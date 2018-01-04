@@ -1,0 +1,64 @@
+<section class="section">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class=" title-block">
+                <h3 class="title">Data Center Summary</h3>
+                <form class="form-inline action font-weight-normal">
+                    <label class="mr-sm-2" for="inlineFormCustomSelect">Migration Week: </label>
+                    <select class="form-control form-control-sm" id="inlineFormCustomSelect">
+                        <option selected>Choose...</option>
+                        <option value="">2017-07-10</option>
+                        <option value="">2017-07-17</option>
+                        <option value="">2017-07-24</option>
+                    </select>
+                </form>
+            </div>
+            <div class="card">
+                <div class="card-block">
+                    <section>
+                        <div *ngIf="!dataCenters">
+                            There are no Data Center's available.
+                        </div>
+                        <div *ngIf="dataCenters">
+                            <table class="table table-bordered table-hover table-sm  ">
+                                <thead>
+                                    <tr>
+                                        <th>Data Center Name</th>
+                                        <th># of Applications</th>
+                                        <th># of Volumes</th>
+                                        <th># of Hosts</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let dataCenter of dataCenters._embedded.dataCenters" (click)="showScheduleModal(volume)">
+                                        <td>{{dataCenter.dataCenterName}}</td>
+                                        <td>{{dataCenter.applicationCount}}</td>
+                                        <td>{{dataCenter.volumeCount}}</td>
+                                        <td>{{dataCenter.hostCount}}</td>
+                                        <td>
+                                            <a class="btn btn-oval btn-primary btn-sm" routerLink="/data-center-detail">View Details</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <nav class="text-xs-right">
+                                <ul class="pagination">
+                                    <li class="page-item"> <a class="page-link" href="#"> Prev </a> </li>
+                                    <li class="page-item active"> <a class="page-link" href="#"> 1 </a> </li>
+                                    <li class="page-item"> <a class="page-link" href="#"> 2 </a> </li>
+                                    <li class="page-item"> <a class="page-link" href="#"> 3 </a> </li>
+                                    <li class="page-item"> <a class="page-link" href="#"> 4 </a> </li>
+                                    <li class="page-item"> <a class="page-link" href="#"> 5 </a> </li>
+                                    <li class="page-item"> <a class="page-link" href="#"> Next  </a> </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

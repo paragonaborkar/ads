@@ -1,0 +1,160 @@
+<div bsModal #scheduleVolumeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="Confirmation Modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">{{title}}</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="cancel()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body" *ngIf="volume">
+                <ng-content select=".modal-body"></ng-content>
+                <h1 class="h4 title-block">Volume Name: {{volume.volumeName}}</h1>
+
+                <form [formGroup]="formGroup">
+
+                    <div class="form-group row" formGroupName="isOwnerFormGroup">
+                        <label for="confirm-owner" class="col-sm-6 form-control-label">Are you the Owner of this Volume? </label>
+                        <div class="col-sm-6">
+                            <div>
+                                <label>
+                                    <input class="radio" formControlName="confirmOwner" type="radio" [value]=true>
+                                    <span>Yes</span>
+                                </label>
+                                <label>
+                                    <input class="radio" formControlName="confirmOwner" type="radio" [value]=false>
+                                    <span>No</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="formGroup.controls.isOwnerFormGroup.controls.confirmOwner.value">
+                        <div class="form-group row" formGroupName="ownerFormGroup">
+                            <label for="decommission-volume" class="col-sm-6 form-control-label">Do you plan to decommission this Volume?</label>
+                            <div class="col-sm-6">
+                                <div>
+                                    <label>
+                                        <input class="radio" formControlName="decommissionVolume" type="radio" [value]=true>
+                                        <span>Yes</span>
+                                    </label>
+                                    <label>
+                                        <input class="radio" formControlName="decommissionVolume" type="radio" [value]=false>
+                                        <span>No</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row" formGroupName="ownerFormGroup">
+                            <div class="col-sm-6">
+                                <label for="confirm-owner" class="form-control-label">Select a date for the migration:</label>
+                                <div class="card" *ngIf="formGroup.controls.ownerFormGroup.controls.migrationDate.value">
+                                    <pre class="card-block card-header">Selected date is: <em > {{formGroup.controls.ownerFormGroup.controls.migrationDate.value | date:'fullDate'}}</em>
+
+                                    </pre>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div style="display:inline-block; min-height:290px;">
+                                    <datepicker formControlName="migrationDate" [minDate]="minDate" [showWeeks]="false" [dateDisabled]="dateDisabled"></datepicker>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row" formGroupName="ownerFormGroup">
+                            <label for="confirm-owner" class="col-sm-6 form-control-label">Select a start time window (All times in EST):</label>
+                            <div class="col col-md-auto">
+                                <div>
+                                    <select class="form-control">
+                                        <option>06:00 EST</option>
+                                        <option>09:00 EST</option>
+                                        <option>12:00 EST</option>
+                                        <option>15:00 EST</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div *ngIf="! formGroup.controls.isOwnerFormGroup.controls.confirmOwner.value">
+
+                        <div class="row">
+                            <div class="col-sm-12 ">
+                                <table class="table table-bordered table-hover table-sm " *ngIf="ownersOfAVolume">
+                                    <thead>
+                                        <tr>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>STD-ID</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let owner of ownersOfAVolume._embedded.ownersOfAVolume">
+                                            <td>{{owner.firstName}}</td>
+                                            <td>{{owner.lastName}}</td>
+                                            <td>{{owner.stdId}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="form-group row" formGroupName="notOwnerFormGroup">
+                            <label for="confirm-owner" class="col-sm-6 form-control-label">If you know the owner who is not in the list please enter it here:</label>
+                            <div class="col-sm-6 ">
+                                <div class="input-group input-group-unstyled">
+
+                                    <input type="text" class="form-control" formControlName="newVolumeOwner">
+
+                                    <span class="input-group-addon">
+                                        <em class="fa fa-search"></em>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row" formGroupName="notOwnerFormGroup">
+                            <div class="col-sm-12">
+                                <label>
+                                    <input class="checkbox" type="checkbox" formControlName="dontKnowOwner">
+                                    <span>I do not know who the Owner is for this Volume</span>
+                                </label>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="form-group row" formGroupName="isOwnerFormGroup">
+                        <label for="migration-team-contact" class="col-sm-6 form-control-label">Would you like the migration team to contact you?</label>
+                        <div class="col-sm-6">
+                            <div>
+                                <label>
+                                    <input class="radio" formControlName="migrationTeamContact" type="radio" [value]=true>
+                                    <span>Yes</span>
+                                </label>
+                                <label>
+                                    <input class="radio" formControlName="migrationTeamContact" type="radio" [value]=false>
+                                    <span>No</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+
+            <div class="modal-footer">
+                <div class="pull-right">
+                    <button type="button" class="btn btn-warning" (click)="cancel()">Cancel</button>
+                    <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+
+/*.navbar-dark {
+	background-color: #0067c5;
+}*/
+
+.logo {
+  background-image: url("/assets/na_logo_hrz_1c-rev_rgb_lrg.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+
+ 
+  width: 155px;
+ 
+  vertical-align: middle;
+  margin-right: 5px;
+  position: relative;
+ }
+
+
+ /*na_logo_vrt_2c_rgb.png*/

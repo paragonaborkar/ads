@@ -1,0 +1,5 @@
+1. Install Packages
+	npm install
+	
+2. Start Package
+	npm start/ng serve

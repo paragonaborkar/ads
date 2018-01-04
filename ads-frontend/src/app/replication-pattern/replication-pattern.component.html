@@ -1,0 +1,107 @@
+<section class="section">
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/data-center-summary">Data Center Summary</a></li>
+                <li class="breadcrumb-item active"><a routerLink="/data-center-detail">DC1</a></li>
+                <li class="breadcrumb-item active">Replication Pattern</li>
+            </ol>
+
+            <div class=" title-block">
+                <h3 class="title">Establish Replication Pattern: DC1</h3>
+                <div>Migration Week: [display selected]</div>
+                <div>Target Cluster: fspodrtp03</div>
+            </div>
+            <div class="card">
+                <div class="card-block">
+                    <section>
+                        <div *ngIf="!replicationPatterns">
+                            There are no Replication Patterns's available.
+                        </div>
+                        <div *ngIf="replicationPatterns">
+                            <table class="table table-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Source Volume</th>
+                                        <th>Source Qtree</th>
+                                        <th>PR Only</th>
+                                        <th>CR</th>
+                                        <th>CR Data Center</th>
+                                        <th>DR</th>
+                                        <th>DR Data Center</th>
+                                        <th>Source Prot Topology</th>
+                                        <th>Application </th>
+                                        <th>Application Owner</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let replicationPattern of replicationPatterns._embedded.replicationPatterns">
+                                        <td>{{replicationPattern.sourceVolume}}</td>
+                                        <td>{{replicationPattern.sourceQtree}}</td>
+                                        <td>
+                                            <label class="item-check" id="select-all-items">
+                                                <input type="checkbox" class="checkbox">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label class="item-check" id="select-all-items">
+                                                <input type="checkbox" class="checkbox">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <select class="form-control" id="exampleSelect1">
+                                            	<option></option>
+                                                <option>MMS2</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label class="item-check" id="select-all-items">
+                                                <input type="checkbox" class="checkbox">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td> <select class="form-control" id="exampleSelect1">
+                                            	<option></option>
+                                                <option>MMS2</option>
+                                            </select></td>
+                                        <td> <select class="form-control" id="exampleSelect1">
+                                            	<option></option>
+                                                <option>PR>DR_VSM</option>
+                                            </select></td>
+                                        <td>{{replicationPattern.application}}</td>
+                                        <td>{{replicationPattern.applicationOwner}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                
+                                <div class="col-sm-6 ">
+                                    <section class="section pull-left">
+                                        <button type="button" class="btn btn-warning">Cancel</button>
+                                        <a  class="btn btn-success" routerLink="/data-center-detail">Save</a>
+                                    </section>
+                                </div>
+                                <div class="col-sm-6">
+                                    <nav class="text-xs-right">
+                                        <ul class="pagination">
+                                            <li class="page-item"> <a class="page-link" href="#"> Prev </a> </li>
+                                            <li class="page-item active"> <a class="page-link" href="#"> 1 </a> </li>
+                                            <li class="page-item"> <a class="page-link" href="#"> 2 </a> </li>
+                                            <li class="page-item"> <a class="page-link" href="#"> 3 </a> </li>
+                                            <li class="page-item"> <a class="page-link" href="#"> 4 </a> </li>
+                                            <li class="page-item"> <a class="page-link" href="#"> 5 </a> </li>
+                                            <li class="page-item"> <a class="page-link" href="#"> Next  </a> </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

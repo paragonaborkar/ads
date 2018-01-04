@@ -1,0 +1,94 @@
+<div *ngIf="projects">
+    <strong>Project Paging Info:</strong>
+    <br> Page Number: {{projects.page.number}}
+    <br> Page Size: {{projects.page.size}}
+    <br> Total Elements: {{projects.page.totalElements}}
+    <br> Total Pages: {{projects.page.totalPages}}
+    <br>
+
+</div>
+<br>
+<br>
+
+<div class="row" *ngIf="projects">
+    <div class="col">
+        <div class="card">
+            <div class="card-block">
+                <div class="card-title-block">
+                    <h3 class="title"> Migration Projects </h3>
+                </div>
+
+                <table class="table table-hover  table-sm">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let migrationProject of projects._embedded.migrationProjects" (click)="onSelect(migrationProject)">
+                            <th scope="row">--id--</th>
+                            <td>{{migrationProject.migrationProjectName}}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-danger" (click)="showDeleteConfirmation(migrationProject)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6" *ngIf="selectedProject">
+        <div class="card card-block">
+            <div class="title-block">
+                <h3 class="title"> Update Project </h3>
+            </div>
+            <div *ngIf="selectedProject">
+                <form>
+                    <div class="form-group row">
+                        <label for="newProjectName" class="col-sm-2 form-control-label">Project Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" [(ngModel)]="selectedProject.migrationProjectName" class="form-control" id="updateProjectName" name="updateProjectName"> </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button (click)="save()" class="btn btn-success">Update Project</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" >
+    <div class="col-md-6">
+        <div class="card card-block">
+            <div class="title-block">
+                <h3 class="title"> Create New Project </h3>
+            </div>
+            <form>
+                <div class="form-group row">
+                    <label for="newProjectName" class="col-sm-2 form-control-label">Project Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" #newProjectName class="form-control" id="newProjectName" placeholder="Project Name"> </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button (click)="add(newProjectName.value)" class="btn btn-success">Create New Project</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<confirmation-modal #confirmationModal [action]="'delete'" [title]="'Confirm Delete'" (onConfirm)="onConfirm($event)">
+    <div class="modal-body" >
+        Are you sure you want to delete {{title}} {{subjectName}}?
+    </div>
+</confirmation-modal>

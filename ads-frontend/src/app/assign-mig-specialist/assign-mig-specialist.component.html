@@ -1,0 +1,74 @@
+<section class="section">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class=" title-block">
+                <h3 class="title">Assign Migration Specialist</h3>
+                <form class="form-inline action font-weight-normal">
+                    <label class="mr-sm-2" for="inlineFormCustomSelect">Migration Week: </label>
+                    <select class="form-control form-control-sm" id="inlineFormCustomSelect">
+                        <option selected>Choose...</option>
+                        <option value="">2017-07-10</option>
+                        <option value="">2017-07-17</option>
+                        <option value="">2017-07-24</option>
+                    </select>
+                </form>
+            </div>
+            <div class="card">
+                <div class="card-block">
+                    <section>
+                        <div *ngIf="!projects">
+                            There are no project's available for this week.
+                        </div>
+                        <div *ngIf="projects">
+                            <table class="table table-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Cutover Project</th>
+                                        <th>Line of Business</th>
+                                        <th>Migration Schedule</th>
+                                        <th>Source Volumes</th>
+                                        <th>Target Volumes</th>
+                                        <th>Migration Specialist</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let project of projects._embedded.projects">
+                                        <td>{{project.cutoverProject}}</td>
+                                        <td>{{project.lob}}</td>
+                                        <td>{{project.scheduledOn | date:'EEE, MMM d, y h:m a' }}</td>
+                                        <td>{{project.sourceVolumeCount}}</td>
+                                        <td>{{project.targetVolumeCount}}</td>
+                                        <td>
+                                        <select class="form-control" id="exampleSelect1">
+                                                <option >{{project.migrationSpecalist}}</option>
+                                            </select>
+                                            </td>
+
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <nav class="text-xs-left">
+                                        <ul class="pagination">
+                                            <li class="page-item"> <a class="page-link" href="#"> Prev </a> </li>
+                                            <li class="page-item active"> <a class="page-link" href="#"> 1 </a> </li>
+                                            <li class="page-item"> <a class="page-link" href="#"> 2 </a> </li>
+                                            <li class="page-item"> <a class="page-link" href="#"> 3 </a> </li>
+                                            <li class="page-item"> <a class="page-link" href="#"> 4 </a> </li>
+                                            <li class="page-item"> <a class="page-link" href="#"> 5 </a> </li>
+                                            <li class="page-item"> <a class="page-link" href="#"> Next  </a> </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

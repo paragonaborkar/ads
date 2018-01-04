@@ -1,0 +1,163 @@
+<aside class="sidebar">
+    <div class="sidebar-container">
+        <div class="sidebar-header">
+            <div class="brand">
+                <div class="logo">
+                    
+                </div>
+                <!-- Migration Service -->
+            </div>
+        </div>
+        <nav class="menu">
+            <ul class="nav metismenu" id="sidebar-menu">
+                <li [class.active]="'work-packages' === selectedSideBarLink">
+                    <a routerLink="work-packages" (click)="onSelect('work-packages')">
+                        <i class="fa fa-cogs"></i> Work Packages
+                    </a>
+                </li>
+                <li [class.active]="'operational-override' === selectedSideBarLink">
+                    <a routerLink="operational-override" (click)="onSelect('operational-override')">
+                        <i class="fa fa-exclamation-circle"></i> Operational Override
+                    </a>
+                </li>
+                <li [class.active]="'batch-release' === selectedSideBarLink">
+                    <a routerLink="batch-release" (click)="onSelect('batch-release')">
+                        <i class="fa fa-share"></i> Batch Release
+                    </a>
+                </li>
+                <li [class.active]="'schedule' === selectedSideBarLink">
+                    <a routerLink="schedule" (click)="onSelect('schedule')">
+                        <i class="fa fa-calendar"></i> Schedule (404)
+                    </a>
+                </li>
+                <li [class.active]="'report-listing' === selectedSideBarLink">
+                    <a routerLink="report-listing" (click)="onSelect('report-listing')">
+                        <i class="fa fa-bar-chart"></i> Reports
+                    </a>
+                </li>
+                <li [class.active]="'server-admin-reference' === selectedSideBarLink">
+                    <a routerLink="server-admin-reference" (click)="onSelect('server-admin-reference')">
+                        <i class="fa fa-life-ring"></i> Server Admin Reference
+                    </a>
+                </li>
+                <li [class.active]="'data-center-summary' === selectedSideBarLink">
+                    <a routerLink="data-center-summary" (click)="onSelect('data-center-summary')">
+                        <i class="fa fa-check"></i> Migration Planning
+                    </a>
+                </li>
+                <li [class.active]="'migration-project' === selectedSideBarLink">
+                    <a routerLink="migration-project" (click)="onSelect('migration-project')">
+                        <i class="fa fa-plus"></i> Create Project
+                    </a>
+                </li>
+                <li [class.active]="'aassign-migration-specialist' === selectedSideBarLink">
+                    <a routerLink="assign-migration-specialist" (click)="onSelect('assign-migration-specialist')">
+                        <i class="fa fa-user-plus"></i> Assign Mig Specialist
+                    </a>
+                </li>
+                <li [class.active]="'migration-execution' === selectedSideBarLink">
+                    <a routerLink="migration-execution" (click)="onSelect('migration-execution')">
+                        <i class="fa fa-tasks"></i> Migration Execution
+                    </a>
+                </li>
+                <li [class.active]="'wfa-mgmt' === selectedSideBarLink">
+                    <a routerLink="wfa-mgmt" (click)="onSelect('wfa-mgmt')">
+                        <i class="fa fa-rocket"></i> WFA Management
+                    </a>
+                </li>
+                <li [class.active]="'storage-x' === selectedSideBarLink">
+                    <a routerLink="storage-x" (click)="onSelect('storage-x')">
+                        <i class="fa fa-upload"></i> Storage X
+                    </a>
+                </li>
+                
+                <li [class.active]="'user-admin' === selectedSideBarLink">
+                    <a routerLink="user-admin" (click)="onSelect('user-admin')">
+                        <i class="fa fa-group"></i> User Admin
+                    </a>
+                </li>
+
+                 <li [class.active]="'manual-functions' === selectedSideBarLink">
+                    <a routerLink="manual-functions" (click)="onSelect('manual-functions')">
+                        <i class="fa fa-wrench"></i> Manual Functions
+                    </a>
+                </li>
+                
+                <li [class.active]="'application-properties' === selectedSideBarLink">
+                    <a routerLink="application-properties" (click)="onSelect('application-properties')">
+                        <i class="fa fa-info-circle"></i> Application Properties
+                    </a>
+                </li>
+                <li [class.active]="'admin' === selectedSideBarLink">
+                    <a routerLink="admin" (click)="onSelect('admin')">
+                        <i class="fa fa-user-secret"></i> Admin (404)
+                    </a>
+                </li>
+                <li [class.active]="'application-config' === selectedSideBarLink">
+                    <a routerLink="application-config" (click)="onSelect('application-config')">
+                        <i class="fa fa-gear"></i> Application Configuration
+                    </a>
+                </li>
+               
+
+                <li>
+                    <a href="">
+                        <i class="fa fa-table"></i> Pages Req. Key
+                        <i class="fa arrow"></i>
+                    </a>
+                    <ul>
+                        <li [class.active]="'volume-owners' === selectedSideBarLink">
+                            <a routerLink="volume-owners" (click)="onSelect('volume-owners')">
+                                <i class="fa fa-user-secret"></i> Volume Owner
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Sub Menu Item #2
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="fa fa-file-text-o"></i> Pages
+                        <i class="fa arrow"></i>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="login.html">
+                                Login
+                            </a>
+                        </li>
+                        <li>
+                            <a href="error-404.html">
+                                Error 404 App
+                            </a>
+                        </li>
+                        <li>
+                            <a href="error-404-alt.html">
+                                Error 404 Global
+                            </a>
+                        </li>
+                        <li>
+                            <a href="error-500.html">
+                                Error 500 App
+                            </a>
+                        </li>
+                        <li>
+                            <a href="error-500-alt.html">
+                                Error 500 Global
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="https://github.com/modularcode/modular-admin-html">
+                        <i class="fa fa-github-alt"></i> Theme Docs
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>

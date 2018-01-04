@@ -1,0 +1,68 @@
+<section class="section">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block">
+                    <div class="card-title-block">
+                        <h3 class="title">Volume Owner</h3>
+                    </div>
+                    <section class="">
+                        <div class="table-responsive" *ngIf="!volumeOwners">
+                            There are no volume's currently assigned to you.
+                        </div>
+                        <div class="table-responsive" *ngIf="volumeOwners">
+                            <table class="table table-bordered table-hover table-sm ">
+                                <thead>
+                                    <tr>
+                                        <th>Application Name</th>
+                                        <th>Volume</th>
+                                        <th>Host Count</th>
+                                        <th>Share Count</th>
+                                        <th>Last Access</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let volume of volumeOwners._embedded.volumeOwners" (click)="showScheduleModal(volume)">
+                                        <td>{{volume.applicationName}}</td>
+                                        <td>{{volume.volumeName}}</td>
+                                        <td>{{volume.hostCount}}</td>
+                                        <td>{{volume.shareCount}}</td>
+                                        <td>{{ volume.lastAccess | date:'medium' }}</td>
+
+                                        <td *ngIf="volume.scheduled">
+                                            <button type="button" class="btn btn-oval btn-primary btn-sm" (click)="showScheduleModal(volume)">Re-Schedule Now</button>
+                                        </td>
+
+                                        <td *ngIf="!volume.scheduled">
+                                            <button type="button" class="btn btn-oval btn-warning btn-sm" (click)="showScheduleModal(volume)">Schedule Now</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <nav class="text-xs-right">
+                            <ul class="pagination">
+                                <li class="page-item"> <a class="page-link" href="#"> Prev </a> </li>
+                                <li class="page-item active"> <a class="page-link" href="#"> 1 </a> </li>
+                                <li class="page-item"> <a class="page-link" href="#"> 2 </a> </li>
+                                <li class="page-item"> <a class="page-link" href="#"> 3 </a> </li>
+                                <li class="page-item"> <a class="page-link" href="#"> 4 </a> </li>
+                                <li class="page-item"> <a class="page-link" href="#"> 5 </a> </li>
+                                <li class="page-item"> <a class="page-link" href="#"> Next  </a> </li>
+                            </ul>
+                        </nav>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<schedule-volume-modal #scheduleVolumeModal (onSavedSchedule)="onSavedSchedule($event)">
+    <!--   <div class="modal-body" >
+        Are you sure you want to delete {{title}} {{subjectName}}?
+    </div> -->
+</schedule-volume-modal>

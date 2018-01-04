@@ -1,0 +1,99 @@
+<section class="section">
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/data-center-summary">Data Center Summary</a></li>
+                <li class="breadcrumb-item active">DC1</li>
+            </ol>
+
+            <div class=" title-block">
+
+                <div [class.col-md-4]="alertDisplayed" [class.col-md-12]="!alertDisplayed">
+                    <h1 class="h3">Data Center Details:  <span class="text-muted">DC1</span></h1>
+                     <h2 class=" h4">Migration Week: <span class="text-muted">[display selected]</span></h2>
+                </div>
+
+                <div class="col-md-4" *ngIf="alertDisplayed">
+                    <div class="alert alert-success" role="alert">
+                        <strong>Approved!</strong> You successfully approved the migration plan.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-block">
+                    <section>
+                        <div *ngIf="!dataCenterDetail">
+                            There are no Data Center's available.
+                        </div>
+                        <div *ngIf="dataCenterDetail">
+                            <table class="table table-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <label class="item-check" id="select-all-items">
+                                                <input type="checkbox" class="checkbox">
+                                                <span></span>
+                                            </label>
+                                        </th>
+                                        <th>Source Controller</th>
+                                        <th>Source Volume</th>
+                                        <th>Application Owner</th>
+                                        <th>Target Data Center</th>
+                                        <th>Target Cluster</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let dataCenter of dataCenterDetail._embedded.dataCenterDetails">
+                                        <td>
+                                            <label class="item-check" id="select-all-items">
+                                                <input type="checkbox" class="checkbox">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td>{{dataCenter.sourceController}}</td>
+                                        <td>{{dataCenter.sourceVolume}}</td>
+                                        <td>{{dataCenter.applicationOwner}}</td>
+                                        <td>{{dataCenter.targetDataCenter}}</td>
+                                        <td>{{dataCenter.targetCluster}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-sm-6 ">
+                                    <section class="section pull-left">
+                                        <a class="btn btn-primary" routerLink="/replication-pattern">Replication</a>
+                                        <button type="button" class="btn btn-info">Retarget</button>
+                                        <button type="button" class="btn btn-success" (click)="approve()">Approve</button>
+                                    </section>
+                                </div>
+                                <div class="col-sm-6">
+                                    <nav class="text-xs-right">
+                                        <ul class="pagination">
+                                            <li class="page-item"> <a class="page-link" href="#"> Prev </a> </li>
+                                            <li class="page-item active"> <a class="page-link" href="#"> 1 </a> </li>
+                                            <li class="page-item"> <a class="page-link" href="#"> 2 </a> </li>
+                                            <li class="page-item"> <a class="page-link" href="#"> 3 </a> </li>
+                                            <li class="page-item"> <a class="page-link" href="#"> 4 </a> </li>
+                                            <li class="page-item"> <a class="page-link" href="#"> 5 </a> </li>
+                                            <li class="page-item"> <a class="page-link" href="#"> Next  </a> </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

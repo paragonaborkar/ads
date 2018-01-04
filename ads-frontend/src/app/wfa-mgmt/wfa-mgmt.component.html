@@ -1,0 +1,607 @@
+<div class="row">
+    <div class="col-md-12 ">
+
+
+
+        <div class=" items-list-page">
+            <div class="title-search-block">
+                <div class="title-block">
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <span class="h3">WFA Dashboard</span>
+
+                            <p class="title-description"> Workflow Automation </p>
+                            <form class="form-inline  font-weight-normal">
+                                <label class="mr-sm-2" for="inlineFormCustomSelect">Migration Week</label>
+                                <select class="form-control form-control-sm" id="inlineFormCustomSelect">
+                                    <option selected>Choose...</option>
+                                    <option value="">2017-07-10</option>
+                                    <option value="">2017-07-17</option>
+                                    <option value="">2017-07-24</option>
+                                </select>
+
+                                <label class="mr-sm-2 ml-3" for="inlineFormCustomSelect">Project</label>
+                                <select class="form-control form-control-sm" id="inlineFormCustomSelect">
+                                    <option selected>Choose...</option>
+                                    <option value="1">MMS-QA_11997</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+
+                                <label class="mr-sm-2 ml-3" for="inlineFormCustomSelect">Migration Type</label>
+                                <select class="form-control form-control-sm" id="inlineFormCustomSelect">
+                                    <option selected>All</option>
+                                    <option value="1">CIFS</option>
+                                    <option value="2">NFS</option>
+                                    <option value="3">Mixed</option>
+                                </select>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="items-search">
+                    <form class="form-inline">
+                        <div class="input-group">
+                            <input type="text" class="form-control boxed rounded-s" placeholder="Search for..."> <span class="input-group-btn">
+                    <button class="btn btn-secondary rounded-s" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span> </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-block">
+                    <div class="card-title-block">
+                        <div class="action dropdown ">
+                            <button class="btn  btn-sm rounded-s btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Actions...
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <a class="dropdown-item" href="#"><i class="fa fa-pencil-square-o icon"></i>Launch Workflow</a>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal"><i class="fa fa-close icon"></i>Stop Workflow</a>
+                            </div>
+                        </div>
+
+                        <table class="table table-striped table-bordered table-hover table-sm wfa-table">
+                            <thead>
+                                <tr>
+                                    <th>
+
+                                    </th>
+
+                                    <th colspan="3" style="text-align: center;">Source</th>
+                                    <th colspan="3" style="text-align: center;">Target</th>
+                                    <th colspan="8" style="text-align: center;">
+
+                                        <span style="">Workflow Status</span>
+
+                                        <span>
+                                         </span>
+
+
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label class="item-check" id="select-all-items">
+                                            <input type="checkbox" class="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </th>
+
+                                    <th>Controller</th>
+                                    <th>Volume</th>
+                                    <th>QTree</th>
+                                    <th>Controller</th>
+                                    <th>Volume</th>
+                                    <th>QTree</th>
+
+                                    <th class="status">Prov</th>
+                                    <th class="status">LDAP</th>
+                                    <th class="status">LDAP
+                                        <br>Verify</th>
+                                    <th class="status">StorageX
+                                        <br>Create</th>
+                                    <th class="status">StorageX
+                                        <br>Baseline</th>
+                                    <th class="status">StorageX
+                                        <br>Complete</th>
+                                    <th class="status">Share Copy</th>
+                                    <th class="status">Pre-Cutover</th>
+                                </tr>
+                                <tr>
+                                    <th>
+
+                                    </th>
+
+                                    <th style="vertical-align: middle;">
+                                        <input type="text" class="form-control form-control-sm col-md-auto" id="formGroupExampleInput" placeholder="Filter">
+                                    </th>
+                                    <th style="vertical-align: middle;">
+                                        <input type="text" class="form-control form-control-sm" id="formGroupExampleInput" placeholder="Filter">
+                                    </th>
+                                    <th style="vertical-align: middle;">
+                                        <input type="text" class="form-control form-control-sm col-md-1" id="formGroupExampleInput" placeholder="Filter">
+                                    </th>
+                                    <th style="vertical-align: middle;">
+                                        <input type="text" class="form-control form-control-sm" id="formGroupExampleInput" placeholder="Filter">
+                                    </th>
+                                    <th style="vertical-align: middle;">
+                                        <input type="text" class="form-control form-control-sm" id="formGroupExampleInput" placeholder="Filter">
+                                    </th>
+                                    <th style="vertical-align: middle;">
+                                        <input type="text" class="form-control form-control-sm" id="formGroupExampleInput" placeholder="Filter">
+                                    </th>
+
+                                    <th class="status">
+                                        <select class="" id="inlineFormCustomSelect">
+                                            <option selected>All</option>
+                                            <option value="1">Done</option>
+                                            <option value="2">Running</option>
+                                            <option value="3">Error</option>
+                                        </select>
+                                    </th>
+                                    <th class="status">
+                                        <select class="" id="inlineFormCustomSelect1">
+                                            <option selected>All</option>
+                                            <option value="1">Done</option>
+                                            <option value="2">Running</option>
+                                            <option value="3">Error</option>
+                                        </select>
+                                    </th>
+                                    <th class="status">
+                                        <select class="" id="inlineFormCustomSelect2">
+                                            <option selected>All</option>
+                                            <option value="1">Done</option>
+                                            <option value="2">Running</option>
+                                            <option value="3">Error</option>
+                                        </select>
+                                    </th>
+                                    <th class="status">
+                                        <select class="" id="inlineFormCustomSelect3">
+                                    <option selected>All</option>
+                                    <option value=" 1 ">Done</option>
+                                    <option value="2 ">Running</option>
+                                    <option value="3 ">Error</option>
+                                </select></th>
+                                    <th class="status "><select class=" " id="inlineFormCustomSelect4 ">
+                                    <option selected>All</option>
+                                    <option value="1 ">Done</option>
+                                    <option value="2 ">Running</option>
+                                    <option value="3 ">Error</option>
+                                </select></th>
+                                    <th class="status "><select class=" " id="inlineFormCustomSelect5 ">
+                                    <option selected>All</option>
+                                    <option value="1 ">Done</option>
+                                    <option value="2 ">Running</option>
+                                    <option value="3 ">Error</option>
+                                </select></th>
+                                    <th class="status "><select class=" " id="inlineFormCustomSelect6 ">
+                                    <option selected>All</option>
+                                    <option value="1 ">Done</option>
+                                    <option value="2 ">Running</option>
+                                    <option value="3 ">Error</option>
+                                </select></th>
+                                    <th class="status "><select class=" " id="inlineFormCustomSelect7 ">
+                                    <option selected>All</option>
+                                    <option value="1 ">Done</option>
+                                    <option value="2 ">Running</option>
+                                    <option value="3 ">Error</option>
+                                </select></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td nowrap="nowrap ">
+                                        <label class="item-check " id="select-all-items ">
+                                            <input type="checkbox " class="checkbox ">
+                                            <span></span>
+                                        </label>
+                                        <em class="fa fa-lg fa-info-circle "></em>
+                                    </td>
+                                  
+                                    <td>
+                                        <a class="status-popover " popoverTitle="Source Controller " popover="fspodrpt_mouse_sub_deliverthegoods_prd_1000 " placement="top ">fspodrpt_mouse_sub_deliv...</a>
+                                    </td>
+                                    <td>mms cifs1 noqtree</td>
+                                    <td>-</td>
+                                    <td>fas3270cl2-rtp</td>
+                                    <td>mms cifs3</td>
+                                    <td>cifs q1</td>
+
+                                    <td class="status bg-success ">
+                                        <a class="status-popover " popoverTitle="Provision " popover="And here 's some amazing status info. It's very engaging. Right? " placement="top ">OK</a>
+                                    </td>
+                                    <td class="status bg-success "></td>
+                                    <td></td>
+                                    <td class="status ">CIFS</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="status ">CIFS</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label class="item-check " id="select-all-items ">
+                                            <input type="checkbox " class="checkbox ">
+                                            <span></span>
+                                        </label>
+                                        <em class="fa fa-lg fa-info-circle "></em>
+
+                                    </td>
+                                 
+                                    <td>fas3270cl2-rtp</td>
+                                    <td>mms cifs3</td>
+                                    <td>cifs q2</td>
+                                    <td>fas3270cl2-rtp</td>
+                                    <td>mms cifs3</td>
+                                    <td>cifs q1</td>
+
+                                    <td class="status bg-success "></td>
+                                    <td class="status bg-warning "></td>
+                                    <td></td>
+                                    <td class="status ">CIFS</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="status ">CIFS</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label class="item-check " id="select-all-items ">
+                                            <input type="checkbox " class="checkbox ">
+                                            <span></span>
+                                        </label>
+                                         <em class="fa fa-lg fa-info-circle "></em>
+                                    </td>
+                                   
+                                    <td>fas3270cl2-rtp</td>
+                                    <td>mms cifs3</td>
+                                    <td>cifs q3</td>
+                                    <td>fas3270cl2-rtp</td>
+                                    <td>mms cifs3</td>
+                                    <td>cifs q1</td>
+
+
+                                    <td class="status bg-success "></td>
+                                    <td class="status bg-success "></td>
+                                    <td class="status bg-success "></td>
+                                    <td class="status bg-danger "> <em class="fa fa-lg fa-warning "></em>NFS</td>
+                                    
+                                    <td></td>
+                                    <td></td>
+                                    <td class="status ">NFS</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label class="item-check " id="select-all-items ">
+                                            <input type="checkbox " class="checkbox ">
+                                            <span></span>
+                                        </label>
+                                         <em class="fa fa-lg fa-info-circle "></em>
+                                    </td>
+                                  
+                                    <td>7GN1-RTPRDC</td>
+                                    <td>mms cifs3</td>
+                                    <td>qtree 2</td>
+                                    <td>fas3270cl2-rtp</td>
+                                    <td>mms cifs3</td>
+                                    <td>cifs q1</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="status ">Mixed</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="status ">Mixed</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<nav class="text-xs-right ">
+    <ul class="pagination ">
+        <li class="page-item "> <a class="page-link " href=" "> Prev </a> </li>
+        <li class="page-item active "> <a class="page-link " href=" "> 1 </a> </li>
+        <li class="page-item "> <a class="page-link " href=" "> 2 </a> </li>
+        <li class="page-item "> <a class="page-link " href=" "> 3 </a> </li>
+        <li class="page-item "> <a class="page-link " href=" "> 4 </a> </li>
+        <li class="page-item "> <a class="page-link " href=" "> 5 </a> </li>
+        <li class="page-item "> <a class="page-link " href=" "> Next </a> </li>
+    </ul>
+</nav>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<!-- TIMELINE: https://codyhouse.co/gem/horizontal-timeline/ -->
+<div class=" items-list-page ">
+    <div class="title-search-block ">
+        <div class="title-block ">
+            <div class="row ">
+                <div class="col-md-6 ">
+                    <span class="h3 "> WFA </span>
+                    <div class="action dropdown ">
+                        <button class="btn btn-sm rounded-s btn-secondary dropdown-toggle " type="button " id="dropdownMenu1 " data-toggle="dropdown " aria-haspopup="true " aria-expanded="false ">
+                            Actions...
+                        </button>
+                        <div class="dropdown-menu " aria-labelledby="dropdownMenu1 ">
+                            <a class="dropdown-item " href="# "><i class="fa fa-pencil-square-o icon "></i>Launch Workflow</a>
+                            <a class="dropdown-item " href="# " data-toggle="modal " data-target="#confirm-modal "><i class="fa fa-close icon "></i>Stop Workflow</a>
+                        </div>
+                    </div>
+
+
+
+                    <p class="title-description "> Some text if needed... </p>
+                    <form class="form-inline action font-weight-normal ">
+                        <label class="mr-sm-2 " for="inlineFormCustomSelect ">Migration Week</label>
+                        <select class="form-control form-control-sm " id="inlineFormCustomSelect ">
+                            <option selected>Choose...</option>
+                            <option value=" ">2017-07-10</option>
+                            <option value=" ">2017-07-17</option>
+                            <option value=" ">2017-07-24</option>
+                        </select>
+
+                        <label class="mr-sm-2 " for="inlineFormCustomSelect ">Project</label>
+                        <select class="form-control form-control-sm " id="inlineFormCustomSelect ">
+                            <option selected>Choose...</option>
+                            <option value="1 ">MMS-QA_11997</option>
+                            <option value="2 ">Two</option>
+                            <option value="3 ">Three</option>
+                        </select>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="items-search ">
+            <form class="form-inline ">
+                <div class="input-group ">
+                    <input type="text " class="form-control boxed rounded-s " placeholder="Search for... "> <span class="input-group-btn ">
+                    <button class="btn btn-secondary rounded-s " type="button ">
+                        <i class="fa fa-search "></i>
+                    </button>
+                </span> </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <div class="card items ">
+        <ul class="item-list striped ">
+            <li class="item item-list-header hidden-sm-down ">
+                <div class="item-row ">
+                    <div class="item-col fixed item-col-check ">
+                        <label class="item-check " id="select-all-items ">
+                            <input type="checkbox " class="checkbox ">
+                            <span></span>
+                        </label>
+                    </div>
+                    <!--    <div class="item-col fixed item-col-check ">
+                        <label class="item-check " id="select-all-items ">
+
+                            <span></span>
+                        </label>
+                    </div> -->
+                    <div class="item-col item-col-header ">
+                        <div class="no-overflow "> <span>Source Controller</span> </div>
+                    </div>
+                    <div class="item-col item-col-header ">
+                        <div class="no-overflow "> <span>Source Volume</span> </div>
+                    </div>
+                    <div class="item-col item-col-header ">
+                        <div class="no-overflow "> <span>Source QTree</span> </div>
+                    </div>
+                    <div class="item-col item-col-header ">
+                        <div class="no-overflow "> <span>Target Volume</span> </div>
+                    </div>
+                    <div class="item-col item-col-header ">
+                        <div class="no-overflow "> <span>Target Volume</span> </div>
+                    </div>
+                    <div class="item-col item-col-header ">
+                        <div class="no-overflow "> <span>Target QTree</span> </div>
+                    </div>
+
+
+                    <div class="item-col item-col-header fixed item-col-actions-dropdown "> </div>
+                </div>
+            </li>
+            <li class="item ">
+                <div class="item-row ">
+                    <div class="item-col fixed item-col-check ">
+                        <label class="item-check " id="select-all-items ">
+                            <input type="checkbox " class="checkbox ">
+                            <span></span>
+                        </label>
+                    </div>
+                    <!-- <div class="item-col fixed item-col-check ">
+                        <label class="item-check " id="select-all-items ">
+                            <em class="fa fa-plus-square-o "></em> -->
+                    <!-- <em class="fa fa-minus-square-o "></em> -->
+                    <!--         <span></span>
+                        </label>
+                    </div> -->
+                    <div class="item-col fixed pull-left item-col-title ">
+                        <div class="item-heading ">Target Volume</div>
+                        <div>
+                            <a href="# " class=" ">
+                                <h4 class="item-title "> fspodrpt_mouse_sub_deliverthegoods_prd_1000 </h4>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="item-col ">
+                        <div class="item-heading ">Stage</div>
+                        <div> Provisioning </div>
+                    </div>
+                    <div class="item-col ">
+                        <div class="item-heading ">Status</div>
+                        <div> Executing
+
+                        </div>
+                    </div>
+                    <div class="item-col ">
+                        <div class="item-heading ">Source Controller</div>
+                        <div class="no-overflow "> SourceController Value</div>
+                    </div>
+                    <div class="item-col ">
+                        <div class="item-heading ">Source Volume</div>
+                        <div class="no-overflow ">SourceVolume Value</div>
+                    </div>
+                    <div class="item-col ">
+                        <div class="item-heading ">Source QTree</div>
+                        <div class="no-overflow "> SourceQtree value </div>
+                    </div>
+                    <div class="item-col fixed item-col-actions-dropdown ">
+                        <label class="item-check " id="select-all-items ">
+                            <em class="fa fa-info-circle "></em>
+                            <!-- <em class="fa fa-minus-square-o "></em> -->
+                            <span></span>
+                        </label>
+
+                        <div class="item-actions-dropdown ">
+                            <a class="item-actions-toggle-btn ">
+                                <span class="inactive ">
+                                    <i class="fa fa-cog "></i>
+                                </span>
+                                <span class="active ">
+                                <i class="fa fa-chevron-circle-right "></i>
+                                </span>
+                            </a>
+                            <div class="item-actions-block ">
+                                <ul class="item-actions-list ">
+                                    <li>
+                                        <a class="remove " href="# " data-toggle="modal " data-target="#confirm-modal ">
+                                            <i class="fa fa-trash-o "></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="edit " href="item-editor.html ">
+                                            <i class="fa fa-pencil "></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </li>
+
+            <li class="item ">
+                <div class="item-row ">
+                    <div class="item-col fixed item-col-check ">
+                        <label class="item-check " id="select-all-items ">
+                            <input type="checkbox " class="checkbox ">
+                            <span></span>
+                        </label>
+                    </div>
+                    <!-- <div class="item-col fixed item-col-check ">
+                        <label class="item-check " id="select-all-items ">
+                            <em class="fa fa-plus-square-o "></em> -->
+                    <!-- <em class="fa fa-minus-square-o "></em> -->
+                    <!--         <span></span>
+                        </label>
+                    </div> -->
+                    <div class="item-col fixed pull-left item-col-title ">
+                        <div class="item-heading ">Target Volume</div>
+                        <div>
+                            <a href="# " class=" ">
+                                <h4 class="item-title "> fspodrpt_mouse_sub_deliverthegoods_prd_1000 </h4>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="item-col ">
+                        <div class="item-heading ">Stage</div>
+                        <div> Provisioning </div>
+                    </div>
+                    <div class="item-col ">
+                        <div class="item-heading ">Status</div>
+                        <div> Executing
+
+                        </div>
+                    </div>
+                    <div class="item-col ">
+                        <div class="item-heading ">Source Controller</div>
+                        <div class="no-overflow "> SourceController Value</div>
+                    </div>
+                    <div class="item-col ">
+                        <div class="item-heading ">Source Volume</div>
+                        <div class="no-overflow ">SourceVolume Value</div>
+                    </div>
+                    <div class="item-col ">
+                        <div class="item-heading ">Source QTree</div>
+                        <div class="no-overflow "> SourceQtree value </div>
+                    </div>
+                    <div class="item-col fixed item-col-actions-dropdown ">
+                        <label class="item-check " id="select-all-items ">
+                            <em class="fa fa-info-circle "></em>
+                            <!-- <em class="fa fa-minus-square-o "></em> -->
+                            <span></span>
+                        </label>
+
+                        <div class="item-actions-dropdown ">
+                            <a class="item-actions-toggle-btn ">
+                                <span class="inactive ">
+                                    <i class="fa fa-cog "></i>
+                                </span>
+                                <span class="active ">
+                                <i class="fa fa-chevron-circle-right "></i>
+                                </span>
+                            </a>
+                            <div class="item-actions-block ">
+                                <ul class="item-actions-list ">
+                                    <li>
+                                        <a class="remove " href="# " data-toggle="modal " data-target="#confirm-modal ">
+                                            <i class="fa fa-trash-o "></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="edit " href="item-editor.html ">
+                                            <i class="fa fa-pencil "></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+
+
+        </ul>
+    </div>
+    <nav class="text-xs-right ">
+        <ul class="pagination ">
+            <li class="page-item "> <a class="page-link " href=" "> Prev </a> </li>
+            <li class="page-item active "> <a class="page-link " href=" "> 1 </a> </li>
+            <li class="page-item "> <a class="page-link " href=" "> 2 </a> </li>
+            <li class="page-item "> <a class="page-link " href=" "> 3 </a> </li>
+            <li class="page-item "> <a class="page-link " href=" "> 4 </a> </li>
+            <li class="page-item "> <a class="page-link " href=" "> 5 </a> </li>
+            <li class="page-item "> <a class="page-link " href=" "> Next </a> </li>
+        </ul>
+    </nav>
+</div>
