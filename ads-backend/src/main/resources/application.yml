@@ -1,0 +1,14 @@
+security:
+  user:
+    password: password
+logging:
+  level:
+    org.springframework.security: DEBUG
+    
+spring:
+    jpa.hibernate.ddl-auto: none
+    datasource:
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/ads
+        username: root
+        password: Paragon1

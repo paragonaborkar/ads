@@ -1,0 +1,65 @@
+{
+  "_embedded": {
+    "dataCenters": [
+      {
+      	"dataCenterName": "DC1",
+        "applicationCount": 6,
+        "volumeCount": 12,
+        "hostCount": "3",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8080/hosts/1"
+          },
+          "host": {
+            "href": "http://localhost:8080/hosts/1{?projection}",
+            "templated": true
+          },
+          "storageSource": {
+            "href": "http://localhost:8080/hosts/1/storageSource"
+          },
+          "dataCenter": {
+            "href": "http://localhost:8080/hosts/1/dataCenter"
+          }
+        }
+      },
+     {
+        "dataCenterName": "DC2",
+        "applicationCount": 23,
+        "volumeCount": 34,
+        "hostCount": "5",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8080/hosts/1"
+          },
+          "host": {
+            "href": "http://localhost:8080/hosts/1{?projection}",
+            "templated": true
+          },
+          "storageSource": {
+            "href": "http://localhost:8080/hosts/1/storageSource"
+          },
+          "dataCenter": {
+            "href": "http://localhost:8080/hosts/1/dataCenter"
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/hosts"
+    },
+    "profile": {
+      "href": "http://localhost:8080/profile/hosts"
+    },
+    "search": {
+      "href": "http://localhost:8080/hosts/search"
+    }
+  },
+  "page": {
+    "size": 20,
+    "totalElements": 2,
+    "totalPages": 1,
+    "number": 0
+  }
+}

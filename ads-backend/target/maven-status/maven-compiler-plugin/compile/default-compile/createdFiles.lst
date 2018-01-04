@@ -1,0 +1,15 @@
+com\netapp\repos\HostRepository.class
+com\netapp\models\DataCenter.class
+com\netapp\repos\RepositoryConfiguration.class
+com\netapp\models\SourceStorage.class
+com\netapp\repos\StorageSourceRepository.class
+com\netapp\HelloController.class
+com\netapp\Application.class
+com\netapp\Application$SecurityConfiguration.class
+com\netapp\repos\MigrationProjectRepository.class
+com\netapp\models\MigrationProject.class
+com\netapp\models\User.class
+com\netapp\CORSFilter.class
+com\netapp\models\Host.class
+com\netapp\repos\HostRepository$HostProjection.class
+com\netapp\repos\DataCenterRepository.class
