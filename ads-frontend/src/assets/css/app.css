@@ -1314,7 +1314,8 @@ a:not(.btn) {
   -webkit-transition: initial;
   transition: initial;
   text-decoration: underline;
-  color: #fff; }
+  /*color: #fff;*/
+   }
   a:not(.btn):hover {
     text-decoration: underline;
     color: #d4dae0; }
@@ -1359,7 +1360,8 @@ span a {
   padding: 5px; }
 
 .nav.nav-pills .nav-item .nav-link {
-  text-decoration: none; }
+  text-decoration: none; 
+    color: black;}    
   .nav.nav-pills .nav-item .nav-link:hover {
     color: #4f5f6f;
     background-color: transparent;
