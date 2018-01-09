@@ -1,0 +1,16 @@
+#text-center {
+  margin-left:170px;
+  margin-top: 9px;
+}
+
+#text-top {
+  margin-top: -20px;
+}
+
+#text-left {
+  margin-left:200px;
+}
+
+.disabled {
+  cursor: not-allowed;
+}

@@ -1,7 +1,8 @@
 import { NgModule }             from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 import { ReportListingComponent }  from './report-listing/report-listing.component';
 import { MmsMigrationProjectComponent } from './mms-migration-project/mms-migration-project.component';
 import { VolumeOwnersComponent } from './volume-owners/volume-owners.component';
@@ -21,36 +22,39 @@ import { BatchReleaseComponent } from './batch-release/batch-release.component';
 import { ServerAdminReferenceComponent } from './server-admin-reference/server-admin-reference.component';
 import { UserAdminComponent } from './user-admin/user-admin.component';
 import { ApplicationConfigComponent } from './application-config/application-config.component';
+import {AuthGuard} from './guards/auth-guard.service';
 
 
 
 import { Error404LoggedInComponent } from './error-404-logged-in/error-404-logged-in.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/', pathMatch: 'full' },
+  //{ path: '', redirectTo: '/', pathMatch: 'full' },
 
 
-  { path: '',  component: HomeComponent },
-  { path: 'migration-project',  component: MmsMigrationProjectComponent },
-  { path: 'report-listing',     component: ReportListingComponent },
-  { path: 'volume-owners',      component: VolumeOwnersComponent },
-  { path: 'data-center-summary',   component: DataCenterSummaryComponent },
-  { path: 'data-center-detail',    component: DataCenterDetailsComponent },
-  { path: 'replication-pattern',   component: ReplicationPatternComponent},
-  { path: 'manual-functions',   component: ManualFunctionsComponent},
-  { path: 'wfa-mgmt',   component: WfaMgmtComponent},
-  { path: 'migration-execution',   component: MigExecutionComponent},
-  { path: 'assign-migration-specialist',   component: AssignMigSpecialistComponent},
-  { path: 'storage-x',   component: StorageXComponent}, 
-  { path: 'application-properties',   component: ApplicationPropertiesComponent}, 
-  { path: 'application-config',   component: ApplicationConfigComponent}, 
+  { path: 'home',  component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'login',  component: LoginComponent },
+  { path: 'migration-project',  component: MmsMigrationProjectComponent, canActivate: [AuthGuard] },
+  { path: 'report-listing',     component: ReportListingComponent, canActivate: [AuthGuard] },
+  { path: 'volume-owners',      component: VolumeOwnersComponent, canActivate: [AuthGuard]},
+  { path: 'data-center-summary',   component: DataCenterSummaryComponent, canActivate: [AuthGuard] },
+  { path: 'data-center-detail',    component: DataCenterDetailsComponent , canActivate: [AuthGuard]},
+  { path: 'replication-pattern',   component: ReplicationPatternComponent, canActivate: [AuthGuard]},
+  { path: 'manual-functions',   component: ManualFunctionsComponent, canActivate: [AuthGuard]},
+  { path: 'wfa-mgmt',   component: WfaMgmtComponent, canActivate: [AuthGuard]},
+  { path: 'migration-execution',   component: MigExecutionComponent, canActivate: [AuthGuard]},
+  { path: 'assign-migration-specialist',   component: AssignMigSpecialistComponent, canActivate: [AuthGuard]},
+  { path: 'storage-x',   component: StorageXComponent, canActivate: [AuthGuard]},
+  { path: 'application-properties',   component: ApplicationPropertiesComponent, canActivate: [AuthGuard]},
+  { path: 'application-config',   component: ApplicationConfigComponent, canActivate: [AuthGuard]},
 
 
-  { path: 'work-packages',   component: WorkPackagesComponent}, 
-  { path: 'operational-override',   component: OperationalOverrideComponent}, 
-  { path: 'batch-release',   component: BatchReleaseComponent}, 
-  { path: 'server-admin-reference',   component: ServerAdminReferenceComponent}, 
-  { path: 'user-admin',   component: UserAdminComponent}, 
+  { path: 'work-packages',   component: WorkPackagesComponent, canActivate: [AuthGuard]},
+  { path: 'operational-override',   component: OperationalOverrideComponent, canActivate: [AuthGuard]},
+  { path: 'batch-release',   component: BatchReleaseComponent, canActivate: [AuthGuard]},
+  { path: 'server-admin-reference',   component: ServerAdminReferenceComponent, canActivate: [AuthGuard]},
+  { path: 'user-admin',   component: UserAdminComponent, /*canActivate: [AuthGuard] */},
+  { path: '',   component: LoginComponent},
 
 
   // Error paths
@@ -60,7 +64,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
+  imports: [ RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules}) ],
   exports: [ RouterModule ]
 })
 export class AppRoutingModule {}

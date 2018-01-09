@@ -1359,7 +1359,7 @@ $(function () {
 	*************************************************/
 
 	function getThemeSettings() {
-		var settings = (localStorage.getItem('themeSettings')) ? JSON.parse(localStorage.getItem('themeSettings')) : {};
+		var settings = (sessionStorage.getItem('themeSettings')) ? JSON.parse(sessionStorage.getItem('themeSettings')) : {};
 
 		settings.headerPosition = settings.headerPosition || '';
 		settings.sidebarPosition = settings.sidebarPosition || '';
@@ -1369,7 +1369,7 @@ $(function () {
 	}
 
 	function saveThemeSettings() {
-		localStorage.setItem('themeSettings', JSON.stringify(themeSettings));
+		sessionStorage.setItem('themeSettings', JSON.stringify(themeSettings));
 	}
 
 });

@@ -8,7 +8,7 @@
                         <div class="col-md-6 ">
                             <span class="h3">User Administration</span>
 
-                            <p class="title-description"> Not REST Enabled yet... </p>
+                            <p class="title-description">Enabled Now</p>
 
                         </div>
                     </div>
@@ -16,11 +16,13 @@
                 <div class="items-search">
                     <form class="form-inline">
                         <div class="input-group">
-                            <input type="text" class="form-control boxed rounded-s" placeholder="Search for..."> <span class="input-group-btn">
-                    <button class="btn btn-secondary rounded-s" type="button">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </span> </div>
+                            <input type="text" class="form-control boxed rounded-s" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-secondary rounded-s" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -29,12 +31,36 @@
 </div>
 
 <div class="row">
-    <div class="col-md-7 ">
+    <div class="col-md-12">
+
+         <p-dataTable [value]="users" [rows]="5" [paginator]="true" (onRowSelect)="onRowSelect($event)" [globalFilter]="gb" #dt [editable]="true" [responsive]="true">
+            <p-column field="lastName" header="Last Name" [filter]="true" filterPlaceholder="Search" [editable]="true"></p-column>
+            <p-column field="firstName" header="First Name" [filter]="true" filterPlaceholder="Search" [editable]="true"></p-column>
+            <p-column field="email" header="Email Address" [filter]="true" filterPlaceholder="Search" [editable]="true"></p-column>
+            <p-column  header="Role" [filter]="true" filterPlaceholder="Search" [editable]="true">
+               <ng-template pTemplate="emptymessage">
+        Storage Admin
+    </ng-template>
+            </p-column>
+            <p-column field="enabled" header="Active" [filter]="true" filterPlaceholder="Search" [editable]="true">
+                <ng-template pTemplate="emptymessage">
+        No
+    </ng-template>
+            </p-column>
+            <p-column header="Actions" icon="fa-check" >
+               <ng-template  pTemplate="node">
+                 <i style="padding-right:25px;" class="fa fa-pencil" data-toggle="tooltip" placement="top" tooltip="Edit User" (click)="edit(user)"></i>
+                 <i class="fa fa-trash" data-toggle="tooltip" placement="top" tooltip="Delete User" (click)="delete(user)"></i>
+             </ng-template>
+            </p-column>
+        </p-dataTable> 
 
         <div class="card">
             <div class="card-block">
                 <div class="card-title-block">
-
+                    <div class="card-header">
+                        <button class="btn btn-primary pull-right" (click)="showAddUser()">Add User</button>
+                    </div>
                     <table class="table table-striped table-bordered table-hover table-sm">
                         <thead>
 
@@ -44,118 +70,81 @@
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Active</th>
+                                <th>Actions</th>
+
+
                             </tr>
                             <tr>
                                 <th style="vertical-align: middle;">
                                     <input type="text" class="form-control form-control-sm col-md-auto" id="formGroupExampleInput" placeholder="Filter">
                                 </th>
                                 <th style="vertical-align: middle;">
-                                    <input type="text" class="form-control form-control-sm" id="formGroupExampleInput" placeholder="Filter">
+                                    <input type="text" class="form-control form-control-sm" id="formGroupExampleInput1" placeholder="Filter">
                                 </th>
                                 <th style="vertical-align: middle;">
-                                    <input type="text" class="form-control form-control-sm col-md-1" id="formGroupExampleInput" placeholder="Filter">
+                                    <input type="text" class="form-control form-control-sm" id="formGroupExampleInput2" placeholder="Filter">
                                 </th>
                                 <th style="vertical-align: middle;">
-                                    <input type="text" class="form-control form-control-sm" id="formGroupExampleInput" placeholder="Filter">
+                                    <input type="text" class="form-control form-control-sm" id="formGroupExampleInput3" placeholder="Filter">
                                 </th>
+                                <th style="vertical-align: middle;">
+                                    <input type="text" class="form-control form-control-sm" id="formGroupExampleInput4" placeholder="Filter">
+                                </th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Newby</td>
-                                <td>Lewis </td>
-                                <td>lewis.newby@netapp.com</td>
-                                <td>User</td>
-                                <td>Yes</td>
-                            </tr>
-                            <tr>
-                                <td>Williams</td>
-                                <td>Brett</td>
-                                <td>brett.williams@netapp.com</td>
-                                <td>Admin</td>
-                                <td>No</td>
-                            </tr>
+                            <tr *ngFor="let user of pagedItems">
 
+                                <td>{{user.lastName}} </td>
+                                <td>{{user.firstName}}</td>
+                                <td>{{user.email}}</td>
+                                <td>Storage Admin</td>
+                                <td>{{user.enabled ? 'Yes' : 'No'}}</td>
+                                <td>
+                                    <i style="padding-right:25px;" class="fa fa-pencil" data-toggle="tooltip" placement="top" tooltip="Edit User" (click)="edit(user)"></i>
+
+                                    <i class="fa fa-trash" data-toggle="tooltip" placement="top" tooltip="Delete User" (click)="delete(user)"></i>
+                                </td>
+
+
+                            </tr>
                         </tbody>
                     </table>
+
+                    <nav class="text-xs-right">
+                        <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                            <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
+                                <a (click)="setPage(1)" class="page-link">First</a>
+                            </li>
+                            <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
+                                <a (click)="setPage(pager.currentPage - 1)" class="page-link">Previous</a>
+                            </li>
+                            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item">
+                                <a (click)="setPage(page)" class="page-link">{{page}}</a>
+                            </li>
+                            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
+                                <a (click)="setPage(pager.currentPage + 1)" class="page-link">Next</a>
+                            </li>
+                            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
+                                <a (click)="setPage(pager.totalPages)" class="page-link">Last</a>
+                            </li>
+                        </ul>
+                    </nav>
+
                 </div>
             </div>
 
-            <nav class="text-xs-right ">
-                <ul class="pagination ">
-                    <li class="page-item "> <a class="page-link " href=" "> Prev </a> </li>
-                    <li class="page-item active "> <a class="page-link " href=" "> 1 </a> </li>
-                    <li class="page-item "> <a class="page-link " href=" "> 2 </a> </li>
-                    <li class="page-item "> <a class="page-link " href=" "> 3 </a> </li>
-                    <li class="page-item "> <a class="page-link " href=" "> 4 </a> </li>
-                    <li class="page-item "> <a class="page-link " href=" "> 5 </a> </li>
-                    <li class="page-item "> <a class="page-link " href=" "> Next </a> </li>
-                </ul>
-            </nav>
+
         </div>
     </div>
-    <div class="col-md-5 ">
-        <form>
-            <div class="form-group row">
-                <label for="meetingDate" class="col-sm-4 col-form-label">Last Name:</label>
-                <div class="col col-sm-auto">
-                    <input type="text" class="form-control" id="meetingDate" placeholder="Last Name">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="exampleSelect2" class="col-sm-4 col-form-label">First Name:</label>
-                <div class="col col-sm-auto">
-                    <input type="text" class="form-control" id="meetingDate" placeholder="First Name">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="exampleSelect2" class="col-sm-4 col-form-label">Email:</label>
-                <div class="col col-sm-auto">
-                    <input type="text" class="form-control" id="meetingDate" placeholder="Email">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="exampleSelect2" class="col-sm-4 col-form-label">Password:</label>
-                <div class="col col-sm-auto">
-                    <input type="password" class="form-control" id="meetingDate" placeholder="Password">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="exampleSelect2" class="col-sm-4 col-form-label">Confirm Password:</label>
-                <div class="col col-sm-auto">
-                    <input type="password" class="form-control" id="meetingDate" placeholder="Confirm Password">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="exampleSelect2" class="col-sm-4 col-form-label">Role:</label>
-                <div class="col col-sm-auto">
-                    <select class="form-control form-control-sm" id="inlineFormCustomSelect">
-                        <option selected>User</option>
-                        <option value="">Admin</option>
-                        <option value="">2017-07-17</option>
-                        <option value="">2017-07-24</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="exampleSelect2" class="col-sm-4 col-form-label">Active:</label>
-                <div class="col col-sm-auto">
-                    <select class="form-control form-control-sm" id="inlineFormCustomSelect">
-                        <option selected>Yes</option>
-                        <option value="">No</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col col-sm-auto offset-sm-4">
-                    <button type="button" class="btn btn-secondary">Reset</button>
-                    <button type="button" class="btn btn-primary ml-2">Save </button>
-                </div>
-            </div>
-        </form>
-    </div>
-
 </div>
+
+<app-adduser *ngIf="isAddUserModal" (onHide)="onHide('add')" [config]="{ show: true }" bsModal #addModal="bs-modal" (yes)="addUser($event)"
+    (cancel)="onClose('add')" class="modal fade"></app-adduser>
+
+<app-edituser *ngIf="isEditModal" (onHide)="onHide('edit')" [config]="{ show: true }" bsModal #editModal="bs-modal" (yes)="editUser($event)"
+    (cancel)="onClose('edit')" class="modal fade" [User]="User"></app-edituser>
+
+<app-deleteuser *ngIf="isDeleteModal" (onHide)="onHide('delete')" [config]="{ show: true }" bsModal #deleteModal="bs-modal"
+    (yes)="deleteUser($event)" (cancel)="onClose('delete')" class="modal fade" [User]="User"></app-deleteuser>

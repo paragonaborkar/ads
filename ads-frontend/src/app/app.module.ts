@@ -1,21 +1,28 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-
-import { HttpModule } from '@angular/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule, Http } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthConfig, AuthHttp, tokenNotExpired, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt';
+
+import { UserService } from './login/user.service';
+import { LoginService } from './login/login.service';
+import { ACCES_TOKEN_NAME } from './login/auth.constant';
+import { AuthGuard } from './guards/auth-guard.service';
+
+import { saveAs as importedSaveAs } from 'file-saver';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PopoverModule } from 'ngx-bootstrap';
 import { SortableModule } from 'ngx-bootstrap/sortable';
 
-
+import { SessionHelper } from './core/session.helper';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ReportListingComponent } from './report-listing/report-listing.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 // TODO: Need to server correct 404 or 500 page depending on User's session.
 import { Error404LoggedInComponent } from './error-404-logged-in/error-404-logged-in.component';
@@ -28,7 +35,7 @@ import { VolumeOwersServiceService } from './volume-owners/volume-owers-service.
 import { OwnersOfAVolumeService } from './volume-owners/schedule-volume-modal/owners-of-a-volume.service';
 import { ProjectsService } from './assign-mig-specialist/projects.service';
 
-import { MmsMigrationProjectComponent }           from  './mms-migration-project/mms-migration-project.component';
+import { MmsMigrationProjectComponent } from './mms-migration-project/mms-migration-project.component';
 import { MmsConfirmationModalComponent } from './confirmation-modal/mms-confirmation-modal.component';
 import { VolumeOwnersComponent } from './volume-owners/volume-owners.component';
 import { ScheduleVolumeModalComponent } from './volume-owners/schedule-volume-modal/schedule-volume-modal.component';
@@ -48,8 +55,30 @@ import { ServerAdminReferenceComponent } from './server-admin-reference/server-a
 import { UserAdminComponent } from './user-admin/user-admin.component';
 import { ApplicationConfigComponent } from './application-config/application-config.component';
 import { HomeComponent } from './home/home.component';
+import { ReportService } from './report-listing/report.service';
+import { LoginComponent } from './login/login.component';
+import { AdduserComponent } from './modals/adduser/adduser.component';
+import { UserAdminService } from './user-admin.service';
+import { EdituserComponent } from './modals/edituser/edituser.component';
+import { DeleteuserComponent } from './modals/deleteuser/deleteuser.component';
+import { PagerService } from './pager.service';
 
 
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DataTableModule, SharedModule } from 'primeng/primeng';
+import { PaginatorModule } from 'primeng/primeng';
+
+export function authHttpServiceFactory(http: Http) {
+  return new AuthHttp(new AuthConfig({
+    headerPrefix: 'Bearer',
+    tokenName: ACCES_TOKEN_NAME,
+    globalHeaders: [{ 'Content-Type': 'application/json' }],
+    noJwtError: false,
+    noTokenScheme: true,
+    tokenGetter: (() => sessionStorage.getItem(ACCES_TOKEN_NAME))
+  }), http);
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,18 +86,18 @@ import { HomeComponent } from './home/home.component';
     FooterComponent,
     SidebarComponent,
 
-    /* Error Section */    
+    /* Error Section */
     Error404LoggedInComponent,
     Error404LoggedOutComponent,
     Error500LoggedInComponent,
     Error500LoggedOutComponent,
 
-    /* MMS App Common and Reusable Section */    
+    /* MMS App Common and Reusable Section */
     MmsConfirmationModalComponent,
 
-    /* MMS App Components */    
-    MmsMigrationProjectComponent,    
-    ReportListingComponent, 
+    /* MMS App Components */
+    MmsMigrationProjectComponent,
+    ReportListingComponent,
     VolumeOwnersComponent,
     ScheduleVolumeModalComponent,
     DataCenterSummaryComponent,
@@ -86,25 +115,43 @@ import { HomeComponent } from './home/home.component';
     ServerAdminReferenceComponent,
     UserAdminComponent,
     ApplicationConfigComponent,
-    HomeComponent 
-    
+    HomeComponent,
+    LoginComponent,
+    AdduserComponent,
+    EdituserComponent,
+    DeleteuserComponent
+
   ],
   imports: [
     BrowserModule,
-    FormsModule,ReactiveFormsModule,
+    FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     AppRoutingModule,
     ModalModule.forRoot(),
     DatepickerModule.forRoot(),
     PopoverModule.forRoot(),
-    SortableModule.forRoot()
+    SortableModule.forRoot(),
+    NgxPaginationModule,
+    BrowserAnimationsModule,
+    DataTableModule,
+    SharedModule,
+    PaginatorModule
   ],
   providers: [
+    { provide: AuthHttp, useFactory: authHttpServiceFactory, deps: [Http] },
+    SessionHelper,
     MigrationProjectService,
     VolumeOwersServiceService,
     OwnersOfAVolumeService,
-    ProjectsService
-              ],
+    ProjectsService,
+    ReportService,
+    LoginService,
+    UserService,
+    UserAdminService,
+    PagerService,
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

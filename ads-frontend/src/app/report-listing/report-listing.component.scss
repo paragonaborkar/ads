@@ -1,0 +1,22 @@
+ul.pagenav {
+list-style: none;
+margin: 0;
+padding: 0;
+overflow: hidden;
+}
+
+.previousPage {
+margin-left: 250px;
+}
+
+.nextPage , .gotoPage {
+margin-left: 180px;
+}
+
+.dwnldReport {
+	margin-left: 10px;
+}
+
+.disabled{
+	pointer-events:none;
+}
