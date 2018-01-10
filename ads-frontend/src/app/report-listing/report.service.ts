@@ -3,6 +3,7 @@ import { Http, Response, RequestOptions, Headers, ResponseContentType} from '@an
 import { Observable } from 'rxjs';
 import { saveAs as importedSaveAs} from "file-saver";
 import { SessionHelper } from '../core/session.helper';
+import { environment } from "../../environments/environment";
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -19,7 +20,7 @@ export class ReportService {
         headers.append('Authorization', `bearer ${authToken}`);
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.get("http://localhost:8080/htmlReport/1",options).toPromise()
+        return this.http.get(environment.serverUrl + '/htmlReport/1',options).toPromise()
             .then(function(data){
             return data;
             },function(error){})
@@ -48,7 +49,7 @@ export class ReportService {
         responseType: ResponseContentType.Blob,
         headers: headers
         });
-        this.http.get('http://localhost:8080/downloadReport', options)
+        this.http.get(environment.serverUrl + '/downloadReport', options)
         .catch(errorResponse => Observable.throw(errorResponse.json()))
         .map((response) => { 
             if (response instanceof Response) {

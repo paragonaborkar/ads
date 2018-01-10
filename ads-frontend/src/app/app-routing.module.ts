@@ -22,7 +22,7 @@ import { BatchReleaseComponent } from './batch-release/batch-release.component';
 import { ServerAdminReferenceComponent } from './server-admin-reference/server-admin-reference.component';
 import { UserAdminComponent } from './user-admin/user-admin.component';
 import { ApplicationConfigComponent } from './application-config/application-config.component';
-import {AuthGuard} from './guards/auth-guard.service';
+import { AuthGuard } from './guards/auth-guard.service';
 
 
 
@@ -53,7 +53,7 @@ const routes: Routes = [
   { path: 'operational-override',   component: OperationalOverrideComponent, canActivate: [AuthGuard]},
   { path: 'batch-release',   component: BatchReleaseComponent, canActivate: [AuthGuard]},
   { path: 'server-admin-reference',   component: ServerAdminReferenceComponent, canActivate: [AuthGuard]},
-  { path: 'user-admin',   component: UserAdminComponent, /*canActivate: [AuthGuard] */},
+  { path: 'user-admin',   component: UserAdminComponent, canActivate: [AuthGuard] },
   { path: '',   component: LoginComponent},
 
 
