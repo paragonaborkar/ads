@@ -1,4 +1,4 @@
-package com.netapp.ads;
+package com.netapp.ads.controllers;
 
 import com.netapp.ads.mail.EmailService;
 import com.netapp.ads.models.Controller;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 @RestController
-public class HelloController {
+public class EmailController {
     @Autowired
     private EmailService emailService;
     @Autowired

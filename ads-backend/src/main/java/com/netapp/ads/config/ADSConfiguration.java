@@ -1,4 +1,4 @@
-package com.netapp.ads;
+package com.netapp.ads.config;
 
 import com.netapp.ads.converters.ControllerPKConverter;
 import org.springframework.context.annotation.Configuration;
