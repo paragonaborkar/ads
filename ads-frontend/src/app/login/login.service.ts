@@ -20,11 +20,10 @@ export class LoginService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('Accept', 'application/json');
     headers.append('Authorization', 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD));
-    return this.http.post(environment.serverUrl+LoginService.AUTH_TOKEN, body, {headers})
+    return this.http.post(environment.serverUrl + LoginService.AUTH_TOKEN, body, {headers})
       .map(res => res.json())
       .map((res: any) => {
-        if (res.access_token) { 
-                
+        if (res.access_token) {        
           return res;
         }
         return null;

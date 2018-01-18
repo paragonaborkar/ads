@@ -3,24 +3,24 @@ import { Http, Response, RequestOptions, Headers, ResponseContentType} from '@an
 import { Observable } from 'rxjs';
 import { saveAs as importedSaveAs} from "file-saver";
 import { SessionHelper } from '../core/session.helper';
+import { TokenService } from '../token.service';
 import { environment } from "../../environments/environment";
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ReportService {
     
-    constructor(private http:Http, private _sessionHelper:SessionHelper ) {
+    constructor(private http:Http, private _sessionHelper:SessionHelper, private tokenService:TokenService ) {
     }
     
+   /**
+   * Generates Jasper Report
+   */
     openJasperReport(e){
-        
-        let authToken = this._sessionHelper.getToken().access_token;
-        const headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', `bearer ${authToken}`);
-        let options = new RequestOptions({ headers: headers });
 
-        return this.http.get(environment.serverUrl + '/htmlReport/1',options).toPromise()
+        let options = this.tokenService.token();
+
+        return this.http.get(environment.serverUrl+'/htmlReport/1',options).toPromise()
             .then(function(data){
             return data;
             },function(error){})
@@ -36,6 +36,9 @@ export class ReportService {
     return Observable.throw(error.message || error);
     }
 
+    /**
+    * Downloads Jasper Report
+    */
     downloadJasperReport() {
         
         const type = 'application/vnd.ms-excel';
@@ -45,11 +48,12 @@ export class ReportService {
         const headers = new Headers({ 'Accept': type });
            
         headers.append('Authorization', `bearer ${authToken}`);
+        let abc = this.tokenService.token();
         const options = new RequestOptions({
         responseType: ResponseContentType.Blob,
         headers: headers
         });
-        this.http.get(environment.serverUrl + '/downloadReport', options)
+        this.http.get(environment.serverUrl+'/downloadReport', options)
         .catch(errorResponse => Observable.throw(errorResponse.json()))
         .map((response) => { 
             if (response instanceof Response) {

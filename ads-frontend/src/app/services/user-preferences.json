@@ -1,0 +1,7 @@
+[
+    {
+        "id": "user-natives",
+        "col": "firstName,lastName",
+        "page": "role,enabled"
+    }
+]

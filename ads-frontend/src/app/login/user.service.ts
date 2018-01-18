@@ -22,8 +22,8 @@ export class UserService {
     this.isAdmin = false;
 
     this._sessionHelper.removeAll();
-    console.log("sessionStorage: ", sessionStorage);
-    console.log("sessionStorage: ", sessionStorage.length);
+    //console.log("sessionStorage: ", sessionStorage);
+    //console.log("sessionStorage: ", sessionStorage.length);
     // redirects to login page on logout
     this._router.navigate(['/']);
   }

@@ -18,12 +18,19 @@ export class DeleteuserComponent implements OnInit {
   constructor() {
   }
 
-
+  /**
+   * This method is to delete user from the table
+   * @param
+   */
 
   okay() {
     console.log(this.User);
     this.yes.emit(this.User);
   }
+  /**
+   * This method is to close the deleteuser modal
+   * @param
+   */
 
   close(event) {
     this.cancel.emit(event);

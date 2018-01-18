@@ -29,38 +29,89 @@
         </div>
     </div>
 </div>
+<div class="card">
+
+
+    <div class="col-md-12">
+        <button class="btn btn-primary pull-right" (click)="showAddUser()" style="float: left">Add User</button>
+
+    </div>
+
+</div>
 
 <div class="row">
     <div class="col-md-12">
 
-         <p-dataTable [value]="users" [rows]="5" [paginator]="true" (onRowSelect)="onRowSelect($event)" [globalFilter]="gb" #dt [editable]="true" [responsive]="true">
-            <p-column field="lastName" header="Last Name" [filter]="true" filterPlaceholder="Search" [editable]="true"></p-column>
+        <p-dataTable [value]="users" [rows]="5" [paginator]="true" [editable]="true" [responsive]="true">
+            <p-column *ngFor="let col of columns" [field]="col.field" [header]="col.header" [hidden]="col.hidden" [filter]="true" filterPlaceholder="Search"
+                filterMatchMode="col.filterMatchMode">
+                <ng-template pTemplate="filter" let-col *ngIf="col.template && col.field==='userRoleId'">
+                    <p-dropdown [options]="roles" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)"
+                        styleClass="ui-column-filter"></p-dropdown>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData="rowData" *ngIf="col.template && col.field==='userRoleId'">
+                    {{roleArray[rowData.userRoleId]}}
+                </ng-template>
+
+                <ng-template pTemplate="filter" let-col *ngIf="col.template && col.field==='enabled'">
+                    <p-dropdown [options]="enabledValues" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)"
+                        styleClass="ui-column-filter"></p-dropdown>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData="rowData" *ngIf="col.template && col.field==='enabled'">
+                    {{rowData.enabled? 'Yes' : 'No'}}
+                </ng-template>
+            </p-column>
+            <p-column header="Actions" icon="fa-check">
+                <ng-template pTemplate="body" let-rowData="rowData">
+                    <div class="text-center">
+                        <i (click)="edit(rowData)" class="fa fa-pencil-square-o text-primary"></i>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <i (click)="delete(rowData)" class="fa fa-trash-o text-danger"></i>
+                    </div>
+                </ng-template>
+
+            </p-column>
+        </p-dataTable>
+
+        <!-- <p-dataTable [value]="users" [rows]="5" [paginator]="true" [globalFilter]="gb" #dt [editable]="true" [responsive]="true">
+            <p-column field="lastName" header="Last Name" [filter]="true" filterPlaceholder="Search" [editable]="true" filterMatchMode="contains"></p-column>
             <p-column field="firstName" header="First Name" [filter]="true" filterPlaceholder="Search" [editable]="true"></p-column>
             <p-column field="email" header="Email Address" [filter]="true" filterPlaceholder="Search" [editable]="true"></p-column>
-            <p-column  header="Role" [filter]="true" filterPlaceholder="Search" [editable]="true">
-               <ng-template pTemplate="emptymessage">
-        Storage Admin
-    </ng-template>
+            <p-column field="userRoleId" header="Role" [filter]="true" filterPlaceholder="Search" [editable]="true" filterMatchMode="equals">
+                <ng-template pTemplate="filter" let-col>
+                    <p-dropdown [options]="roles" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)"
+                        styleClass="ui-column-filter"></p-dropdown>
+                    {{roleArray[rowData.userRoleId]}}
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData="rowData">
+                    {{roleArray[rowData.userRoleId]}}
+                </ng-template>
             </p-column>
-            <p-column field="enabled" header="Active" [filter]="true" filterPlaceholder="Search" [editable]="true">
-                <ng-template pTemplate="emptymessage">
-        No
-    </ng-template>
+            <p-column header="Active" [filter]="true" field="enabled" filterPlaceholder="Search" [editable]="true"  filterMatchMode="equals">
+                <ng-template pTemplate="filter" let-col>
+                    <p-dropdown [options]="enabledValues" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)"
+                        styleClass="ui-column-filter"></p-dropdown>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData="rowData">
+                    {{rowData.enabled? 'Yes' : 'No'}}
+                </ng-template>
             </p-column>
-            <p-column header="Actions" icon="fa-check" >
-               <ng-template  pTemplate="node">
-                 <i style="padding-right:25px;" class="fa fa-pencil" data-toggle="tooltip" placement="top" tooltip="Edit User" (click)="edit(user)"></i>
-                 <i class="fa fa-trash" data-toggle="tooltip" placement="top" tooltip="Delete User" (click)="delete(user)"></i>
-             </ng-template>
+            <p-column header="Actions" icon="fa-check">
+                <ng-template pTemplate="body" let-rowData="rowData">
+                    <div class="text-center">
+                        <i (click)="edit(rowData)" class="fa fa-pencil-square-o text-primary"></i>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <i (click)="delete(rowData)" class="fa fa-trash-o text-danger"></i>
+                    </div>
+                </ng-template>
+
             </p-column>
-        </p-dataTable> 
+        </p-dataTable>
 
         <div class="card">
             <div class="card-block">
                 <div class="card-title-block">
-                    <div class="card-header">
-                        <button class="btn btn-primary pull-right" (click)="showAddUser()">Add User</button>
-                    </div>
+
                     <table class="table table-striped table-bordered table-hover table-sm">
                         <thead>
 
@@ -99,7 +150,7 @@
                                 <td>{{user.lastName}} </td>
                                 <td>{{user.firstName}}</td>
                                 <td>{{user.email}}</td>
-                                <td>Storage Admin</td>
+                                <td>{{roleArray[user.userRoleId]}}</td>
                                 <td>{{user.enabled ? 'Yes' : 'No'}}</td>
                                 <td>
                                     <i style="padding-right:25px;" class="fa fa-pencil" data-toggle="tooltip" placement="top" tooltip="Edit User" (click)="edit(user)"></i>
@@ -136,7 +187,7 @@
             </div>
 
 
-        </div>
+        </div> -->
     </div>
 </div>
 

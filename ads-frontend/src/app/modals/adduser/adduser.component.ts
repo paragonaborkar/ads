@@ -1,4 +1,4 @@
-// <reference path="../../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
+
 import { Component, OnInit } from '@angular/core';
 import { EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
@@ -15,7 +15,7 @@ export class AdduserComponent implements OnInit {
   confirmPassword: String;
   doesPasswordMatch = true;
 
-  public User: any = {};
+  roleArray =  ['Migration Specialist', 'Storage Owner', 'ADS Admin'] ;
   public user: any = {};
 
   constructor() { }
@@ -23,37 +23,58 @@ export class AdduserComponent implements OnInit {
   ngOnInit() {
   }
 
-  /*ngOnChanges(changes: SimpleChanges) {
-    if (!changes.Error.currentValue.login) {
-      this.initEmptyUser();
+  /**
+   * This method is to add the user
+   * @param
+   */
+  okay() {
+     if(this.user.enabled == true){
+       this.user.enabled = 1;
+     }
+     else{
+       this.user.enabled = 0;
+     }
+
+    if(this.confirmPassword === this.user.password) {
+      if(this.user.firstName != null){
+        if(this.user.lastName != null){
+          if(this.user.email != null){
+              console.log('COmpared yEs password')
+              this.yes.emit(this.user);
+
+          }
+        }
+      }
+      else{
+        window.alert('please enter all the fields');
+      }
+
+    }
+    else {
+    window.alert('Passwords did not match');
     }
   }
+  /**
+   * This method is to close the adduser modal
+   * @param event
+   */
 
-  initEmptyUser() {
-
-  }*/
-
-  okay() {
-    // this.User.password = btoa(this.User.password);
-    console.log('User Password: ' + this.User.password);
-    console.log('role' + this.User.role);
-    this.yes.emit(this.User);
-  }
   close(event) {
     this.cancel.emit(event);
   }
 
+  /**
+   * This method is to compare passwords
+   *
+   */
+
   comparePasswords() {
-    console.log(this.User.password, this.confirmPassword);
-    this.doesPasswordMatch = this.User.password === this.confirmPassword;
+    console.log(this.user.password, this.confirmPassword);
+    this.doesPasswordMatch = this.user.password === this.confirmPassword;
     console.log(this.doesPasswordMatch);
   }
 
   onSubmit({ value, valid }: { value: any, valid: boolean }) {
-    if (!valid) {
-    } else {
-      console.log(value);
-      this.yes.emit(value);
-    }
+
   }
 }

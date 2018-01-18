@@ -6,8 +6,9 @@ import { AuthConfig, AuthHttp, tokenNotExpired, AUTH_PROVIDERS, provideAuth } fr
 
 import { UserService } from './login/user.service';
 import { LoginService } from './login/login.service';
-import { ACCES_TOKEN_NAME } from './login/auth.constant';
+import { ACCESS_TOKEN_NAME } from './login/auth.constant';
 import { AuthGuard } from './guards/auth-guard.service';
+import { TokenService } from './token.service';
 
 import { saveAs as importedSaveAs } from 'file-saver';
 
@@ -69,14 +70,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataTableModule, SharedModule } from 'primeng/primeng';
 import { PaginatorModule } from 'primeng/primeng';
 
+import { ApplicationConfigService } from './services/application-config.service';
+
 export function authHttpServiceFactory(http: Http) {
   return new AuthHttp(new AuthConfig({
     headerPrefix: 'Bearer',
-    tokenName: ACCES_TOKEN_NAME,
+    tokenName: ACCESS_TOKEN_NAME,
     globalHeaders: [{ 'Content-Type': 'application/json' }],
     noJwtError: false,
     noTokenScheme: true,
-    tokenGetter: (() => sessionStorage.getItem(ACCES_TOKEN_NAME))
+    tokenGetter: (() => sessionStorage.getItem(ACCESS_TOKEN_NAME))
   }), http);
 }
 @NgModule({
@@ -150,7 +153,9 @@ export function authHttpServiceFactory(http: Http) {
     UserService,
     UserAdminService,
     PagerService,
-    AuthGuard
+    AuthGuard,
+    ApplicationConfigService,
+    TokenService
   ],
   bootstrap: [AppComponent]
 })

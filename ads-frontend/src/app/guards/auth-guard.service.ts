@@ -3,7 +3,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { tokenNotExpired } from 'angular2-jwt';
 import { SessionHelper } from '../core/session.helper';
 import { UserService } from '../login/user.service';
-import { ACCES_TOKEN_NAME } from '../login/auth.constant';
+import { ACCESS_TOKEN_NAME } from '../login/auth.constant'
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -11,6 +11,9 @@ export class AuthGuard implements CanActivate {
     private _sessionHelper: SessionHelper) {
   }
 
+  /**
+  * Method to secure all URL's
+  */
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this._sessionHelper.isAuthenticated()) { 
     	console.log("Authorized");

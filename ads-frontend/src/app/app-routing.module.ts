@@ -45,8 +45,8 @@ const routes: Routes = [
   { path: 'migration-execution',   component: MigExecutionComponent, canActivate: [AuthGuard]},
   { path: 'assign-migration-specialist',   component: AssignMigSpecialistComponent, canActivate: [AuthGuard]},
   { path: 'storage-x',   component: StorageXComponent, canActivate: [AuthGuard]},
-  { path: 'application-properties',   component: ApplicationPropertiesComponent, canActivate: [AuthGuard]},
-  { path: 'application-config',   component: ApplicationConfigComponent, canActivate: [AuthGuard]},
+  { path: 'application-properties',   component: ApplicationPropertiesComponent, canActivate: [AuthGuard] },
+  { path: 'application-config',   component: ApplicationConfigComponent, canActivate: [AuthGuard] },
 
 
   { path: 'work-packages',   component: WorkPackagesComponent, canActivate: [AuthGuard]},

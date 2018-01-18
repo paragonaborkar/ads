@@ -1,4 +1,4 @@
-<form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)">
+<form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)" >
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -10,10 +10,10 @@
       <div class="modal-body">
 
         <div class="form-group row">
-          <label for="firstName" class="col-sm-3 col-form-label">First Name</label>
+          <label for="firstName" class="col-sm-3 col-form-label">Firstname</label>
           <div class="col-sm-9">
             <input type="text" class="form-control" [ngClass]="{'is-invalid':userFirstName.errors?.required && userFirstName.touched || userFirstName.errors?.minlength && userFirstName.touched}"
-              [(ngModel)]="user.firstName" name="firstName" #userFirstName="ngModel" minlength="2" required>
+              [(ngModel)]="user.firstName" name="firstName" #userFirstName="ngModel" minlength="2" required placeholder="First Name">
             <div *ngIf="userFirstName.errors?.required && userFirstName.touched" class="invalid-feedback">
               First Name is required
             </div>
@@ -23,10 +23,10 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="lastName" class="col-sm-3 col-form-label">Last Name</label>
+          <label for="lastName" class="col-sm-3 col-form-label">Lastname</label>
           <div class="col-sm-9">
             <input type="text" class="form-control" [ngClass]="{'is-invalid':userLastName.errors?.required && userLastName.touched || userLastName.errors?.minlength && userLastName.touched}"
-              [(ngModel)]="user.lastName" name="lastName" #userLastName="ngModel" minlength="2" required>
+              [(ngModel)]="user.lastName" name="lastName" #userLastName="ngModel" minlength="2" required placeholder="Last Name">
             <div *ngIf="userLastName.errors?.required && userLastName.touched" class="invalid-feedback">
               Last Name is required
             </div>
@@ -39,16 +39,25 @@
           <label for="password" class="col-sm-3 col-form-label">Password</label>
           <div class="col-sm-9">
             <input type="password" class="form-control" [ngClass]="{'is-invalid':userPassword.errors?.required && userPassword.touched || userPassword.errors?.minlength && userPassword.touched}"
-              [(ngModel)]="user.password" name="password" #userPassword="ngModel" minlength="8" required>
-            <div *ngIf="userPassword.errors?.required && userPassword.touched" class="invalid-feedback">
+              [(ngModel)]="user.password" name="password" #userPassword="ngModel" minlength="3" required placeholder="Password">
+           <!--  <div *ngIf="userPassword.errors?.required && userPassword.touched" class="invalid-feedback">
               Password is required
             </div>
             <div *ngIf="userPassword.errors?.minlength && userPassword.touched" class="invalid-feedback">
               Must be at least 8 characters
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="form-group row">
+                    <label for="confirmPassword" class="col-sm-3 col-form-label">Confirm Password</label>
+                    <div class="col-sm-9">
+                    <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="confirmPassword"
+                    required placeholder="Confirm Password">
+                  </div>
+
+        </div>
+
+       <!--  <div class="form-group row">
           <label for="confirmPassword" class="col-sm-3 col-form-label">Confirm Password</label>
           <div class="col-sm-9">
             <input type="password" class="form-control" [ngClass]="{'is-invalid':userConfirmPassword.errors?.required && userConfirmPassword.touched || userConfirmPassword.errors?.minlength && userConfirmPassword.touched}"
@@ -61,12 +70,12 @@
             </div>
           </div>
         </div>
-        <div class="form-group row">
+ -->        <div class="form-group row">
           <label for="email" class="col-sm-3 col-form-label">Email</label>
           <div class="col-sm-9">
             <input type="text" class="form-control" [ngClass]="{'is-invalid':userEmail.errors?.required && userEmail.touched || userEmail.errors?.pattern && userEmail.touched}"
-              [(ngModel)]="user.email" name="email" #userEmail="ngModel" minlength="8" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
-            <div *ngIf="userEmail.errors?.required && userEmail.touched" class="invalid-feedback">
+              [(ngModel)]="user.email" name="email" #userEmail="ngModel" minlength="8" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" placeholder="Email">
+            <div *ngIf="userEmail.errors?.required && userEmail.touched" class="invalid-feedback" >
               Email is required
             </div>
             <div *ngIf="userEmail.errors?.pattern && userEmail.touched" class="invalid-feedback">
@@ -78,13 +87,13 @@
           <label for="role" class="col-sm-3 col-form-label">Role</label>
           <div class="col-sm-9">
             <select class="form-control" [(ngModel)]="user.userRoleId" name="userRoleId">
-              <option value="1" selected>Migration Specialist</option>
-              <option value="2">Storage Owner</option>
-              <option value="3">ADS Admin</option>
+              <option *ngFor="let r of roleArray; index as i" value="{{i+1}}">{{r}}</option>
+
             </select>
           </div>
         </div>
 
+        <!---->
         <!-- <form #f="ngForm">
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">First name</label>
@@ -163,14 +172,14 @@
 
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Active</label>
-          <div class="col-sm-9">
-            <input type="checkbox" class="form-control" placeholder="Active" name="Active" [(ngModel)]="User.active">
+          <div class="col-sm-1" >
+            <input type="checkbox" class="form-control" placeholder="Active" name="Active" [(ngModel)]="user.enabled">
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <!-- <button class="btn btn-primary" (click)="okay()">Ok</button> -->
-        <input type="submit" value="Add" class="btn btn-primary btn-block">
+        <button class="btn btn-primary"  (click)="okay()" >Ok</button>
+        <!-- <input type="submit" value="Add" class="btn btn-primary btn-block"> -->
       </div>
     </div>
   </div>

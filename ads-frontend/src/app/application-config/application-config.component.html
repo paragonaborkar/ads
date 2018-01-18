@@ -1,31 +1,65 @@
 <div class="row">
-  <div class="col-md-12 ">
+  <div class="col-md-12">
     <div class=" items-list-page">
       <div class="title-search-block">
         <div class="title-block">
-          <span class="h3">Application Configuration</span>
-          <p class="title-description">Settings for Listing Pages</p>
+          <div class="row align-items-center">
+            <div class="col-auto mr-auto">
+              <span class="h3">Application Configuration</span>
+              <p class="title-description">Settings for Listing Pages</p>
+            </div>
+            <div class="col-auto">
+              <a (click)="getPreferences()">
+                <i class="fa fa-cog fa-3x" title="Settings"></i>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<div class="row">
+  <div class="col-xs-12 col-md-6 col-lg-5">
+    <div class="form-group row">
+      <label for="selectedPreference" class="col-xs-12 col-md-4 col-lg-2 col-form-label">Select Page</label>
+      <div class="col-xs-12 col-md-4 col-lg-5">
+        <select class="form-control" [(ngModel)]="selectedPreferenceId" name="selectedPreferenceId">
+          <option [value]="NOT_VALID">Select Page</option>
+          <option *ngFor="let preference of preferences" [value]="preference.id">{{preference.pageName}}</option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-primary" (click)="getPreferenceDetails(selectedPreferenceId)">
+          <i class="fa fa-cog" title="Settings"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <template #itemTemplate let-item="item" let-index="index">
-  <span><i class="fa fa-bars" aria-hidden="true"></i> {{index}}.  <strong>{{item.value}}</strong>  
-  <span class="pull-right">Max Display Length: {{item.initData.truncateAtChars}}</span> </span>
+  <span>
+    <i class="fa fa-bars" aria-hidden="true"></i> 
+    <strong>&nbsp;{{item.initData.fieldName}}</strong>
+  </span>
   <!-- {{item | json }} -->
 </template>
 
-
-<div class="col-xs-6 col-md-3">
-  <h4>Displayed</h4>
-  <bs-sortable [(ngModel)]="itemObjectsLeft" [itemTemplate]="itemTemplate" fieldName="name" itemClass="sortable-item" itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="sortable-item" wrapperClass="sortable-wrapper"></bs-sortable>
-  <pre>{{ itemObjectsLeft | json }}</pre>
-</div>
-<div class="col-xs-6 col-md-3">
-  <h4>Hidden</h4>
-  <bs-sortable [(ngModel)]="itemObjectsRight" [itemTemplate]="itemTemplate" fieldName="name" itemClass="sortable-item" itemActiveClass="sortable-item-active" placeholderItem="Drag here" placeholderClass="sortable-item" wrapperClass="sortable-wrapper"></bs-sortable>
-  <pre>{{ itemObjectsRight | json }}</pre>
+<div class="clearfix">
+  <div class="row" *ngIf="showSettingsPanel">
+    <div class="col-xs-6 col-md-6">
+      <h4>Visible</h4>
+      <bs-sortable [(ngModel)]="itemObjectsLeft" [itemTemplate]="itemTemplate" fieldName="fieldName" itemClass="sortable-item" itemActiveClass="sortable-item-active"
+        placeholderItem="Drag here" placeholderClass="sortable-item" wrapperClass="sortable-wrapper" (drop)="drop()"></bs-sortable>
+      
+    </div>
+    <div class="col-xs-6 col-md-6">
+      <h4>Hidden</h4>
+      <bs-sortable [(ngModel)]="itemObjectsRight" [itemTemplate]="itemTemplate" fieldName="fieldName" itemClass="sortable-item" itemActiveClass="sortable-item-active"
+        placeholderItem="Drag here" placeholderClass="sortable-item" wrapperClass="sortable-wrapper" (drop)="drop()"></bs-sortable>
+      
+    </div>
+  </div>
 </div>

@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 	}
 
 	login(isValid) {
-			console.log("FOrm is valid ",isValid);
+			console.log("Form is valid ",isValid);
 			if(isValid){
 	    this.loading = true;
 	    this.showNavOptions = true;
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
 	          this.loading = false;
 
 	          if (result) {
-	          	console.log('result',JSON.stringify(result));
+	          	//console.log('result',JSON.stringify(result));
 	            this.userService.login(result);
 	            this.navigateAfterSuccess();
 	          } else {
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
 	          }
 	        },
 	        error => {
-						if(error && error.status == 401 && error.status == 400){
+						if(error || error.status == 401 || error.status == 400){
 							alert("Username or password is incorrect")
 						}
 	          this.error = 'Username or password is incorrect';
