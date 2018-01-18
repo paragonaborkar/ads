@@ -42,9 +42,9 @@
 <div class="row">
     <div class="col-md-12">
 
-        <p-dataTable [value]="users" [rows]="5" [paginator]="true" [editable]="true" [responsive]="true">
+        <p-dataTable [value]="users" [rows]="5" [paginator]="true" [editable]="true" [responsive]="true" #dt>
             <p-column *ngFor="let col of columns" [field]="col.field" [header]="col.header" [hidden]="col.hidden" [filter]="true" filterPlaceholder="Search"
-                filterMatchMode="col.filterMatchMode">
+                filterMatchMode="{{col.filterMatchMode}}">
                 <ng-template pTemplate="filter" let-col *ngIf="col.template && col.field==='userRoleId'">
                     <p-dropdown [options]="roles" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)"
                         styleClass="ui-column-filter"></p-dropdown>
