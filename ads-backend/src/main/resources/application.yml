@@ -11,4 +11,4 @@ spring:
         driverClassName: com.mysql.jdbc.Driver
         url: jdbc:mysql://localhost:3306/vitae_data_refactor
         username: root
-        password: Pragon1
+        password: Paragon1
