@@ -3,13 +3,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.test</groupId>
+	<groupId>com.netapp.ads</groupId>
 	<artifactId>ads</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>redirect</name>
-	<description>Demo project for Spring Boot</description>
+	<name>ADS</name>
+	<description>Automated Data Services</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>		
+	</properties>
+
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -36,11 +42,57 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+
+		<!-- License Management dependencies -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcpg-jdk15on</artifactId>
+			<version>1.59</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-ext-jdk15</artifactId>
+			<version>1.46</version>
+		</dependency>
+		<dependency>
+			<groupId>com.javax0.license3j</groupId>
+			<artifactId>license3j</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/license3j-1.0.8-SNAPSHOT.jar</systemPath>
+		</dependency>
+		<!-- End License Management dependencies -->
+		
+		
 		<!-- https://mvnrepository.com/artifact/com.lowagie/itext -->
+		<!-- iText is for Jasper Reports -->
 		<dependency>
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext</artifactId>
 			<version>2.1.7</version>
+			<!-- These dependencies break the license code. -->
+			<exclusions>
+				<exclusion>  
+					<groupId>bouncycastle</groupId>
+    				<artifactId>bcmail-jdk14</artifactId>
+				</exclusion>
+				<exclusion>  
+					<groupId>bouncycastle</groupId>
+    				<artifactId>bcprov-jdk14</artifactId>
+				</exclusion>
+				<exclusion>  
+					<groupId>bouncycastle</groupId>
+    				<artifactId>bctsp-jdk14</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.5.1</version>
 		</dependency>
 
 		<dependency>
@@ -61,12 +113,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
-		<dependency>
-			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports</artifactId>
-			<version>6.1.0</version>
 		</dependency>
 
 
@@ -123,6 +169,7 @@
 			<artifactId>poi</artifactId>
 			<version>3.14</version>
 		</dependency>
+
 		<!--LDAP dependencies start from here -->
 		<dependency>
 			<groupId>org.springframework.ldap</groupId>
@@ -137,55 +184,54 @@
 			<artifactId>unboundid-ldapsdk</artifactId>
 		</dependency>
 		<!--LDAP dependencies ends here -->
+
 		<dependency>
 			<!-- Is the ApacheDS server - 1.5.6 and 1.5.7 don't work -->
 			<groupId>org.apache.directory.server</groupId>
 			<artifactId>apacheds-server-jndi</artifactId>
 			<version>1.5.5</version>
 		</dependency>
-		 <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-            <version>1.4.3.RELEASE</version>
-        </dependency>
 		<dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphql-spring-boot-starter</artifactId>
-            <version>3.10.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphiql-spring-boot-starter</artifactId>
-            <version>3.10.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.graphql-java</groupId>
-            <artifactId>graphql-java-tools</artifactId>
-            <version>4.3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf</artifactId>
-            <version>3.0.9.RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring4</artifactId>
-            <version>3.0.9.RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
-	</dependencies>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+			<version>1.4.3.RELEASE</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf</artifactId>
+			<version>3.0.9.RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring4</artifactId>
+			<version>3.0.9.RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		
+		
+		<!-- TODO: NEED TO USE TO REMOVE -->
+		<dependency>
+			<groupId>com.graphql-java</groupId>
+			<artifactId>graphql-spring-boot-starter</artifactId>
+			<version>3.10.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.graphql-java</groupId>
+			<artifactId>graphiql-spring-boot-starter</artifactId>
+			<version>3.10.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.graphql-java</groupId>
+			<artifactId>graphql-java-tools</artifactId>
+			<version>4.3.0</version>
+		</dependency>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<wro4j.version>1.8.0</wro4j.version>
-		<java.version>1.8</java.version>
-		<angularjs.version>1.4.9</angularjs.version>
-		<bootstrap.version>3.3.7-1</bootstrap.version>
-		<jquery.version>2.2.4</jquery.version>
-		<jasmine.version>2.0.0</jasmine.version>
-	</properties>
+
+
+	</dependencies>
 
 	<build>
 		<resources>
@@ -197,12 +243,12 @@
 			</resource>
 		</resources>
 		<plugins>
-			<plugin>
+			<!-- <plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>
 					<execution>
-						<!-- Serves *only* to filter the wro.xml so it can get an absolute 
-							path for the project -->
+						Serves *only* to filter the wro.xml so it can get an absolute 
+							path for the project
 						<id>copy-resources</id>
 						<phase>validate</phase>
 						<goals>
@@ -225,9 +271,9 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<executions>
 					<execution>
-					    <goals>
-						<goal>repackage</goal>
-					    </goals>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
@@ -268,7 +314,7 @@
 						<version>${bootstrap.version}</version>
 					</dependency>
 				</dependencies>
-			</plugin>
+			</plugin> -->
 		</plugins>
 	</build>
 
