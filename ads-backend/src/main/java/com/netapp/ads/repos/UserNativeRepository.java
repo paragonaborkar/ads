@@ -9,8 +9,9 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import com.netapp.ads.models.UserNative;
 
 @RepositoryRestResource
-public interface UserNativeRepository extends PagingAndSortingRepository<UserNative, Long>  {
+public interface UserNativeRepository extends PagingAndSortingRepository<UserNative, Integer>  {
 
 	List<UserNative> findByEmail(@Param("email") String email);
+	List<UserNative> findByUserName(@Param("user_name") String username);
 	
 }
