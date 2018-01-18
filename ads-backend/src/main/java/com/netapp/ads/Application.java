@@ -35,6 +35,7 @@ public class Application {
 		ACTIVE_MODULES = completeLicenseInfo.get("modules");
 		HashMap<String, String> licenseInfo = completeLicenseInfo.get("licenseInfo");
 
+		// FIXME: no sys out's
 		System.out.println("The following ADS modules are enabled:");
 		boolean noActiveModules = true;
 		for (Map.Entry<String, Boolean> entry : ACTIVE_MODULES.entrySet()) {
@@ -46,6 +47,7 @@ public class Application {
 				noActiveModules = false;
 
 			// FIXME: Print this out using a logger.
+			// FIXME: no sys out's
 			System.out.println(key + ":" + value);
 		}
 
@@ -68,14 +70,15 @@ public class Application {
     public static HashMap<String, HashMap>  checkLicense() {
 
 		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-		URL licenseUrl = classloader.getResource("license/license-2.out");
+		URL licenseUrl = classloader.getResource("license/license.out");
 
 		String licenseFileName = "";
 		try {
 			licenseFileName = Paths.get(licenseUrl.toURI()).toFile().getAbsolutePath();
 		} catch (URISyntaxException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			throw new IllegalArgumentException("ADS license not found.");
+		}catch (NullPointerException e2) {
+			throw new NullPointerException("ADS license not found.");
 		}
 
 		License lic = new License();

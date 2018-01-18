@@ -1,6 +1,6 @@
 package com.netapp.ads.controllers;
 
-import com.netapp.ads.mail.EmailService;
+import com.netapp.ads.email.EmailService;
 import com.netapp.ads.models.Controller;
 import com.netapp.ads.models.ControllerPK;
 import com.netapp.ads.repos.ControllerRepository;
@@ -29,8 +29,10 @@ public class EmailController {
             context.setVariable("controllers", controllers);
             emailService.sendMail("ADS - Controllers Details", "simple-announcement.html", context);
         } catch (MessagingException e) {
+        	// FIXME: no sys out's
             System.out.println(e.getMessage());
         } catch (UnsupportedEncodingException e) {
+        	// FIXME: Handle this correctly
             e.printStackTrace();
         }
         return "Greetings from Spring Boot!";

@@ -1,4 +1,4 @@
-package com.netapp.ads.mail;
+package com.netapp.ads.email;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

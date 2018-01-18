@@ -1,4 +1,4 @@
-package com.netapp.ads.mail;
+package com.netapp.ads.email;
 
 import java.io.File;
 import java.io.IOException;

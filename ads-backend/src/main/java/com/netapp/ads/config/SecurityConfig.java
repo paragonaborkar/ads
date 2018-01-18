@@ -103,6 +103,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	/**
 	 * LDAP Authentication
 	 */
+	// FIXME: Remove old code
 	/*@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
