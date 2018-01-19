@@ -1,0 +1,59 @@
+type Controller {
+    id: ControllerPK
+    controllerName: String
+    dateAvailable: String
+    exportsId: Int
+    serialNumber: String
+    volumeTally: Int
+    dataCenter: DataCenter
+    storage: Storage
+}
+
+type ControllerPK {
+    storageId: Int
+    dataCenterId: Int
+}
+
+type DataCenter {
+    id: Int
+    city: String
+    country: String
+    dataCenterFullName: String
+    dataCenterName: String
+    dataGeoLocation: String
+    region: String
+    controllers: [Controller]
+}
+
+type Storage {
+    id: Int
+    family: String
+    manufacturer: String
+    microcodeVersion: String
+    model: String
+    rawCapacityMb: Int
+    storageName: String
+    controllers: [Controller]
+    workPackage: WorkPackage
+}
+
+type WorkPackage {
+    id: Int
+    assetNumber: String
+    controllerInstalledDate: String
+    priority: Int
+    processed: Int
+    workPackageName: String
+    storages: [Storage]
+}
+
+type Query {
+    allControllers: [Controller]
+    controllersByDataCenterIdAndStorageId(dataCenterId: Int, storageId: Int): [Controller]
+    allDataCenters: [DataCenter]
+    allControllersByDataCenterId(dataCenterId: Int): DataCenter
+}
+
+schema {
+    query: Query
+}

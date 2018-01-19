@@ -1,0 +1,114 @@
+{
+    "_embedded": {
+        "dataCenterDetails": [{
+            "dataCenterName": "DC1",
+            "sourceController": "fas3270cl1-rpt",
+            "sourceVolume": "mms_cifs_noqtree",
+            "application": "Deliver the goods",
+            "applicationOwner": "Steve Zemanick",
+            "targetDataCenter": "MMS1",
+            "targetCluster": "fspodrtp03",
+            "_links": {
+                "self": {
+                    "href": "http://localhost:8080/hosts/1"
+                },
+                "host": {
+                    "href": "http://localhost:8080/hosts/1{?projection}",
+                    "templated": true
+                },
+                "storageSource": {
+                    "href": "http://localhost:8080/hosts/1/storageSource"
+                },
+                "dataCenter": {
+                    "href": "http://localhost:8080/hosts/1/dataCenter"
+                }
+            }
+        }, {
+            "dataCenterName": "DC1",
+            "sourceController": "fas3270cl1-rpt",
+            "sourceVolume": "mms_cifs_multiqtree",
+            "application": "Deliver the goods",
+            "applicationOwner": "Steve Zemanick",
+            "targetDataCenter": "MMS1",
+            "targetCluster": "fspodrtp03",
+            "_links": {
+                "self": {
+                    "href": "http://localhost:8080/hosts/1"
+                },
+                "host": {
+                    "href": "http://localhost:8080/hosts/1{?projection}",
+                    "templated": true
+                },
+                "storageSource": {
+                    "href": "http://localhost:8080/hosts/1/storageSource"
+                },
+                "dataCenter": {
+                    "href": "http://localhost:8080/hosts/1/dataCenter"
+                }
+            }
+        }, {
+            "dataCenterName": "DC1",
+            "sourceController": "fas3270cl1-rpt",
+            "sourceVolume": "vol1",
+            "application": "Deliver the goods",
+            "applicationOwner": "Steve Zemanick",
+            "targetDataCenter": "MMS1",
+            "targetCluster": "fspodrtp03",
+            "_links": {
+                "self": {
+                    "href": "http://localhost:8080/hosts/1"
+                },
+                "host": {
+                    "href": "http://localhost:8080/hosts/1{?projection}",
+                    "templated": true
+                },
+                "storageSource": {
+                    "href": "http://localhost:8080/hosts/1/storageSource"
+                },
+                "dataCenter": {
+                    "href": "http://localhost:8080/hosts/1/dataCenter"
+                }
+            }
+        }, {
+            "dataCenterName": "DC1",
+            "sourceController": "fas3270cl1-rpt",
+            "sourceVolume": "vol2",
+            "application": "Deliver the goods",
+            "applicationOwner": "Steve Zemanick",
+            "targetDataCenter": "MMS1",
+            "targetCluster": "fspodrtp03",
+            "_links": {
+                "self": {
+                    "href": "http://localhost:8080/hosts/1"
+                },
+                "host": {
+                    "href": "http://localhost:8080/hosts/1{?projection}",
+                    "templated": true
+                },
+                "storageSource": {
+                    "href": "http://localhost:8080/hosts/1/storageSource"
+                },
+                "dataCenter": {
+                    "href": "http://localhost:8080/hosts/1/dataCenter"
+                }
+            }
+        }]
+    },
+    "_links": {
+        "self": {
+            "href": "http://localhost:8080/hosts"
+        },
+        "profile": {
+            "href": "http://localhost:8080/profile/hosts"
+        },
+        "search": {
+            "href": "http://localhost:8080/hosts/search"
+        }
+    },
+    "page": {
+        "size": 20,
+        "totalElements": 2,
+        "totalPages": 1,
+        "number": 0
+    }
+}
