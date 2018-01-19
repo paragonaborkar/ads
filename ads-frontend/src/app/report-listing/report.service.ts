@@ -6,11 +6,15 @@ import { SessionHelper } from '../core/session.helper';
 import { TokenService } from '../token.service';
 import { environment } from "../../environments/environment";
 import 'rxjs/add/operator/map';
+import {Globals} from '../globals';
 
 @Injectable()
 export class ReportService {
     
-    constructor(private http:Http, private _sessionHelper:SessionHelper, private tokenService:TokenService ) {
+     private reportServiceUrl = '';
+
+    constructor(private http:Http, private _sessionHelper:SessionHelper, private tokenService:TokenService, private globals: Globals) {
+        this.reportServiceUrl = globals.apiUrl;
     }
     
    /**
@@ -20,7 +24,7 @@ export class ReportService {
 
         let options = this.tokenService.token();
 
-        return this.http.get(environment.serverUrl+'/htmlReport/1',options).toPromise()
+        return this.http.get(this.reportServiceUrl+'/htmlReport/1',options).toPromise()
             .then(function(data){
             return data;
             },function(error){})
@@ -53,7 +57,8 @@ export class ReportService {
         responseType: ResponseContentType.Blob,
         headers: headers
         });
-        this.http.get(environment.serverUrl+'/downloadReport', options)
+        
+        this.http.get(this.reportServiceUrl+'/downloadReport', options)
         .catch(errorResponse => Observable.throw(errorResponse.json()))
         .map((response) => { 
             if (response instanceof Response) {

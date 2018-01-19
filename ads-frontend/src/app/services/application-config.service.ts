@@ -2,13 +2,16 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { TokenService } from '../token.service';
+import {Globals} from '../globals';
 
 @Injectable()
 export class ApplicationConfigService {
-  private preferencesServiceUrl = 'http://localhost:8080/preferences';
+  private preferencesServiceUrl = '';
   private headers = new Headers({ 'Content-Type': 'application/json' });
 
-  constructor(private http: Http, private tokenService: TokenService) { }
+  constructor(private http: Http, private tokenService: TokenService, private globals: Globals) { 
+     this.preferencesServiceUrl = globals.apiUrl + '/preferences';
+  }
 
   getPreferences(): Observable<any[]> {
 
