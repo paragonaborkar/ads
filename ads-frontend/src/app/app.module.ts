@@ -72,6 +72,8 @@ import { PaginatorModule } from 'primeng/primeng';
 
 import { ApplicationConfigService } from './services/application-config.service';
 
+import {Globals} from './globals'
+
 export function authHttpServiceFactory(http: Http) {
   return new AuthHttp(new AuthConfig({
     headerPrefix: 'Bearer',
@@ -155,7 +157,8 @@ export function authHttpServiceFactory(http: Http) {
     PagerService,
     AuthGuard,
     ApplicationConfigService,
-    TokenService
+    TokenService,
+    Globals
   ],
   bootstrap: [AppComponent]
 })
