@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SortableModule } from 'ngx-bootstrap/sortable';
 import { ApplicationConfigService } from '../services/application-config.service';
 import { Headers, Http, Response } from '@angular/http';
+import { PageConstants } from '../domains/page-constants';
 
 @Component({
   selector: 'app-application-config',
@@ -38,6 +39,12 @@ export class ApplicationConfigComponent implements OnInit {
   ngOnInit() {
     this.applicationConfigService.getPreferences().subscribe(preferences => this.preferences = preferences);
   }
+
+  getDisplayNameForPreferencePageName(pageName: String): String {
+    console.log(PageConstants.PAGES.get(pageName));
+    return PageConstants.PAGES.get(pageName);
+  }
+
 
   getPreferenceDetails(selectedPreferenceId: String) {
     if (selectedPreferenceId !== undefined && selectedPreferenceId !== 'undefined'.toString()) {
