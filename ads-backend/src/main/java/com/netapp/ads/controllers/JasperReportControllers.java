@@ -68,8 +68,8 @@ public class JasperReportControllers {
 
 	@PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER') or hasAuthority('USER') or hasAuthority('ROLE_USER') or hasAuthority('CLIENT')")
 	@RequestMapping(value = "/htmlReport/{num}", method = RequestMethod.GET)
-	public Report htmlReport(HttpServletRequest request,
-			HttpServletResponse response,ModelMap map,@PathVariable Integer num) throws IOException {
+	public Report htmlReport(HttpServletRequest request, HttpServletResponse response,ModelMap map,@PathVariable Integer num) throws IOException {
+		// FIXME: no sys out's
 		System.out.println("running -1");
 		Report reportOut = new Report();
 		Map<String, Object> parameters = new HashMap<String, Object>();
@@ -78,6 +78,7 @@ public class JasperReportControllers {
 
 		
 		try {
+			// FIXME: no sys out's
 			System.out.println("running -1");
 			File jrxmlFile = new ClassPathResource("Simple_Blue_2.jrxml").getFile();
 		    JasperCompileManager.compileReportToFile(jrxmlFile.getPath());
@@ -100,10 +101,12 @@ public class JasperReportControllers {
 			exporter.exportReport();
 			reportOut.setReport(sb.toString());
 			reportOut.setTotalPages(jasperPrint.getPages().size());
+			// FIXME: no sys out's
 			System.out.println("running2");
 			System.out.println(reportOut);
 			return reportOut;
 		} catch (JRException e) {
+			// FIXME: Handle this correctly
 			e.printStackTrace();
 		}
 
@@ -122,9 +125,9 @@ public class JasperReportControllers {
 	public void downXL(HttpServletRequest request,
 			HttpServletResponse response,Map<String, Object> model) throws Exception {
 		
-       File jrxmlFile = new ClassPathResource("UserNative.jrxml").getFile();
+       File jrxmlFile = new ClassPathResource("jasper/UserNative.jrxml").getFile();
        JasperCompileManager.compileReportToFile(jrxmlFile.getPath());
-	   File jasperFile = new ClassPathResource("UserNative.jasper").getFile();
+	   File jasperFile = new ClassPathResource("jasper/UserNative.jasper").getFile();
 	   Map<String, Object> parameters = new HashMap<String, Object>();
 	   parameters.put("ReportTitle", "User Report");
 	   parameters.put("Author", "");
@@ -134,13 +137,13 @@ public class JasperReportControllers {
 	    
 	    try {
 	        
-
 	        JasperPrint xlsPrint = JasperFillManager.fillReport(
 	        		jasperFile.getPath(),
 	                parameters,
 	                beanCollectionDataSource);
 
 	        JRXlsExporter xlsExporter = new JRXlsExporter();
+	        
 	        
 	        File file = new File("Report.xls");
 	        
@@ -164,6 +167,7 @@ public class JasperReportControllers {
 			}
 	     
 	     catch (JRException e) {
+	    	// FIXME: Handle this correctly
 	        e.printStackTrace();
 	    }
 	  }
