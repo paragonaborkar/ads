@@ -13,9 +13,7 @@ export class ApplicationConfigComponent implements OnInit {
   private headers = new Headers({ 'Content-Type': 'application/json' });
 
   public itemObjectsLeft: any[] = [
-    { id: 1, name: 'Windstorm', truncateAtChars: 128 },
-    { id: 2, name: 'Bombasto', truncateAtChars: 50 },
-    { id: 3, name: 'Magneta', truncateAtChars: 35 }
+  
   ];
 
   public itemObjectsRight: any[] = [
@@ -30,13 +28,26 @@ export class ApplicationConfigComponent implements OnInit {
   updatedPreference: any;
   updatedPreferences: any[] = [];
 
+  columnMap: Map<String, String> = new Map();
+  
   showSettingsPanel = false;
   constructor(
     private applicationConfigService: ApplicationConfigService
-  ) { }
+  ) {
+    
+   }
 
   ngOnInit() {
+    this.columnMap.set('firstName', "First Name");
+    this.columnMap.set('lastName', "Last Name");
+    this.columnMap.set('email', "Email");
+    this.columnMap.set('enabled', "Enabled");
+    this.columnMap.set('userRoleId', "Roles");
     this.applicationConfigService.getPreferences().subscribe(preferences => this.preferences = preferences);
+  }
+
+  getColumnDisplayName(columnName: String) {
+    return this.columnMap.get(columnName);
   }
 
   getPreferenceDetails(selectedPreferenceId: String) {
@@ -56,6 +67,7 @@ export class ApplicationConfigComponent implements OnInit {
                 for (let j = 0; j < this.preferenceDetails.length; j++) {
                   // console.log(this.preferenceDetails[j]);
                   if (this.preferenceDetails[j].fieldVisible === 1) {
+
                     this.itemObjectsLeft.push(this.preferenceDetails[j]);
                   } else {
                     this.itemObjectsRight.push(this.preferenceDetails[j]);

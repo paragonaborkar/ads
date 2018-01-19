@@ -39,6 +39,8 @@ export class UserAdminComponent implements OnInit {
   preferences: any[];
   preferenceDetails: any;
 
+  
+
   columns: any[] = [
     {
       field: 'firstName',
@@ -236,7 +238,7 @@ export class UserAdminComponent implements OnInit {
       //console.log(response);
       that.preferences.forEach(pref => {
         //console.log(pref);
-        if (pref.pageName === 'user_admin') {
+        if (pref.pageName === 'UserAdmin') {
           //console.log('Inside PageName');
           that.preference = pref;
           that.applicationConfigService.getPreferenceDetailsForPreference(that.preference)

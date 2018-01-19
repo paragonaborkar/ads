@@ -1,8 +1,12 @@
 package com.netapp.ads.repos;
 
 import com.netapp.ads.models.Preference;
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +15,8 @@ import org.springframework.stereotype.Repository;
 */
 @RepositoryRestResource
 public interface PreferenceRepository extends JpaRepository<Preference, Integer>, JpaSpecificationExecutor<Preference> {
+	public List<Preference> findByPreferenceType(@Param(value = "preferenceType") String preferenceType);
+	public List<Preference> findByPreferenceTypeAndPageName(@Param(value = "preferenceType") String preferenceType, @Param(value = "pageName") String pageName);
+
 
 }

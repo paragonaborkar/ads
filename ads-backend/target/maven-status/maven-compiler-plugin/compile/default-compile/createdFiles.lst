@@ -17,6 +17,7 @@ com\netapp\ads\models\AuditReasonCode.class
 com\netapp\ads\repos\CutoverMountPointRepository.class
 com\netapp\ads\models\AuditTrailCorporateUserPK.class
 com\netapp\ads\repos\WfaMessageRepository.class
+com\netapp\ads\models\AggregatePK.class
 com\netapp\ads\models\MstEmailingDatePK.class
 com\netapp\ads\graphql\DataCentersQuery.class
 com\netapp\ads\models\LineOfBusiness.class
@@ -25,6 +26,7 @@ com\netapp\ads\repos\ADSAuditEventRepository.class
 com\netapp\ads\models\SystemAdmin.class
 com\netapp\ads\models\Storagex.class
 com\netapp\ads\repos\MigrationCutoverTeamRepository.class
+com\netapp\ads\repos\AggregateRepository.class
 com\netapp\ads\models\ActivityPresumedLobXRefPK.class
 com\netapp\ads\models\ScheduleReset.class
 com\netapp\ads\repos\MmsPropertyTypeRepository.class
@@ -41,6 +43,7 @@ com\netapp\ads\repos\AggregatePurposeRepository.class
 com\netapp\ads\models\SharePK.class
 com\netapp\ads\models\UserNative.class
 com\netapp\ads\services\UserNativeServiceImpl.class
+com\netapp\ads\repos\QtreeRepository.class
 com\netapp\ads\models\StoragexPK.class
 com\netapp\ads\repos\SourceStorageRepository.class
 com\netapp\ads\filter\CORSFilter.class
@@ -95,6 +98,7 @@ com\netapp\ads\models\ActivityMigrationKeyXRefPK.class
 com\netapp\ads\models\MmsPropertyType.class
 com\netapp\ads\repos\ExtendedInfoVarcharRepository.class
 com\netapp\ads\models\ExtendedInfoVarchar.class
+com\netapp\ads\models\Qtree.class
 com\netapp\ads\repos\DataProtectionPolicyRepository.class
 com\netapp\ads\models\ApplicationLobXRef.class
 com\netapp\ads\mail\ThymeleafDatabaseResourceResolver.class
@@ -102,10 +106,12 @@ com\netapp\ads\models\WorkPackage.class
 com\netapp\ads\models\Application.class
 com\netapp\ads\models\AuditTrailApi.class
 com\netapp\ads\models\SchemaVersion.class
+com\netapp\ads\models\NasVolume.class
 com\netapp\ads\repos\MstEmailTypeRepository.class
 com\netapp\ads\models\AuditReasonCodePK.class
 com\netapp\ads\models\ChangeManagement.class
 com\netapp\ads\repos\EmailTemplateRepository.class
+com\netapp\ads\repos\NasVolumeRepository.class
 com\netapp\ads\repos\ShareRepository.class
 com\netapp\ads\models\CutoverMountPoint.class
 com\netapp\ads\repos\MigrationCutoverSrcToTgtRepository.class
@@ -135,6 +141,7 @@ com\netapp\ads\models\MigrationCutoverEvent.class
 com\netapp\ads\models\ChangeManagementPK.class
 com\netapp\ads\models\User.class
 com\netapp\ads\repos\WfaOcumControllerDataRepository.class
+com\netapp\ads\models\QtreePK.class
 com\netapp\ads\repos\SystemAdminRepository.class
 com\netapp\ads\models\Replication.class
 com\netapp\ads\models\SystemAdminPK.class
@@ -153,9 +160,11 @@ com\netapp\ads\repos\ApplicationLobXRefRepository.class
 com\netapp\ads\repos\ActivityPresumedLobXRefRepository.class
 com\netapp\ads\repos\HostApplicationXRefRepository.class
 com\netapp\ads\models\CutoverTimePK.class
+com\netapp\ads\models\Aggregate.class
 com\netapp\ads\models\MigrationCutoverTeam.class
 com\netapp\ads\models\ControllerPK.class
 com\netapp\ads\repos\ActivityMigrationKeyXRefRepository.class
 com\netapp\ads\models\ReplicationPK.class
+com\netapp\ads\models\NasVolumePK.class
 com\netapp\ads\models\MigrationKey.class
 com\netapp\ads\config\ADSConfiguration.class

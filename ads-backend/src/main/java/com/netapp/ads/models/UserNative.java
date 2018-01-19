@@ -22,6 +22,7 @@ public class UserNative implements Serializable {
 	private Timestamp createTime;
 
 	private String email;
+	
 
 	private byte enabled;
 
