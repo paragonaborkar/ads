@@ -1,0 +1,15 @@
+*.log
+*.class
+.project
+.metadata
+**/.recommenders
+**/ads-backend/target
+**/ads-backend/.apt_generated
+**/ads-backend/.idea
+**/ads-backend/.settings
+**/ads-backend/.classpath
+Servers/
+RemoteSystemsTempFiles/
+ads-backend/.factorypath
+package-lock.json
+
