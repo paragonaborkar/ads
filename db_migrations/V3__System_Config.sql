@@ -1,7 +1,8 @@
 ALTER TABLE `mms_config` RENAME TO  `sys_config`;
 ALTER TABLE `mms_property_type` RENAME TO  `sys_config_property_type`;
 
-ALTER TABLE `sys_config` DROP INDEX `prop_env_id`;
+#ALTER TABLE `sys_config` DROP INDEX `prop_env_id`;
+
 ALTER TABLE `sys_config` DROP COLUMN `environment_name` ;
 ALTER TABLE `sys_config` DROP COLUMN `component_name` ;
 ALTER TABLE `sys_config` DROP COLUMN `subcomponent_name` ;
