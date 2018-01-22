@@ -48,6 +48,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			if (user == null || user.getEnabled() != 1) {
 				throw new UsernameNotFoundException(String.format("The username %s doesn't exist", username));
 			}
+			
+			// FIXME: Get the user role and return it here. 
+			// Frontend needs to be update do that admin menus are not displayed.
 			grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
 			return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
 					grantedAuthorities);

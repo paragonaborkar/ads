@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+
 import { SessionHelper } from '../core/session.helper';
 import { UserService } from '../login/user.service';
+import {Globals} from '../globals';
+
 
 @Component({
   selector: 'app-nav',
@@ -10,8 +13,8 @@ import { UserService } from '../login/user.service';
 export class NavComponent implements OnInit {
   clientName: string = "JPMorgan Chase & Co.";
 
-  constructor(private userService: UserService, private _sessionHelper: SessionHelper) {
-    
+  constructor(private userService: UserService, private _sessionHelper: SessionHelper, private globals: Globals) {
+    console.log(globals.appModulesAvailable);
   }
 
   ngOnInit() {
