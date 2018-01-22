@@ -20,12 +20,12 @@ public class AdsTokenEnhancer implements TokenEnhancer {
 		User user = (User) authentication.getPrincipal();
 		final Map<String, Object> additionalInfo = new HashMap<>();
 		
-		Collection<GrantedAuthority> auth = user.getAuthorities();
+//		Collection<GrantedAuthority> auth = user.getAuthorities();
+//		
+//		
 		
-		additionalInfo.put("GrantedAuthority", auth);
 		// Add the modules to the response that the application is licensed to use.
 		additionalInfo.put("ads_modules", Application.ACTIVE_MODULES);
-		System.out.println( Application.ACTIVE_MODULES);
 		
 		((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
 
