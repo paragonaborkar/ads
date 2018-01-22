@@ -1,24 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelper } from 'angular2-jwt';
+
 import { SessionHelper } from '../core/session.helper';
+import {Globals} from '../globals';
 
 @Injectable()
 export class UserService {
   jwtHelper: JwtHelper = new JwtHelper();
-  accessToken: string;
+  accessInformation: string;
   isAdmin: boolean;
 
-  constructor(private _router: Router, private _sessionHelper: SessionHelper) {
+  constructor(private _router: Router, private _sessionHelper: SessionHelper, private globals: Globals) {
   }
 
-  login(accessToken: any) {
-  this.accessToken = accessToken;
-  this._sessionHelper.setToken(accessToken);
+  login(accessInformation: any) {
+    console.log(accessInformation);
+    this.accessInformation = accessInformation;
+    this._sessionHelper.setToken(accessInformation);
+    this.globals.appModulesAvailable = accessInformation.ads_modules;
   }
 
   logout() {
-    this.accessToken = null;
+    this.accessInformation = null;
     this.isAdmin = false;
 
     this._sessionHelper.removeAll();
@@ -33,6 +37,6 @@ export class UserService {
   }
 
   isUser(): boolean {
-    return this.accessToken && !this.isAdmin;
+    return this.accessInformation && !this.isAdmin;
   }
 }

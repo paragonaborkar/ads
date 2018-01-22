@@ -6,7 +6,7 @@ import { AuthConfig, AuthHttp, tokenNotExpired, AUTH_PROVIDERS, provideAuth } fr
 
 import { UserService } from './login/user.service';
 import { LoginService } from './login/login.service';
-import { ACCESS_TOKEN_NAME } from './login/auth.constant';
+// import { ACCESS_TOKEN_NAME } from './login/auth.constant';
 import { AuthGuard } from './guards/auth-guard.service';
 import { TokenService } from './token.service';
 
@@ -72,16 +72,16 @@ import { PaginatorModule } from 'primeng/primeng';
 
 import { ApplicationConfigService } from './services/application-config.service';
 
-import {Globals} from './globals'
+import {Globals} from './globals';
 
-export function authHttpServiceFactory(http: Http) {
+export function authHttpServiceFactory(http: Http, globals: Globals) {
   return new AuthHttp(new AuthConfig({
     headerPrefix: 'Bearer',
-    tokenName: ACCESS_TOKEN_NAME,
+    tokenName: globals.ACCESS_TOKEN_NAME,
     globalHeaders: [{ 'Content-Type': 'application/json' }],
     noJwtError: false,
     noTokenScheme: true,
-    tokenGetter: (() => sessionStorage.getItem(ACCESS_TOKEN_NAME))
+    tokenGetter: (() => sessionStorage.getItem(globals.ACCESS_TOKEN_NAME))
   }), http);
 }
 @NgModule({
