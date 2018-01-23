@@ -52,7 +52,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			
 			// FIXME: Get the user role and return it here. 
 			// Frontend needs to be update do that admin menus are not displayed.
-			grantedAuthorities.add(new SimpleGrantedAuthority("U"));
+			grantedAuthorities.add(new SimpleGrantedAuthority("USER_TYPE"));
 			return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), grantedAuthorities);
 		}
 	}

@@ -4,6 +4,9 @@ import { HttpModule, Http } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthConfig, AuthHttp, tokenNotExpired, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './core/token.interceptor'; // rename core to auth
+
 import { UserService } from './login/user.service';
 import { LoginService } from './login/login.service';
 // import { ACCESS_TOKEN_NAME } from './login/auth.constant';
@@ -24,6 +27,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ReportListingComponent } from './report-listing/report-listing.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
 // TODO: Need to server correct 404 or 500 page depending on User's session.
 import { Error404LoggedInComponent } from './error-404-logged-in/error-404-logged-in.component';
@@ -141,7 +145,8 @@ export function authHttpServiceFactory(http: Http, globals: Globals) {
     BrowserAnimationsModule,
     DataTableModule,
     SharedModule,
-    PaginatorModule
+    PaginatorModule,
+    LoggerModule.forRoot({serverLoggingUrl: 'http://localhost:8080/remoteLog', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR})
   ],
   providers: [
     { provide: AuthHttp, useFactory: authHttpServiceFactory, deps: [Http] },
@@ -158,7 +163,12 @@ export function authHttpServiceFactory(http: Http, globals: Globals) {
     AuthGuard,
     ApplicationConfigService,
     TokenService,
-    Globals
+    Globals,
+    { 
+        provide: HTTP_INTERCEPTORS,
+        useClass: TokenInterceptor,
+        multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
