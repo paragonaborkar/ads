@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.netapp.ads.models.UserNative;
+import com.netapp.ads.repos.UserNativeRepository;
 import com.netapp.ads.services.UserNativeService;
 import com.netapp.ads.util.Report;
 
@@ -48,12 +49,16 @@ import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
 public class JasperReportControllers {
 
 	@Autowired
-	UserNativeService userNativeService;
+	private UserNativeRepository userNativeRepository;
+	
+//	@Autowired
+//	UserNativeService userNativeService;
 	
 	@PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER') or hasAuthority('USER') or hasAuthority('ROLE_USER') or hasAuthority('CLIENT')")
 	@RequestMapping(value = "/get" , method = RequestMethod.GET)
 	public Iterable<UserNative> getUser() {	
-		return userNativeService.getuser();
+//		return userNativeService.getuser();
+		return userNativeRepository.findAll();
 	}
 
 	/**
@@ -83,7 +88,10 @@ public class JasperReportControllers {
 			File jrxmlFile = new ClassPathResource("Simple_Blue_2.jrxml").getFile();
 		    JasperCompileManager.compileReportToFile(jrxmlFile.getPath());
 			File file = new ClassPathResource("Simple_Blue_2.jasper").getFile();
-			ArrayList<UserNative> dataList = (ArrayList<UserNative>) userNativeService.getuser();
+			
+//			ArrayList<UserNative> dataList = (ArrayList<UserNative>) userNativeService.getuser();
+			ArrayList<UserNative> dataList = (ArrayList<UserNative>) userNativeRepository.findAll();
+			
 			JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(dataList,false);
 
 			JasperReport report = (JasperReport) JRLoader.loadObjectFromFile(file.getPath());
@@ -132,8 +140,9 @@ public class JasperReportControllers {
 	   parameters.put("ReportTitle", "User Report");
 	   parameters.put("Author", "");
 
-	   ArrayList<UserNative> dataList2 = (ArrayList<UserNative>) userNativeService.getuser();
-	   JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(dataList2);
+//	   ArrayList<UserNative> dataList = (ArrayList<UserNative>) userNativeService.getuser();
+	   ArrayList<UserNative> dataList = (ArrayList<UserNative>) userNativeRepository.findAll();
+	   JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(dataList);
 	    
 	    try {
 	        
