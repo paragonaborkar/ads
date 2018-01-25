@@ -41,16 +41,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			if (userApi.getEnabled() == 1) {
 				grantedAuthorities.add(new SimpleGrantedAuthority("CLIENT"));
 				return new User(userApi.getClientId(), userApi.getClientSecret(), grantedAuthorities);
-			} else {throw new UsernameNotFoundException(String.format("The user is not enabled", username));
+			} else {
+				throw new UsernameNotFoundException(String.format("The user is not enabled", username));
 			}
 		} else {
-			UserNative user = userNativeRepository.findByEmail(username).get(0);
+			UserNative user = userNativeRepository.findFirstByEmail(username);
 			if (user == null || user.getEnabled() != 1) {
 				throw new UsernameNotFoundException(String.format("The username %s doesn't exist", username));
 			}
-			grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
-			return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
-					grantedAuthorities);
+			
+			// FIXME: Get the user role and return it here. 
+			// Frontend needs to be update do that admin menus are not displayed.
+			grantedAuthorities.add(new SimpleGrantedAuthority("USER_TYPE"));
+			return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), grantedAuthorities);
 		}
 	}
 

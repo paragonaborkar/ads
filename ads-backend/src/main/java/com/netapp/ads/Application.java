@@ -119,7 +119,7 @@ public class Application {
 		licenseInfo.put("edition", lic.getFeature("edition"));
 
 		HashMap<String, Boolean> modules = new HashMap<String, Boolean>();
-		modules.put("host_connections", Boolean.parseBoolean(lic.getFeature("module_host_connections")));
+		modules.put("connections", Boolean.parseBoolean(lic.getFeature("module_host_connections")));
 		modules.put("discover", Boolean.parseBoolean(lic.getFeature("module_discover")));
 		modules.put("reports", Boolean.parseBoolean(lic.getFeature("module_reports")));
 		modules.put("schedule", Boolean.parseBoolean(lic.getFeature("module_schedule")));

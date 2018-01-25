@@ -16,7 +16,7 @@ export class SessionHelper {
     getToken() {
         return this.get<any>(this._tokenKey);
     }
-
+    
     set(key: string, value: any) {
         this._storage.setItem(key, JSON.stringify(value));
     }

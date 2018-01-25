@@ -8,23 +8,23 @@ import org.springframework.transaction.annotation.Transactional;
 import com.netapp.ads.models.UserNative;
 import com.netapp.ads.repos.UserNativeRepository;
 
-@Service("userNativeService")
-public class UserNativeServiceImpl implements UserNativeService {
+//@Service("userNativeService")
+public class UserNativeServiceImpl { //  implements UserNativeService {
 	
-	@Autowired
-    UserNativeRepository userNativeRepository;
+//	@Autowired
+//    UserNativeRepository userNativeRepository;
 	
-	@Override
+	/*@Override
     @Transactional(readOnly = true)
     public UserNative findByEmail(String email) throws UsernameNotFoundException {
         return userNativeRepository.findByEmail(email).get(0);
-    }
+    }*/
 	
-	@Override
-	public Iterable<UserNative> getuser() {
-		Iterable<UserNative> s = userNativeRepository.findAll();
-		return s;
-		
-	}
+//	@Override
+//	public Iterable<UserNative> getuser() {
+//		Iterable<UserNative> s = userNativeRepository.findAll();
+//		return s;
+//		
+//	}
 	
 }

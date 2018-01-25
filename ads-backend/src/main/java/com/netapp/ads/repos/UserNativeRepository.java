@@ -11,7 +11,8 @@ import com.netapp.ads.models.UserNative;
 @RepositoryRestResource
 public interface UserNativeRepository extends PagingAndSortingRepository<UserNative, Integer>  {
 
-	List<UserNative> findByEmail(@Param("email") String email);
+	UserNative findFirstByEmail(@Param("email") String email);
+	
 	List<UserNative> findByUserName(@Param("user_name") String username);
 	
 }

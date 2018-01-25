@@ -24,10 +24,11 @@ public class CORSFilter implements Filter{
 	@Override
 	public final void doFilter(final ServletRequest req, final ServletResponse res, final FilterChain chain) throws IOException, ServletException {
 	    final HttpServletResponse response = (HttpServletResponse) res;
-	    response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+	    response.setHeader("Access-Control-Allow-Origin", "*");
 	    response.setHeader("Access-Control-Allow-Credentials", "true");
 	    response.setHeader("Access-Control-Allow-Methods", "*");
 	    response.setHeader("Access-Control-Allow-Headers", "*");
+//	    response.setHeader("Access-Control-Allow-Headers", "Authorization, Access-Control-Allow-Header, Origin, X-Requested-With, Content-Type, Accept");
 	
 	    final HttpServletRequest request = (HttpServletRequest) req;
 	    if (!request.getMethod().equals("OPTIONS")) {
