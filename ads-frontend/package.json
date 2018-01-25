@@ -34,7 +34,8 @@
     "primeng": "4.3.0",
     "rxjs": "^5.5.6",
     "underscore": "^1.8.3",
-    "zone.js": "^0.8.19"
+    "zone.js": "^0.8.19",
+    "ngx-logger": "1.1.2"
   },
   "devDependencies": {
     "@angular/cli": "1.4.2",

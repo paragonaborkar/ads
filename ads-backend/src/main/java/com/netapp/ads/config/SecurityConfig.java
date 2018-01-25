@@ -77,6 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.csrf()
 		.disable();
 		
+		System.out.println("Added cors");
+		
 	}
 
 	@Bean
