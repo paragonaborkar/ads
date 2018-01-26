@@ -17,18 +17,18 @@ public class AdsTokenEnhancer implements TokenEnhancer {
 
 	@Override
 	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
+		
 		User user = (User) authentication.getPrincipal();
 		final Map<String, Object> additionalInfo = new HashMap<>();
 		
-//		Collection<GrantedAuthority> auth = user.getAuthorities();
-//		
-//		
+		Collection<GrantedAuthority> auth = user.getAuthorities();
 		
 		// Add the modules to the response that the application is licensed to use.
 		additionalInfo.put("ads_modules", Application.ACTIVE_MODULES);
 		
 		((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
-
+		
+		
 		return accessToken;
 	}
 }
