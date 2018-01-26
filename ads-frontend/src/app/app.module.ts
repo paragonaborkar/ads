@@ -163,7 +163,8 @@ export function authHttpServiceFactory(http: Http, globals: Globals) {
     AuthGuard,
     ApplicationConfigService,
     TokenService,
-    Globals,
+    Globals
+    ,
     { 
         provide: HTTP_INTERCEPTORS,
         useClass: TokenInterceptor,
