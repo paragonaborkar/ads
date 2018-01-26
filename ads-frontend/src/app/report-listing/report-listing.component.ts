@@ -20,27 +20,29 @@ export class ReportListingComponent implements OnInit {
     totalPagesArr=[];
     showJasperReport;
     pageCount;
+    output;
 
     constructor(private reportService:ReportService, private _http: Http, private _sessionHelper:SessionHelper) { }
 
-    output;
+   
     ngOnInit():void {
         this.pageCount = 1;
     }
 
     openJasperReport(e):void {
-    this.showJasperReport = true;
-    if(!e) e = 1;
-    this.pageCount=e;
-    this.report = this.reportService.openJasperReport(e);
-    this.report.then((data)=>{
-    var data1 = (<any>data)._body;
-    this.customReport = JSON.parse(data1).report;
-    this.totalPages = JSON.parse(data1).totalPages;
-    var ele:any = document.getElementById('reportsCustom');
-    
-    ele.innerHTML = this.customReport;
-    })
+        this.showJasperReport = true;
+        if(!e) 
+            e = 1;
+        this.pageCount=e;
+        this.report = this.reportService.openJasperReport(e);
+        this.report.then((data)=>{
+            var data1 = (<any>data)._body;
+            this.customReport = JSON.parse(data1).report;
+            this.totalPages = JSON.parse(data1).totalPages;
+            var ele:any = document.getElementById('reportsCustom');
+            
+            ele.innerHTML = this.customReport;
+        });
     }
 
     goToPrevious():void{

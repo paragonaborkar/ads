@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin
 public class RemoteLogController {
     
     @RequestMapping(value = "/remoteLog", method = RequestMethod.POST)
