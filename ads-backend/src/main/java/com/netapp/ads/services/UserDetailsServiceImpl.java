@@ -19,6 +19,7 @@ import com.netapp.ads.repos.UserApiRepository;
 import com.netapp.ads.repos.UserNativeRepository;
 
 @Service
+@Transactional(readOnly=false)
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
@@ -31,7 +32,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	 * Checks Credentials in API and Native Table for Authentication
 	 */
 	@Override
-	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();

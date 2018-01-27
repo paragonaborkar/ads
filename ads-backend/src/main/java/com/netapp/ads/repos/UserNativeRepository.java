@@ -14,5 +14,6 @@ public interface UserNativeRepository extends PagingAndSortingRepository<UserNat
 	UserNative findFirstByEmail(@Param("email") String email);
 	
 	List<UserNative> findByUserName(@Param("user_name") String username);
+	List<UserNative> findByEmail(@Param("email") String email);
 	
 }

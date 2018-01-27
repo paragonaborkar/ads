@@ -22,6 +22,9 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netapp.ads.filter.CORSFilter;
 
 @Configuration
@@ -101,23 +104,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		defaultTokenServices.setSupportRefreshToken(true);
 		return defaultTokenServices;
 	}
-	
-	/**
-	 * LDAP Authentication
-	 */
-	// FIXME: Remove old code
-	/*@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http
-			.authorizeRequests()
-			.anyRequest().fullyAuthenticated()
-			.and()
-			.formLogin();
+
+	@Bean
+	public BCryptPasswordEncoder bcryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 	
-	@Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.ldapAuthentication().userSearchBase("ou=people").userSearchFilter("(uid={0})").groupSearchBase("ou=groups").groupSearchFilter("(member={0})").contextSource().root("dc=baeldung,dc=com").ldif("classpath:users.ldif");
-    }*/
 }
 
