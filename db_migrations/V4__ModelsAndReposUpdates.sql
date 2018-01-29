@@ -1,8 +1,10 @@
-ALTER TABLE `sys_config` DROP INDEX `prop_env_id`, ADD UNIQUE INDEX `prop_env_id` (`property_name`);
+SET FOREIGN_KEY_CHECKS=0;
+
+/*ALTER TABLE `sys_config` DROP INDEX `prop_env_id`, ADD UNIQUE INDEX `prop_env_id` (`property_name`);*/
 ALTER TABLE `user_api` CHANGE `key` `client_id` VARCHAR(45);
 ALTER TABLE `user_api` CHANGE `secret` `client_secret` VARCHAR(45);
 ALTER TABLE `user_api` DROP PRIMARY KEY, CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY(`id`);
-ALTER TABLE `sys_config_property_type` DROP PRIMARY KEY, CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY(`id`);
+ALTER TABLE `sys_config_property_type` CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `wfa_ocum_controller_data` DROP PRIMARY KEY, CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY(`id`);
 ALTER TABLE `mst_email_type` DROP PRIMARY KEY, CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY(`id`);
 ALTER TABLE `migration_time` DROP PRIMARY KEY, CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY(`id`);
@@ -44,11 +46,9 @@ ALTER TABLE `aggregate_purpose` CHANGE COLUMN `create_time` `create_time` TIMEST
 
 ALTER TABLE `controller` DROP KEY `fk_exports_id`, ADD CONSTRAINT `fk_exports_id` FOREIGN KEY (`exports_id`) REFERENCES `exports` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT; 
 
-
-
 ALTER TABLE `exports` DROP FOREIGN KEY `fk_exports_controller1`;
 ALTER TABLE `exports` DROP FOREIGN KEY `fk_exports_exports_host_x_ref1`;
-ALTER TABLE `export_host_x_ref` ADD CONSTRAINT `fk_export_host_x_ref_exports1` FOREIGN KEY (`exports_id`) REFERENCES `exports` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT, ADD CONSTRAINT `fk_export_host_x_ref_host1` FOREIGN KEY (`host_id`) REFERENCES `host` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE `exports_host_x_ref` ADD CONSTRAINT `fk_export_host_x_ref_exports1` FOREIGN KEY (`exports_id`) REFERENCES `exports` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT, ADD CONSTRAINT `fk_export_host_x_ref_host1` FOREIGN KEY (`host_id`) REFERENCES `host` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 ALTER TABLE `host` DROP FOREIGN KEY `fk_host_exports_host_x_ref1`;
 ALTER TABLE `host` DROP FOREIGN KEY `fk_host_host_application_x_ref1`;
 
@@ -91,5 +91,6 @@ ALTER TABLE `system_admin` DROP PRIMARY KEY, ADD PRIMARY KEY(`id`), ADD CONSTRAI
 ALTER TABLE `wfa_data` DROP PRIMARY KEY, ADD PRIMARY KEY(`id`), ADD CONSTRAINT uc_primary UNIQUE (`id`, `workflow_id`);
 ALTER TABLE `wfa_message` DROP PRIMARY KEY, ADD PRIMARY KEY(`id`), ADD CONSTRAINT uc_primary UNIQUE (`id`, `workflow_id`);
 ALTER TABLE `workflow` DROP PRIMARY KEY, ADD PRIMARY KEY(`id`), ADD CONSTRAINT uc_primary UNIQUE (`id`, `migration_cutover_src_to_tgt_id`, `migration_cutover_src_to_tgt_migration_cutover_event_id`);
-ALTER TABLE `wfa_message` DROP PRIMARY KEY, ADD PRIMARY KEY(`id`), ADD CONSTRAINT uc_primary UNIQUE (`id`, `workflow_id`);
 ALTER TABLE `workflow` DROP INDEX `fk_workflow_migration_cutover_src_to_tgt1_idx`;
+
+SET FOREIGN_KEY_CHECKS=1;
