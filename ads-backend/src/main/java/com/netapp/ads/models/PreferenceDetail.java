@@ -33,7 +33,7 @@ public class PreferenceDetail implements Serializable {
 	private Integer fieldOrder;
 
 	@Column(name="field_visible", length=255)
-	private String fieldVisible;
+	private Integer fieldVisible;
 
 	@Column(name="native_user_id")
 	private Integer nativeUserId;
@@ -90,11 +90,11 @@ public class PreferenceDetail implements Serializable {
 		this.fieldOrder = fieldOrder;
 	}
 
-	public String getFieldVisible() {
+	public int getFieldVisible() {
 		return this.fieldVisible;
 	}
 
-	public void setFieldVisible(String fieldVisible) {
+	public void setFieldVisible(int fieldVisible) {
 		this.fieldVisible = fieldVisible;
 	}
 
