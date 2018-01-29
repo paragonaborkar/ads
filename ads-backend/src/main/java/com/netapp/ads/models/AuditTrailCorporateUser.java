@@ -11,17 +11,18 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="audit_trail_corporate_user")
-@NamedQuery(name="AuditTrailCorporateUser.findAll", query="SELECT a FROM AuditTrailCorporateUser a")
 public class AuditTrailCorporateUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private AuditTrailCorporateUserPK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Column(name="audit_comment")
+	@Column(name="audit_comment", length=1024)
 	private String auditComment;
 
-	@Column(name="audited_resource")
+	@Column(name="audited_resource", length=255)
 	private String auditedResource;
 
 	@Column(name="create_time")
@@ -34,22 +35,22 @@ public class AuditTrailCorporateUser implements Serializable {
 	@Column(name="update_time")
 	private Timestamp updateTime;
 
-	@Column(name="user_corporate_id")
-	private int userCorporateId;
+	@Column(name="user_corporate_id", nullable=false)
+	private Integer userCorporateId;
 
 	//bi-directional many-to-one association to AuditEvent
 	@ManyToOne
-	@JoinColumn(name="audit_event_id", insertable = false, updatable = false)
+	@JoinColumn(name="audit_event_id", nullable=false)
 	private AuditEvent auditEvent;
 
 	public AuditTrailCorporateUser() {
 	}
 
-	public AuditTrailCorporateUserPK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(AuditTrailCorporateUserPK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -93,11 +94,11 @@ public class AuditTrailCorporateUser implements Serializable {
 		this.updateTime = updateTime;
 	}
 
-	public int getUserCorporateId() {
+	public Integer getUserCorporateId() {
 		return this.userCorporateId;
 	}
 
-	public void setUserCorporateId(int userCorporateId) {
+	public void setUserCorporateId(Integer userCorporateId) {
 		this.userCorporateId = userCorporateId;
 	}
 

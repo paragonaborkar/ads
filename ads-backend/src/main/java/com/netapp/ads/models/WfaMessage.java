@@ -2,7 +2,7 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -11,35 +11,42 @@ import java.util.Date;
  */
 @Entity
 @Table(name="wfa_message")
-@NamedQuery(name="WfaMessage.findAll", query="SELECT w FROM WfaMessage w")
 public class WfaMessage implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private WfaMessagePK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
+	@Column(length=16)
 	private String code;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
-	private Date createTime;
+	private Timestamp createTime;
 
+	@Column(length=1024)
 	private String meaning;
 
+	@Column(length=1024)
 	private String message;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="update_time")
-	private Date updateTime;
+	private Timestamp updateTime;
+
+	//bi-directional many-to-one association to Workflow
+	@ManyToOne
+	@JoinColumn(name="workflow_id", nullable=false)
+	private Workflow workflow;
 
 	public WfaMessage() {
 	}
 
-	public WfaMessagePK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(WfaMessagePK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -51,11 +58,11 @@ public class WfaMessage implements Serializable {
 		this.code = code;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
@@ -75,12 +82,20 @@ public class WfaMessage implements Serializable {
 		this.message = message;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public Workflow getWorkflow() {
+		return this.workflow;
+	}
+
+	public void setWorkflow(Workflow workflow) {
+		this.workflow = workflow;
 	}
 
 }

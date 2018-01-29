@@ -2,7 +2,7 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -10,60 +10,66 @@ import java.util.Date;
  * 
  */
 @Entity
-@NamedQuery(name="Storagex.findAll", query="SELECT s FROM Storagex s")
+@Table(name="storagex")
 public class Storagex implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private StoragexPK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	private byte completed;
+	private boolean completed;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
-	private Date createTime;
+	private Timestamp createTime;
 
+	@Column(length=1024)
 	private String description;
 
-	@Column(name="policy_name")
+	@Column(name="policy_name", length=1024)
 	private String policyName;
 
-	@Column(name="source_path")
+	@Column(name="source_path", length=1024)
 	private String sourcePath;
 
-	private byte submitted;
+	private boolean submitted;
 
-	@Column(name="target_path")
+	@Column(name="target_path", length=1024)
 	private String targetPath;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="update_time")
-	private Date updateTime;
+	private Timestamp updateTime;
+
+	//bi-directional many-to-one association to MigrationCutoverEvent
+	@ManyToOne
+	@JoinColumn(name="migration_cutover_event_id", nullable=false)
+	private MigrationCutoverEvent migrationCutoverEvent;
 
 	public Storagex() {
 	}
 
-	public StoragexPK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(StoragexPK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public byte getCompleted() {
+	public boolean getCompleted() {
 		return this.completed;
 	}
 
-	public void setCompleted(byte completed) {
+	public void setCompleted(boolean completed) {
 		this.completed = completed;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
@@ -91,11 +97,11 @@ public class Storagex implements Serializable {
 		this.sourcePath = sourcePath;
 	}
 
-	public byte getSubmitted() {
+	public boolean getSubmitted() {
 		return this.submitted;
 	}
 
-	public void setSubmitted(byte submitted) {
+	public void setSubmitted(boolean submitted) {
 		this.submitted = submitted;
 	}
 
@@ -107,12 +113,20 @@ public class Storagex implements Serializable {
 		this.targetPath = targetPath;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public MigrationCutoverEvent getMigrationCutoverEvent() {
+		return this.migrationCutoverEvent;
+	}
+
+	public void setMigrationCutoverEvent(MigrationCutoverEvent migrationCutoverEvent) {
+		this.migrationCutoverEvent = migrationCutoverEvent;
 	}
 
 }

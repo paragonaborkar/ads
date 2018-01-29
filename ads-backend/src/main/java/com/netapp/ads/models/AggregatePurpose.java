@@ -2,7 +2,7 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -11,38 +11,42 @@ import java.util.Date;
  */
 @Entity
 @Table(name="aggregate_purpose")
-@NamedQuery(name="AggregatePurpose.findAll", query="SELECT a FROM AggregatePurpose a")
 public class AggregatePurpose implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private AggregatePurposePK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Column(name="aggregate_function")
+	@Column(name="aggregate_function", length=16)
 	private String aggregateFunction;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
-	private Date createTime;
+	private Timestamp createTime;
 
-	@Column(name="service_level")
+	@Column(name="service_level", length=16)
 	private String serviceLevel;
 
-	@Column(name="storage_type")
+	@Column(name="storage_type", length=16)
 	private String storageType;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="update_time")
-	private Date updateTime;
+	private Timestamp updateTime;
+
+	//bi-directional many-to-one association to Aggregate
+	@ManyToOne
+	@JoinColumn(name="aggregate_id", nullable=false)
+	private Aggregate aggregate;
 
 	public AggregatePurpose() {
 	}
 
-	public AggregatePurposePK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(AggregatePurposePK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -54,11 +58,11 @@ public class AggregatePurpose implements Serializable {
 		this.aggregateFunction = aggregateFunction;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
@@ -78,12 +82,20 @@ public class AggregatePurpose implements Serializable {
 		this.storageType = storageType;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public Aggregate getAggregate() {
+		return this.aggregate;
+	}
+
+	public void setAggregate(Aggregate aggregate) {
+		this.aggregate = aggregate;
 	}
 
 }

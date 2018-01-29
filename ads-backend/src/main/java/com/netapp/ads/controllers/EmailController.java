@@ -2,11 +2,9 @@ package com.netapp.ads.controllers;
 
 import com.netapp.ads.email.EmailService;
 import com.netapp.ads.models.Controller;
-import com.netapp.ads.models.ControllerPK;
 import com.netapp.ads.repos.ControllerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;

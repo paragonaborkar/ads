@@ -12,14 +12,23 @@ public class ActivityLobXRefPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="activity_id")
+	@Column(name="activity_id", insertable=false, updatable=false, unique=true, nullable=false)
 	private int activityId;
 
-	@Column(name="lob_id")
+	@Column(name="lob_id", insertable=false, updatable=false, unique=true, nullable=false)
 	private int lobId;
 
 	public ActivityLobXRefPK() {
 	}
+	
+	public ActivityLobXRefPK(int activityId, int lobId) {
+		super();
+		this.activityId = activityId;
+		this.lobId = lobId;
+	}
+
+
+
 	public int getActivityId() {
 		return this.activityId;
 	}
