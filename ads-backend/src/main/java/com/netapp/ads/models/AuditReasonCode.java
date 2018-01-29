@@ -2,7 +2,7 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -11,39 +11,44 @@ import java.util.Date;
  */
 @Entity
 @Table(name="audit_reason_code")
-@NamedQuery(name="AuditReasonCode.findAll", query="SELECT a FROM AuditReasonCode a")
 public class AuditReasonCode implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private AuditReasonCodePK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
-	private Date createTime;
+	private Timestamp createTime;
 
+	@Column(nullable=false, length=255)
 	private String reason;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="update_time")
-	private Date updateTime;
+	private Timestamp updateTime;
+
+	//bi-directional many-to-one association to AuditEvent
+	@ManyToOne
+	@JoinColumn(name="audit_event_id", nullable=false)
+	private AuditEvent auditEvent;
 
 	public AuditReasonCode() {
 	}
 
-	public AuditReasonCodePK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(AuditReasonCodePK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
@@ -55,12 +60,20 @@ public class AuditReasonCode implements Serializable {
 		this.reason = reason;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public AuditEvent getAuditEvent() {
+		return this.auditEvent;
+	}
+
+	public void setAuditEvent(AuditEvent auditEvent) {
+		this.auditEvent = auditEvent;
 	}
 
 }

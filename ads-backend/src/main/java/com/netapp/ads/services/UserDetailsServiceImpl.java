@@ -38,14 +38,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		if(!userApiRepository.findByClientId(username).isEmpty()) {
 			UserApi userApi = userApiRepository.findByClientId(username).get(0);
-			if (userApi.getEnabled() == 1) {
+			if (userApi.getEnabled() == true) {
 				grantedAuthorities.add(new SimpleGrantedAuthority("CLIENT"));
 				return new User(userApi.getClientId(), userApi.getClientSecret(), grantedAuthorities);
 			} else {throw new UsernameNotFoundException(String.format("The user is not enabled", username));
 			}
 		} else {
 			UserNative user = userNativeRepository.findByEmail(username).get(0);
-			if (user == null || user.getEnabled() != 1) {
+			if (user == null || user.getEnabled() == false) {
 				throw new UsernameNotFoundException(String.format("The username %s doesn't exist", username));
 			}
 			grantedAuthorities.add(new SimpleGrantedAuthority("USER"));

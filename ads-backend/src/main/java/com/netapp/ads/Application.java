@@ -18,10 +18,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 import com.javax0.license3j.licensor.License;
-import com.netapp.ads.config.ADSConfiguration;
 
 @SpringBootApplication
-@Import(ADSConfiguration.class)
 public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
     public static HashMap<String, Boolean> ACTIVE_MODULES; 

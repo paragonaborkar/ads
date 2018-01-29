@@ -12,27 +12,32 @@ import java.util.List;
  */
 @Entity
 @Table(name="audit_event")
-@NamedQuery(name="AuditEvent.findAll", query="SELECT a FROM AuditEvent a")
 public class AuditEvent implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
 	@Column(name="create_time")
 	private Timestamp createTime;
 
-	@Column(name="event_name")
+	@Column(name="event_name", nullable=false, length=45)
 	private String eventName;
 
-	@Column(name="http_method")
+	@Column(name="http_method", nullable=false, length=1)
 	private String httpMethod;
 
-	@Column(name="resource_pattern")
+	@Column(name="resource_pattern", nullable=false, length=255)
 	private String resourcePattern;
 
 	@Column(name="update_time")
 	private Timestamp updateTime;
+
+	//bi-directional many-to-one association to AuditReasonCode
+	@OneToMany(mappedBy="auditEvent")
+	private List<AuditReasonCode> auditReasonCodes;
 
 	//bi-directional many-to-one association to AuditTrailApi
 	@OneToMany(mappedBy="auditEvent")
@@ -49,11 +54,11 @@ public class AuditEvent implements Serializable {
 	public AuditEvent() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -95,6 +100,28 @@ public class AuditEvent implements Serializable {
 
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public List<AuditReasonCode> getAuditReasonCodes() {
+		return this.auditReasonCodes;
+	}
+
+	public void setAuditReasonCodes(List<AuditReasonCode> auditReasonCodes) {
+		this.auditReasonCodes = auditReasonCodes;
+	}
+
+	public AuditReasonCode addAuditReasonCode(AuditReasonCode auditReasonCode) {
+		getAuditReasonCodes().add(auditReasonCode);
+		auditReasonCode.setAuditEvent(this);
+
+		return auditReasonCode;
+	}
+
+	public AuditReasonCode removeAuditReasonCode(AuditReasonCode auditReasonCode) {
+		getAuditReasonCodes().remove(auditReasonCode);
+		auditReasonCode.setAuditEvent(null);
+
+		return auditReasonCode;
 	}
 
 	public List<AuditTrailApi> getAuditTrailApis() {

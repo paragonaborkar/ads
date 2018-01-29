@@ -3,6 +3,7 @@ package com.netapp.ads.models;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -11,12 +12,13 @@ import java.util.Date;
  */
 @Entity
 @Table(name="cutover_time")
-@NamedQuery(name="CutoverTime.findAll", query="SELECT c FROM CutoverTime c")
 public class CutoverTime implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private CutoverTimePK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="change_mount_begin_time")
@@ -34,9 +36,8 @@ public class CutoverTime implements Serializable {
 	@Column(name="complete_replication_end_time")
 	private Date completeReplicationEndTime;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
-	private Date createTime;
+	private Timestamp createTime;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="start_app_begin_time")
@@ -78,9 +79,8 @@ public class CutoverTime implements Serializable {
 	@Column(name="unmount_volume_end_time")
 	private Date unmountVolumeEndTime;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="update_time")
-	private Date updateTime;
+	private Timestamp updateTime;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="validate_complete_begin_time")
@@ -98,14 +98,19 @@ public class CutoverTime implements Serializable {
 	@Column(name="validate_db_end_time")
 	private Date validateDbEndTime;
 
+	//bi-directional many-to-one association to CutoverAssembly
+	@ManyToOne
+	@JoinColumn(name="cutover_assembly_id", nullable=false)
+	private CutoverAssembly cutoverAssembly;
+
 	public CutoverTime() {
 	}
 
-	public CutoverTimePK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(CutoverTimePK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -141,11 +146,11 @@ public class CutoverTime implements Serializable {
 		this.completeReplicationEndTime = completeReplicationEndTime;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
@@ -229,11 +234,11 @@ public class CutoverTime implements Serializable {
 		this.unmountVolumeEndTime = unmountVolumeEndTime;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
 
@@ -267,6 +272,14 @@ public class CutoverTime implements Serializable {
 
 	public void setValidateDbEndTime(Date validateDbEndTime) {
 		this.validateDbEndTime = validateDbEndTime;
+	}
+
+	public CutoverAssembly getCutoverAssembly() {
+		return this.cutoverAssembly;
+	}
+
+	public void setCutoverAssembly(CutoverAssembly cutoverAssembly) {
+		this.cutoverAssembly = cutoverAssembly;
 	}
 
 }

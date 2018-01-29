@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -11,52 +12,62 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@NamedQuery(name="Schedule.findAll", query="SELECT s FROM Schedule s")
+@Table(name="schedule")
 public class Schedule implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
 	@Column(name="create_time")
 	private Timestamp createTime;
 
-	@Column(name="host_connection_booked")
-	private int hostConnectionBooked;
+	@Column(name="host_connection_booked", nullable=false)
+	private Integer hostConnectionBooked;
 
 	@Column(name="host_connection_limit")
-	private int hostConnectionLimit;
+	private Integer hostConnectionLimit;
 
 	@Column(name="host_connection_pending")
-	private int hostConnectionPending;
+	private Integer hostConnectionPending;
 
 	@Column(name="migration_booked")
-	private int migrationBooked;
+	private Integer migrationBooked;
 
 	@Column(name="migration_limit")
-	private int migrationLimit;
+	private Integer migrationLimit;
 
 	@Column(name="migration_pending")
-	private int migrationPending;
+	private Integer migrationPending;
 
-	@Column(name="schedule_status")
+	@Column(name="schedule_status", length=45)
 	private String scheduleStatus;
 
 	@Column(name="update_time")
 	private Timestamp updateTime;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="week_date")
+	@Column(name="week_date", nullable=false)
 	private Date weekDate;
+
+	//bi-directional many-to-one association to Cutover
+	@OneToMany(mappedBy="schedule")
+	private List<Cutover> cutovers;
+
+	//bi-directional many-to-one association to ScheduleReset
+	@OneToMany(mappedBy="schedule")
+	private List<ScheduleReset> scheduleResets;
 
 	public Schedule() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -68,51 +79,51 @@ public class Schedule implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public int getHostConnectionBooked() {
+	public Integer getHostConnectionBooked() {
 		return this.hostConnectionBooked;
 	}
 
-	public void setHostConnectionBooked(int hostConnectionBooked) {
+	public void setHostConnectionBooked(Integer hostConnectionBooked) {
 		this.hostConnectionBooked = hostConnectionBooked;
 	}
 
-	public int getHostConnectionLimit() {
+	public Integer getHostConnectionLimit() {
 		return this.hostConnectionLimit;
 	}
 
-	public void setHostConnectionLimit(int hostConnectionLimit) {
+	public void setHostConnectionLimit(Integer hostConnectionLimit) {
 		this.hostConnectionLimit = hostConnectionLimit;
 	}
 
-	public int getHostConnectionPending() {
+	public Integer getHostConnectionPending() {
 		return this.hostConnectionPending;
 	}
 
-	public void setHostConnectionPending(int hostConnectionPending) {
+	public void setHostConnectionPending(Integer hostConnectionPending) {
 		this.hostConnectionPending = hostConnectionPending;
 	}
 
-	public int getMigrationBooked() {
+	public Integer getMigrationBooked() {
 		return this.migrationBooked;
 	}
 
-	public void setMigrationBooked(int migrationBooked) {
+	public void setMigrationBooked(Integer migrationBooked) {
 		this.migrationBooked = migrationBooked;
 	}
 
-	public int getMigrationLimit() {
+	public Integer getMigrationLimit() {
 		return this.migrationLimit;
 	}
 
-	public void setMigrationLimit(int migrationLimit) {
+	public void setMigrationLimit(Integer migrationLimit) {
 		this.migrationLimit = migrationLimit;
 	}
 
-	public int getMigrationPending() {
+	public Integer getMigrationPending() {
 		return this.migrationPending;
 	}
 
-	public void setMigrationPending(int migrationPending) {
+	public void setMigrationPending(Integer migrationPending) {
 		this.migrationPending = migrationPending;
 	}
 
@@ -138,6 +149,50 @@ public class Schedule implements Serializable {
 
 	public void setWeekDate(Date weekDate) {
 		this.weekDate = weekDate;
+	}
+
+	public List<Cutover> getCutovers() {
+		return this.cutovers;
+	}
+
+	public void setCutovers(List<Cutover> cutovers) {
+		this.cutovers = cutovers;
+	}
+
+	public Cutover addCutover(Cutover cutover) {
+		getCutovers().add(cutover);
+		cutover.setSchedule(this);
+
+		return cutover;
+	}
+
+	public Cutover removeCutover(Cutover cutover) {
+		getCutovers().remove(cutover);
+		cutover.setSchedule(null);
+
+		return cutover;
+	}
+
+	public List<ScheduleReset> getScheduleResets() {
+		return this.scheduleResets;
+	}
+
+	public void setScheduleResets(List<ScheduleReset> scheduleResets) {
+		this.scheduleResets = scheduleResets;
+	}
+
+	public ScheduleReset addScheduleReset(ScheduleReset scheduleReset) {
+		getScheduleResets().add(scheduleReset);
+		scheduleReset.setSchedule(this);
+
+		return scheduleReset;
+	}
+
+	public ScheduleReset removeScheduleReset(ScheduleReset scheduleReset) {
+		getScheduleResets().remove(scheduleReset);
+		scheduleReset.setSchedule(null);
+
+		return scheduleReset;
 	}
 
 }
