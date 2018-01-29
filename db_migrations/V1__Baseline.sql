@@ -1530,40 +1530,7 @@ LOCK TABLES `schedule_reset` WRITE;
 /*!40000 ALTER TABLE `schedule_reset` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `schema_version`
---
 
-DROP TABLE IF EXISTS `schema_version`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `schema_version` (
-  `installed_rank` int(11) NOT NULL,
-  `version` varchar(50) DEFAULT NULL,
-  `description` varchar(200) NOT NULL,
-  `type` varchar(20) NOT NULL,
-  `script` varchar(1000) NOT NULL,
-  `checksum` int(11) DEFAULT NULL,
-  `installed_by` varchar(100) NOT NULL,
-  `installed_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `execution_time` int(11) NOT NULL,
-  `success` tinyint(1) NOT NULL,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`installed_rank`),
-  KEY `schema_version_s_idx` (`success`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `schema_version`
---
-
-LOCK TABLES `schema_version` WRITE;
-/*!40000 ALTER TABLE `schema_version` DISABLE KEYS */;
-INSERT INTO `schema_version` VALUES (1,'1','Vitae-DB-Dump20170829 Starting Point','SQL','V1__Vitae-DB-Dump20170829_Starting_Point.sql',1743239658,'root','2017-09-14 01:35:15',2689,1,'2017-09-27 16:52:27',NULL),(2,'2','Updates from Workshop #1','SQL','V2__Updates_from_Workshop_#1.sql',-1515122143,'root','2017-09-14 01:35:24',9353,1,'2017-09-27 16:52:27',NULL),(3,'3','Naming Standards and Consistency','SQL','V3__Naming_Standards_and_Consistency.sql',-2050166332,'root','2017-09-14 01:35:27',2954,1,'2017-09-27 16:52:27',NULL),(4,'4','Round 2 Table and Column updates','SQL','V4__Round_2_Table_and_Column_updates.sql',-1848168995,'root','2017-09-14 01:35:31',3396,1,'2017-09-27 16:52:27',NULL),(5,'5','Round 2 SQL Power Architect Updates','SQL','V5__Round_2_SQL_Power_Architect_Updates.sql',0,'root','2017-09-14 01:35:31',0,1,'2017-09-27 16:52:27',NULL),(6,'6','Round 2 Relation updates','SQL','V6__Round_2_Relation_updates.sql',1547162424,'root','2017-09-14 01:35:31',677,1,'2017-09-27 16:52:27',NULL),(7,'7','Round 2 Table and Column updates #2','SQL','V7__Round_2_Table_and_Column_updates_#2.sql',965625380,'root','2017-09-14 01:35:31',0,1,'2017-09-27 16:52:27',NULL);
-/*!40000 ALTER TABLE `schema_version` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `share`
