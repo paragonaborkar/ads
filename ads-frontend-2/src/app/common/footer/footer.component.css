@@ -1,0 +1,30 @@
+.footer {
+    background-color: rgba(224, 224, 224, 100);
+    position: absolute;
+    left: 0px;
+    right: 0;
+    bottom: 0;
+    height: 50px;
+    line-height: 50px; 
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.footer .footer-block {
+    vertical-align: middle;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.footer  a {
+  transition: initial;
+  text-decoration: underline;
+  color: #403c3c;
+}
