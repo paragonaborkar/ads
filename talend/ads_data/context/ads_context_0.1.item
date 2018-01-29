@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<talendfile:ContextType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" xmi:id="_hSI6MPzBEeeuIL132lN64w" confirmationNeeded="false" name="Default">
+  <contextParameter xmi:id="_hSh7wPzBEeeuIL132lN64w" comment="" name="logDir" prompt="logDir?" promptNeeded="false" type="id_Directory" value="C:/netapp/logs/"/>
+  <contextParameter xmi:id="_hSh7wfzBEeeuIL132lN64w" comment="" name="ADS_CONFIGS_LOADSHEET_USER_NATIVES_XLSX" prompt="ADS_CONFIGS_LOADSHEET_USER_NATIVES_XLSX?" promptNeeded="false" type="id_String" value="UserNativeLoadSheetTemplate.xlsx"/>
+  <contextParameter xmi:id="_hSh7wvzBEeeuIL132lN64w" comment="" name="ROLE_LOOKUP_CSV" prompt="ROLE_LOOKUP_CSV?" promptNeeded="false" type="id_String" value="ADS_User_Roles.csv"/>
+  <contextParameter xmi:id="_hSh7w_zBEeeuIL132lN64w" comment="" name="LOAD_FILES_LOC" prompt="LOAD_FILES_LOC?" promptNeeded="false" type="id_Directory" value="C:/netapp/ads_setup_loadsheets/"/>
+  <contextParameter xmi:id="_hSh7xPzBEeeuIL132lN64w" comment="" name="RESOURCE_XPATH_USER_NATIVE" prompt="RESOURCE_XPATH_USER_NATIVE?" promptNeeded="false" type="id_String" value="&quot;/root/_links/userNative/href&quot;"/>
+  <contextParameter xmi:id="_hSh7xfzBEeeuIL132lN64w" comment="" name="REST_REQ_JSON" prompt="REST_REQ_JSON?" promptNeeded="false" type="id_String" value=""/>
+  <contextParameter xmi:id="_hSh7xvzBEeeuIL132lN64w" comment="" name="REST_BASE_URL" prompt="REST_BASE_URL?" promptNeeded="false" type="id_String" value="&quot;http://dv2-ls-cts-1:8080/&quot;"/>
+  <contextParameter xmi:id="_hsc-APzJEeeuIL132lN64w" comment="" name="REST_URL_USER_NATIVES" prompt="REST_URL_USER_NATIVES?" promptNeeded="false" type="id_String" value="&quot;http://dv2-ls-cts-1:8080/userNatives&quot;"/>
+  <contextParameter xmi:id="_MD4g0PzOEeeuIL132lN64w" comment="" name="FORMAT_DATETIME_TO_STRING" prompt="FORMAT_DATETIME_TO_STRING?" promptNeeded="false" type="id_String" value="&quot;%Y-%m-%dT%H:%i:%s&quot;"/>
+  <contextParameter xmi:id="_b0A8QPzPEeeuIL132lN64w" comment="" name="REST_URL_DATA_CENTERS" prompt="REST_URL_DATA_CENTERS?" promptNeeded="false" type="id_String" value="&quot;http://dv2-ls-cts-1:8080/dataCenters&quot;"/>
+  <contextParameter xmi:id="_jpmz8PzZEeeuIL132lN64w" comment="" name="REST_URL_STORAGE" prompt="REST_URL_STORAGE?" promptNeeded="false" type="id_String" value="&quot;http://dv2-ls-cts-1:8080/storages&quot;"/>
+  <contextParameter xmi:id="_96hUoP0pEeeuIL132lN64w" comment="" name="REST_URL_HOSTS" prompt="REST_URL_HOSTS?" promptNeeded="false" type="id_String" value="&quot;http://dv2-ls-cts-1:8080/hosts&quot;"/>
+  <contextParameter xmi:id="_h1XrAP0tEeeuIL132lN64w" comment="" name="REST_URL_SHARES" prompt="REST_URL_SHARES?" promptNeeded="false" type="id_String" value="&quot;http://dv2-ls-cts-1:8080/shares&quot;"/>
+  <contextParameter xmi:id="_fh1HAP1tEeeuIL132lN64w" comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" type="id_String" value="&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoidGFsZW5kIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTUxNjc0OTk4NywiYXV0aG9yaXRpZXMiOlsiQ0xJRU5UIl0sImp0aSI6ImVlNTUzNTkxLWVmM2MtNDg4Ny05NzgwLWE2ZmM5MDg1OWU0ZCIsImNsaWVudF9pZCI6InRlc3Rqd3RjbGllbnRpZCJ9.O2fRkkwcZsH_u5vFxO4ZlQ4xbNoWFYvxs72EzXQSpZg&quot;"/>
+  <contextParameter xmi:id="_1ZdysP5fEeeuIL132lN64w" comment="" name="REST_DATA_RESOURCE_XPATH" prompt="REST_DATA_RESOURCE_XPATH?" promptNeeded="false" type="id_String" value="&quot;/root/_links/self/href&quot;"/>
+  <contextParameter xmi:id="_mFjngP7SEeeuIL132lN64w" comment="" name="REST_URL_CONTROLLERS" prompt="REST_URL_CONTROLLERS?" promptNeeded="false" type="id_String" value="&quot;http://dv2-ls-cts-1:8080/controllers&quot;"/>
+  <contextParameter xmi:id="_KiBIEP7UEeeuIL132lN64w" comment="" name="FORMAT_DATE_TO_STRING" prompt="FORMAT_DATE_TO_STRING?" promptNeeded="false" type="id_String" value="&quot;%Y-%m-%d&quot;"/>
+  <contextParameter xmi:id="_-27soP9lEeeuIL132lN64w" comment="" name="REST_URL_AGGREGATES" prompt="REST_URL_AGGREGATES?" promptNeeded="false" type="id_String" value="&quot;http://dv2-ls-cts-1:8080/aggregates&quot;"/>
+  <contextParameter xmi:id="_nLVLQP9rEeeuIL132lN64w" comment="" name="REST_URL_NAS_VOLUMES" prompt="REST_URL_NAS_VOLUMES?" promptNeeded="false" type="id_String" value="&quot;http://dv2-ls-cts-1:8080/nas_volumes&quot;"/>
+  <contextParameter xmi:id="_sAOoMP9sEeeuIL132lN64w" comment="" name="REST_URL_QTREES" prompt="REST_URL_QTREES?" promptNeeded="false" type="id_String" value="&quot;http://dv2-ls-cts-1:8080/qtrees&quot;"/>
+  <contextParameter xmi:id="_g2HVkAAvEeiY4fwiS5-9dw" comment="" name="ADS_CONFIGS_LOADSHEET_USER_ROLES_XLSX" prompt="ADS_CONFIGS_LOADSHEET_USER_ROLES_XLSX?" promptNeeded="false" type="id_String" value="ads_configs_UserRoles.xlsx"/>
+  <contextParameter xmi:id="_OFCKQAAxEeiY4fwiS5-9dw" comment="" name="REST_URL_USER_ROLES" prompt="REST_URL_USER_ROLES?" promptNeeded="false" type="id_String" value="&quot;http://dv2-ls-cts-1:8080/userRoles&quot;"/>
+</talendfile:ContextType>
