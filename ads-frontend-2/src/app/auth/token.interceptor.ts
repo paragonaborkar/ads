@@ -12,8 +12,8 @@ export class TokenInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    console.log("INTERCEPTED !!!!!!!!!!!!!!!!!!!!!!!!!");
-    console.log(this._sessionHelper.getToken().access_token);
+    // console.log("INTERCEPTED !!!!!!!!!!!!!!!!!!!!!!!!!");
+    // console.log(this._sessionHelper.getToken().access_token);
     
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
