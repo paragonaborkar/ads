@@ -1,5 +1,5 @@
-UPDATE `ads`.`user_native` SET `email`='jdoe@corp.com', `password`='$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6' WHERE  `id`=1;
-UPDATE `ads`.`user_native` SET `first_name`='Joe', `last_name`='Doe' WHERE  `id`=1;
+UPDATE `user_native` SET `email`='jdoe@corp.com', `password`='$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6' WHERE  `id`=1;
+UPDATE `user_native` SET `first_name`='Joe', `last_name`='Doe' WHERE  `id`=1;
 
 INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `created_on`, `updated_on`) VALUES (2, 'UserListing', 'USER', NULL, NULL);
 
