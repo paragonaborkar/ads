@@ -12,6 +12,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { SortableModule } from 'ngx-bootstrap/sortable';
 
 import { DataTableModule, SharedModule, DropdownModule } from 'primeng/primeng';
+import { DataTablesModule } from 'angular-datatables';
 
 
 // Providers
@@ -71,6 +72,7 @@ import { PropPreferencesComponent } from './common/prop-preferences/prop-prefere
     AppRoutingModule,
     DataTableModule,
     DropdownModule,
+    DataTablesModule,
     SharedModule,
     ModalModule.forRoot(), 
     SortableModule.forRoot(),
