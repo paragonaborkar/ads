@@ -66,6 +66,8 @@ ALTER TABLE `activity_migration_key_x_ref`  ADD CONSTRAINT `fk_activity_migratio
 ALTER TABLE `user_corporate` CHANGE costCenter cost_center varchar(100);
 ALTER TABLE `wfa_data` CHANGE migrationTarget migration_target TINYINT(1) DEFAULT 1;
 
+ALTER TABLE `user_api` CHANGE COLUMN `client_secret` `client_secret` VARCHAR(100) NULL;
+
 /******************* Missing Foreign Keys in migrationCutoverEvents ***********************/
 
 ALTER TABLE `activity_response` DROP PRIMARY KEY, ADD PRIMARY KEY(`id`), ADD CONSTRAINT uc_primary UNIQUE (`id`, `activity_id`);
