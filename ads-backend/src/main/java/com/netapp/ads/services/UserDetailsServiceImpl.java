@@ -38,7 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		if(!userApiRepository.findByClientId(username).isEmpty()) {
 			UserApi userApi = userApiRepository.findByClientId(username).get(0);
-			if (userApi.getEnabled() == 1) {
+			if (userApi.getEnabled()) {
 				grantedAuthorities.add(new SimpleGrantedAuthority("CLIENT"));
 				return new User(userApi.getClientId(), userApi.getClientSecret(), grantedAuthorities);
 			} else {
@@ -46,7 +46,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			}
 		} else {
 			UserNative user = userNativeRepository.findFirstByEmail(username);
-			if (user == null || user.getEnabled() != 1) {
+			if (user == null || !user.getEnabled()) {
 				throw new UsernameNotFoundException(String.format("The username %s doesn't exist", username));
 			}
 			
