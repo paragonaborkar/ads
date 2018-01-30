@@ -1,0 +1,186 @@
+<form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Add User</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group row">
+          <label for="firstName" class="col-sm-3 col-form-label">Firstname</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" [ngClass]="{'is-invalid':userFirstName.errors?.required && userFirstName.touched || userFirstName.errors?.minlength && userFirstName.touched}"
+              [(ngModel)]="user.firstName" name="firstName" #userFirstName="ngModel" minlength="2" required placeholder="First Name">
+            <div *ngIf="userFirstName.errors?.required && userFirstName.touched" class="invalid-feedback">
+              First Name is required
+            </div>
+            <div *ngIf="userFirstName.errors?.minlength && userFirstName.touched" class="invalid-feedback">
+              Must be at least 2 characters
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="lastName" class="col-sm-3 col-form-label">Lastname</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" [ngClass]="{'is-invalid':userLastName.errors?.required && userLastName.touched || userLastName.errors?.minlength && userLastName.touched}"
+              [(ngModel)]="user.lastName" name="lastName" #userLastName="ngModel" minlength="2" required placeholder="Last Name">
+            <div *ngIf="userLastName.errors?.required && userLastName.touched" class="invalid-feedback">
+              Last Name is required
+            </div>
+            <div *ngIf="userLastName.errors?.minlength && userLastName.touched" class="invalid-feedback">
+              Must be at least 2 characters
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="password" class="col-sm-3 col-form-label">Password</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" [ngClass]="{'is-invalid':userPassword.errors?.required && userPassword.touched || userPassword.errors?.minlength && userPassword.touched}"
+              [(ngModel)]="user.password" name="password" #userPassword="ngModel" minlength="3" required placeholder="Password">
+           <!--  <div *ngIf="userPassword.errors?.required && userPassword.touched" class="invalid-feedback">
+              Password is required
+            </div>
+            <div *ngIf="userPassword.errors?.minlength && userPassword.touched" class="invalid-feedback">
+              Must be at least 8 characters
+            </div> -->
+          </div>
+        </div>
+        <div class="form-group row">
+                    <label for="confirmPassword" class="col-sm-3 col-form-label">Confirm Password</label>
+                    <div class="col-sm-9">
+                    <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="confirmPassword"
+                    required placeholder="Confirm Password">
+                  </div>
+
+        </div>
+
+       <!--  <div class="form-group row">
+          <label for="confirmPassword" class="col-sm-3 col-form-label">Confirm Password</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" [ngClass]="{'is-invalid':userConfirmPassword.errors?.required && userConfirmPassword.touched || userConfirmPassword.errors?.minlength && userConfirmPassword.touched}"
+              [(ngModel)]="user.confirmPassword" name="confirmPassword" #userConfirmPassword="ngModel" minlength="8" required>
+            <div *ngIf="userConfirmPassword.errors?.required && userConfirmPassword.touched" class="invalid-feedback">
+              Password is required
+            </div>
+            <div *ngIf="userConfirmPassword.errors?.minlength && userConfirmPassword.touched" class="invalid-feedback">
+              Must be at least 8 characters
+            </div>
+          </div>
+        </div>
+ -->        <div class="form-group row">
+          <label for="email" class="col-sm-3 col-form-label">Email</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" [ngClass]="{'is-invalid':userEmail.errors?.required && userEmail.touched || userEmail.errors?.pattern && userEmail.touched}"
+              [(ngModel)]="user.email" name="email" #userEmail="ngModel" minlength="8" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" placeholder="Email">
+            <div *ngIf="userEmail.errors?.required && userEmail.touched" class="invalid-feedback" >
+              Email is required
+            </div>
+            <div *ngIf="userEmail.errors?.pattern && userEmail.touched" class="invalid-feedback">
+              Email is invalid
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="role" class="col-sm-3 col-form-label">Role</label>
+          <div class="col-sm-9">
+            <select class="form-control" [(ngModel)]="user.userRoleId" name="userRoleId">
+              <option *ngFor="let r of roleArray; index as i" value="{{i+1}}">{{r}}</option>
+
+            </select>
+          </div>
+        </div>
+
+        <!---->
+        <!-- <form #f="ngForm">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">First name</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="firstname" [(ngModel)]="User.firstName" required minlength="5" maxlength="8"
+              #firstname="ngModel" placeholder="First name">
+            <small [hidden]="firstname.valid || (firstname.pristine && !f.submitted)" class="text-danger">
+              First name is required (minimum 5 characters).
+            </small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Last name</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="lastname" [(ngModel)]="User.lastName" required minlength="5" maxlength="8"
+              #lastname="ngModel" placeholder="Last name">
+            <small [hidden]="lastname.valid || (lastname.pristine && !f.submitted)" class="text-danger">
+              Last name is required (minimum 5 characters).
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Password</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" name="password" [(ngModel)]="User.password" required validateEqual="confirmPassword"
+              reverse="true" #password="ngModel" placeholder="Password">
+            <small [hidden]="password.valid || (password.pristine && !f.submitted)" class="text-danger">
+              Password is required
+            </small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Confirm password</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="confirmPassword" required validateEqual="password"
+              reverse="false" #confirmPassword="ngModel" placeholder="Confirm password">
+            <small [hidden]="confirmPassword.valid || (confirmPassword.pristine && !f.submitted)" class="text-danger">
+              Password mismatch
+            </small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Email</label>
+          <div class="col-sm-9">
+            <input type="email" class="form-control" name="email" [(ngModel)]="User.email" required #email="ngModel" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
+              placeholder="Email">
+            <small [hidden]="email.valid || (email.pristine && !f.submitted)" class="text-danger">
+              Email is required and format should be
+              <i>john@doe.com</i>.
+            </small>
+          </div>
+        </div>
+        <div class="dropdown">
+          <label class="col-sm-3 col-form-label">Role</label>
+          <div class="col-sm-9">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+              Select
+            </button>
+            <select class="dropdown-menu" [(ngModel)]="User.role" [ngModelOptions]="{standalone: true}">
+              <option class="dropdown-item" value="1">Migration Specialist</option>
+              <option class="dropdown-item" value="2">Storage Owner</option>
+              <option class="dropdown-item" value="3">ADS Admin</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Active</label>
+          <div class="col-sm-9">
+            <input type="checkbox" class="form-control" placeholder="Active" name="Active" [(ngModel)]="User.active">
+          </div>
+        </div>
+
+      </form> -->
+
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">Active</label>
+          <div class="col-sm-1" >
+            <input type="checkbox" class="form-control" placeholder="Active" name="Active" [(ngModel)]="user.enabled">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary"  (click)="okay()" >Ok</button>
+        <!-- <input type="submit" value="Add" class="btn btn-primary btn-block"> -->
+      </div>
+    </div>
+  </div>
+</form>

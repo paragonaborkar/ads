@@ -6,17 +6,17 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the preference_details database table.
+ * The persistent class for the preference_detail database table.
  * 
  */
 @Entity
-@Table(name="preference_details")
-@NamedQuery(name="PreferenceDetail.findAll", query="SELECT p FROM PreferenceDetail p")
+@Table(name="preference_detail")
 public class PreferenceDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
 	private Integer id;
 
 	@Column(name="corp_user_id")
@@ -26,14 +26,14 @@ public class PreferenceDetail implements Serializable {
 	@Column(name="created_on")
 	private Date createdOn;
 
-	@Column(name="field_name")
+	@Column(name="field_name", length=255)
 	private String fieldName;
 
 	@Column(name="field_order")
 	private Integer fieldOrder;
 
-	@Column(name="field_visible")
-	private byte fieldVisible;
+	@Column(name="field_visible", length=255)
+	private Integer fieldVisible;
 
 	@Column(name="native_user_id")
 	private Integer nativeUserId;
@@ -44,6 +44,7 @@ public class PreferenceDetail implements Serializable {
 
 	//bi-directional many-to-one association to Preference
 	@ManyToOne
+	@JoinColumn(name="preference_id")
 	private Preference preference;
 
 	public PreferenceDetail() {
@@ -89,11 +90,11 @@ public class PreferenceDetail implements Serializable {
 		this.fieldOrder = fieldOrder;
 	}
 
-	public byte getFieldVisible() {
+	public int getFieldVisible() {
 		return this.fieldVisible;
 	}
 
-	public void setFieldVisible(byte fieldVisible) {
+	public void setFieldVisible(int fieldVisible) {
 		this.fieldVisible = fieldVisible;
 	}
 

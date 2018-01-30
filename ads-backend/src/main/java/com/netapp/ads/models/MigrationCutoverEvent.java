@@ -13,40 +13,41 @@ import java.util.List;
  */
 @Entity
 @Table(name="migration_cutover_event")
-@NamedQuery(name="MigrationCutoverEvent.findAll", query="SELECT m FROM MigrationCutoverEvent m")
 public class MigrationCutoverEvent implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
 	@Column(name="app_owner_user_corporate_id")
-	private int appOwnerUserCorporateId;
+	private Integer appOwnerUserCorporateId;
 
-	@Column(name="application_id")
-	private int applicationId;
+	@Column(name="application_id", nullable=false)
+	private Integer applicationId;
 
 	@Column(name="create_time")
 	private Timestamp createTime;
 
 	@Column(name="high_over_write")
-	private byte highOverWrite;
+	private boolean highOverWrite;
 
 	@Column(name="lob_id")
-	private int lobId;
+	private Integer lobId;
 
-	@Column(name="migrate_day")
-	private int migrateDay;
+	@Column(name="migrate_day", nullable=false)
+	private Integer migrateDay;
 
-	@Column(name="migrate_time")
+	@Column(name="migrate_time", nullable=false, length=60)
 	private String migrateTime;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="migrate_week")
+	@Column(name="migrate_week", nullable=false)
 	private Date migrateWeek;
 
 	@Column(name="migration_approved")
-	private byte migrationApproved;
+	private boolean migrationApproved;
 
 	@Column(name="update_time")
 	private Timestamp updateTime;
@@ -54,6 +55,10 @@ public class MigrationCutoverEvent implements Serializable {
 	//bi-directional many-to-one association to ChangeManagement
 	@OneToMany(mappedBy="migrationCutoverEvent")
 	private List<ChangeManagement> changeManagements;
+
+	//bi-directional many-to-one association to CutoverAssembly
+	@OneToMany(mappedBy="migrationCutoverEvent")
+	private List<CutoverAssembly> cutoverAssemblies;
 
 	//bi-directional many-to-one association to CutoverMountPoint
 	@OneToMany(mappedBy="migrationCutoverEvent")
@@ -67,30 +72,34 @@ public class MigrationCutoverEvent implements Serializable {
 	@OneToMany(mappedBy="migrationCutoverEvent")
 	private List<MigrationCutoverSrcToTgt> migrationCutoverSrcToTgts;
 
+	//bi-directional many-to-one association to Storagex
+	@OneToMany(mappedBy="migrationCutoverEvent")
+	private List<Storagex> storagexs;
+
 	public MigrationCutoverEvent() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getAppOwnerUserCorporateId() {
+	public Integer getAppOwnerUserCorporateId() {
 		return this.appOwnerUserCorporateId;
 	}
 
-	public void setAppOwnerUserCorporateId(int appOwnerUserCorporateId) {
+	public void setAppOwnerUserCorporateId(Integer appOwnerUserCorporateId) {
 		this.appOwnerUserCorporateId = appOwnerUserCorporateId;
 	}
 
-	public int getApplicationId() {
+	public Integer getApplicationId() {
 		return this.applicationId;
 	}
 
-	public void setApplicationId(int applicationId) {
+	public void setApplicationId(Integer applicationId) {
 		this.applicationId = applicationId;
 	}
 
@@ -102,27 +111,27 @@ public class MigrationCutoverEvent implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public byte getHighOverWrite() {
+	public boolean getHighOverWrite() {
 		return this.highOverWrite;
 	}
 
-	public void setHighOverWrite(byte highOverWrite) {
+	public void setHighOverWrite(boolean highOverWrite) {
 		this.highOverWrite = highOverWrite;
 	}
 
-	public int getLobId() {
+	public Integer getLobId() {
 		return this.lobId;
 	}
 
-	public void setLobId(int lobId) {
+	public void setLobId(Integer lobId) {
 		this.lobId = lobId;
 	}
 
-	public int getMigrateDay() {
+	public Integer getMigrateDay() {
 		return this.migrateDay;
 	}
 
-	public void setMigrateDay(int migrateDay) {
+	public void setMigrateDay(Integer migrateDay) {
 		this.migrateDay = migrateDay;
 	}
 
@@ -142,11 +151,11 @@ public class MigrationCutoverEvent implements Serializable {
 		this.migrateWeek = migrateWeek;
 	}
 
-	public byte getMigrationApproved() {
+	public boolean getMigrationApproved() {
 		return this.migrationApproved;
 	}
 
-	public void setMigrationApproved(byte migrationApproved) {
+	public void setMigrationApproved(boolean migrationApproved) {
 		this.migrationApproved = migrationApproved;
 	}
 
@@ -178,6 +187,28 @@ public class MigrationCutoverEvent implements Serializable {
 		changeManagement.setMigrationCutoverEvent(null);
 
 		return changeManagement;
+	}
+
+	public List<CutoverAssembly> getCutoverAssemblies() {
+		return this.cutoverAssemblies;
+	}
+
+	public void setCutoverAssemblies(List<CutoverAssembly> cutoverAssemblies) {
+		this.cutoverAssemblies = cutoverAssemblies;
+	}
+
+	public CutoverAssembly addCutoverAssembly(CutoverAssembly cutoverAssembly) {
+		getCutoverAssemblies().add(cutoverAssembly);
+		cutoverAssembly.setMigrationCutoverEvent(this);
+
+		return cutoverAssembly;
+	}
+
+	public CutoverAssembly removeCutoverAssembly(CutoverAssembly cutoverAssembly) {
+		getCutoverAssemblies().remove(cutoverAssembly);
+		cutoverAssembly.setMigrationCutoverEvent(null);
+
+		return cutoverAssembly;
 	}
 
 	public List<CutoverMountPoint> getCutoverMountPoints() {
@@ -244,6 +275,28 @@ public class MigrationCutoverEvent implements Serializable {
 		migrationCutoverSrcToTgt.setMigrationCutoverEvent(null);
 
 		return migrationCutoverSrcToTgt;
+	}
+
+	public List<Storagex> getStoragexs() {
+		return this.storagexs;
+	}
+
+	public void setStoragexs(List<Storagex> storagexs) {
+		this.storagexs = storagexs;
+	}
+
+	public Storagex addStoragex(Storagex storagex) {
+		getStoragexs().add(storagex);
+		storagex.setMigrationCutoverEvent(this);
+
+		return storagex;
+	}
+
+	public Storagex removeStoragex(Storagex storagex) {
+		getStoragexs().remove(storagex);
+		storagex.setMigrationCutoverEvent(null);
+
+		return storagex;
 	}
 
 }
