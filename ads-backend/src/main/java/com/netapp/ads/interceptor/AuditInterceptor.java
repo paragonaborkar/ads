@@ -19,10 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netapp.ads.exception.NetAppAdsException;
 import com.netapp.ads.models.AuditEvent;
 import com.netapp.ads.models.AuditTrailApi;
-import com.netapp.ads.models.AuditTrailApiPK;
 import com.netapp.ads.models.AuditTrailCorporateUser;
 import com.netapp.ads.models.AuditTrailNativeUser;
-import com.netapp.ads.models.AuditTrailNativeUserPK;
 import com.netapp.ads.models.UserApi;
 import com.netapp.ads.models.UserNative;
 import com.netapp.ads.repos.AuditEventRepository;
@@ -88,7 +86,7 @@ public class AuditInterceptor extends EmptyInterceptor {
 	 */
 	@Override
 	public void postFlush(Iterator entities) {
-
+		
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = servletRequestAttributes.getRequest();
@@ -97,7 +95,6 @@ public class AuditInterceptor extends EmptyInterceptor {
 		String userName = request.getUserPrincipal().getName();
 		String method = request.getMethod();
 		Object currentObject;
-
 		if (isMainEntity) {
 			if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method)) {
 				currentObject = entities.next();
@@ -107,13 +104,13 @@ public class AuditInterceptor extends EmptyInterceptor {
 
 			UserApiRepository userApiRepo = ContextProvider.getBean(UserApiRepository.class);
 			UserNativeRepository userNativeRepo = ContextProvider.getBean(UserNativeRepository.class);
-
+			
 			AuditTrailApiRepository auditTrailApiRepositories = ContextProvider.getBean(AuditTrailApiRepository.class);
 			AuditTrailNativeUserRepository auditTrailNativeUserRepositories = ContextProvider
 					.getBean(AuditTrailNativeUserRepository.class);
 
 			AuditEventRepository auditEventRepositories = ContextProvider.getBean(AuditEventRepository.class);
-
+			
 			//Finding Audit Event
 			List<AuditEvent> auditEvent = auditEventRepositories.findByHttpMethodAndResourcePattern(method,
 					resourcePattern);
@@ -124,14 +121,16 @@ public class AuditInterceptor extends EmptyInterceptor {
 
 				List<UserApi> newUserApi = userApiRepo.findByClientId(userName);
 				List<UserNative> newUserNative = userNativeRepo.findByUserName(userName);
-
+				
 				if (!newUserNative.isEmpty()) {
+					System.out.println("***: " + getClass().getName() + ": postFlush: in first if");
 					UserNative userNative = newUserNative.get(0);
 
 					AuditTrailNativeUser auditTrailNativeUser = new AuditTrailNativeUser();
-					AuditTrailNativeUserPK auditTrailNativeUserPK = new AuditTrailNativeUserPK();
-					auditTrailNativeUserPK.setAuditEventId(auditId);
-					auditTrailNativeUser.setId(auditTrailNativeUserPK);
+					//AuditTrailNativeUserPK auditTrailNativeUserPK = new AuditTrailNativeUserPK();
+					//auditTrailNativeUserPK.setAuditEventId(auditId);
+					//auditTrailNativeUser.setId(auditTrailNativeUserPK);
+					auditTrailNativeUser.setAuditEvent(auditEventRepositories.findOne(auditId));
 					auditTrailNativeUser.setCreateTime((Timestamp) dateUtils.convertToUtc());
 					auditTrailNativeUser.setUserNativeId(userNative.getId());
 					if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method)) {
@@ -150,9 +149,10 @@ public class AuditInterceptor extends EmptyInterceptor {
 					UserApi userApi = newUserApi.get(0);
 
 					AuditTrailApi auditTrailApi = new AuditTrailApi();
-					AuditTrailApiPK auditTrailApiPK = new AuditTrailApiPK();
-					auditTrailApiPK.setAuditEventId(auditId);
-					auditTrailApi.setId(auditTrailApiPK);
+					//AuditTrailApiPK auditTrailApiPK = new AuditTrailApiPK();
+					//auditTrailApiPK.setAuditEventId(auditId);
+					//auditTrailApi.setId(auditTrailApiPK);
+					auditTrailApi.setAuditEvent(auditEventRepositories.findOne(auditId));
 					auditTrailApi.setCreateTime((Timestamp) dateUtils.convertToUtc());
 					auditTrailApi.setUserApiId(userApi.getId());
 

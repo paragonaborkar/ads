@@ -2,6 +2,9 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Timestamp;
 
 
@@ -22,6 +25,7 @@ public class UserApi implements Serializable {
 	@Column(name="client_id", length=45)
 	private String clientId;
 
+	@JsonIgnore
 	@Column(name="client_secret", length=45)
 	private String clientSecret;
 

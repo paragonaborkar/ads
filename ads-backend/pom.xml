@@ -41,7 +41,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
-		</dependency> -->
+		</dependency>
 
 
 		<!-- License Management dependencies -->
@@ -56,12 +56,19 @@
 			<version>1.46</version>
 		</dependency>
 		<dependency>
+		    <groupId>com.verhas</groupId>
+		    <artifactId>license3j</artifactId>
+		    <version>1.0.8</version>
+		</dependency>
+		
+		<!-- 
+		<dependency>
 			<groupId>com.javax0.license3j</groupId>
 			<artifactId>license3j</artifactId>
-			<version>1.0</version>
+			<version>1.0.7</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/license3j-1.0.8-SNAPSHOT.jar</systemPath>
-		</dependency>
+			  <systemPath>${basedir}/lib/license3j-1.0.8-SNAPSHOT.jar</systemPath>
+		</dependency> -->
 		<!-- End License Management dependencies -->
 		
 		

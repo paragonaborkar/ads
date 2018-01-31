@@ -14,9 +14,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.netapp.ads.models.AuditEvent;
 import com.netapp.ads.models.AuditTrailApi;
-import com.netapp.ads.models.AuditTrailApiPK;
 import com.netapp.ads.models.AuditTrailNativeUser;
-import com.netapp.ads.models.AuditTrailNativeUserPK;
 import com.netapp.ads.models.UserApi;
 import com.netapp.ads.models.UserNative;
 import com.netapp.ads.repos.AuditEventRepository;
@@ -93,9 +91,9 @@ public class AuditReportsData {
 			if (!firstUserApi.isEmpty()) {
 				UserApi userApi = firstUserApi.get(0);
 				AuditTrailApi auditTrailApi = new AuditTrailApi();
-				AuditTrailApiPK auditTrailApiPK = new AuditTrailApiPK();
-				auditTrailApiPK.setAuditEventId(auditId);
-				auditTrailApi.setId(auditTrailApiPK);
+				//auditTrailApiPK.setAuditEventId(auditId);
+				auditTrailApi.setAuditEvent(auditEventRepository.findOne(auditId));
+				//auditTrailApi.setId(auditTrailApiPK);
 				auditTrailApi.setUserApiId(userApi.getId());
 				auditTrailApi.setCreateTime((Timestamp) dateUtils.convertToUtc());
 				auditTrailApi.setAuditedResource(urlInfo);
@@ -122,9 +120,10 @@ public class AuditReportsData {
 
 				UserNative userNative = firstUserNative.get(0);
 				AuditTrailNativeUser auditTrailNativeUser = new AuditTrailNativeUser();
-				AuditTrailNativeUserPK auditTrailNativeUserPK = new AuditTrailNativeUserPK();
-				auditTrailNativeUserPK.setAuditEventId(auditId);
-				auditTrailNativeUser.setId(auditTrailNativeUserPK);
+				//AuditTrailNativeUserPK auditTrailNativeUserPK = new AuditTrailNativeUserPK();
+				auditTrailNativeUser.setAuditEvent(auditEventRepository.findOne(auditId));
+				//auditTrailNativeUserPK.setAuditEventId(auditId);
+				//auditTrailNativeUser.setId(auditTrailNativeUserPK);
 				auditTrailNativeUser.setUserNativeId(userNative.getId());
 				auditTrailNativeUser.setAuditedResource(urlInfo);
 				auditTrailNativeUser.setCreateTime((Timestamp) dateUtils.convertToUtc());
