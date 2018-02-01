@@ -1,43 +1,63 @@
 package com.netapp.ads.models;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the sys_config database table.
  * 
  */
 @Entity
-@Table(name="sys_config")
+@Table(name = "sys_config")
 public class SysConfig implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(unique = true, nullable = false)
 	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name = "create_time")
 	private Timestamp createTime;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private boolean encrypted;
 
-	@Column(name="property_name", nullable=false, length=255)
+	@Column(name = "property_name", nullable = false, length = 255)
 	private String propertyName;
 
-	@Column(name="property_value", nullable=false, length=255)
+	@Column(name = "property_value", nullable = false, length = 255)
 	private String propertyValue;
 
-	@Column(name="update_time")
+	@Column(name = "update_time")
 	private Timestamp updateTime;
 
-	//bi-directional many-to-one association to SysConfigPropertyType
-	@ManyToOne
-	@JoinColumn(name="property_type_id")
+	@Column(name = "grouping", nullable = false, length = 48)
+	private String grouping;
+	
+	// bi-directional many-to-one association to SysConfigPropertyType
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "property_type_id")
 	private SysConfigPropertyType sysConfigPropertyType;
+
+	public String getGrouping() {
+		return grouping;
+	}
+
+	public void setGrouping(String grouping) {
+		this.grouping = grouping;
+	}
 
 	public SysConfig() {
 	}
