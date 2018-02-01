@@ -96,3 +96,7 @@ ALTER TABLE `workflow` DROP PRIMARY KEY, ADD PRIMARY KEY(`id`), ADD CONSTRAINT u
 ALTER TABLE `workflow` DROP INDEX `fk_workflow_migration_cutover_src_to_tgt1_idx`;
 
 SET FOREIGN_KEY_CHECKS=1;
+
+/******************* Updates identified during Talend Job Testing **********************/
+ALTER TABLE `storage` CHANGE COLUMN `work_package_id` `work_package_id` INT(11) NULL;
+ALTER TABLE `preference_detail` CHANGE COLUMN `field_visible` `field_visible` TINYINT(1) NULL;
