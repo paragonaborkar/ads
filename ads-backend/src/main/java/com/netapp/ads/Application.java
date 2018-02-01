@@ -34,7 +34,7 @@ public class Application {
 		HashMap<String, String> licenseInfo = completeLicenseInfo.get("licenseInfo");
 
 		// FIXME: no sys out's
-		System.out.println("The following ADS modules are enabled:");
+		log.debug("The following ADS modules are enabled:");
 		boolean noActiveModules = true;
 		for (Map.Entry<String, Boolean> entry : ACTIVE_MODULES.entrySet()) {
 			String key = entry.getKey();
@@ -46,7 +46,7 @@ public class Application {
 
 			// FIXME: Print this out using a logger.
 			// FIXME: no sys out's
-			System.out.println(key + ":" + value);
+			log.debug(key + ":" + value);
 		}
 
 		if (noActiveModules) {

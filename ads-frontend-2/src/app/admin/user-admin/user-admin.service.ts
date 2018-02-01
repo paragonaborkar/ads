@@ -48,11 +48,11 @@ export class UserAdminService {
    */
   addUser(obj): Observable<any> {
     console.log('User Object in Add User - ', obj);
-    let authToken = this._sessionHelper.getToken().access_token;
-    const headers = new Headers();
+    // let authToken = this._sessionHelper.getToken().access_token;
+    // const headers = new Headers();
     //headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', `bearer ${authToken}`);
-    let options = new RequestOptions({ headers: headers });
+    // headers.append('Authorization', `bearer ${authToken}`);
+    // let options = new RequestOptions({ headers: headers });
 
     return this.http.post(this.serviceUrl, obj).map(function (response) {
       //return response.json();

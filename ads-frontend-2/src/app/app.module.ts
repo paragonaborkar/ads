@@ -49,8 +49,12 @@ import { UpdateUserComponent } from './admin/user-admin/edituser/edituser.compon
 import { DeleteUserComponent } from './admin/user-admin/deleteuser/deleteuser.component';
 import { PropPreferencesComponent } from './common/prop-preferences/prop-preferences.component';
 import { AppPropertiesComponent } from './admin/app-properties/app-properties.component';
-/*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
+import { ArrayFilterPipePipe } from './pipes/array-filter-pipe.pipe';
 
+import { ConnectionsManualFunctionsComponent } from './connections/connections-manual-functions/connections-manual-functions.component';
+import { DiscoverManualFunctionsComponent } from './discover/discover-manual-functions/discover-manual-functions.component';
+import { FriendlyLabelPipePipe } from './pipes/friendly-label-pipe.pipe';
+/*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
 
 @NgModule({
@@ -67,6 +71,10 @@ import { AppPropertiesComponent } from './admin/app-properties/app-properties.co
     FooterComponent,
     PropPreferencesComponent,
     AppPropertiesComponent,
+    ArrayFilterPipePipe,
+    FriendlyLabelPipePipe,
+    ConnectionsManualFunctionsComponent,
+    DiscoverManualFunctionsComponent,
     
 
   ],

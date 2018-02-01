@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.hibernate.CallbackException;
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -33,6 +35,8 @@ import com.netapp.ads.util.DateUtils;
 @Component
 public class AuditInterceptor extends EmptyInterceptor {
 
+	private static final Logger log = LoggerFactory.getLogger(AuditInterceptor.class);
+	
 	boolean isMainEntity = false;
 	Object deleteObj, oldUpdate;
 
@@ -123,7 +127,7 @@ public class AuditInterceptor extends EmptyInterceptor {
 				List<UserNative> newUserNative = userNativeRepo.findByUserName(userName);
 				
 				if (!newUserNative.isEmpty()) {
-					System.out.println("***: " + getClass().getName() + ": postFlush: in first if");
+					log.debug("***: " + getClass().getName() + ": postFlush: in first if");
 					UserNative userNative = newUserNative.get(0);
 
 					AuditTrailNativeUser auditTrailNativeUser = new AuditTrailNativeUser();

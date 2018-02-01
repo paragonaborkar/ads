@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <talendfile:ProcessType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" defaultContext="Default" jobType="Standard">
   <context confirmationNeeded="false" name="Default">
-    <contextParameter comment="" name="new1" prompt="new1?" promptNeeded="false" type="id_String" value="&quot;SELECT  volSel.intVolId,  volSel.contId,  volSel.aggrId,  volSel.vServer,       volSel.volName,        volSel.allocCap,        volSel.usedCap,        volSel.snapType,        volSel.snapSrcVolId,        volSel.snapTgtVolId,        volSel.snap_count, volSel.status,        volSel.lastAccess,        volSel.avgIOpS,        volSel.peakIOpS,        volSel.create_date,       volSel.creation_user   FROM    (SELECT DISTINCT dwh_inventory.internal_volume.id AS 'intVolId',       dwh_inventory.storage_node_to_storage_pool.storageNodeId AS 'contId',       dwh_inventory.internal_volume.storagePoolId AS 'aggrId',       IF (dwh_inventory.internal_volume.virtualStorage IS NULL, 'vFiler0',  dwh_inventory.internal_volume.virtualStorage) AS 'vServer',       IF (dwh_inventory.internal_volume.name LIKE '%:%',  SUBSTRING_INDEX(dwh_inventory.internal_volume.name,':',-1),  dwh_inventory.internal_volume.name) AS 'volName', dwh_inventory.internal_volume.totalAllocatedCapacityMB/1024 AS 'allocCap',       dwh_inventory.internal_volume.totalUsedCapacityMB/1024 AS 'usedCap',       dwh_inventory.dr_internal_volume_replica.technology AS 'snapType',       dwh_inventory.dr_internal_volume_replica.sourceInternalVolumeId AS 'snapSrcVolId',       dwh_inventory.dr_internal_volume_replica.targetInternalVolumeId AS 'snapTgtVolId',       dwh_inventory.internal_volume.snapshotCount AS 'snap_count',       dwh_inventory.internal_volume.status AS 'status',       MAX(dwh_inventory.wcr_host_conn_view.`Last Seen`) AS 'lastAccess',       dwh_inventory.wcr_vol_combined_data.avgIOpS AS 'avgIOpS',       dwh_inventory.wcr_vol_combined_data.peakIOpS AS 'peakIOpS',       NOW() AS 'create_date',       'system' AS 'creation_user'    FROM dwh_inventory.internal_volume  JOIN dwh_inventory.storage_node_to_storage_pool ON dwh_inventory.internal_volume.storagePoolId = dwh_inventory.storage_node_to_storage_pool.storagePoolId      LEFT JOIN dwh_inventory.dr_internal_volume_replica ON dwh_inventory.internal_volume.id = dwh_inventory.dr_internal_volume_replica.sourceInternalVolumeId LEFT JOIN dwh_inventory.wcr_host_conn_view ON dwh_inventory.internal_volume.id = dwh_inventory.wcr_host_conn_view.`Internal Volume ID`      LEFT JOIN dwh_inventory.wcr_volume_dimension ON dwh_inventory.internal_volume.id = dwh_inventory.wcr_volume_dimension.internalVolumeId      LEFT JOIN dwh_inventory.wcr_vol_combined_data ON dwh_inventory.wcr_volume_dimension.id = dwh_inventory.wcr_vol_combined_data.volDimId WHERE dwh_inventory.internal_volume.id NOT IN (SELECT targetInternalVolumeId FROM dwh_inventory.dr_internal_volume_replica)   GROUP BY dwh_inventory.internal_volume.id  ) AS volSel&quot;"/>
     <contextParameter comment="" name="FORMAT_DATETIME_TO_STRING" prompt="FORMAT_DATETIME_TO_STRING?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;%Y-%m-%dT%H:%i:%s&quot;"/>
     <contextParameter comment="" name="LOAD_FILES_LOC" prompt="LOAD_FILES_LOC?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_Directory" value="C:/netapp/ads_setup_loadsheets/"/>
     <contextParameter comment="" name="logDir" prompt="logDir?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_Directory" value="C:/netapp/logs/"/>
@@ -18,11 +17,13 @@
     <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_USER_NATIVES_XLSX" prompt="ADS_CONFIGS_LOADSHEET_USER_NATIVES_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_UserNative_Template.xlsx"/>
     <contextParameter comment="" name="REST_DATA_RESOURCE_XPATH" prompt="REST_DATA_RESOURCE_XPATH?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;/root/_links/self/href&quot;"/>
     <contextParameter comment="" name="REST_URL_CONTROLLERS" prompt="REST_URL_CONTROLLERS?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;http://localhost:8080/controllers&quot;"/>
+    <contextParameter comment="" name="FORMAT_DATE_TO_STRING" prompt="FORMAT_DATE_TO_STRING?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;%Y-%m-%d&quot;"/>
     <contextParameter comment="" name="REST_URL_AGGREGATES" prompt="REST_URL_AGGREGATES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;http://localhost:8080/aggregates&quot;"/>
     <contextParameter comment="" name="REST_URL_NAS_VOLUMES" prompt="REST_URL_NAS_VOLUMES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;http://localhost:8080/nas_volumes&quot;"/>
     <contextParameter comment="" name="REST_URL_QTREES" prompt="REST_URL_QTREES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;http://localhost:8080/qtrees&quot;"/>
     <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_USER_ROLES_XLSX" prompt="ADS_CONFIGS_LOADSHEET_USER_ROLES_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_UserRoles_Template.xlsx"/>
     <contextParameter comment="" name="REST_URL_USER_ROLES" prompt="REST_URL_USER_ROLES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;http://localhost:8080/userRoles&quot;"/>
+    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_APPLICATION_XLSX" prompt="ADS_CONFIGS_LOADSHEET_APPLICATION_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_Application_Template.xlsx"/>
     <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_MST_EMAIL_TYPE_XLSX" prompt="ADS_CONFIGS_LOADSHEET_MST_EMAIL_TYPE_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_MstEmailType_Template.xlsx"/>
     <contextParameter comment="" name="REST_URL_APPLICATIONS" prompt="REST_URL_APPLICATIONS?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="http://localhost:8080/applications"/>
     <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_SCHEDULE_XLSX" prompt="ADS_CONFIGS_LOADSHEET_SCHEDULE_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_Schedule_Template.xlsx"/>
@@ -42,7 +43,7 @@
     <contextParameter comment="" name="ADS_EMAIL_AUTHENTICATION_USER" prompt="ADS_EMAIL_AUTHENTICATION_USER?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;ads.sendemail@gmail.com&quot;"/>
     <contextParameter comment="" name="ADS_EMAIL_SMTP_PORT" prompt="ADS_EMAIL_SMTP_PORT?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="587"/>
     <contextParameter comment="" name="ADS_EMAIL_AUTHENTICATION_PASSWORD" prompt="ADS_EMAIL_AUTHENTICATION_PASSWORD?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;Paragon123&quot;"/>
-    <contextParameter comment="" name="ADS_EMAIL_FROM" prompt="ADS_EMAIL_FROM?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;mohan.bondada@gmail.com&quot;"/>
+    <contextParameter comment="" name="ADS_EMAIL_FROM" prompt="ADS_EMAIL_FROM?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;ads.sendemail@gmail.com&quot;"/>
     <contextParameter comment="" name="ADS_EMAIL_TO" prompt="ADS_EMAIL_TO?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;szemanick@consultparagon.com&quot;"/>
     <contextParameter comment="" name="ADS_EMAIL_SMTP_NAME" prompt="ADS_EMAIL_SMTP_NAME?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;smtp.gmail.com&quot;"/>
   </context>
@@ -212,12 +213,12 @@
     <elementParameter field="TEXT" name="TYPE" value="MYSQL" show="false"/>
     <elementParameter field="TEXT" name="USER" value="&quot;root&quot;"/>
     <elementParameter field="PASSWORD" name="PASS" value="nN+96tarjYXiKuQUlVjMjA=="/>
-    <elementParameter field="DBTABLE" name="TABLE" value="&quot;user_roles&quot;"/>
+    <elementParameter field="DBTABLE" name="TABLE" value=""/>
     <elementParameter field="QUERYSTORE_TYPE" name="QUERYSTORE" value="&quot;&quot;"/>
     <elementParameter field="TECHNICAL" name="QUERYSTORE:REPOSITORY_QUERYSTORE_TYPE" value="" show="false"/>
     <elementParameter field="TECHNICAL" name="QUERYSTORE:QUERYSTORE_TYPE" value="BUILT_IN"/>
     <elementParameter field="GUESS_SCHEMA" name="GUESS_SCHEMA" value="&quot;&quot;"/>
-    <elementParameter field="MEMO_SQL" name="QUERY" value="&quot;SELECT DISTINCT &#xD;&#xA;  dwh_inventory.storage.datacenter,&#xD;&#xA;  dwh_inventory.storage.region&#xD;&#xA; FROM dwh_inventory.storage&quot;"/>
+    <elementParameter field="MEMO_SQL" name="QUERY" value="&quot;SELECT&#xD;&#xA;        dwh_inventory.wcr_host_conn_view.hostname,&#xD;&#xA;        dwh_inventory.wcr_host_conn_view.ip&#xD;&#xA; FROM dwh_inventory.wcr_host_conn_view&quot;"/>
     <elementParameter field="LABEL" name="NOTE" value="This option only applies when deploying and running in the Talend Runtime"/>
     <elementParameter field="CHECK" name="SPECIFY_DATASOURCE_ALIAS" value="false"/>
     <elementParameter field="TEXT" name="DATASOURCE_ALIAS" value="&quot;&quot;" show="false"/>
@@ -228,16 +229,16 @@
     <elementParameter field="CHECK" name="ENABLE_STREAM" value="false"/>
     <elementParameter field="CHECK" name="TRIM_ALL_COLUMN" value="false"/>
     <elementParameter field="TABLE" name="TRIM_COLUMN">
-      <elementValue elementRef="SCHEMA_COLUMN" value="dataCenter"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="Hostname"/>
       <elementValue elementRef="TRIM" value="false"/>
-      <elementValue elementRef="SCHEMA_COLUMN" value="Region"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="IP"/>
       <elementValue elementRef="TRIM" value="false"/>
     </elementParameter>
     <elementParameter field="TEXT" name="LABEL" value="dwh_inventory"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
     <metadata connector="FLOW" name="tMysqlInput_1">
-      <column comment="" key="false" length="255" name="dataCenter" nullable="false" pattern="" precision="0" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
-      <column comment="" key="false" length="255" name="Region" nullable="false" pattern="" precision="0" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="1" name="Hostname" nullable="false" pattern="" precision="0" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column comment="" key="false" length="1" name="IP" nullable="false" pattern="" precision="0" sourceType="VARCHAR" type="id_String" originalLength="-1" usefulColumn="true"/>
       <additionalProperties key="Comment" value=""/>
     </metadata>
   </node>
@@ -250,16 +251,16 @@
       <elementValue elementRef="VALUE" value=""/>
       <elementValue elementRef="ATTRIBUTE" value="main"/>
       <elementValue elementRef="ORDER" value="1"/>
-      <elementValue elementRef="PATH" value="/root/region"/>
-      <elementValue elementRef="COLUMN" value="Region"/>
+      <elementValue elementRef="PATH" value="/root/ip"/>
+      <elementValue elementRef="COLUMN" value="IP"/>
       <elementValue elementRef="VALUE" value=""/>
       <elementValue elementRef="ATTRIBUTE" value="branch"/>
       <elementValue elementRef="ORDER" value="3"/>
     </elementParameter>
     <elementParameter field="TABLE" name="GROUP" show="false"/>
     <elementParameter field="TABLE" name="LOOP" show="false">
-      <elementValue elementRef="PATH" value="/root/dataCenterName"/>
-      <elementValue elementRef="COLUMN" value="dataCenter"/>
+      <elementValue elementRef="PATH" value="/root/hostname"/>
+      <elementValue elementRef="COLUMN" value="Hostname"/>
       <elementValue elementRef="VALUE" value=""/>
       <elementValue elementRef="ATTRIBUTE" value="main"/>
       <elementValue elementRef="ORDER" value="2"/>
@@ -305,7 +306,7 @@
       <elementValue elementRef="PARAM_NAME_COLUMN" value="RESPONSE_RESOURCE_XPATH"/>
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.REST_DATA_RESOURCE_XPATH"/>
       <elementValue elementRef="PARAM_NAME_COLUMN" value="REST_URL"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.REST_URL_DATA_CENTERS"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.REST_URL_HOSTS"/>
       <elementValue elementRef="PARAM_NAME_COLUMN" value="REST_REQ_JSON"/>
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.REST_REQ_JSON"/>
     </elementParameter>
@@ -348,7 +349,7 @@
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
   </subjob>
   <subjob>
-    <elementParameter field="CHECK" name="SHOW_SUBJOB_TITLE" value="true" show="false"/>
+    <elementParameter field="CHECK" name="SHOW_SUBJOB_TITLE" value="true"/>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tPrejob_1" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="230;100;0"/>
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="255;220;180"/>

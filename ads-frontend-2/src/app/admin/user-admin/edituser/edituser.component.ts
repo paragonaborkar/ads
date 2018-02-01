@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./edituser.component.css']
 })
 export class UpdateUserComponent implements OnInit {
+  @ViewChild('updateModal') public updateModal:ModalDirective;
   @Output() yes = new EventEmitter();
   @Output() cancel = new EventEmitter();
   @Input() User: any;
@@ -29,16 +30,13 @@ export class UpdateUserComponent implements OnInit {
      this.User.enabled = 0;
    }
     console.log('user Edit Form == > ' + JSON.stringify(this.User));
-    if(this.confirmPassword === this.User.password){
-      console.log('COmpared yEs password')
       this.yes.emit(this.User);
-    } else {
-      window.alert('Passwords did not match');
-    }
+      this.updateModal.hide();
   }
 
   close(event) {
     this.cancel.emit(event);
+    this.updateModal.hide();
   }
 
 }
