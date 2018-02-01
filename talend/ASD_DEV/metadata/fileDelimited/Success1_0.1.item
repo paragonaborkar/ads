@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendMetadata="http://www.talend.org/metadata/connection/2010" xmlns:orgomg.cwm.resource.record="http:///orgomg/cwm/resource/record.ecore">
+  <TalendMetadata:DelimitedFileConnection xmi:id="_QOyOAPrsEeeJ7Ia1X_-gbA" name="Success1" dataPackage="_QOy1EPrsEeeJ7Ia1X_-gbA" Server="Localhost 127.0.0.1" FilePath="C:/netapp/logs/LoadUserNatives_Success.csv" Encoding="US-ASCII" FieldSeparatorValue="&quot;;&quot;" RowSeparatorValue="&quot;\n&quot;" UseHeader="true" HeaderValue="1" FirstLineCaption="true"/>
+  <orgomg.cwm.resource.record:RecordFile xmi:id="_QOy1EPrsEeeJ7Ia1X_-gbA" name="default" dataManager="_QOyOAPrsEeeJ7Ia1X_-gbA">
+    <ownedElement xsi:type="TalendMetadata:MetadataTable" xmi:id="_QOy1EfrsEeeJ7Ia1X_-gbA" id="_FisewPrsEeeJ7Ia1X_-gbA" label="metadata">
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_QOy1EvrsEeeJ7Ia1X_-gbA" label="statusCode" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_QOy1E_rsEeeJ7Ia1X_-gbA" label="body" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_QOy1FPrsEeeJ7Ia1X_-gbA" label="string" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_QOy1FfrsEeeJ7Ia1X_-gbA" label="errorCode" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_QOy1FvrsEeeJ7Ia1X_-gbA" label="errorMessage" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_QOy1F_rsEeeJ7Ia1X_-gbA" label="RowStatus" length="7" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_QOy1GPrsEeeJ7Ia1X_-gbA" label="customErrorMessage" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_QOy1GfrsEeeJ7Ia1X_-gbA" label="rowNumber" length="1" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+    </ownedElement>
+  </orgomg.cwm.resource.record:RecordFile>
+</xmi:XMI>

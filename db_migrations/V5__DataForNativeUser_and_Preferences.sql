@@ -1,3 +1,4 @@
+ALTER TABLE `user_native` AUTO_INCREMENT = 1;
 INSERT INTO `user_native`  (`email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`) VALUES ('jdoe@corp.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'Joe', 'Doe','sparky', 1);
 
 INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `created_on`, `updated_on`) VALUES (2, 'UserListing', 'USER', NULL, NULL);
