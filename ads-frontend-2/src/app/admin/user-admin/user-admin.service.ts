@@ -70,7 +70,7 @@ export class UserAdminService {
     const url = user['_links']['self']['href'];
     return this.http
       .put(url, JSON.stringify(user))
-      .map((res: Response) => res.json() as Object)
+      .map((res: Response) => res)
       // .map(() => user)
       .catch(this.handleError);
   }

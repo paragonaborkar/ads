@@ -90,7 +90,7 @@ export class PropPreferencesComponent implements OnInit {
       this.updatedPreference = {
         fieldOrder: index + 1,
         fieldVisible: 1,
-        patchLink: leftItem._links.preferenceDetail.href
+        patchLink: leftItem._links.preferenceDetail.templated === true ? leftItem._links.preferenceDetail.href.substring(0, leftItem._links.preferenceDetail.href.indexOf('{')) : leftItem._links.preferenceDetail.href
       };
       this.updatedPreferences.push(this.updatedPreference);
     });
@@ -99,7 +99,7 @@ export class PropPreferencesComponent implements OnInit {
       this.updatedPreference = {
         fieldOrder: index + 1,
         fieldVisible: 0,
-        patchLink: rightItem._links.preferenceDetail.href
+        patchLink: rightItem._links.preferenceDetail.templated === true ? rightItem._links.preferenceDetail.href.substring(0, rightItem._links.preferenceDetail.href.indexOf('{')) : rightItem._links.preferenceDetail.href
       };
       this.updatedPreferences.push(this.updatedPreference);
     });
