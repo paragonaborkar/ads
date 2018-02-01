@@ -2,6 +2,9 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -35,6 +38,7 @@ public class UserNative implements Serializable {
 	@Column(name="last_name", length=45)
 	private String lastName;
 
+	@JsonIgnore
 	@Column(nullable=false, length=64)
 	private String password;
 
