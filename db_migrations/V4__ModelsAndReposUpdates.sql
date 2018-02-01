@@ -66,6 +66,8 @@ ALTER TABLE `activity_migration_key_x_ref`  ADD CONSTRAINT `fk_activity_migratio
 ALTER TABLE `user_corporate` CHANGE costCenter cost_center varchar(100);
 ALTER TABLE `wfa_data` CHANGE migrationTarget migration_target TINYINT(1) DEFAULT 1;
 
+ALTER TABLE `user_api` CHANGE COLUMN `client_secret` `client_secret` VARCHAR(100) NULL;
+
 /******************* Missing Foreign Keys in migrationCutoverEvents ***********************/
 
 ALTER TABLE `activity_response` DROP PRIMARY KEY, ADD PRIMARY KEY(`id`), ADD CONSTRAINT uc_primary UNIQUE (`id`, `activity_id`);
@@ -94,3 +96,7 @@ ALTER TABLE `workflow` DROP PRIMARY KEY, ADD PRIMARY KEY(`id`), ADD CONSTRAINT u
 ALTER TABLE `workflow` DROP INDEX `fk_workflow_migration_cutover_src_to_tgt1_idx`;
 
 SET FOREIGN_KEY_CHECKS=1;
+
+/******************* Updates identified during Talend Job Testing **********************/
+ALTER TABLE `storage` CHANGE COLUMN `work_package_id` `work_package_id` INT(11) NULL;
+ALTER TABLE `preference_detail` CHANGE COLUMN `field_visible` `field_visible` TINYINT(1) NULL;

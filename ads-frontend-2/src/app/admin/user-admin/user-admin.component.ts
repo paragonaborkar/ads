@@ -15,6 +15,9 @@ import { SpringRestResponse } from '../../spring-rest-response';
 import { UserAdminService } from './user-admin.service';
 
 
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/map';
+
 @Component({
   selector: 'app-user-admin',
   templateUrl: './user-admin.component.html',
@@ -94,7 +97,18 @@ export class UserAdminComponent implements OnInit {
 
   constructor(private usersService: UserAdminService, private pagerService: PagerService, private applicationConfigService: ApplicationConfigService) { }
 
+  dtOptions: DataTables.Settings = {};
+  // We use this trigger because fetching the list of persons can be quite long,
+  // thus we ensure the data is fetched before rendering
+  dtTrigger: Subject<any> = new Subject();
+
+
   ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 2
+    };
+
     const that = this;
     this.usersService.getUserNatives().subscribe(
       usersNativeResponse => {
@@ -103,6 +117,10 @@ export class UserAdminComponent implements OnInit {
 
         this.setPage(1);
         console.log(usersNativeResponse);
+        // Calling the DT trigger to manually render the table
+        this.dtTrigger.next();
+
+
       });
     this.enabledValues = [];
     this.enabledValues.push({ label: 'All', value: null });

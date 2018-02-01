@@ -5,7 +5,7 @@ import { EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/
 @Component({
   selector: 'app-adduser',
   templateUrl: './adduser.component.html',
-  styleUrls: ['./adduser.component.css']
+  styleUrls: ['./adduser.component.scss']
 })
 export class AddUserComponent implements OnInit {
 

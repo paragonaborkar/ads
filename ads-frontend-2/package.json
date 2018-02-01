@@ -60,6 +60,11 @@
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
     "typescript": "~2.5.3",
-    "uglifyjs-webpack-plugin": "^1.1.8"
+    "datatables.net": "~1.10.16",
+    "datatables.net-dt": "1.10.16",
+    "@types/datatables.net": "^1.10.8",
+    "angular-datatables": "^5.0.0",
+    "@types/jquery": "3.3.0",
+    "uglifyjs-webpack-plugin": "^1.1.8",
   }
 }

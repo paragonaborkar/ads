@@ -12,6 +12,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { SortableModule } from 'ngx-bootstrap/sortable';
 
 import { DataTableModule, SharedModule, DropdownModule } from 'primeng/primeng';
+import { DataTablesModule } from 'angular-datatables';
 
 import { DataTablesModule } from 'angular-datatables';
 
@@ -84,6 +85,7 @@ import { AppPropertiesComponent } from './common/app-properties/app-properties.c
     AppRoutingModule,
     DataTableModule,
     DropdownModule,
+    DataTablesModule,
     SharedModule,
     DataTablesModule,
     Ng2SearchTableModule.forRoot(),
