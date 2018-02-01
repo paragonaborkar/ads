@@ -51,7 +51,6 @@ import { UpdateUserComponent } from './admin/user-admin/edituser/edituser.compon
 import { DeleteUserComponent } from './admin/user-admin/deleteuser/deleteuser.component';
 import { PropPreferencesComponent } from './common/prop-preferences/prop-preferences.component';
 import { AppPropertiesComponent } from './common/app-properties/app-properties.component';
-import { SysConfigPipe } from './common/app-properties/sysconfig.pipe';
 /*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
 
@@ -73,7 +72,6 @@ import { SysConfigPipe } from './common/app-properties/sysconfig.pipe';
     PropPreferencesComponent,
 
     AppPropertiesComponent,
-    SysConfigPipe,
     
 
   ],
