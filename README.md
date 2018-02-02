@@ -21,7 +21,9 @@ Selenium            |
 Talend Open Studio  | 6.4.1
 
 
- 
+
+Please always start with a fresh DB using flyway to avoid any issues later on
+ <code>flyway clean migrate</code>
 
 
 
