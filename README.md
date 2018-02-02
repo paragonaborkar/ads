@@ -1,5 +1,20 @@
 # ads
 
+Software | Version 
+---------------------
+Spring Boot         | 1.5.6 
+Angular             | 5.2.2 
+Bootstrap           | 4.0
+Node                | 8.9.4 
+Java                | 1.8 
+MariaDB             | 10.2 
+HeidiSQL            | 9.5.0.5227 
+Selenium            | 
+Talend Open Studio  | 6.4.1
+
+ 
+
+
 
 To run backend in Eclipse/STS, this one time setup is required for the licensing component
 
