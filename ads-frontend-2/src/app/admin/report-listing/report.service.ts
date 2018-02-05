@@ -1,107 +1,85 @@
 import { Injectable } from '@angular/core';
-// import { Response, RequestOptions, Headers, ResponseContentType} from '@angular/http';
-import {RequestOptions, ResponseContentType, Headers} from '@angular/http';
-import {HttpClient, HttpResponse} from "@angular/common/http";
+import { RequestOptions, ResponseContentType, Headers } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from "@angular/common/http";
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
-import { SpringRestResponse } from '../../spring-rest-response';
+// import { SpringRestResponse } from '../../spring-rest-response';
 
 
-import { saveAs as importedSaveAs} from "file-saver";
+import { saveAs as importedSaveAs } from "file-saver";
 
 import { SessionHelper } from '../../auth/session.helper';
 import { Globals } from '../../globals';
 
 @Injectable()
 export class ReportService {
-    
-     private reportServiceUrl = '';
 
-    constructor(private http:HttpClient, private _sessionHelper:SessionHelper,  private globals: Globals) {
+    private reportServiceUrl = '';
+
+    constructor(private http: HttpClient, private _sessionHelper: SessionHelper, private globals: Globals) {
         this.reportServiceUrl = globals.apiUrl;
     }
-    
-   /**
-   * Generates Jasper Report
-   */
-    // openJasperReport(e){
-    //     return this.http.get(this.reportServiceUrl+'/htmlReport/1').toPromise()
-    //         .then(function(data){
-    //         return data;
-    //         },function(error){
-    //             //FIXME
-    //         })
-    
-    // }
 
 
-    openJasperReport(e): Observable<SpringRestResponse> {
-        console.log(
-            "here"
-        );
 
-        return this.http.get(this.reportServiceUrl+'/htmlReport/1')
-                        .map((res:Response) => new SpringRestResponse(res.json())) 
-                        .catch(this.handleError);
+    openJasperReport(e): Observable<any> {
+        console.log(this.reportServiceUrl + '/htmlReport/1');
 
-                      
-      }
-      
-      private handleError (error: Response | any) {
-          // In a real world app, you might use a remote logging infrastructure
-          let errMsg: string;
-          if (error instanceof Response) {
+        return this.http.get(this.reportServiceUrl + '/htmlReport/1')
+            .map((res: Response) => res)
+            .catch(this.handleError);
+    }
+
+    private handleError(error: Response | any) {
+        // In a real world app, you might use a remote logging infrastructure
+        let errMsg: string;
+        if (error instanceof Response) {
             const body = error.json() || '';
             const err = JSON.stringify(body);
             errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-          } else {
+        } else {
             errMsg = error.message ? error.message : error.toString();
-          }
-    
-          console.error(errMsg);
-          return Observable.throw(errMsg);
-      }
-   
+        }
+
+        console.error(errMsg);
+        return Observable.throw(errMsg);
+    }
+
     private extractData(res: Response) {
-    let body = res.json();
+        let body = res.json();
         return body;
     }
-    private handleErrorObservable (error: Response | any) {
-    console.error(error.message || error);
-    return Observable.throw(error.message || error);
+    private handleErrorObservable(error: Response | any) {
+        console.error(error.message || error);
+        return Observable.throw(error.message || error);
     }
 
     /**
     * Downloads Jasper Report
     */
     downloadJasperReport() {
-        
+
         const type = 'application/vnd.ms-excel';
         const fileName = 'UserReport.xls';
-        
-        const headers = new Headers({ 'Accept': type });
-        
-        const options = new RequestOptions({
-            responseType: ResponseContentType.Blob,
-            headers: headers
-        });
-        
-        
-        // this.http.get(this.reportServiceUrl+'/downloadReport', options)
-        // .catch(errorResponse => Observable.throw(errorResponse.json()))
-        // .map((response) => { 
-        //     if (response instanceof Response) {
-        //         return response.blob();
-        //     }
-        //         return response;
-        //     })
-        // .subscribe(data => importedSaveAs(data, fileName),
-        //         error => console.log(error)); 
-        
+
+        const headers = new HttpHeaders({ 'Accept': type });
+
+        //Add download process feature: https://blog.angularindepth.com/the-new-angular-httpclient-api-9e5c85fe3361
+
+        this.http.get(this.reportServiceUrl + '/downloadReport', { headers: headers, responseType: 'blob', reportProgress: true })
+            .catch(errorResponse => Observable.throw(errorResponse))
+            .map((response) => {
+                if (response instanceof Response) {
+                    return response.blob();
+                }
+                return response;
+            })
+            .subscribe(data => importedSaveAs(data, fileName),
+            error => console.error(error));
     }
-        
+
 } 

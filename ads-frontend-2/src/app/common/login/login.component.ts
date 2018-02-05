@@ -18,16 +18,18 @@ export class LoginComponent implements OnInit {
 	error = '';
 	redirectUrl: string;
 	showNavOptions;
+	loginError = false;
+	serverError = false;
 
-	
 
-	constructor(private router: Router, 
+
+	constructor(private router: Router,
 		private activatedRoute: ActivatedRoute,
-		private authenticationService:LoginService,
+		private authenticationService: LoginService,
 		private userService: UserService,
 		private _sessionHelper: SessionHelper
-		) {
-		if (this._sessionHelper.isAuthenticated()){
+	) {
+		if (this._sessionHelper.isAuthenticated()) {
 			this.router.navigate(['/home']);
 		}
 	}
@@ -36,33 +38,36 @@ export class LoginComponent implements OnInit {
 	}
 
 	login(isValid) {
-		console.log("Form is valid ",isValid);
-		if(isValid){
+		console.log("Form is valid ", isValid);
+		if (isValid) {
 			this.loading = true;
 			this.showNavOptions = true;
 
 			this.authenticationService.login(this.model.username, this.model.password).subscribe(result => {
 				this.loading = false;
-				
+
 				console.log(result);
 
-			if (result) {
-	          	//console.log('result',JSON.stringify(result));
-	          	this.userService.login(result);
+				if (result) {
+					//console.log('result',JSON.stringify(result));
+					this.userService.login(result);
 
-	          	this.navigateAfterSuccess();
-	          } else {
-	          	this.error = 'Username or password is incorrect';
-	          }
-	      },
-	      error => {
-	      	if(error || error.status == 401 || error.status == 400){
-	      		alert("Username or password is incorrect")
-	      	}
-	      	this.error = 'Username or password is incorrect';
-	      	this.loading = false;
-	      }
-	      );
+					this.navigateAfterSuccess();
+				} else {
+					this.error = 'Username or password is incorrect';
+				}
+			},
+				error => {
+					console.error(error.status);
+					if (error.status >= 400 && error.status < 500) {
+						this.loginError = true;
+					}
+					else {
+						this.serverError = true;
+					}					
+					this.loading = false;
+				}
+			);
 		}
 	}
 

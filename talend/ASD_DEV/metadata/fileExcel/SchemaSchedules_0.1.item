@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendMetadata="http://www.talend.org/metadata/connection/2010" xmlns:orgomg.cwm.resource.record="http:///orgomg/cwm/resource/record.ecore">
+  <TalendMetadata:FileExcelConnection xmi:id="_bxvYsAYBEeiFzshYoq_qNA" name="SchemaSchedules" dataPackage="_bxvYsQYBEeiFzshYoq_qNA" Server="Localhost 127.0.0.1" FilePath="C:/netapp/ads_setup_loadsheets/LoadSheet_Schedule_Template.xlsx" Encoding="UTF-8" UseHeader="true" HeaderValue="1" FirstLineCaption="true" SheetName="Schedules" firstColumn="1" thousandSeparator="','" decimalSeparator="'.'" selectAllSheets="true" sheetList="Schedules:w&#xA;">
+    <sheetColumns>A</sheetColumns>
+    <sheetColumns>B</sheetColumns>
+    <sheetColumns>C</sheetColumns>
+    <sheetColumns>D</sheetColumns>
+    <sheetColumns>E</sheetColumns>
+    <sheetColumns>F</sheetColumns>
+    <sheetColumns>G</sheetColumns>
+    <sheetColumns>H</sheetColumns>
+  </TalendMetadata:FileExcelConnection>
+  <orgomg.cwm.resource.record:RecordFile xmi:id="_bxvYsQYBEeiFzshYoq_qNA" name="default" dataManager="_bxvYsAYBEeiFzshYoq_qNA">
+    <ownedElement xsi:type="TalendMetadata:MetadataTable" xmi:id="_bxvYsgYBEeiFzshYoq_qNA" id="_EkCjAAYBEeiFzshYoq_qNA" label="metadata">
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_bxvYswYBEeiFzshYoq_qNA" label="hostConnectionBooked" length="1" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_bxvYtAYBEeiFzshYoq_qNA" label="hostConnectionLimit" length="4" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_bxvYtQYBEeiFzshYoq_qNA" label="hostConnectionPending" length="1" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_bxvYtgYBEeiFzshYoq_qNA" label="migrationBooked" length="1" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_bxvYtwYBEeiFzshYoq_qNA" label="migrationLimit" length="2" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_bxvYuAYBEeiFzshYoq_qNA" label="migrationPending" length="1" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_bxvYuQYBEeiFzshYoq_qNA" label="scheduleStatus" length="10" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_bxvYugYBEeiFzshYoq_qNA" label="weekDate_mm_dd_yyyy_" length="-1" talendType="id_Date" pattern="&quot;yyyy-MM-dd&quot;"/>
+    </ownedElement>
+  </orgomg.cwm.resource.record:RecordFile>
+</xmi:XMI>

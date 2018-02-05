@@ -1,11 +1,7 @@
 package com.netapp.ads;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,16 +11,12 @@ import java.util.Map;
 import org.bouncycastle.openpgp.PGPException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.StreamUtils;
 
-import com.google.common.reflect.ClassPath;
 import com.javax0.license3j.licensor.License;
 
 @SpringBootApplication
@@ -42,7 +34,7 @@ public class Application {
 		HashMap<String, String> licenseInfo = completeLicenseInfo.get("licenseInfo");
 
 		// FIXME: no sys out's
-		System.out.println("The following ADS modules are enabled:");
+		log.debug("The following ADS modules are enabled:");
 		boolean noActiveModules = true;
 		for (Map.Entry<String, Boolean> entry : ACTIVE_MODULES.entrySet()) {
 			String key = entry.getKey();
@@ -54,7 +46,7 @@ public class Application {
 
 			// FIXME: Print this out using a logger.
 			// FIXME: no sys out's
-			System.out.println(key + ":" + value);
+			log.debug(key + ":" + value);
 		}
 
 		if (noActiveModules) {

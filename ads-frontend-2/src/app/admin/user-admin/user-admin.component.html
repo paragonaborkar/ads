@@ -23,12 +23,18 @@
         <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
             <thead>
                 <tr>
-                    <th *ngFor="let col of columns">{{col.field}}</th>
+                    <th *ngFor="let col of columns | arrayFilter:columnFilterArgs">{{col.field | friendlyLabel}}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let user of users">
-                    <td *ngFor="let col of columns">{{user[col.field]}}</td>
+                    <td *ngFor="let col of columns | arrayFilter:columnFilterArgs">{{user[col.field]}}</td>
+                    <td>
+                        <div class="text-center">
+                            <i (click)="edit(user)" class="fa fa-pencil-square-o text-primary"></i> &nbsp;&nbsp;&nbsp;&nbsp;
+                            <i (click)="delete(user)" class="fa fa-trash-o text-danger"></i>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -36,24 +42,24 @@
 </div>
 
 <!-- WE WANT TO REPLACE THIS CODE WITH THE ABOVE DATA TABLE. -->
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-12">
         <p-dataTable [value]="users" [rows]="5" [paginator]="true" [editable]="true" #dt>
             <p-column *ngFor="let col of columns" [field]="col.field" [header]="col.header" [hidden]="col.hidden" [filter]="true" filterPlaceholder="Search"
                 filterMatchMode="{{col.filterMatchMode}}">
 
-                <!-- All other User Columns -->
+               
                 <ng-template pTemplate="filter" let-col *ngIf="col.template && col.field==='userRoleId'">
                     <p-dropdown [options]="roles" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)"
                         styleClass="ui-column-filter"></p-dropdown>
                 </ng-template>
 
-                <!-- User Role -->
+              
                 <ng-template pTemplate="body" let-rowData="rowData" *ngIf="col.template && col.field==='userRoleId'">
                     {{roleArray[rowData.userRoleId]}}
                 </ng-template>
 
-                <!-- Active -->
+                
                 <ng-template pTemplate="filter" let-col *ngIf="col.template && col.field==='enabled'">
                     <p-dropdown [options]="enabledValues" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)"
                         styleClass="ui-column-filter"></p-dropdown>
@@ -65,7 +71,7 @@
                 </ng-template>
             </p-column>
 
-            <!-- Static Actions Column - Always last on the right -->
+            
             <p-column header="Actions" icon="fa-check">
                 <ng-template pTemplate="body" let-rowData="rowData">
                     <div class="text-center">
@@ -77,7 +83,7 @@
             </p-column>
         </p-dataTable>
     </div>
-</div>
+</div> -->
 
 
 <!-- Modals -->

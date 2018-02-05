@@ -1,5 +1,7 @@
 package com.netapp.ads.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -25,13 +27,16 @@ import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netapp.ads.Application;
 import com.netapp.ads.filter.CORSFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
+	
+	private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
+	
 	@Value("${security.signing-key}")
 	private String signingKey;
 
@@ -80,7 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.csrf()
 		.disable();
 		
-		System.out.println("Added cors");
+		log.debug("Added cors");
 		
 	}
 

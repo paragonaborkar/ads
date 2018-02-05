@@ -1,17 +1,22 @@
 <form class="form-signin" role="form" novalidate autocomplete="off" id="formLogin" #formLogin="ngForm" (ngSubmit)="login(formLogin.valid)">
     <div class="d-flex justify-content-center">
-        <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <img class="mb-4" src="assets/img/na_logo_vrt_2c_rgb.png" alt="" width="100" height="110">
 
     </div>
 
-    <h1 class="h3 mb-3 text-center">Please sign in</h1>
+    <h1 class="h3 mb-3 text-center">Login to Continue</h1>
+
+    <div class="alert alert-danger" role="alert" *ngIf="loginError || serverError">
+        <span *ngIf="loginError">Incorrect Email and/or Password provided.</span>
+        <span *ngIf="serverError">An application error has occurred. Please contact HelpDesk.</span>
+      </div>
 
     <div class="form-group" id="text-top">
         <label for="uname1">Email</label>
         <input type="email" class="form-control form-control-lg rounded-0" name="username" #emailRef="ngModel" id="username" required
             [(ngModel)]="model.username" email/>
         <div *ngIf="emailRef.invalid && emailRef.touched">
-            <span class="alert-msg" *ngIf="emailRef?.errors.email">Please enter a valid Email</span>
+            <span class="text-danger" *ngIf="emailRef?.errors.email">Please enter a valid Email</span>
         </div>
     </div>
     <div class="form-group">
@@ -19,7 +24,7 @@
         <input type="password" class="form-control form-control-lg rounded-0" id="pwd1" name="password" #passwordRef="ngModel" required
             autocomplete="new-password" [(ngModel)]="model.password" />
         <div *ngIf="passwordRef.invalid && passwordRef.touched">
-            <span class="alert-msg" *ngIf="passwordRef?.errors.required">Password is required.</span>
+            <span class="text-danger" *ngIf="passwordRef?.errors.required">Password is required.</span>
         </div>
 
     </div>

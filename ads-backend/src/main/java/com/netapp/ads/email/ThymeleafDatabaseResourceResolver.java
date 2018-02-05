@@ -33,7 +33,7 @@ public class ThymeleafDatabaseResourceResolver  {
         try {
             thymeleafTemplate = FileUtils.readFileToString(new File(emailTemplate.getTemplateLocation() + emailTemplate.getTemplateName()));
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            log.debuge.getMessage());
         }
         if (thymeleafTemplate != null) {
 			return super.computeTemplateResource(configuration, ownerTemplate, thymeleafTemplate,

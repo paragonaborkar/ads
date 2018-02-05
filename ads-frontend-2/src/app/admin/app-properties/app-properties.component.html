@@ -1,0 +1,50 @@
+<div class="row">
+	<div class="col-md-11 ">
+    	<span class="h3">Application Properties</span>
+	</div>
+	<div class="col-md-1 ">
+        <a (click)="getPreferences()">
+        	<i class="fa fa-cog fa-2x" title="Settings"></i>
+        </a>
+	</div>
+</div> 
+
+<div class="row mt-3 mb-2">
+  <ul class="nav nav-tabs">
+    	<li *ngFor="let groupName of configGroups" class="nav-item">
+        <a href="" class="nav-link" data-toggle="tab" role="tab" ng-model="myVar" data-dismiss="modal" (click)="getConfigDetails(groupName)">{{groupName}}</a>
+      </li>
+	</ul>
+</div>
+
+ 
+<div class="col-md-12" ng-show="myVar">
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="dataTable table table-responsive table-hover">
+    <thead class="thead-default">
+      <tr>
+        <th scope="row">Property Name</th>
+        <th scope="row">Property Value</th>
+        <th scope="row">Property Type</th>
+        <th scope="row">Encrypted</th>
+        <th scope="row">Action</th>
+      </tr>
+    </thead>
+
+    <tr *ngFor="let item of configDetails" >
+        <td *ngIf = "!item.edit">{{item.propertyName}}</td>
+        <td *ngIf = "!item.edit">{{item.propertyValue}}</td>
+        <td *ngIf = "!item.edit">{{item.sysConfigPropertyType}}</td>
+        <td *ngIf = "!item.edit">{{item.encrypted}}</td>
+        <td *ngIf = "!item.edit"><button (click) = "removeItem(item.id)">Remove</button></td>
+        <td *ngIf = "!item.edit"><button (click) = "editItem(item)">Edit</button></td>
+       
+        <td *ngIf = "item.edit"><input type="text" [(ngModel)]="item.changedName"></td>
+        <td *ngIf = "item.edit"><input [(ngModel)]="item.changedPriority"></td>
+        <td *ngIf = "item.edit"><input type="text" [(ngModel)]="item.changedName"></td>
+        <td *ngIf = "item.edit"><input ng-model="item.changedPriority"></td>
+        <td *ngIf = "item.edit"><button (click) = "dontUpdate(item)">Cancel</button></td>
+        <td *ngIf = "item.edit"><button (click) = "updateItem(item)">Update</button></td>
+    </tr>
+  </table> 
+</div>
+
