@@ -4,7 +4,7 @@
     <contextParameter comment="" name="FORMAT_DATETIME_TO_STRING" prompt="FORMAT_DATETIME_TO_STRING?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;%Y-%m-%dT%H:%i:%s&quot;"/>
     <contextParameter comment="" name="LOAD_FILES_LOC" prompt="LOAD_FILES_LOC?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_Directory" value="C:/netapp/ads_setup_loadsheets/"/>
     <contextParameter comment="" name="logDir" prompt="logDir?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_Directory" value="C:/netapp/logs/"/>
-    <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoic3Bhcmt5IiwiYWRzX21vZHVsZXMiOnsiZGlzY292ZXIiOnRydWUsInJlcG9ydHMiOmZhbHNlLCJzY2hlZHVsZSI6ZmFsc2UsInBsYW5uaW5nIjpmYWxzZSwiZXhlY3V0ZSI6ZmFsc2UsImNvbm5lY3Rpb25zIjp0cnVlfSwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTUxNzUwMjA4NCwiYXV0aG9yaXRpZXMiOlsiVVNFUl9UWVBFIl0sImp0aSI6IjIyZDBlZWMzLWM5YTEtNDNkNi05YTZlLTllYWQzMmNhNDEzNSIsImNsaWVudF9pZCI6InRlc3Rqd3RjbGllbnRpZCJ9.Ie42roHFS-IzvVMiS4ae3epKE_8gzTJ2VvccQQdMv2A&quot;"/>
+    <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoidGFsZW5kIiwiYWRzX21vZHVsZXMiOnsiZGlzY292ZXIiOnRydWUsInJlcG9ydHMiOmZhbHNlLCJzY2hlZHVsZSI6ZmFsc2UsInBsYW5uaW5nIjpmYWxzZSwiZXhlY3V0ZSI6ZmFsc2UsImNvbm5lY3Rpb25zIjp0cnVlfSwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTUxNzU2MDMwMiwiYXV0aG9yaXRpZXMiOlsiQ0xJRU5UIl0sImp0aSI6ImE2OGYzYTVhLWZiNDEtNGVhOC1hNWJmLTJmOTQ2NGZkYjQ4MSIsImNsaWVudF9pZCI6InRlc3Rqd3RjbGllbnRpZCJ9.jcYrFN6BWn0v3YVDMEY2XKnxdzMJ_MoxP_L7zuKZrbs&quot;"/>
     <contextParameter comment="" name="RESOURCE_XPATH_USER_NATIVE" prompt="RESOURCE_XPATH_USER_NATIVE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;/root/_links/userNative/href&quot;"/>
     <contextParameter comment="" name="REST_BASE_URL" prompt="REST_BASE_URL?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;http://localhost:8080/&quot;"/>
     <contextParameter comment="" name="REST_REQ_JSON" prompt="REST_REQ_JSON?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
@@ -349,7 +349,7 @@
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
   </subjob>
   <subjob>
-    <elementParameter field="CHECK" name="SHOW_SUBJOB_TITLE" value="true"/>
+    <elementParameter field="CHECK" name="SHOW_SUBJOB_TITLE" value="true" show="false"/>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tPrejob_1" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="230;100;0"/>
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="255;220;180"/>
