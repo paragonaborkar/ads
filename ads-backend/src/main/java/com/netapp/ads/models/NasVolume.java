@@ -1,275 +1,287 @@
 package com.netapp.ads.models;
 
+import java.io.Serializable;
 import javax.persistence.*;
+import java.util.Date;
 import java.sql.Timestamp;
-import java.util.Objects;
+import java.util.List;
 
+
+/**
+ * The persistent class for the nas_volume database table.
+ * 
+ */
 @Entity
-@IdClass(NasVolumePK.class)
-public class NasVolume {
-    private Integer id;
-    private Integer controlledId;
-    private Integer aggregateId;
-    private String vserver;
-    private String volumeName;
-    private Integer allocatedCapacityGb;
-    private Integer usedCapacityGb;
-    private String snapType;
-    private Integer snapSrcVolumeId;
-    private Integer snapTgtVolumeId;
-    private String snapDestinationVolume;
-    private String volumeStatus;
-    private Timestamp volumeLastAccessed;
-    private String disposition;
-    private String justification;
-    private Integer avgIops;
-    private Integer peakIops;
-    private Integer qtreeTally;
-    private Integer snapTally;
-    private Timestamp createTime;
-    private Timestamp updateTime;
+@Table(name="nas_volume")
+public class NasVolume implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id", nullable = false)
-    public Integer getId() {
-        return id;
-    }
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	@Column(name="allocated_capacity_gb")
+	private Integer allocatedCapacityGb;
 
-    @Id
-    @Column(name = "controlled_id", nullable = false)
-    public Integer getControlledId() {
-        return controlledId;
-    }
+	@Column(name="avg_iops")
+	private Integer avgIops;
 
-    public void setControlledId(Integer controlledId) {
-        this.controlledId = controlledId;
-    }
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
-    @Id
-    @Column(name = "aggregate_id", nullable = false)
-    public Integer getAggregateId() {
-        return aggregateId;
-    }
+	@Column(length=1024)
+	private String disposition;
 
-    public void setAggregateId(Integer aggregateId) {
-        this.aggregateId = aggregateId;
-    }
+	@Column(length=1024)
+	private String justification;
 
-    @Basic
-    @Column(name = "vserver", nullable = true, length = 255)
-    public String getVserver() {
-        return vserver;
-    }
+	@Column(name="peak_iops")
+	private Integer peakIops;
 
-    public void setVserver(String vserver) {
-        this.vserver = vserver;
-    }
+	@Column(name="qtree_tally", nullable=false)
+	private Integer qtreeTally;
 
-    @Basic
-    @Column(name = "volume_name", nullable = false, length = 255)
-    public String getVolumeName() {
-        return volumeName;
-    }
+	@Column(name="snap_destination_volume", length=255)
+	private String snapDestinationVolume;
 
-    public void setVolumeName(String volumeName) {
-        this.volumeName = volumeName;
-    }
+	@Column(name="snap_src_volume_id")
+	private Integer snapSrcVolumeId;
 
-    @Basic
-    @Column(name = "allocated_capacity_gb", nullable = true)
-    public Integer getAllocatedCapacityGb() {
-        return allocatedCapacityGb;
-    }
+	@Column(name="snap_tally")
+	private Integer snapTally;
 
-    public void setAllocatedCapacityGb(Integer allocatedCapacityGb) {
-        this.allocatedCapacityGb = allocatedCapacityGb;
-    }
+	@Column(name="snap_tgt_volume_id")
+	private Integer snapTgtVolumeId;
 
-    @Basic
-    @Column(name = "used_capacity_gb", nullable = true)
-    public Integer getUsedCapacityGb() {
-        return usedCapacityGb;
-    }
+	@Column(name="snap_type", length=255)
+	private String snapType;
 
-    public void setUsedCapacityGb(Integer usedCapacityGb) {
-        this.usedCapacityGb = usedCapacityGb;
-    }
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
 
-    @Basic
-    @Column(name = "snap_type", nullable = true, length = 255)
-    public String getSnapType() {
-        return snapType;
-    }
+	@Column(name="used_capacity_gb")
+	private Integer usedCapacityGb;
 
-    public void setSnapType(String snapType) {
-        this.snapType = snapType;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="volume_last_accessed")
+	private Date volumeLastAccessed;
 
-    @Basic
-    @Column(name = "snap_src_volume_id", nullable = true)
-    public Integer getSnapSrcVolumeId() {
-        return snapSrcVolumeId;
-    }
+	@Column(name="volume_name", nullable=false, length=255)
+	private String volumeName;
 
-    public void setSnapSrcVolumeId(Integer snapSrcVolumeId) {
-        this.snapSrcVolumeId = snapSrcVolumeId;
-    }
+	@Column(name="volume_status", length=255)
+	private String volumeStatus;
 
-    @Basic
-    @Column(name = "snap_tgt_volume_id", nullable = true)
-    public Integer getSnapTgtVolumeId() {
-        return snapTgtVolumeId;
-    }
+	@Column(length=255)
+	private String vserver;
 
-    public void setSnapTgtVolumeId(Integer snapTgtVolumeId) {
-        this.snapTgtVolumeId = snapTgtVolumeId;
-    }
+	//bi-directional many-to-one association to Aggregate
+	@ManyToOne
+	@JoinColumn(name="aggregate_id", nullable=false)
+	private Aggregate aggregate;
 
-    @Basic
-    @Column(name = "snap_destination_volume", nullable = true, length = 255)
-    public String getSnapDestinationVolume() {
-        return snapDestinationVolume;
-    }
+	//bi-directional many-to-one association to Controller
+	@ManyToOne
+	@JoinColumn(name="controlled_id", nullable=false)
+	private Controller controller;
 
-    public void setSnapDestinationVolume(String snapDestinationVolume) {
-        this.snapDestinationVolume = snapDestinationVolume;
-    }
+	//bi-directional many-to-one association to Qtree
+	@OneToMany(mappedBy="nasVolume")
+	private List<Qtree> qtrees;
 
-    @Basic
-    @Column(name = "volume_status", nullable = true, length = 255)
-    public String getVolumeStatus() {
-        return volumeStatus;
-    }
+	public NasVolume() {
+	}
 
-    public void setVolumeStatus(String volumeStatus) {
-        this.volumeStatus = volumeStatus;
-    }
+	public Integer getId() {
+		return this.id;
+	}
 
-    @Basic
-    @Column(name = "volume_last_accessed", nullable = true)
-    public Timestamp getVolumeLastAccessed() {
-        return volumeLastAccessed;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setVolumeLastAccessed(Timestamp volumeLastAccessed) {
-        this.volumeLastAccessed = volumeLastAccessed;
-    }
+	public Integer getAllocatedCapacityGb() {
+		return this.allocatedCapacityGb;
+	}
 
-    @Basic
-    @Column(name = "disposition", nullable = true, length = 1024)
-    public String getDisposition() {
-        return disposition;
-    }
+	public void setAllocatedCapacityGb(Integer allocatedCapacityGb) {
+		this.allocatedCapacityGb = allocatedCapacityGb;
+	}
 
-    public void setDisposition(String disposition) {
-        this.disposition = disposition;
-    }
+	public Integer getAvgIops() {
+		return this.avgIops;
+	}
 
-    @Basic
-    @Column(name = "justification", nullable = true, length = 1024)
-    public String getJustification() {
-        return justification;
-    }
+	public void setAvgIops(Integer avgIops) {
+		this.avgIops = avgIops;
+	}
 
-    public void setJustification(String justification) {
-        this.justification = justification;
-    }
+	public Timestamp getCreateTime() {
+		return this.createTime;
+	}
 
-    @Basic
-    @Column(name = "avg_iops", nullable = true)
-    public Integer getAvgIops() {
-        return avgIops;
-    }
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
 
-    public void setAvgIops(Integer avgIops) {
-        this.avgIops = avgIops;
-    }
+	public String getDisposition() {
+		return this.disposition;
+	}
 
-    @Basic
-    @Column(name = "peak_iops", nullable = true)
-    public Integer getPeakIops() {
-        return peakIops;
-    }
+	public void setDisposition(String disposition) {
+		this.disposition = disposition;
+	}
 
-    public void setPeakIops(Integer peakIops) {
-        this.peakIops = peakIops;
-    }
+	public String getJustification() {
+		return this.justification;
+	}
 
-    @Basic
-    @Column(name = "qtree_tally", nullable = false)
-    public Integer getQtreeTally() {
-        return qtreeTally;
-    }
+	public void setJustification(String justification) {
+		this.justification = justification;
+	}
 
-    public void setQtreeTally(Integer qtreeTally) {
-        this.qtreeTally = qtreeTally;
-    }
+	public Integer getPeakIops() {
+		return this.peakIops;
+	}
 
-    @Basic
-    @Column(name = "snap_tally", nullable = true)
-    public Integer getSnapTally() {
-        return snapTally;
-    }
+	public void setPeakIops(Integer peakIops) {
+		this.peakIops = peakIops;
+	}
 
-    public void setSnapTally(Integer snapTally) {
-        this.snapTally = snapTally;
-    }
+	public Integer getQtreeTally() {
+		return this.qtreeTally;
+	}
 
-    @Basic
-    @Column(name = "create_time", nullable = true)
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
+	public void setQtreeTally(Integer qtreeTally) {
+		this.qtreeTally = qtreeTally;
+	}
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
+	public String getSnapDestinationVolume() {
+		return this.snapDestinationVolume;
+	}
 
-    @Basic
-    @Column(name = "update_time", nullable = true)
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
+	public void setSnapDestinationVolume(String snapDestinationVolume) {
+		this.snapDestinationVolume = snapDestinationVolume;
+	}
 
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
+	public Integer getSnapSrcVolumeId() {
+		return this.snapSrcVolumeId;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        NasVolume nasVolume = (NasVolume) o;
-        return Objects.equals(id, nasVolume.id) &&
-                Objects.equals(controlledId, nasVolume.controlledId) &&
-                Objects.equals(aggregateId, nasVolume.aggregateId) &&
-                Objects.equals(vserver, nasVolume.vserver) &&
-                Objects.equals(volumeName, nasVolume.volumeName) &&
-                Objects.equals(allocatedCapacityGb, nasVolume.allocatedCapacityGb) &&
-                Objects.equals(usedCapacityGb, nasVolume.usedCapacityGb) &&
-                Objects.equals(snapType, nasVolume.snapType) &&
-                Objects.equals(snapSrcVolumeId, nasVolume.snapSrcVolumeId) &&
-                Objects.equals(snapTgtVolumeId, nasVolume.snapTgtVolumeId) &&
-                Objects.equals(snapDestinationVolume, nasVolume.snapDestinationVolume) &&
-                Objects.equals(volumeStatus, nasVolume.volumeStatus) &&
-                Objects.equals(volumeLastAccessed, nasVolume.volumeLastAccessed) &&
-                Objects.equals(disposition, nasVolume.disposition) &&
-                Objects.equals(justification, nasVolume.justification) &&
-                Objects.equals(avgIops, nasVolume.avgIops) &&
-                Objects.equals(peakIops, nasVolume.peakIops) &&
-                Objects.equals(qtreeTally, nasVolume.qtreeTally) &&
-                Objects.equals(snapTally, nasVolume.snapTally) &&
-                Objects.equals(createTime, nasVolume.createTime) &&
-                Objects.equals(updateTime, nasVolume.updateTime);
-    }
+	public void setSnapSrcVolumeId(Integer snapSrcVolumeId) {
+		this.snapSrcVolumeId = snapSrcVolumeId;
+	}
 
-    @Override
-    public int hashCode() {
+	public Integer getSnapTally() {
+		return this.snapTally;
+	}
 
-        return Objects.hash(id, controlledId, aggregateId, vserver, volumeName, allocatedCapacityGb, usedCapacityGb, snapType, snapSrcVolumeId, snapTgtVolumeId, snapDestinationVolume, volumeStatus, volumeLastAccessed, disposition, justification, avgIops, peakIops, qtreeTally, snapTally, createTime, updateTime);
-    }
+	public void setSnapTally(Integer snapTally) {
+		this.snapTally = snapTally;
+	}
+
+	public Integer getSnapTgtVolumeId() {
+		return this.snapTgtVolumeId;
+	}
+
+	public void setSnapTgtVolumeId(Integer snapTgtVolumeId) {
+		this.snapTgtVolumeId = snapTgtVolumeId;
+	}
+
+	public String getSnapType() {
+		return this.snapType;
+	}
+
+	public void setSnapType(String snapType) {
+		this.snapType = snapType;
+	}
+
+	public Timestamp getUpdateTime() {
+		return this.updateTime;
+	}
+
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public Integer getUsedCapacityGb() {
+		return this.usedCapacityGb;
+	}
+
+	public void setUsedCapacityGb(Integer usedCapacityGb) {
+		this.usedCapacityGb = usedCapacityGb;
+	}
+
+	public Date getVolumeLastAccessed() {
+		return this.volumeLastAccessed;
+	}
+
+	public void setVolumeLastAccessed(Date volumeLastAccessed) {
+		this.volumeLastAccessed = volumeLastAccessed;
+	}
+
+	public String getVolumeName() {
+		return this.volumeName;
+	}
+
+	public void setVolumeName(String volumeName) {
+		this.volumeName = volumeName;
+	}
+
+	public String getVolumeStatus() {
+		return this.volumeStatus;
+	}
+
+	public void setVolumeStatus(String volumeStatus) {
+		this.volumeStatus = volumeStatus;
+	}
+
+	public String getVserver() {
+		return this.vserver;
+	}
+
+	public void setVserver(String vserver) {
+		this.vserver = vserver;
+	}
+
+	public Aggregate getAggregate() {
+		return this.aggregate;
+	}
+
+	public void setAggregate(Aggregate aggregate) {
+		this.aggregate = aggregate;
+	}
+
+	public Controller getController() {
+		return this.controller;
+	}
+
+	public void setController(Controller controller) {
+		this.controller = controller;
+	}
+
+	public List<Qtree> getQtrees() {
+		return this.qtrees;
+	}
+
+	public void setQtrees(List<Qtree> qtrees) {
+		this.qtrees = qtrees;
+	}
+
+	public Qtree addQtree(Qtree qtree) {
+		getQtrees().add(qtree);
+		qtree.setNasVolume(this);
+
+		return qtree;
+	}
+
+	public Qtree removeQtree(Qtree qtree) {
+		getQtrees().remove(qtree);
+		qtree.setNasVolume(null);
+
+		return qtree;
+	}
+
 }
+

@@ -1,8 +1,5 @@
 package com.netapp.ads.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -12,150 +9,205 @@ import java.util.List;
 
 /**
  * The persistent class for the storage database table.
+ * 
  */
 @Entity
-@NamedQuery(name = "Storage.findAll", query = "SELECT s FROM Storage s")
+@Table(name="storage")
 public class Storage implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    private Integer id;
+	@Id
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-    @Column(name = "create_time")
-    private Timestamp createTime;
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
-    private String family;
+	@Column(length=255)
+	private String family;
 
-    private String manufacturer;
+	@Column(length=255)
+	private String manufacturer;
 
-    @Column(name = "microcode_version")
-    private String microcodeVersion;
+	@Column(name="microcode_version", length=255)
+	private String microcodeVersion;
 
-    private String model;
+	@Column(length=255)
+	private String model;
 
-    @Column(name = "raw_capacity_mb")
-    private BigInteger rawCapacityMb;
+	@Column(name="raw_capacity_mb")
+	private BigInteger rawCapacityMb;
 
-    @Column(name = "storage_name")
-    private String storageName;
+	@Column(name="storage_name", nullable=false, length=255)
+	private String storageName;
 
-    @Column(name = "update_time")
-    private Timestamp updateTime;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
 
-    //bi-directional many-to-one association to Controller
-    @JsonBackReference
-    @OneToMany(mappedBy = "storage")
-    private List<Controller> controllers;
+	//bi-directional many-to-one association to Controller
+	@OneToMany(mappedBy="storage")
+	private List<Controller> controllers;
 
-    //bi-directional many-to-one association to WorkPackage
-    @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name = "work_package_id")
-    private WorkPackage workPackage;
+	//bi-directional many-to-one association to Replication
+	@OneToMany(mappedBy="targetVaultStorage")
+	private List<Replication> targetVaultStorageReplications;
 
-    public Storage() {
-    }
+	//bi-directional many-to-one association to Replication
+	@OneToMany(mappedBy="targetMirrorStorage")
+	private List<Replication> targetMirrorStorageReplications;
 
-    public Integer getId() {
-        return this.id;
-    }
+	//bi-directional many-to-one association to WorkPackage
+	@ManyToOne
+	@JoinColumn(name="work_package_id", nullable=false)
+	private WorkPackage workPackage;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Storage() {
+	}
 
-    public Timestamp getCreateTime() {
-        return this.createTime;
-    }
+	public Integer getId() {
+		return this.id;
+	}
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public String getFamily() {
-        return this.family;
-    }
+	public Timestamp getCreateTime() {
+		return this.createTime;
+	}
 
-    public void setFamily(String family) {
-        this.family = family;
-    }
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
 
-    public String getManufacturer() {
-        return this.manufacturer;
-    }
+	public String getFamily() {
+		return this.family;
+	}
 
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
+	public void setFamily(String family) {
+		this.family = family;
+	}
 
-    public String getMicrocodeVersion() {
-        return this.microcodeVersion;
-    }
+	public String getManufacturer() {
+		return this.manufacturer;
+	}
 
-    public void setMicrocodeVersion(String microcodeVersion) {
-        this.microcodeVersion = microcodeVersion;
-    }
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
+	}
 
-    public String getModel() {
-        return this.model;
-    }
+	public String getMicrocodeVersion() {
+		return this.microcodeVersion;
+	}
 
-    public void setModel(String model) {
-        this.model = model;
-    }
+	public void setMicrocodeVersion(String microcodeVersion) {
+		this.microcodeVersion = microcodeVersion;
+	}
 
-    public BigInteger getRawCapacityMb() {
-        return this.rawCapacityMb;
-    }
+	public String getModel() {
+		return this.model;
+	}
 
-    public void setRawCapacityMb(BigInteger rawCapacityMb) {
-        this.rawCapacityMb = rawCapacityMb;
-    }
+	public void setModel(String model) {
+		this.model = model;
+	}
 
-    public String getStorageName() {
-        return this.storageName;
-    }
+	public BigInteger getRawCapacityMb() {
+		return this.rawCapacityMb;
+	}
 
-    public void setStorageName(String storageName) {
-        this.storageName = storageName;
-    }
+	public void setRawCapacityMb(BigInteger rawCapacityMb) {
+		this.rawCapacityMb = rawCapacityMb;
+	}
 
-    public Timestamp getUpdateTime() {
-        return this.updateTime;
-    }
+	public String getStorageName() {
+		return this.storageName;
+	}
 
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
+	public void setStorageName(String storageName) {
+		this.storageName = storageName;
+	}
 
-    public List<Controller> getControllers() {
-        return this.controllers;
-    }
+	public Timestamp getUpdateTime() {
+		return this.updateTime;
+	}
 
-    public void setControllers(List<Controller> controllers) {
-        this.controllers = controllers;
-    }
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
+	}
 
-    public Controller addController(Controller controller) {
-        getControllers().add(controller);
-        controller.setStorage(this);
+	public List<Controller> getControllers() {
+		return this.controllers;
+	}
 
-        return controller;
-    }
+	public void setControllers(List<Controller> controllers) {
+		this.controllers = controllers;
+	}
 
-    public Controller removeController(Controller controller) {
-        getControllers().remove(controller);
-        controller.setStorage(null);
+	public Controller addController(Controller controller) {
+		getControllers().add(controller);
+		controller.setStorage(this);
 
-        return controller;
-    }
+		return controller;
+	}
 
-    public WorkPackage getWorkPackage() {
-        return this.workPackage;
-    }
+	public Controller removeController(Controller controller) {
+		getControllers().remove(controller);
+		controller.setStorage(null);
 
-    public void setWorkPackage(WorkPackage workPackage) {
-        this.workPackage = workPackage;
-    }
+		return controller;
+	}
+
+	public List<Replication> getTargetVaultStorageReplications() {
+		return this.targetVaultStorageReplications;
+	}
+
+	public void setTargetVaultStorageReplications(List<Replication> replications) {
+		this.targetVaultStorageReplications = replications;
+	}
+
+	public Replication addTargetVaultStorageReplication(Replication replication) {
+		getTargetVaultStorageReplications().add(replication);
+		replication.setTargetVaultStorage(this);
+
+		return replication;
+	}
+
+	public Replication removeTargetVaultStorageReplication(Replication replication) {
+		getTargetVaultStorageReplications().remove(replication);
+		replication.setTargetVaultStorage(null);
+
+		return replication;
+	}
+
+	public List<Replication> getTargetMirrorStorageReplications() {
+		return this.targetMirrorStorageReplications;
+	}
+
+	public void setTargetMirrorStorageReplications(List<Replication> replications) {
+		this.targetMirrorStorageReplications = replications;
+	}
+
+	public Replication addTargetMirrorStorageReplication(Replication replication) {
+		getTargetMirrorStorageReplications().add(replication);
+		replication.setTargetMirrorStorage(this);
+
+		return replication;
+	}
+
+	public Replication removeTargetMirrorStorageReplication(Replication replication) {
+		getTargetMirrorStorageReplications().remove(replication);
+		replication.setTargetMirrorStorage(null);
+
+		return replication;
+	}
+
+	public WorkPackage getWorkPackage() {
+		return this.workPackage;
+	}
+
+	public void setWorkPackage(WorkPackage workPackage) {
+		this.workPackage = workPackage;
+	}
 
 }

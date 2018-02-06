@@ -1,0 +1,90 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Edit User</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+     <form novalidate #f="ngForm">
+       <div class="form-group row">
+         <label for="firstName" class="col-sm-3 col-form-label">First Name</label>
+         <div class="col-sm-9">
+           <input type="text" class="form-control" [ngClass]="{'is-invalid':userFirstName.errors?.required && userFirstName.touched || userFirstName.errors?.minlength && userFirstName.touched}"
+                  [(ngModel)]="User.firstName" name="firstName" #userFirstName="ngModel" minlength="2" required>
+           <div *ngIf="userFirstName.errors?.required && userFirstName.touched" class="invalid-feedback">
+             First Name is required
+           </div>
+           <div *ngIf="userFirstName.errors?.minlength && userFirstName.touched" class="invalid-feedback">
+             Must be at least 2 characters
+           </div>
+         </div>
+       </div>
+       <div class="form-group row">
+         <label for="lastName" class="col-sm-3 col-form-label">Last Name</label>
+         <div class="col-sm-9">
+           <input type="text" class="form-control" [ngClass]="{'is-invalid':userLastName.errors?.required && userLastName.touched || userLastName.errors?.minlength && userLastName.touched}"
+                  [(ngModel)]="User.lastName" name="lastName" #userLastName="ngModel" minlength="2" required>
+           <div *ngIf="userLastName.errors?.required && userLastName.touched" class="invalid-feedback">
+             Last Name is required
+           </div>
+           <div *ngIf="userLastName.errors?.minlength && userLastName.touched" class="invalid-feedback">
+             Must be at least 2 characters
+           </div>
+         </div>
+       </div>
+
+       <div class="form-group row">
+         <label for="password" class="col-sm-3 col-form-label">Password</label>
+         <div class="col-sm-9">
+           <input type="password" class="form-control" [ngClass]="{'is-invalid':userPassword.errors?.required && userPassword.touched || userPassword.errors?.minlength && userPassword.touched}"
+                  [(ngModel)]="User.password" name="password" #userPassword="ngModel" minlength="3" required>
+         </div>
+       </div>
+           <div class="form-group row">
+             <label for="confirmPassword" class="col-sm-3 col-form-label">Confirm Password</label>
+             <div class="col-sm-9">
+               <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="confirmPassword"
+                      required>
+             </div>
+
+           </div>
+
+           <div class="form-group row">
+             <label for="email" class="col-sm-3 col-form-label">Email</label>
+             <div class="col-sm-9">
+               <input type="text" class="form-control" [ngClass]="{'is-invalid':userEmail.errors?.required && userEmail.touched || userEmail.errors?.pattern && userEmail.touched}"
+                      [(ngModel)]="User.email" name="email" #userEmail="ngModel" minlength="8" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+               <div *ngIf="userEmail.errors?.required && userEmail.touched" class="invalid-feedback">
+                 Email is required
+               </div>
+               <div *ngIf="userEmail.errors?.pattern && userEmail.touched" class="invalid-feedback">
+                 Email is invalid
+               </div>
+             </div>
+           </div>
+           <div class="form-group row">
+             <label for="role" class="col-sm-3 col-form-label">Role</label>
+             <div class="col-sm-9">
+               <select class="form-control" [(ngModel)]="User.userRoleId" name="userRoleId">
+                 <option *ngFor="let r of roleArray; index as i" value="{{i+1}}">{{r}}</option>
+
+               </select>
+             </div>
+           </div>
+        <div class="form-group row">
+          <label class="form-control-label" class="col-sm-3 col-form-label">Active</label>
+          <div class="col-sm-1">
+          <input type="checkbox" class="form-control" placeholder="Active" name="Active" [(ngModel)]="User.enabled">
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="okay()" >Ok</button>
+    </div>
+  </div>
+</div>

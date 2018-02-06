@@ -1,3 +1,4 @@
+
 package com.netapp.ads.services;
 
 import java.util.HashSet;
@@ -19,6 +20,7 @@ import com.netapp.ads.repos.UserApiRepository;
 import com.netapp.ads.repos.UserNativeRepository;
 
 @Service
+@Transactional(readOnly=false)
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
@@ -31,14 +33,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	 * Checks Credentials in API and Native Table for Authentication
 	 */
 	@Override
-	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
 		if(!userApiRepository.findByClientId(username).isEmpty()) {
 			UserApi userApi = userApiRepository.findByClientId(username).get(0);
-			if (userApi.getEnabled() == 1) {
+			if (userApi.getEnabled()) {
 				grantedAuthorities.add(new SimpleGrantedAuthority("CLIENT"));
 				return new User(userApi.getClientId(), userApi.getClientSecret(), grantedAuthorities);
 			} else {
@@ -46,7 +47,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			}
 		} else {
 			UserNative user = userNativeRepository.findFirstByEmail(username);
-			if (user == null || user.getEnabled() != 1) {
+			if (user == null || !user.getEnabled()) {
 				throw new UsernameNotFoundException(String.format("The username %s doesn't exist", username));
 			}
 			

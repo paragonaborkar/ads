@@ -1,38 +1,38 @@
 package com.netapp.ads.models;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 
 /**
- * The persistent class for the preferences database table.
+ * The persistent class for the preference database table.
  * 
  */
 @Entity
-@Table(name="preferences")
-@NamedQuery(name="Preference.findAll", query="SELECT p FROM Preference p")
+@Table(name="preference")
 public class Preference implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_on")
-	private Date createdOn;
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
-	@Column(name="page_name")
+	@Column(name="page_name", length=255)
 	private String pageName;
 
-	@Column(name="preference_type")
+	@Column(name="preference_type", length=255)
 	private String preferenceType;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="updated_on")
-	private Date updatedOn;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to PreferenceDetail
 	@OneToMany(mappedBy="preference")
@@ -49,12 +49,12 @@ public class Preference implements Serializable {
 		this.id = id;
 	}
 
-	public Date getCreatedOn() {
-		return this.createdOn;
+	public Timestamp getCreateTime() {
+		return this.createTime;
 	}
 
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
+	public void setCreateTime(Timestamp createdOn) {
+		this.createTime = createdOn;
 	}
 
 	public String getPageName() {
@@ -73,12 +73,12 @@ public class Preference implements Serializable {
 		this.preferenceType = preferenceType;
 	}
 
-	public Date getUpdatedOn() {
-		return this.updatedOn;
+	public Timestamp getUpdateTime() {
+		return this.updateTime;
 	}
 
-	public void setUpdatedOn(Date updatedOn) {
-		this.updatedOn = updatedOn;
+	public void setUpdateTime(Timestamp updatedOn) {
+		this.updateTime = updatedOn;
 	}
 
 	public List<PreferenceDetail> getPreferenceDetails() {

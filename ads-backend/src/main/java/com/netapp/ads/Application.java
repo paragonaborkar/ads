@@ -3,6 +3,8 @@ package com.netapp.ads;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,20 +15,24 @@ import java.util.Map;
 import org.bouncycastle.openpgp.PGPException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.util.StreamUtils;
 
+import com.google.common.reflect.ClassPath;
 import com.javax0.license3j.licensor.License;
-import com.netapp.ads.config.ADSConfiguration;
 
 @SpringBootApplication
-@Import(ADSConfiguration.class)
 public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
     public static HashMap<String, Boolean> ACTIVE_MODULES; 
-
-    public static void main(String[] args) {
+    
+    public static void main(String[] args) throws Exception {
 
 		HashMap<String, HashMap> completeLicenseInfo = checkLicense();
 
@@ -67,21 +73,19 @@ public class Application {
 	}
 
 
-    public static HashMap<String, HashMap>  checkLicense() {
+    public static HashMap<String, HashMap>  checkLicense() throws Exception {
 
-		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-		URL licenseUrl = classloader.getResource("license/license.out");
-
-		String licenseFileName = "";
+    	Resource licenseFileResource = new ClassPathResource("license/license.out");
+    	String licenseFileContent = null;
 		try {
-			licenseFileName = Paths.get(licenseUrl.toURI()).toFile().getAbsolutePath();
-		} catch (URISyntaxException e1) {
+			licenseFileContent = StreamUtils.copyToString(licenseFileResource.getInputStream(), StandardCharsets.UTF_8);
+		} catch (Exception ex) {
 			throw new IllegalArgumentException("ADS license not found.");
-		}catch (NullPointerException e2) {
-			throw new NullPointerException("ADS license not found.");
 		}
-
-		License lic = new License();
+		
+		if(licenseFileContent == null) {
+			throw new Exception("ADS license not found.");
+		}
 
 		//		 ---KEY RING DIGEST START
 		byte [] digest = new byte[] {
@@ -97,12 +101,14 @@ public class Application {
 				};
 		//		 ---KEY RING DIGEST END
 
+		License lic = new License();
 		try {
 			// FIXME: must use a digest in production. Not sure if this should be loaded from a text file or if it needs to be in the code.
 			// See: https://github.com/verhas/License3j/wiki/sample
 //			 lic.loadKeyRingFromResource("license/pubring.gpg", digest);
-			lic.loadKeyRingFromResource("license/pubring.gpg", null);
-			lic.setLicenseEncodedFromFile(licenseFileName);
+			Resource keyRingResource = new ClassPathResource("license/pubring.gpg");
+			lic.loadKeyRing(keyRingResource.getInputStream(), null);
+			lic.setLicenseEncoded(licenseFileContent);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -6,44 +6,43 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the preference_details database table.
+ * The persistent class for the preference_detail database table.
  * 
  */
 @Entity
-@Table(name="preference_details")
-@NamedQuery(name="PreferenceDetail.findAll", query="SELECT p FROM PreferenceDetail p")
+@Table(name="preference_detail")
 public class PreferenceDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
 	private Integer id;
 
 	@Column(name="corp_user_id")
 	private Integer corpUserId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_on")
-	private Date createdOn;
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Date createTime;
 
-	@Column(name="field_name")
+	@Column(name="field_name", length=255)
 	private String fieldName;
 
 	@Column(name="field_order")
 	private Integer fieldOrder;
 
-	@Column(name="field_visible")
-	private byte fieldVisible;
+	@Column(name="field_visible", length=255)
+	private Integer fieldVisible;
 
 	@Column(name="native_user_id")
 	private Integer nativeUserId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="updated_on")
-	private Date updatedOn;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Date updateTime;
 
 	//bi-directional many-to-one association to Preference
 	@ManyToOne
+	@JoinColumn(name="preference_id")
 	private Preference preference;
 
 	public PreferenceDetail() {
@@ -65,12 +64,12 @@ public class PreferenceDetail implements Serializable {
 		this.corpUserId = corpUserId;
 	}
 
-	public Date getCreatedOn() {
-		return this.createdOn;
+	public Date getCreateTime() {
+		return this.createTime;
 	}
 
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
+	public void setCreateTime(Date createdOn) {
+		this.createTime = createdOn;
 	}
 
 	public String getFieldName() {
@@ -89,11 +88,11 @@ public class PreferenceDetail implements Serializable {
 		this.fieldOrder = fieldOrder;
 	}
 
-	public byte getFieldVisible() {
+	public int getFieldVisible() {
 		return this.fieldVisible;
 	}
 
-	public void setFieldVisible(byte fieldVisible) {
+	public void setFieldVisible(int fieldVisible) {
 		this.fieldVisible = fieldVisible;
 	}
 
@@ -105,12 +104,12 @@ public class PreferenceDetail implements Serializable {
 		this.nativeUserId = nativeUserId;
 	}
 
-	public Date getUpdatedOn() {
-		return this.updatedOn;
+	public Date getUpdateTime() {
+		return this.updateTime;
 	}
 
-	public void setUpdatedOn(Date updatedOn) {
-		this.updatedOn = updatedOn;
+	public void setUpdateTime(Date updatedOn) {
+		this.updateTime = updatedOn;
 	}
 
 	public Preference getPreference() {
