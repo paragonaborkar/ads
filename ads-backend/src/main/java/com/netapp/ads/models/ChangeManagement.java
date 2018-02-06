@@ -27,7 +27,7 @@ public class ChangeManagement implements Serializable {
 	@Column(name="change_management_number", length=60)
 	private String changeManagementNumber;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(length=1024)
@@ -36,7 +36,7 @@ public class ChangeManagement implements Serializable {
 	@Lob
 	private String note;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to MigrationCutoverEvent

@@ -20,7 +20,7 @@ public class Cutover implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="cutover_name", nullable=false, length=60)
@@ -32,7 +32,7 @@ public class Cutover implements Serializable {
 	@Column(name="migrate_time", nullable=false, length=36)
 	private String migrateTime;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to ChangeManagement

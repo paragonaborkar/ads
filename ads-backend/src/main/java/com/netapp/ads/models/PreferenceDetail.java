@@ -22,9 +22,8 @@ public class PreferenceDetail implements Serializable {
 	@Column(name="corp_user_id")
 	private Integer corpUserId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_on")
-	private Date createdOn;
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Date createTime;
 
 	@Column(name="field_name", length=255)
 	private String fieldName;
@@ -38,9 +37,8 @@ public class PreferenceDetail implements Serializable {
 	@Column(name="native_user_id")
 	private Integer nativeUserId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="updated_on")
-	private Date updatedOn;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Date updateTime;
 
 	//bi-directional many-to-one association to Preference
 	@ManyToOne
@@ -66,12 +64,12 @@ public class PreferenceDetail implements Serializable {
 		this.corpUserId = corpUserId;
 	}
 
-	public Date getCreatedOn() {
-		return this.createdOn;
+	public Date getCreateTime() {
+		return this.createTime;
 	}
 
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
+	public void setCreateTime(Date createdOn) {
+		this.createTime = createdOn;
 	}
 
 	public String getFieldName() {
@@ -106,12 +104,12 @@ public class PreferenceDetail implements Serializable {
 		this.nativeUserId = nativeUserId;
 	}
 
-	public Date getUpdatedOn() {
-		return this.updatedOn;
+	public Date getUpdateTime() {
+		return this.updateTime;
 	}
 
-	public void setUpdatedOn(Date updatedOn) {
-		this.updatedOn = updatedOn;
+	public void setUpdateTime(Date updatedOn) {
+		this.updateTime = updatedOn;
 	}
 
 	public Preference getPreference() {

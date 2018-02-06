@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.netapp.ads.models.UserNative;
-import com.netapp.ads.projections.UserNativeWithUserRole;
+import com.netapp.ads.models.projections.UserNativeWithUserRole;
 
 //@Repository
 @RepositoryRestResource(excerptProjection = UserNativeWithUserRole.class)

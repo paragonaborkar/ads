@@ -26,7 +26,7 @@ public class UserCorporate implements Serializable {
 	@Column(length=100)
 	private String costCenter;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(nullable=false, length=255)
@@ -53,7 +53,7 @@ public class UserCorporate implements Serializable {
 	@Column(length=255)
 	private String title;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	@Column(name="user_name", nullable=false, length=45)

@@ -19,7 +19,7 @@ public class WfaOcumControllerData implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="ocum_controller_name", nullable=false, length=225)
@@ -28,7 +28,7 @@ public class WfaOcumControllerData implements Serializable {
 	@Column(name="ocum_controller_serial_number", nullable=false, length=225)
 	private String ocumControllerSerialNumber;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to Controller

@@ -22,7 +22,7 @@ public class AggregatePurpose implements Serializable {
 	@Column(name="aggregate_function", length=16)
 	private String aggregateFunction;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="service_level", length=16)
@@ -31,7 +31,7 @@ public class AggregatePurpose implements Serializable {
 	@Column(name="storage_type", length=16)
 	private String storageType;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to Aggregate

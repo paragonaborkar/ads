@@ -16,11 +16,10 @@ public class Host implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	//@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="host_name", length=255)
@@ -38,7 +37,7 @@ public class Host implements Serializable {
 	@Column(name="system_admin_id")
 	private Integer systemAdminId;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-many association to Application
