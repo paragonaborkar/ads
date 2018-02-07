@@ -39,7 +39,7 @@ public class NasVolume implements Serializable {
 	@Column(name="peak_iops")
 	private Integer peakIops;
 
-	@Column(name="qtree_tally", nullable=false)
+	@Column(name="qtree_tally")
 	private Integer qtreeTally;
 
 	@Column(name="snap_destination_volume", length=255)
