@@ -22,7 +22,7 @@ public class WfaMessage implements Serializable {
 	@Column(length=16)
 	private String code;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(length=1024)
@@ -31,7 +31,7 @@ public class WfaMessage implements Serializable {
 	@Column(length=1024)
 	private String message;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to Workflow

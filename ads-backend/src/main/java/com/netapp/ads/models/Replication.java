@@ -19,7 +19,7 @@ public class Replication implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="src_mirror_aggregate_name", length=225)
@@ -55,7 +55,7 @@ public class Replication implements Serializable {
 	@Column(name="src_vault_volume_name", length=225)
 	private String srcVaultVolumeName;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to Aggregate

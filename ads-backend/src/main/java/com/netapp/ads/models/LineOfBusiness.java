@@ -20,7 +20,7 @@ public class LineOfBusiness implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="liason_contact_number", nullable=false, length=255)
@@ -41,7 +41,7 @@ public class LineOfBusiness implements Serializable {
 	@Column(name="lob_name", nullable=false, length=255)
 	private String lobName;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to Export

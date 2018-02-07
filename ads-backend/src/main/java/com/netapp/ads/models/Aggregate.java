@@ -39,7 +39,7 @@ public class Aggregate implements Serializable {
 	@Column(name="avg_iops")
 	private Integer avgIops;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="is_hybrid", nullable=false)
@@ -57,7 +57,7 @@ public class Aggregate implements Serializable {
 	@Column(name="pool_used_capacity_gb")
 	private float poolUsedCapacityGb;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to Controller

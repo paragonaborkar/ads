@@ -23,7 +23,7 @@ public class UserNative implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(nullable=false, length=255)
@@ -45,7 +45,7 @@ public class UserNative implements Serializable {
 	@Column(length=64)
 	private String salt;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	@Column(name="user_name", nullable=false, length=100)

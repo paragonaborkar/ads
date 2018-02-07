@@ -29,7 +29,7 @@ public class UserApi implements Serializable {
 	@Column(name="client_secret", length=45)
 	private String clientSecret;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	private boolean enabled;
@@ -37,7 +37,7 @@ public class UserApi implements Serializable {
 	@Column(length=255)
 	private String purpose;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	public UserApi() {

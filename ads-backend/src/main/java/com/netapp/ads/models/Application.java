@@ -29,7 +29,7 @@ public class Application implements Serializable {
 	@Column(length=255)
 	private String archtype;
 
-	@Column(name="create_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="information_owner", length=60)
@@ -38,7 +38,7 @@ public class Application implements Serializable {
 	@Column(name="owner_user_corporate_id", nullable=false)
 	private Integer ownerUserCorporateId;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-many association to Host
