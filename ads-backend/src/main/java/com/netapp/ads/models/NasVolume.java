@@ -17,7 +17,7 @@ public class NasVolume implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	//@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
@@ -39,7 +39,7 @@ public class NasVolume implements Serializable {
 	@Column(name="peak_iops")
 	private Integer peakIops;
 
-	@Column(name="qtree_tally", nullable=false)
+	@Column(name="qtree_tally")
 	private Integer qtreeTally;
 
 	@Column(name="snap_destination_volume", length=255)
