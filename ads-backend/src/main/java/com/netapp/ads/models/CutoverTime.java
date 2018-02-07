@@ -36,7 +36,7 @@ public class CutoverTime implements Serializable {
 	@Column(name="complete_replication_end_time")
 	private Date completeReplicationEndTime;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -79,7 +79,7 @@ public class CutoverTime implements Serializable {
 	@Column(name="unmount_volume_end_time")
 	private Date unmountVolumeEndTime;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	@Temporal(TemporalType.TIMESTAMP)

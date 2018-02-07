@@ -19,7 +19,7 @@ public class EmailTemplate implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="template_location", length=255)
@@ -28,7 +28,7 @@ public class EmailTemplate implements Serializable {
 	@Column(name="template_name", nullable=false, length=32)
 	private String templateName;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	public EmailTemplate() {

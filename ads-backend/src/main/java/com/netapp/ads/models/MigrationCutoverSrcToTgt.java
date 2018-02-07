@@ -28,7 +28,7 @@ public class MigrationCutoverSrcToTgt implements Serializable {
 
 	private boolean completed;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="host_id_list", length=1024)
@@ -77,7 +77,7 @@ public class MigrationCutoverSrcToTgt implements Serializable {
 	@Column(name="tgt_volume_id", nullable=false)
 	private Integer tgtVolumeId;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to DataProtectionPolicy
