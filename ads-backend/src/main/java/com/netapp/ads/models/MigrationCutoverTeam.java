@@ -19,13 +19,13 @@ public class MigrationCutoverTeam implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Column(name="create_time", insertable=false, updatable=false)
+	@Column(name="create_time")
 	private Timestamp createTime;
 
 	@Column(name="team_member_role", nullable=false, length=1)
 	private String teamMemberRole;
 
-	@Column(name="update_time", insertable=false, updatable=false)
+	@Column(name="update_time")
 	private Timestamp updateTime;
 
 	@Column(name="user_corporate_id", nullable=false)

@@ -26,7 +26,7 @@ public class DataCenter implements Serializable {
 	@Column(length=255)
 	private String country;
 
-	@Column(name="create_time", insertable=false, updatable=false)
+	@Column(name="create_time")
 	private Timestamp createTime;
 
 	@Column(name="data_center_full_name", length=1024)
@@ -41,7 +41,7 @@ public class DataCenter implements Serializable {
 	@Column(nullable=false, length=60)
 	private String region;
 
-	@Column(name="update_time", insertable=false, updatable=false)
+	@Column(name="update_time")
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to Controller

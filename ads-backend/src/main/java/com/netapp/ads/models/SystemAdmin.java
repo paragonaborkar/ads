@@ -22,7 +22,7 @@ public class SystemAdmin implements Serializable {
 	@Column(name="contact_type", nullable=false, length=1)
 	private String contactType;
 
-	@Column(name="create_time", insertable=false, updatable=false)
+	@Column(name="create_time")
 	private Timestamp createTime;
 
 	@Column(name="mailing_list", length=255)
@@ -34,7 +34,7 @@ public class SystemAdmin implements Serializable {
 	@Column(name="system_admin", nullable=false, length=100)
 	private String systemAdmin;
 
-	@Column(name="update_time", insertable=false, updatable=false)
+	@Column(name="update_time")
 	private Timestamp updateTime;
 
 	@Column(name="user_corporate_id", nullable=false)

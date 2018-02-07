@@ -19,7 +19,7 @@ public class Share implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Column(name="create_time", insertable=false, updatable=false)
+	@Column(name="create_time")
 	private Timestamp createTime;
 
 	@Column(name="owner_user_corporate_id", nullable=false)
@@ -31,7 +31,7 @@ public class Share implements Serializable {
 	@Column(name="share_type", nullable=false, length=20)
 	private String shareType;
 
-	@Column(name="update_time", insertable=false, updatable=false)
+	@Column(name="update_time")
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to Host

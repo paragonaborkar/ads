@@ -19,7 +19,7 @@ public class MountPoint implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Column(name="create_time", insertable=false, updatable=false)
+	@Column(name="create_time")
 	private Timestamp createTime;
 
 	@Column(name="inventory_number", nullable=false, length=45)
@@ -28,7 +28,7 @@ public class MountPoint implements Serializable {
 	@Column(name="mount_location", nullable=false, length=255)
 	private String mountLocation;
 
-	@Column(name="update_time", insertable=false, updatable=false)
+	@Column(name="update_time")
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to Host

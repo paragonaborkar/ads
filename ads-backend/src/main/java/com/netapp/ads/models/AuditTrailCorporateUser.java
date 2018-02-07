@@ -25,14 +25,14 @@ public class AuditTrailCorporateUser implements Serializable {
 	@Column(name="audited_resource", length=255)
 	private String auditedResource;
 
-	@Column(name="create_time", insertable=false, updatable=false)
+	@Column(name="create_time")
 	private Timestamp createTime;
 
 	@Lob
 	@Column(name="old_values")
 	private String oldValues;
 
-	@Column(name="update_time", insertable=false, updatable=false)
+	@Column(name="update_time")
 	private Timestamp updateTime;
 
 	@Column(name="user_corporate_id", nullable=false)

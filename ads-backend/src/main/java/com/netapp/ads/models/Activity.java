@@ -39,7 +39,7 @@ public class Activity implements Serializable {
 	@Column(name="call_reason", length=2048)
 	private String callReason;
 
-	@Column(name="create_time", insertable=false, updatable=false)
+	@Column(name="create_time")
 	private Timestamp createTime;
 
 	@Temporal(TemporalType.DATE)
@@ -69,7 +69,7 @@ public class Activity implements Serializable {
 	@Column(length=1024)
 	private String note;
 
-	@Column(name="update_time", insertable=false, updatable=false)
+	@Column(name="update_time")
 	private Timestamp updateTime;
 
 	@Column(length=255)

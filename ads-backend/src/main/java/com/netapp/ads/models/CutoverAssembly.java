@@ -26,7 +26,7 @@ public class CutoverAssembly implements Serializable {
 	@Column(name="completed_replication")
 	private boolean completedReplication;
 
-	@Column(name="create_time", insertable=false, updatable=false)
+	@Column(name="create_time")
 	private Timestamp createTime;
 
 	@Column(name="cutover_complete")
@@ -47,7 +47,7 @@ public class CutoverAssembly implements Serializable {
 	@Column(name="unmount_volume")
 	private boolean unmountVolume;
 
-	@Column(name="update_time", insertable=false, updatable=false)
+	@Column(name="update_time")
 	private Timestamp updateTime;
 
 	@Column(name="validated_database")

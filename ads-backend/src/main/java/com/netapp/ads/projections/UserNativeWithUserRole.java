@@ -1,4 +1,4 @@
-package com.netapp.ads.models.projections;
+package com.netapp.ads.projections;
 
 import java.sql.Timestamp;
 

@@ -24,7 +24,7 @@ public class Controller implements Serializable {
 	@Column(name="controller_name", nullable=false, length=255)
 	private String controllerName;
 
-	@Column(name="create_time", insertable=false, updatable=false)
+	@Column(name="create_time")
 	private Timestamp createTime;
 
 	@Temporal(TemporalType.DATE)
@@ -34,7 +34,7 @@ public class Controller implements Serializable {
 	@Column(name="serial_number", length=255)
 	private String serialNumber;
 
-	@Column(name="update_time", insertable=false, updatable=false)
+	@Column(name="update_time")
 	private Timestamp updateTime;
 
 	@Column(name="volume_tally")

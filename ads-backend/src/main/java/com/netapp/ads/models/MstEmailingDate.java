@@ -23,7 +23,7 @@ public class MstEmailingDate implements Serializable {
 	@Column(name="app_owner_user_corporate_id")
 	private Integer appOwnerUserCorporateId;
 
-	@Column(name="create_time", insertable=false, updatable=false)
+	@Column(name="create_time")
 	private Timestamp createTime;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -37,7 +37,7 @@ public class MstEmailingDate implements Serializable {
 	@Column(name="system_admin_id")
 	private Integer systemAdminId;
 
-	@Column(name="update_time", insertable=false, updatable=false)
+	@Column(name="update_time")
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to MstEmailType

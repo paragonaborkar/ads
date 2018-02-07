@@ -27,7 +27,7 @@ public class NasVolume implements Serializable {
 	@Column(name="avg_iops")
 	private Integer avgIops;
 
-	@Column(name="create_time", insertable=false, updatable=false)
+	@Column(name="create_time")
 	private Timestamp createTime;
 
 	@Column(length=1024)
@@ -57,7 +57,7 @@ public class NasVolume implements Serializable {
 	@Column(name="snap_type", length=255)
 	private String snapType;
 
-	@Column(name="update_time", insertable=false, updatable=false)
+	@Column(name="update_time")
 	private Timestamp updateTime;
 
 	@Column(name="used_capacity_gb")

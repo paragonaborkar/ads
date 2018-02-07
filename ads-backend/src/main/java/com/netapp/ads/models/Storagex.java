@@ -21,7 +21,7 @@ public class Storagex implements Serializable {
 
 	private boolean completed;
 
-	@Column(name="create_time", insertable=false, updatable=false)
+	@Column(name="create_time")
 	private Timestamp createTime;
 
 	@Column(length=1024)
@@ -38,7 +38,7 @@ public class Storagex implements Serializable {
 	@Column(name="target_path", length=1024)
 	private String targetPath;
 
-	@Column(name="update_time", insertable=false, updatable=false)
+	@Column(name="update_time")
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to MigrationCutoverEvent
