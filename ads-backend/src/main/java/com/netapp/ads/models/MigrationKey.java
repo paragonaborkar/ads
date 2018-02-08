@@ -2,7 +2,8 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -11,43 +12,46 @@ import java.util.Date;
  */
 @Entity
 @Table(name="migration_key")
-@NamedQuery(name="MigrationKey.findAll", query="SELECT m FROM MigrationKey m")
 public class MigrationKey implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
-	private Date createTime;
+	private Timestamp createTime;
 
-	@Column(name="migration_key")
+	@Column(name="migration_key", nullable=false, length=100)
 	private String migrationKey;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="update_time")
-	private Date updateTime;
+	private Timestamp updateTime;
 
-	@Column(name="user_corporate_id")
-	private int userCorporateId;
+	@Column(name="user_corporate_id", nullable=false)
+	private Integer userCorporateId;
+
+	//bi-directional many-to-one association to ActivityMigrationKeyXRef
+	@OneToMany(mappedBy="migrationKey")
+	private List<ActivityMigrationKeyXRef> activityMigrationKeyXRefs;
 
 	public MigrationKey() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
@@ -59,20 +63,42 @@ public class MigrationKey implements Serializable {
 		this.migrationKey = migrationKey;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
 
-	public int getUserCorporateId() {
+	public Integer getUserCorporateId() {
 		return this.userCorporateId;
 	}
 
-	public void setUserCorporateId(int userCorporateId) {
+	public void setUserCorporateId(Integer userCorporateId) {
 		this.userCorporateId = userCorporateId;
+	}
+
+	public List<ActivityMigrationKeyXRef> getActivityMigrationKeyXRefs() {
+		return this.activityMigrationKeyXRefs;
+	}
+
+	public void setActivityMigrationKeyXRefs(List<ActivityMigrationKeyXRef> activityMigrationKeyXRefs) {
+		this.activityMigrationKeyXRefs = activityMigrationKeyXRefs;
+	}
+
+	public ActivityMigrationKeyXRef addActivityMigrationKeyXRef(ActivityMigrationKeyXRef activityMigrationKeyXRef) {
+		getActivityMigrationKeyXRefs().add(activityMigrationKeyXRef);
+		activityMigrationKeyXRef.setMigrationKey(this);
+
+		return activityMigrationKeyXRef;
+	}
+
+	public ActivityMigrationKeyXRef removeActivityMigrationKeyXRef(ActivityMigrationKeyXRef activityMigrationKeyXRef) {
+		getActivityMigrationKeyXRefs().remove(activityMigrationKeyXRef);
+		activityMigrationKeyXRef.setMigrationKey(null);
+
+		return activityMigrationKeyXRef;
 	}
 
 }

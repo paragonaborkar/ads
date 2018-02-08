@@ -3,6 +3,7 @@ package com.netapp.ads.models;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -11,21 +12,26 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="migration_time")
-@NamedQuery(name="MigrationTime.findAll", query="SELECT m FROM MigrationTime m")
 public class MigrationTime implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
 	private Integer id;
 
 	@Column(name="create_time")
 	private Timestamp createTime;
 
-	@Column(name="time_slot")
+	@Column(name="time_slot", length=45)
 	private String timeSlot;
 
 	@Column(name="update_time")
 	private Timestamp updateTime;
+
+	//bi-directional many-to-one association to Activity
+	@OneToMany(mappedBy="migrationTime")
+	private List<Activity> activities;
 
 	public MigrationTime() {
 	}
@@ -60,6 +66,28 @@ public class MigrationTime implements Serializable {
 
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public List<Activity> getActivities() {
+		return this.activities;
+	}
+
+	public void setActivities(List<Activity> activities) {
+		this.activities = activities;
+	}
+
+	public Activity addActivity(Activity activity) {
+		getActivities().add(activity);
+		activity.setMigrationTime(this);
+
+		return activity;
+	}
+
+	public Activity removeActivity(Activity activity) {
+		getActivities().remove(activity);
+		activity.setMigrationTime(null);
+
+		return activity;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.netapp.ads.models;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -11,23 +12,25 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="change_management")
-@NamedQuery(name="ChangeManagement.findAll", query="SELECT c FROM ChangeManagement c")
 public class ChangeManagement implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private ChangeManagementPK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
 	@Lob
 	@Column(name="assets_impacted")
 	private String assetsImpacted;
 
-	@Column(name="change_management_number")
+	@Column(name="change_management_number", length=60)
 	private String changeManagementNumber;
 
 	@Column(name="create_time")
 	private Timestamp createTime;
 
+	@Column(length=1024)
 	private String description;
 
 	@Lob
@@ -38,17 +41,21 @@ public class ChangeManagement implements Serializable {
 
 	//bi-directional many-to-one association to MigrationCutoverEvent
 	@ManyToOne
-	@JoinColumn(name="migration_cutover_event_id", insertable = false, updatable = false)
+	@JoinColumn(name="migration_cutover_event_id", nullable=false)
 	private MigrationCutoverEvent migrationCutoverEvent;
+
+	//bi-directional many-to-one association to Cutover
+	@OneToMany(mappedBy="changeManagement")
+	private List<Cutover> cutovers;
 
 	public ChangeManagement() {
 	}
 
-	public ChangeManagementPK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(ChangeManagementPK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -106,6 +113,28 @@ public class ChangeManagement implements Serializable {
 
 	public void setMigrationCutoverEvent(MigrationCutoverEvent migrationCutoverEvent) {
 		this.migrationCutoverEvent = migrationCutoverEvent;
+	}
+
+	public List<Cutover> getCutovers() {
+		return this.cutovers;
+	}
+
+	public void setCutovers(List<Cutover> cutovers) {
+		this.cutovers = cutovers;
+	}
+
+	public Cutover addCutover(Cutover cutover) {
+		getCutovers().add(cutover);
+		cutover.setChangeManagement(this);
+
+		return cutover;
+	}
+
+	public Cutover removeCutover(Cutover cutover) {
+		getCutovers().remove(cutover);
+		cutover.setChangeManagement(null);
+
+		return cutover;
 	}
 
 }

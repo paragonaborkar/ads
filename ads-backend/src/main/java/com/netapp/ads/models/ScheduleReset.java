@@ -2,7 +2,7 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -11,36 +11,36 @@ import java.util.Date;
  */
 @Entity
 @Table(name="schedule_reset")
-@NamedQuery(name="ScheduleReset.findAll", query="SELECT s FROM ScheduleReset s")
 public class ScheduleReset implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_date")
-	private Date createDate;
+	@Column(name="create_date", nullable=false)
+	private Timestamp createDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
-	private Date createTime;
+	private Timestamp createTime;
 
 	@Column(name="host_count")
-	private int hostCount;
+	private Integer hostCount;
 
-	@Column(name="jsession_id")
+	@Column(name="jsession_id", length=100)
 	private String jsessionId;
 
-	@Column(name="schedule_id")
-	private int scheduleId;
-
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="update_time")
-	private Date updateTime;
+	private Timestamp updateTime;
 
 	@Column(name="user_corporate_id")
-	private int userCorporateId;
+	private Integer userCorporateId;
+
+	//bi-directional many-to-one association to Schedule
+	@ManyToOne
+	@JoinColumn(name="schedule_id")
+	private Schedule schedule;
 
 	public ScheduleReset() {
 	}
@@ -53,27 +53,27 @@ public class ScheduleReset implements Serializable {
 		this.id = id;
 	}
 
-	public Date getCreateDate() {
+	public Timestamp getCreateDate() {
 		return this.createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
-	public int getHostCount() {
+	public Integer getHostCount() {
 		return this.hostCount;
 	}
 
-	public void setHostCount(int hostCount) {
+	public void setHostCount(Integer hostCount) {
 		this.hostCount = hostCount;
 	}
 
@@ -85,28 +85,28 @@ public class ScheduleReset implements Serializable {
 		this.jsessionId = jsessionId;
 	}
 
-	public int getScheduleId() {
-		return this.scheduleId;
-	}
-
-	public void setScheduleId(int scheduleId) {
-		this.scheduleId = scheduleId;
-	}
-
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
 
-	public int getUserCorporateId() {
+	public Integer getUserCorporateId() {
 		return this.userCorporateId;
 	}
 
-	public void setUserCorporateId(int userCorporateId) {
+	public void setUserCorporateId(Integer userCorporateId) {
 		this.userCorporateId = userCorporateId;
+	}
+
+	public Schedule getSchedule() {
+		return this.schedule;
+	}
+
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
 	}
 
 }

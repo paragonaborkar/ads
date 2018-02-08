@@ -10,12 +10,16 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="exports_host_x_ref")
-@NamedQuery(name="ExportsHostXRef.findAll", query="SELECT e FROM ExportsHostXRef e")
 public class ExportsHostXRef implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private ExportsHostXRefPK id;
+
+	//bi-directional many-to-one association to Export
+	@ManyToOne
+	@JoinColumn(name="exports_id", nullable=false, insertable=false, updatable=false)
+	private Export export;
 
 	public ExportsHostXRef() {
 	}
@@ -26,6 +30,14 @@ public class ExportsHostXRef implements Serializable {
 
 	public void setId(ExportsHostXRefPK id) {
 		this.id = id;
+	}
+
+	public Export getExport() {
+		return this.export;
+	}
+
+	public void setExport(Export export) {
+		this.export = export;
 	}
 
 }

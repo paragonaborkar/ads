@@ -12,24 +12,31 @@ public class ExportsHostXRefPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="host_id")
-	private int hostId;
+	@Column(name="host_id", insertable=false, updatable=false, unique=true, nullable=false)
+	private Integer hostId;
 
-	@Column(name="exports_id")
-	private int exportsId;
+	@Column(name="exports_id", insertable=false, updatable=false, unique=true, nullable=false)
+	private Integer exportsId;
 
 	public ExportsHostXRefPK() {
 	}
-	public int getHostId() {
+	
+	public ExportsHostXRefPK(Integer hostId, Integer exportsId) {
+		super();
+		this.hostId = hostId;
+		this.exportsId = exportsId;
+	}
+
+	public Integer getHostId() {
 		return this.hostId;
 	}
-	public void setHostId(int hostId) {
+	public void setHostId(Integer hostId) {
 		this.hostId = hostId;
 	}
-	public int getExportsId() {
+	public Integer getExportsId() {
 		return this.exportsId;
 	}
-	public void setExportsId(int exportsId) {
+	public void setExportsId(Integer exportsId) {
 		this.exportsId = exportsId;
 	}
 

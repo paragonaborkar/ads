@@ -1,7 +1,5 @@
 package com.netapp.ads.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
@@ -15,46 +13,46 @@ import java.util.List;
  */
 @Entity
 @Table(name="work_package")
-@NamedQuery(name="WorkPackage.findAll", query="SELECT w FROM WorkPackage w")
 public class WorkPackage implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Column(name="asset_number")
+	@Column(name="asset_number", length=60)
 	private String assetNumber;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="controller_installed_date")
+	@Column(name="controller_installed_date", nullable=false)
 	private Date controllerInstalledDate;
 
 	@Column(name="create_time")
 	private Timestamp createTime;
 
-	private int priority;
+	private Integer priority;
 
-	private byte processed;
+	private boolean processed;
 
 	@Column(name="update_time")
 	private Timestamp updateTime;
 
-	@Column(name="work_package_name")
+	@Column(name="work_package_name", nullable=false, length=255)
 	private String workPackageName;
 
 	//bi-directional many-to-one association to Storage
-	@JsonBackReference
 	@OneToMany(mappedBy="workPackage")
 	private List<Storage> storages;
 
 	public WorkPackage() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -82,19 +80,19 @@ public class WorkPackage implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public int getPriority() {
+	public Integer getPriority() {
 		return this.priority;
 	}
 
-	public void setPriority(int priority) {
+	public void setPriority(Integer priority) {
 		this.priority = priority;
 	}
 
-	public byte getProcessed() {
+	public boolean getProcessed() {
 		return this.processed;
 	}
 
-	public void setProcessed(byte processed) {
+	public void setProcessed(boolean processed) {
 		this.processed = processed;
 	}
 

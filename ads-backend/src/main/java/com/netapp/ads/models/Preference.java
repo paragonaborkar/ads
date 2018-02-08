@@ -7,27 +7,27 @@ import java.util.List;
 
 
 /**
- * The persistent class for the preferences database table.
+ * The persistent class for the preference database table.
  * 
  */
 @Entity
-@Table(name="preferences")
-@NamedQuery(name="Preference.findAll", query="SELECT p FROM Preference p")
+@Table(name="preference")
 public class Preference implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
 	private Integer id;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="created_on")
 	private Date createdOn;
 
-	@Column(name="page_name")
+	@Column(name="page_name", length=255)
 	private String pageName;
 
-	@Column(name="preference_type")
+	@Column(name="preference_type", length=255)
 	private String preferenceType;
 
 	@Temporal(TemporalType.TIMESTAMP)

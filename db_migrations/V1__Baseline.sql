@@ -1485,6 +1485,7 @@ CREATE TABLE IF NOT EXISTS `schedule_reset` (
 -- Dumping data for table vitae_data_refactor.schedule_reset: ~0 rows (approximately)
 /*!40000 ALTER TABLE `schedule_reset` DISABLE KEYS */;
 /*!40000 ALTER TABLE `schedule_reset` ENABLE KEYS */;
+<<<<<<< HEAD
 
 -- Dumping structure for table vitae_data_refactor.schema_version
 DROP TABLE IF EXISTS `schema_version`;
@@ -1507,6 +1508,15 @@ CREATE TABLE IF NOT EXISTS `schema_version` (
 -- Dumping data for table vitae_data_refactor.schema_version: ~0 rows (approximately)
 /*!40000 ALTER TABLE `schema_version` DISABLE KEYS */;
 /*!40000 ALTER TABLE `schema_version` ENABLE KEYS */;
+=======
+UNLOCK TABLES;
+
+
+
+--
+-- Table structure for table `share`
+--
+>>>>>>> b_models_repos
 
 -- Dumping structure for table vitae_data_refactor.share
 DROP TABLE IF EXISTS `share`;

@@ -1,155 +1,200 @@
 package com.netapp.ads.models;
 
+import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
+import java.math.BigInteger;
+import java.util.List;
 
+
+/**
+ * The persistent class for the qtree database table.
+ * 
+ */
 @Entity
-@IdClass(QtreePK.class)
-public class Qtree {
-    private Integer id;
-    private Integer nasVolumeId;
-    private String qtreeName;
-    private Long quotaHardCapacityLimitMb;
-    private Long quotaSoftCapacityLimitMb;
-    private Long quotaUsedCapacityLimitMb;
-    private String qtreeType;
-    private String securityStyle;
-    private String qtreeStatus;
-    private Timestamp createTime;
-    private Timestamp updateTime;
+@Table(name="qtree")
+public class Qtree implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id", nullable = false)
-    public Integer getId() {
-        return id;
-    }
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	@Column(name="create_time")
+	private Timestamp createTime;
 
-    @Id
-    @Column(name = "nas_volume_id", nullable = false)
-    public Integer getNasVolumeId() {
-        return nasVolumeId;
-    }
+	@Column(name="qtree_name", length=225)
+	private String qtreeName;
 
-    public void setNasVolumeId(Integer nasVolumeId) {
-        this.nasVolumeId = nasVolumeId;
-    }
+	@Column(name="qtree_status", length=225)
+	private String qtreeStatus;
 
-    @Basic
-    @Column(name = "qtree_name", nullable = true, length = 225)
-    public String getQtreeName() {
-        return qtreeName;
-    }
+	@Column(name="qtree_type", length=1)
+	private String qtreeType;
 
-    public void setQtreeName(String qtreeName) {
-        this.qtreeName = qtreeName;
-    }
+	@Column(name="quota_hard_capacity_limit_mb")
+	private BigInteger quotaHardCapacityLimitMb;
 
-    @Basic
-    @Column(name = "quota_hard_capacity_limit_mb", nullable = true)
-    public Long getQuotaHardCapacityLimitMb() {
-        return quotaHardCapacityLimitMb;
-    }
+	@Column(name="quota_soft_capacity_limit_mb")
+	private BigInteger quotaSoftCapacityLimitMb;
 
-    public void setQuotaHardCapacityLimitMb(Long quotaHardCapacityLimitMb) {
-        this.quotaHardCapacityLimitMb = quotaHardCapacityLimitMb;
-    }
+	@Column(name="quota_used_capacity_limit_mb")
+	private BigInteger quotaUsedCapacityLimitMb;
 
-    @Basic
-    @Column(name = "quota_soft_capacity_limit_mb", nullable = true)
-    public Long getQuotaSoftCapacityLimitMb() {
-        return quotaSoftCapacityLimitMb;
-    }
+	@Column(name="security_style", length=1)
+	private String securityStyle;
 
-    public void setQuotaSoftCapacityLimitMb(Long quotaSoftCapacityLimitMb) {
-        this.quotaSoftCapacityLimitMb = quotaSoftCapacityLimitMb;
-    }
+	@Column(name="update_time")
+	private Timestamp updateTime;
 
-    @Basic
-    @Column(name = "quota_used_capacity_limit_mb", nullable = true)
-    public Long getQuotaUsedCapacityLimitMb() {
-        return quotaUsedCapacityLimitMb;
-    }
+	//bi-directional many-to-one association to Activity
+	@OneToMany(mappedBy="qtree")
+	private List<Activity> activities;
 
-    public void setQuotaUsedCapacityLimitMb(Long quotaUsedCapacityLimitMb) {
-        this.quotaUsedCapacityLimitMb = quotaUsedCapacityLimitMb;
-    }
+	//bi-directional many-to-one association to NasVolume
+	@ManyToOne
+	@JoinColumn(name="nas_volume_id", nullable=false)
+	private NasVolume nasVolume;
 
-    @Basic
-    @Column(name = "qtree_type", nullable = true)
-    public String getQtreeType() {
-        return qtreeType;
-    }
+	//bi-directional many-to-one association to Share
+	@OneToMany(mappedBy="qtree")
+	private List<Share> shares;
 
-    public void setQtreeType(String qtreeType) {
-        this.qtreeType = qtreeType;
-    }
+	public Qtree() {
+	}
 
-    @Basic
-    @Column(name = "security_style", nullable = true)
-    public String getSecurityStyle() {
-        return securityStyle;
-    }
+	public Integer getId() {
+		return this.id;
+	}
 
-    public void setSecurityStyle(String securityStyle) {
-        this.securityStyle = securityStyle;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    @Basic
-    @Column(name = "qtree_status", nullable = true, length = 225)
-    public String getQtreeStatus() {
-        return qtreeStatus;
-    }
+	public Timestamp getCreateTime() {
+		return this.createTime;
+	}
 
-    public void setQtreeStatus(String qtreeStatus) {
-        this.qtreeStatus = qtreeStatus;
-    }
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
 
-    @Basic
-    @Column(name = "create_time", nullable = true)
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
+	public String getQtreeName() {
+		return this.qtreeName;
+	}
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
+	public void setQtreeName(String qtreeName) {
+		this.qtreeName = qtreeName;
+	}
 
-    @Basic
-    @Column(name = "update_time", nullable = true)
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
+	public String getQtreeStatus() {
+		return this.qtreeStatus;
+	}
 
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
+	public void setQtreeStatus(String qtreeStatus) {
+		this.qtreeStatus = qtreeStatus;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Qtree qtree = (Qtree) o;
-        return Objects.equals(id, qtree.id) &&
-                Objects.equals(nasVolumeId, qtree.nasVolumeId) &&
-                Objects.equals(qtreeName, qtree.qtreeName) &&
-                Objects.equals(quotaHardCapacityLimitMb, qtree.quotaHardCapacityLimitMb) &&
-                Objects.equals(quotaSoftCapacityLimitMb, qtree.quotaSoftCapacityLimitMb) &&
-                Objects.equals(quotaUsedCapacityLimitMb, qtree.quotaUsedCapacityLimitMb) &&
-                Objects.equals(qtreeType, qtree.qtreeType) &&
-                Objects.equals(securityStyle, qtree.securityStyle) &&
-                Objects.equals(qtreeStatus, qtree.qtreeStatus) &&
-                Objects.equals(createTime, qtree.createTime) &&
-                Objects.equals(updateTime, qtree.updateTime);
-    }
+	public String getQtreeType() {
+		return this.qtreeType;
+	}
 
-    @Override
-    public int hashCode() {
+	public void setQtreeType(String qtreeType) {
+		this.qtreeType = qtreeType;
+	}
 
-        return Objects.hash(id, nasVolumeId, qtreeName, quotaHardCapacityLimitMb, quotaSoftCapacityLimitMb, quotaUsedCapacityLimitMb, qtreeType, securityStyle, qtreeStatus, createTime, updateTime);
-    }
+	public BigInteger getQuotaHardCapacityLimitMb() {
+		return this.quotaHardCapacityLimitMb;
+	}
+
+	public void setQuotaHardCapacityLimitMb(BigInteger quotaHardCapacityLimitMb) {
+		this.quotaHardCapacityLimitMb = quotaHardCapacityLimitMb;
+	}
+
+	public BigInteger getQuotaSoftCapacityLimitMb() {
+		return this.quotaSoftCapacityLimitMb;
+	}
+
+	public void setQuotaSoftCapacityLimitMb(BigInteger quotaSoftCapacityLimitMb) {
+		this.quotaSoftCapacityLimitMb = quotaSoftCapacityLimitMb;
+	}
+
+	public BigInteger getQuotaUsedCapacityLimitMb() {
+		return this.quotaUsedCapacityLimitMb;
+	}
+
+	public void setQuotaUsedCapacityLimitMb(BigInteger quotaUsedCapacityLimitMb) {
+		this.quotaUsedCapacityLimitMb = quotaUsedCapacityLimitMb;
+	}
+
+	public String getSecurityStyle() {
+		return this.securityStyle;
+	}
+
+	public void setSecurityStyle(String securityStyle) {
+		this.securityStyle = securityStyle;
+	}
+
+	public Timestamp getUpdateTime() {
+		return this.updateTime;
+	}
+
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public List<Activity> getActivities() {
+		return this.activities;
+	}
+
+	public void setActivities(List<Activity> activities) {
+		this.activities = activities;
+	}
+
+	public Activity addActivity(Activity activity) {
+		getActivities().add(activity);
+		activity.setQtree(this);
+
+		return activity;
+	}
+
+	public Activity removeActivity(Activity activity) {
+		getActivities().remove(activity);
+		activity.setQtree(null);
+
+		return activity;
+	}
+
+	public NasVolume getNasVolume() {
+		return this.nasVolume;
+	}
+
+	public void setNasVolume(NasVolume nasVolume) {
+		this.nasVolume = nasVolume;
+	}
+
+	public List<Share> getShares() {
+		return this.shares;
+	}
+
+	public void setShares(List<Share> shares) {
+		this.shares = shares;
+	}
+
+	public Share addShare(Share share) {
+		getShares().add(share);
+		share.setQtree(this);
+
+		return share;
+	}
+
+	public Share removeShare(Share share) {
+		getShares().remove(share);
+		share.setQtree(null);
+
+		return share;
+	}
+
 }
+

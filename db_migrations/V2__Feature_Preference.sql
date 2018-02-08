@@ -1,6 +1,3 @@
-DROP TABLE IF EXISTS `preference_detail`;
-DROP TABLE IF EXISTS `preference`;
-
 CREATE TABLE `preference` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `page_name` varchar(255) DEFAULT NULL,
