@@ -1,0 +1,22 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<expression:EMFExpression xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:expression="http:///expression.ecore" id="tMap_1=>" expression="ADSStringUtils.getRestURLForId(context.REST_BASE_URL, ADSConstants.NODE_CONTROLLERS,String.valueOf(row1.storageNodeId))">
+  <variables name="row1.id" value="0" talendType="id_Integer"/>
+  <variables name="row1.name" value="null" talendType="id_String" nullable="true"/>
+  <variables name="row1.storageId" value="0" talendType="id_Integer"/>
+  <variables name="row1.totalAllocatedCapacityMB" value="0" talendType="id_Long"/>
+  <variables name="row1.usesFlashPools" value="0" talendType="id_Byte"/>
+  <variables name="row1.type" value="null" talendType="id_String"/>
+  <variables name="row1.storageNodeId" value="0" talendType="id_Integer"/>
+  <variables name="row1.poolAllocatedCapMB" value="null" talendType="id_Float" nullable="true"/>
+  <variables name="row1.poolUsedCapMB" value="null" talendType="id_Float" nullable="true"/>
+  <variables name="row1.poolIopsCapability" value="null" talendType="id_Integer" nullable="true"/>
+  <variables name="row1.avgIOpS" value="null" talendType="id_Integer" nullable="true"/>
+  <variables name="row1.maxIOpS" value="null" talendType="id_Integer" nullable="true"/>
+  <variables name="row1.totalAllocatedCapacityMB /1024.0f" value="0" talendType="id_Float"/>
+  <variables name="row1.poolAllocatedCapMB /1024.0f" value="0" talendType="id_Float"/>
+  <variables name="row1.poolUsedCapMB /1024.0f" value="0" talendType="id_Float"/>
+  <variables name="(row1.usesFlashPools ==1)?true:false " value="false" talendType="id_Boolean"/>
+  <variables name="row1.storageNodeId &#xD;&#xA;ADSStringUtils.getRestURLForId(context.REST_BASE_URL, &quot;&quot;, &quot;&quot;) " value="null" talendType="id_String"/>
+  <variables name="row1.storageNodeId &#xD;&#xA;ADSStringUtils.getRestURLForId(context.REST_BASE_URL, ADSConstants., &quot;&quot;) " value="null" talendType="id_String"/>
+  <variables name="ADSStringUtils.getRestURLForId(context.REST_BASE_URL, ADSConstants.NODE_CONTROLLERS,String.valueOf(row1.storageNodeId)) " value="null" talendType="id_String"/>
+</expression:EMFExpression>
