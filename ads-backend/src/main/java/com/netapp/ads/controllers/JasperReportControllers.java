@@ -11,6 +11,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,6 +48,8 @@ import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
 @RestController
 public class JasperReportControllers {
 
+	private static final Logger log = LoggerFactory.getLogger(JasperReportControllers.class);
+	
 	@Autowired
 	private UserNativeRepository userNativeRepository;
 
@@ -84,6 +88,7 @@ public class JasperReportControllers {
 
 			ArrayList<UserNative> dataList = (ArrayList<UserNative>) userNativeRepository.findAll();
 
+			
 			JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(dataList, false);
 
 			JasperReport report = (JasperReport) JRLoader.loadObjectFromFile(file.getPath());
@@ -94,6 +99,7 @@ public class JasperReportControllers {
 			exporter.setParameter(JRHtmlExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
 			exporter.setParameter(JRHtmlExporterParameter.IS_WRAP_BREAK_WORD, Boolean.TRUE);
 			exporter.setParameter(JRXlsExporterParameter.IS_IGNORE_GRAPHICS, Boolean.TRUE);
+			
 			StringBuffer sb = new StringBuffer();
 			exporter.setParameter(JRHtmlExporterParameter.SIZE_UNIT, JRHtmlExporterParameter.SIZE_UNIT_POINT);
 			exporter.setParameter(JRExporterParameter.OUTPUT_STRING_BUFFER, sb);

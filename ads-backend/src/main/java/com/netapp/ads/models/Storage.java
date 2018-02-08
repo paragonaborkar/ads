@@ -58,7 +58,7 @@ public class Storage implements Serializable {
 
 	//bi-directional many-to-one association to WorkPackage
 	@ManyToOne
-	@JoinColumn(name="work_package_id", nullable=false)
+	@JoinColumn(name="work_package_id")
 	private WorkPackage workPackage;
 
 	public Storage() {

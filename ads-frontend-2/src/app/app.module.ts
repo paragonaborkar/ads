@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpModule, Http } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -14,10 +14,7 @@ import { SortableModule } from 'ngx-bootstrap/sortable';
 import { DataTableModule, SharedModule, DropdownModule } from 'primeng/primeng';
 import { DataTablesModule } from 'angular-datatables';
 
-import { DataTablesModule } from 'angular-datatables';
-
-
-import {Ng2SearchTableModule} from "ng2-search-table/ng2-search-table";
+import { Ng2SearchTableModule } from "ng2-search-table/ng2-search-table";
 
 
 // Providers
@@ -31,7 +28,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
 
 import { ReportService } from './admin/report-listing/report.service';   // RENAME TO "admin-."
-import { AppPropertiesService } from './common/app-properties/app-properties.service'
+import { AppPropertiesService } from './admin/app-properties/app-properties.service'
 
 import { UserAdminService } from './admin/user-admin/user-admin.service';
 import { PagerService } from './common/pager.service';      // Currently used in user admin. Possibly many pages.
@@ -51,9 +48,13 @@ import { AddUserComponent } from './admin/user-admin/adduser/adduser.component';
 import { UpdateUserComponent } from './admin/user-admin/edituser/edituser.component';
 import { DeleteUserComponent } from './admin/user-admin/deleteuser/deleteuser.component';
 import { PropPreferencesComponent } from './common/prop-preferences/prop-preferences.component';
-import { AppPropertiesComponent } from './common/app-properties/app-properties.component';
-/*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
+import { AppPropertiesComponent } from './admin/app-properties/app-properties.component';
+import { ArrayFilterPipePipe } from './pipes/array-filter-pipe.pipe';
 
+import { ConnectionsManualFunctionsComponent } from './connections/connections-manual-functions/connections-manual-functions.component';
+import { DiscoverManualFunctionsComponent } from './discover/discover-manual-functions/discover-manual-functions.component';
+import { FriendlyLabelPipePipe } from './pipes/friendly-label-pipe.pipe';
+/*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
 
 @NgModule({
@@ -67,12 +68,13 @@ import { AppPropertiesComponent } from './common/app-properties/app-properties.c
     AddUserComponent,
     UpdateUserComponent,
     DeleteUserComponent,
-
     FooterComponent,
-
     PropPreferencesComponent,
-
     AppPropertiesComponent,
+    ArrayFilterPipePipe,
+    FriendlyLabelPipePipe,
+    ConnectionsManualFunctionsComponent,
+    DiscoverManualFunctionsComponent,
     
 
   ],

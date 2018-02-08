@@ -8,7 +8,10 @@ import { LoginComponent } from './common/login/login.component';
 import { ReportListingComponent } from './admin/report-listing/report-listing.component';
 import { UserAdminComponent } from './admin/user-admin/user-admin.component';
 import { PropPreferencesComponent } from './common/prop-preferences/prop-preferences.component';
-import { AppPropertiesComponent } from './common/app-properties/app-properties.component';
+import { AppPropertiesComponent } from './admin/app-properties/app-properties.component';
+
+import { ConnectionsManualFunctionsComponent } from './connections/connections-manual-functions/connections-manual-functions.component';
+import { DiscoverManualFunctionsComponent } from './discover/discover-manual-functions/discover-manual-functions.component';
 
 
 // import { Error404LoggedInComponent } from './common/error-404-logged-in/error-404-logged-in.component';
@@ -23,6 +26,12 @@ const routes: Routes = [
   { path: 'admin/native-user-mgmt',  component: UserAdminComponent, canActivate: [AuthGuard] },
   { path: 'admin/property-preferences',  component: PropPreferencesComponent, canActivate: [AuthGuard] },
   { path: 'admin/application-properties',  component: AppPropertiesComponent, canActivate: [AuthGuard] },
+
+
+  { path: 'connections/manual-function',  component: ConnectionsManualFunctionsComponent, canActivate: [AuthGuard] },
+   
+  
+  { path: 'discover/manual-function',  component: DiscoverManualFunctionsComponent, canActivate: [AuthGuard] },
  
   
   { path: '',   component: LoginComponent},

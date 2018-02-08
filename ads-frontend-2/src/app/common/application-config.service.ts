@@ -26,6 +26,8 @@ export class ApplicationConfigService {
   }
 
   updatePreferenceDetails(updatedPreferenceDetail: any): Observable<any> {
+    console.log("updatedPreferenceDetail.patchLink:");
+    console.log(updatedPreferenceDetail);
     return this.http.patch(updatedPreferenceDetail.patchLink,
       {
         fieldOrder: updatedPreferenceDetail.fieldOrder,

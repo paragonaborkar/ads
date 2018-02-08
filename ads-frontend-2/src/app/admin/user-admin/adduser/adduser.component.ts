@@ -15,7 +15,7 @@ export class AddUserComponent implements OnInit {
   confirmPassword: String;
   doesPasswordMatch = true;
 
-  roleArray =  ['Migration Specialist', 'Storage Owner', 'ADS Admin'] ;
+  roleArray = ['Migration Specialist', 'Storage Owner', 'ADS Admin'];
   public user: any = {};
 
   constructor() { }
@@ -28,30 +28,30 @@ export class AddUserComponent implements OnInit {
    * @param
    */
   okay() {
-     if(this.user.enabled == true){
-       this.user.enabled = 1;
-     }
-     else{
-       this.user.enabled = 0;
-     }
+    if (this.user.enabled == true) {
+      this.user.enabled = 1;
+    }
+    else {
+      this.user.enabled = 0;
+    }
 
-    if(this.confirmPassword === this.user.password) {
-      if(this.user.firstName != null){
-        if(this.user.lastName != null){
-          if(this.user.email != null){
-              console.log('COmpared yEs password')
-              this.yes.emit(this.user);
+    if (this.confirmPassword === this.user.password) {
+      if (this.user.firstName != null) {
+        if (this.user.lastName != null) {
+          if (this.user.email != null) {
+            console.log('COmpared yEs password')
+            this.yes.emit(this.user);
 
           }
         }
       }
-      else{
+      else {
         window.alert('please enter all the fields');
       }
 
     }
     else {
-    window.alert('Passwords did not match');
+      window.alert('Passwords did not match');
     }
   }
   /**

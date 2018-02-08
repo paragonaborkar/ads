@@ -18,6 +18,10 @@ import { UserAdminService } from './user-admin.service';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 
+import { FriendlyLabelPipePipe } from '../../pipes/friendly-label-pipe.pipe';
+import { ArrayFilterPipePipe } from '../../pipes/array-filter-pipe.pipe';
+import { ColumnConfig } from '../../pipes/column-config';
+
 @Component({
   selector: 'app-user-admin',
   templateUrl: './user-admin.component.html',
@@ -28,6 +32,8 @@ export class UserAdminComponent implements OnInit {
   @ViewChild('addModal') public addModal: ModalDirective;
   @ViewChild('updateModal') public updateModal: ModalDirective;
   @ViewChild('deleteModal') public deleteModal: ModalDirective;
+
+  columnFilterArgs = {hidden: false};
 
   // TODO: load this from REST call... don't default it. We have a user_role table.
   roleArray = ['Migration Specialist', 'Storage Owner', 'ADS Admin'];
@@ -48,7 +54,7 @@ export class UserAdminComponent implements OnInit {
 
   // TODO: load this from REST call... don't default it.
   // For now, we may have to default the Role as example data until the REST call provide it easily.
-  columns: any[] = [
+  columns: ColumnConfig[] = [
     // {
     //   field: 'firstName',
     //   header: 'First Name',
@@ -70,22 +76,32 @@ export class UserAdminComponent implements OnInit {
     //   filterMatchMode: 'contains',
     //   hidden: false
     // },
-    {
-      field: 'userRoleId',
-      header: 'Role',
-      template: true,
-      filterMatchMode: 'equals',
-      hidden: false,
-      order: 99
-    },
-    {
-      field: 'enabled',
-      header: 'Active',
-      template: true,
-      filterMatchMode: 'equals',
-      hidden: false,
-      order: 100
-    }
+    // {
+    //   field: 'userRoleId',
+    //   header: 'Role',
+    //   template: true,
+    //   filterMatchMode: 'equals',
+    //   hidden: false,
+    //   order: 99
+    // }
+    // },
+    // {
+    //   field: 'enabled',
+    //   header: 'Active',
+    //   template: true,
+    //   filterMatchMode: 'equals',
+    //   hidden: false,
+    //   order: 100
+    // }
+    // ,
+    // {
+    //   field: 'Actions',
+    //   header: 'Actions',
+    //   template: true,
+    //   filterMatchMode: 'equals',
+    //   hidden: false,
+    //   order: 1000
+    // }
   ];
 
   columnOptions: any[];
@@ -145,7 +161,7 @@ export class UserAdminComponent implements OnInit {
   }
 
   edit(obj) {
-    this.User = JSON.parse(JSON.stringify(obj));
+    this.User = obj; 
     this.isUpdateModal = true;
   }
 

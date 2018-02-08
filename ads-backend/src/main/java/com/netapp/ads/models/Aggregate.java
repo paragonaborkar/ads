@@ -17,7 +17,7 @@ public class Aggregate implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	//@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
@@ -30,10 +30,10 @@ public class Aggregate implements Serializable {
 	@Column(name="aggregate_type", nullable=false, length=45)
 	private String aggregateType;
 
-	@Column(name="assigned_capacity_gb", nullable=false)
+	@Column(name="assigned_capacity_gb")
 	private float assignedCapacityGb;
 
-	@Column(name="assigned_iops", nullable=false)
+	@Column(name="assigned_iops")
 	private Integer assignedIops;
 
 	@Column(name="avg_iops")

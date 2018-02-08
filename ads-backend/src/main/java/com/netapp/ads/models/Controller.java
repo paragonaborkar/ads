@@ -17,7 +17,7 @@ public class Controller implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	//@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
@@ -51,7 +51,7 @@ public class Controller implements Serializable {
 
 	//bi-directional many-to-one association to Export
 	@ManyToOne
-	@JoinColumn(name="exports_id", nullable=false)
+	@JoinColumn(name="exports_id")
 	private Export export;
 
 	//bi-directional many-to-one association to Storage

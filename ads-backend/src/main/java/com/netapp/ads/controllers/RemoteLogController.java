@@ -8,15 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.netapp.ads.Application;
+
 @RestController
 public class RemoteLogController {
     
-	private static final Logger logger = LoggerFactory.getLogger(RemoteLogController.class);
+	private static final Logger log = LoggerFactory.getLogger(RemoteLogController.class);
 	
     @RequestMapping(value = "/remoteLog", method = RequestMethod.POST)
     public void getControllersWithControllerPK(@RequestBody Object obj) {
-        logger.info("GOT LOG FROM USER'S BROWSER");
-        logger.info(obj.toString());
+    	log.error("GOT LOG FROM USER'S BROWSER");
+    	log.error(obj.toString());
         return;
     }
 }

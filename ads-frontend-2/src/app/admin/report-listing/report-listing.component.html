@@ -3,25 +3,24 @@
 <!-- Nav tabs -->
 <ul class="nav nav-pills ">
     <li class="nav-item">
-        <a href="" class="nav-link active" data-toggle="tab" role="tab" aria-expanded="false" aria-expanded="true" data-dismiss="modal" (click)="openJasperReport()">User Report</a>
-    </li>
-    <li *ngIf="showJasperReport" class="nav-item dwnldReport">
-        <a href="" class="nav-link active" data-toggle="tab" role="tab" aria-expanded="false" aria-expanded="true" (click)="downloadJasperReport()">Export to Excel</a>
+        <a href="" class="nav-link active" data-toggle="tab" role="tab" aria-expanded="false" aria-expanded="true" data-dismiss="modal"
+            (click)="openJasperReport()">User Report</a>
     </li>
 </ul>
 
-
-<br>
-<br>
-<br>
-
-<div class="border-left-10 dwnldReport" name="viewport" content="width=device-width, initial-scale=1" id="reportsCustom">
+<div class="row" *ngIf="totalPages">
+    <div class="col-md-12 text-center">
+        <div *ngIf="totalPages">
+            <button class="btn btn-primary previousPage" [ngClass]="{disabled: pageCount <= 1}" (click)="goToPrevious()">Previous</button>
+            <input class="gotoPage" type="number" [(ngModel)]="pageNum" min="1" max={{totalPages}} />
+            <button class="btn btn-primary" (click)="openJasperReport(pageNum)">Go To Page</button>
+            <button class="btn btn-primary nextPage" [ngClass]="{disabled: pageCount === totalPages}"><a (click)="goToNext()">Next</a></button>
+            <button class="btn btn-primary pull-right" (click)="downloadJasperReport()">Export to Excel</button>
+        </div>
+    </div>
 </div>
-<div *ngIf="showJasperReport">
-    <button class="btn btn-primary previousPage" [ngClass]="{disabled: pageCount <= 1}" (click)="goToPrevious()">Previous</button>
-    <input class="gotoPage" type="number" [(ngModel)]="pageNum" min="1" max={{totalPages}} />
-    <button class="btn btn-primary" (click)="openJasperReport(pageNum)">Go To Page</button>
-    <button class="btn btn-primary nextPage" [ngClass]="{disabled: pageCount === totalPages}"><a (click)="goToNext()">Next</a></button>
 
-   
-</div>
+
+
+<div class="border-left-10 dwnldReport" name="viewport" content="width=device-width, initial-scale=1" id="reportsCustom"></div>
+

@@ -17,7 +17,6 @@ public class DateUtils {
 	    ZonedDateTime zdt = ZonedDateTime.of(ldt, ZoneId.systemDefault());
 		ZonedDateTime gmt = zdt.withZoneSameInstant(ZoneId.of("UTC"));
 		Timestamp timestamp = Timestamp.valueOf(gmt.toLocalDateTime());
-		System.out.println(timestamp);
 		return timestamp;
 
 	}
