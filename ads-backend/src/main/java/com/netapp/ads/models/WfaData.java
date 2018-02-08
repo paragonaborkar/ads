@@ -28,7 +28,7 @@ public class WfaData implements Serializable {
 	@Column(name="change_number")
 	private Integer changeNumber;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(length=255)
@@ -134,7 +134,7 @@ public class WfaData implements Serializable {
 	@Column(name="sub_lob", length=128)
 	private String subLob;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	@Column(name="user_corporate_id")

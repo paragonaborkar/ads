@@ -29,7 +29,7 @@ public class Export implements Serializable {
 	@Column(name="controller_name", nullable=false, length=255)
 	private String controllerName;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="impact_status", nullable=false, length=255)
@@ -41,7 +41,7 @@ public class Export implements Serializable {
 	@Column(nullable=false, length=255)
 	private String reason;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	@Column(name="user_corporate_id")

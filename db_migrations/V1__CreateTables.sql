@@ -46,13 +46,9 @@ CREATE TABLE `activity` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `Activity_has_a _Migration_Time_idx` (`migration_time_id`),
   KEY `fk_activity_qtree1_idx` (`qtree_id`),
   CONSTRAINT `Activity_has_a _Migration_Time` FOREIGN KEY (`migration_time_id`) REFERENCES `migration_time` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_activity_activity_lob_x_ref1` FOREIGN KEY (`id`) REFERENCES `activity_lob_x_ref` (`activity_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_activity_activity_migration_key_x_ref1` FOREIGN KEY (`id`) REFERENCES `activity_migration_key_x_ref` (`activity_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_activity_activity_presumed_lob_x_ref1` FOREIGN KEY (`id`) REFERENCES `activity_presumed_lob_x_ref` (`activity_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_activity_qtree1` FOREIGN KEY (`qtree_id`) REFERENCES `qtree` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -69,7 +65,9 @@ CREATE TABLE `activity_lob_x_ref` (
   `lob_id` int(11) NOT NULL,
   PRIMARY KEY (`activity_id`,`lob_id`),
   UNIQUE KEY `activity_id_and_lob_id` (`activity_id`,`lob_id`),
-  KEY `lob_id_idx` (`lob_id`)
+  KEY `lob_id_idx` (`lob_id`),
+  CONSTRAINT `fk_actvitiy_lob_xref_line_of_business1` FOREIGN KEY (`lob_id`) REFERENCES `line_of_business` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_activity_lob_xref_activity1` FOREIGN KEY (`activity_id`) REFERENCES `activity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -93,7 +91,9 @@ CREATE TABLE `activity_migration_key_x_ref` (
   `activity_id` int(11) NOT NULL,
   `migration_key_id` int(11) NOT NULL,
   PRIMARY KEY (`activity_id`,`migration_key_id`),
-  KEY `migration_key_idx` (`migration_key_id`)
+  KEY `migration_key_idx` (`migration_key_id`),
+  CONSTRAINT `fk_activity_migration_key_x_ref_migration_key1` FOREIGN KEY (`migration_key_id`) REFERENCES `migration_key` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_activity_migration_key_x_ref_activity` FOREIGN KEY (`activity_id`) REFERENCES `activity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -117,7 +117,9 @@ CREATE TABLE `activity_presumed_lob_x_ref` (
   `activity_id` int(11) NOT NULL,
   `lob_id` int(11) NOT NULL,
   PRIMARY KEY (`activity_id`,`lob_id`),
-  KEY `activity_id_and_lob_id` (`lob_id`,`activity_id`)
+  KEY `activity_id_and_lob_id` (`lob_id`,`activity_id`),
+  CONSTRAINT `fk_activity_presumed_lob_x_ref_lob1` FOREIGN KEY (`lob_id`) REFERENCES `line_of_business` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_activity_presumed_lob_x_ref_activity1` FOREIGN KEY (`activity_id`) REFERENCES `activity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -146,7 +148,7 @@ CREATE TABLE `activity_response` (
   `suggested_owner_user_corporate_id` int(11) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`activity_id`),
+  PRIMARY KEY(`id`),
   UNIQUE KEY `candidate_fk_key` (`activity_id`,`owner_user_corporate_id`),
   CONSTRAINT `fk_activity_response_id` FOREIGN KEY (`activity_id`) REFERENCES `activity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
@@ -197,7 +199,7 @@ CREATE TABLE `aggregate_purpose` (
   `aggregate_function` varchar(16) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`aggregate_id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `aggregate_id_idx` (`aggregate_id`),
   CONSTRAINT `fk_aggregate_to_aggregate_purpose` FOREIGN KEY (`aggregate_id`) REFERENCES `aggregate` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=623 DEFAULT CHARSET=utf8;
@@ -219,9 +221,7 @@ CREATE TABLE `application` (
   `information_owner` varchar(60) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_application_application_lob_x_ref1` FOREIGN KEY (`id`) REFERENCES `application_lob_x_ref` (`application_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_application_host_application_x_ref1` FOREIGN KEY (`id`) REFERENCES `host_application_x_ref` (`application_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -237,7 +237,9 @@ CREATE TABLE `application_lob_x_ref` (
   `application_id` int(11) NOT NULL,
   `lob_id` int(11) NOT NULL,
   PRIMARY KEY (`application_id`,`lob_id`),
-  KEY `application_id_and_lob_id` (`lob_id`,`application_id`)
+  KEY `application_id_and_lob_id` (`lob_id`,`application_id`),
+  CONSTRAINT `fk_application_lob_x_ref_lob1` FOREIGN KEY (`lob_id`) REFERENCES `line_of_business` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_application_lob_x_ref_application1` FOREIGN KEY (`application_id`) REFERENCES `application` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -290,7 +292,7 @@ CREATE TABLE `audit_reason_code` (
   `reason` varchar(255) NOT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`audit_event_id`),
+  PRIMARY KEY (`id`),
   KEY `fk_audit_reason_code_audit_event1_idx` (`audit_event_id`),
   CONSTRAINT `fk_audit_reason_code_audit_event1` FOREIGN KEY (`audit_event_id`) REFERENCES `audit_event` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
@@ -313,7 +315,7 @@ CREATE TABLE `audit_trail_api` (
   `audited_resource` varchar(255) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`audit_event_id`),
+  PRIMARY KEY (`id`),
   KEY `fk_audit_trail_corporate_audit_event1_idx` (`audit_event_id`),
   CONSTRAINT `fk_audit_trail_corporate_audit_event100` FOREIGN KEY (`audit_event_id`) REFERENCES `audit_event` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -344,7 +346,7 @@ CREATE TABLE `audit_trail_corporate_user` (
   `audited_resource` varchar(255) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`audit_event_id`),
+  PRIMARY KEY (`id`),
   KEY `fk_audit_trail_corporate_audit_event1_idx` (`audit_event_id`),
   CONSTRAINT `fk_audit_trail_corporate_audit_event1` FOREIGN KEY (`audit_event_id`) REFERENCES `audit_event` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -375,7 +377,7 @@ CREATE TABLE `audit_trail_native_user` (
   `audited_resource` varchar(255) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`audit_event_id`),
+  PRIMARY KEY (`id`),
   KEY `fk_audit_trail_corporate_audit_event1_idx` (`audit_event_id`),
   CONSTRAINT `fk_audit_trail_corporate_audit_event10` FOREIGN KEY (`audit_event_id`) REFERENCES `audit_event` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -406,7 +408,7 @@ CREATE TABLE `change_management` (
   `assets_impacted` mediumtext,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`migration_cutover_event_id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `migrationId` (`migration_cutover_event_id`),
   UNIQUE KEY `itsmNum` (`change_management_number`),
   CONSTRAINT `fk_change_management_migration_cutover_event` FOREIGN KEY (`migration_cutover_event_id`) REFERENCES `migration_cutover_event` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -430,7 +432,7 @@ DROP TABLE IF EXISTS `controller`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `controller` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `controller_name` varchar(255) NOT NULL,
   `serial_number` varchar(255) DEFAULT NULL,
   `storage_id` int(11) NOT NULL,
@@ -444,9 +446,9 @@ CREATE TABLE `controller` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_con_dc_id` (`data_center_id`),
   KEY `fk_con_storage_id` (`storage_id`),
-  KEY `fk_exports_id` (`exports_id`),
   CONSTRAINT `fk_con_dc_id` FOREIGN KEY (`data_center_id`) REFERENCES `data_center` (`id`),
-  CONSTRAINT `fk_con_storage_id` FOREIGN KEY (`storage_id`) REFERENCES `storage` (`id`)
+  CONSTRAINT `fk_con_storage_id` FOREIGN KEY (`storage_id`) REFERENCES `storage` (`id`),
+  CONSTRAINT `fk_exports_id` FOREIGN KEY (`exports_id`) REFERENCES `exports` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -469,7 +471,7 @@ CREATE TABLE `cutover` (
   `prep_meeting_ical_id` int(11) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`schedule_id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`cutover_name`),
   KEY `cutoverical_fk` (`cutover_ical_id`),
   KEY `itsm_fk` (`change_management_id`),
@@ -517,7 +519,7 @@ CREATE TABLE `cutover_assembly` (
   `cutover_complete` tinyint(1) DEFAULT '0',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`cutover_id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `cutover_mount_point_id_UNIQUE` (`cutover_mount_point_id`),
   KEY `fk_migrationId_coa` (`migration_cutover_event_id`),
   KEY `fk_itPAMiD_coa` (`cutover_mount_point_id`),
@@ -599,7 +601,7 @@ CREATE TABLE `cutover_time` (
   `validate_complete_begin_time` datetime DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`cutover_assembly_id`),
+  PRIMARY KEY (`id`),
   KEY `cutoverAssemblyId_idx` (`cutover_assembly_id`),
   CONSTRAINT `cutoverAssemblyId` FOREIGN KEY (`cutover_assembly_id`) REFERENCES `cutover_assembly` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -701,8 +703,7 @@ CREATE TABLE `exports` (
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `line_of_business_exports1_idx` (`lob_id`),
-  CONSTRAINT `fk_exports_controller1` FOREIGN KEY (`id`) REFERENCES `controller` (`exports_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_exports_exports_host_x_ref1` FOREIGN KEY (`id`) REFERENCES `exports_host_x_ref` (`exports_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_exports_lob1` FOREIGN KEY (`lob_id`) REFERENCES `line_of_business` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -726,7 +727,9 @@ CREATE TABLE `exports_host_x_ref` (
   `exports_id` int(11) NOT NULL,
   `host_id` int(11) NOT NULL,
   PRIMARY KEY (`host_id`,`exports_id`),
-  KEY `exports_id_host_id` (`exports_id`,`host_id`)
+  KEY `exports_id_host_id` (`exports_id`,`host_id`),
+  CONSTRAINT `fk_export_host_x_ref_exports1` FOREIGN KEY (`exports_id`) REFERENCES `exports` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT, 
+  CONSTRAINT `fk_export_host_x_ref_host1` FOREIGN KEY (`host_id`) REFERENCES `host` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -811,9 +814,7 @@ CREATE TABLE `host` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `host_ip_idx` (`ip_addr`),
-  CONSTRAINT `fk_host_exports_host_x_ref1` FOREIGN KEY (`id`) REFERENCES `exports_host_x_ref` (`host_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_host_host_application_x_ref1` FOREIGN KEY (`id`) REFERENCES `host_application_x_ref` (`host_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `host_ip_idx` (`ip_addr`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -829,7 +830,9 @@ CREATE TABLE `host_application_x_ref` (
   `host_id` int(11) NOT NULL,
   `application_id` int(11) NOT NULL,
   PRIMARY KEY (`host_id`,`application_id`),
-  KEY `host_id_application_id` (`application_id`,`host_id`)
+  KEY `host_id_application_id` (`application_id`,`host_id`),
+  CONSTRAINT `fk_host_application_x_ref_host1` FOREIGN KEY (`host_id`) REFERENCES `host` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_host_application_x_ref_application1` FOREIGN KEY (`application_id`) REFERENCES `application` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -863,7 +866,7 @@ CREATE TABLE `ical` (
   `notes` varchar(255) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`migration_cutover_event_id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `migration_id` (`migration_cutover_event_id`),
   KEY `date_idx` (`date_of_meeting`),
   CONSTRAINT `fk_ical_migration_cutover_event` FOREIGN KEY (`migration_cutover_event_id`) REFERENCES `migration_cutover_event` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -896,11 +899,7 @@ CREATE TABLE `line_of_business` (
   `liason_email` varchar(255) NOT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_line_of_business_activity_lob_x_ref1` FOREIGN KEY (`id`) REFERENCES `activity_lob_x_ref` (`lob_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_line_of_business_activity_presumed_lob_x_ref1` FOREIGN KEY (`id`) REFERENCES `activity_presumed_lob_x_ref` (`lob_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_line_of_business_application_lob_x_ref1` FOREIGN KEY (`id`) REFERENCES `application_lob_x_ref` (`lob_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_line_of_business_exports1` FOREIGN KEY (`id`) REFERENCES `exports` (`lob_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -977,12 +976,11 @@ CREATE TABLE `migration_cutover_src_to_tgt` (
   `tgt_status` enum('Red','Amber','Green') DEFAULT 'Red',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`migration_cutover_event_id`),
+  PRIMARY KEY (`id`),
   KEY `fk_migration_cutover_src_to_tgt_migration_cutover_event1_idx` (`migration_cutover_event_id`),
   KEY `fk_migration_cutover_src_to_tgt_data_protection_policy1_idx` (`data_protection_policy_id`),
   CONSTRAINT `fk_migration_cutover_src_to_tgt_data_protection_policy1` FOREIGN KEY (`data_protection_policy_id`) REFERENCES `data_protection_policy` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_migration_cutover_src_to_tgt_migration_cutover_event1` FOREIGN KEY (`migration_cutover_event_id`) REFERENCES `migration_cutover_event` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_migration_cutover_src_to_tgt_migration_cutover_team` FOREIGN KEY (`id`) REFERENCES `migration_cutover_team` (`migration_cutover_src_to_tgt_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_migration_cutover_src_to_tgt_migration_cutover_event1` FOREIGN KEY (`migration_cutover_event_id`) REFERENCES `migration_cutover_event` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1010,7 +1008,8 @@ CREATE TABLE `migration_cutover_team` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `migration_cutover_src_to_tgt_id_idx` (`migration_cutover_src_to_tgt_id`)
+  KEY `migration_cutover_src_to_tgt_id_idx` (`migration_cutover_src_to_tgt_id`),
+  CONSTRAINT `fk_migration_cutover_team_migration_cutover_src_to_tgt` FOREIGN KEY (`migration_cutover_src_to_tgt_id`) REFERENCES `migration_cutover_src_to_tgt` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1038,8 +1037,7 @@ CREATE TABLE `migration_key` (
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `migration_key_UNIQUE` (`migration_key`),
-  UNIQUE KEY `user_corporate_id_UNIQUE` (`user_corporate_id`),
-  CONSTRAINT `fk_migration_key_activity_migration_key_x_ref1` FOREIGN KEY (`id`) REFERENCES `activity_migration_key_x_ref` (`migration_key_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `user_corporate_id_UNIQUE` (`user_corporate_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1060,43 +1058,36 @@ CREATE TABLE `migration_time` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `mms_config`
+-- Table structure for table `sys_config`
 --
 
-DROP TABLE IF EXISTS `mms_config`;
+DROP TABLE IF EXISTS `sys_config`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mms_config` (
+CREATE TABLE `sys_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `environment_name` varchar(8) NOT NULL,
-  `component_name` varchar(255) DEFAULT NULL,
-  `subcomponent_name` varchar(255) DEFAULT NULL,
   `property_name` varchar(255) NOT NULL,
   `property_value` varchar(255) NOT NULL,
   `property_type_id` int(11) DEFAULT NULL,
   `encrypted` tinyint(1) NOT NULL DEFAULT '0',
-  `expiration` date DEFAULT NULL,
-  `last_update_user` varchar(255) NOT NULL,
-  `last_updated_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `prop_env_id` (`property_name`,`environment_name`),
   KEY `fk_property_type` (`property_type_id`),
-  CONSTRAINT `fk_property_type` FOREIGN KEY (`property_type_id`) REFERENCES `mms_property_type` (`id`)
+  CONSTRAINT `fk_property_type` FOREIGN KEY (`property_type_id`) REFERENCES `sys_config_property_type` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2054 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
 --
--- Table structure for table `mms_property_type`
+-- Table structure for table `sys_config_property_type`
 --
 
-DROP TABLE IF EXISTS `mms_property_type`;
+DROP TABLE IF EXISTS `sys_config_property_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mms_property_type` (
-  `id` int(11) NOT NULL DEFAULT '0',
+CREATE TABLE `sys_config_property_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `property_type` varchar(255) NOT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -1118,7 +1109,7 @@ CREATE TABLE `mount_point` (
   `inventory_number` varchar(45) NOT NULL DEFAULT 'UNKNOWN',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`host_id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `host_mount_idx` (`host_id`,`mount_location`),
   CONSTRAINT `mount_point_host_fk_1` FOREIGN KEY (`host_id`) REFERENCES `host` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
@@ -1157,7 +1148,7 @@ CREATE TABLE `mst_emailing_date` (
   `system_admin_id` int(11) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`email_type_id`),
+  PRIMARY KEY (`id`),
   KEY `fk_email_type_idx` (`email_type_id`),
   CONSTRAINT `fk_email_type` FOREIGN KEY (`email_type_id`) REFERENCES `mst_email_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1201,7 +1192,7 @@ CREATE TABLE `nas_volume` (
   `snap_tally` int(11) DEFAULT '0',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`aggregate_id`,`controlled_id`),
+  PRIMARY KEY (`id`),
   KEY `vol_name_idx` (`vserver`,`volume_name`),
   KEY `volume_controller_idx` (`controlled_id`),
   KEY `volume_aggregate` (`aggregate_id`),
@@ -1229,7 +1220,7 @@ CREATE TABLE `qtree` (
   `qtree_status` varchar(225) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`nas_volume_id`),
+  PRIMARY KEY (`id`),
   KEY `qtreedata_internalVolumeId_idx` (`nas_volume_id`),
   CONSTRAINT `Volume_verb_QTree_fk` FOREIGN KEY (`nas_volume_id`) REFERENCES `nas_volume` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1264,7 +1255,7 @@ CREATE TABLE `replication` (
   `src_vault_qtree_name` varchar(225) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`migration_cutover_src_to_tgt_id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `migration_cutover_src_to_tgt_id_UNIQUE` (`migration_cutover_src_to_tgt_id`),
   KEY `fk_crTgtDatacenterId` (`tgt_vault_data_center_id`),
   KEY `fk_crTgtClusterId` (`tgt_vault_storage_id`),
@@ -1361,7 +1352,7 @@ CREATE TABLE `share` (
   `owner_user_corporate_id` int(11) NOT NULL DEFAULT '0',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`host_id`,`id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `shareId` (`id`,`host_id`),
   KEY `share_user_idx` (`owner_user_corporate_id`),
   KEY `share_host_appOwner_idx` (`host_id`),
@@ -1395,7 +1386,7 @@ CREATE TABLE `storage` (
   `manufacturer` varchar(255) DEFAULT NULL,
   `microcode_version` varchar(255) DEFAULT NULL,
   `raw_capacity_mb` bigint(20) DEFAULT NULL,
-  `work_package_id` int(11) NOT NULL,
+  `work_package_id` int(11) NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -1424,7 +1415,7 @@ CREATE TABLE `storagex` (
   `policy_name` varchar(1024) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`migration_cutover_event_id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `migration_id_UNIQUE` (`migration_cutover_event_id`),
   KEY `migration_id` (`migration_cutover_event_id`),
   CONSTRAINT `fk_storagex_migration_cutover_event` FOREIGN KEY (`migration_cutover_event_id`) REFERENCES `migration_cutover_event` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -1456,7 +1447,7 @@ CREATE TABLE `system_admin` (
   `note` varchar(512) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`user_corporate_id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `resolver_UNIQUE` (`system_admin`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1478,9 +1469,9 @@ DROP TABLE IF EXISTS `user_api`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_api` (
-  `id` int(11) NOT NULL COMMENT 'Surrogate ID of the User API',
-  `secret` varchar(45) DEFAULT NULL,
-  `key` varchar(45) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the User API',
+  `client_secret` varchar(100) DEFAULT NULL,
+  `client_id` varchar(100) DEFAULT NULL,
   `purpose` varchar(255) DEFAULT NULL,
   `enabled` tinyint(1) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1516,7 +1507,7 @@ CREATE TABLE `user_corporate` (
   `work_phone` varchar(45) DEFAULT NULL,
   `mobile_phone` varchar(45) DEFAULT NULL,
   `best_phone` varchar(45) DEFAULT NULL,
-  `costCenter` varchar(100) DEFAULT NULL,
+  `cost_center` varchar(100) DEFAULT NULL,
   `location` varchar(255) DEFAULT NULL,
   `timezone` varchar(45) DEFAULT NULL,
   `manager_user_corporate_id` int(11) DEFAULT NULL,
@@ -1550,7 +1541,8 @@ CREATE TABLE `user_native` (
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_idx` (`user_name`),
-  KEY `user_role_id_idx` (`user_role_id`)
+  KEY `user_role_id_idx` (`user_role_id`),
+  CONSTRAINT `fk_user_native_user_role1` FOREIGN KEY (`user_role_id`) REFERENCES `user_roles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1568,8 +1560,7 @@ CREATE TABLE `user_roles` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
-  CONSTRAINT `fk_user_roles_user_native1` FOREIGN KEY (`id`) REFERENCES `user_native` (`user_role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `UNIQUE_users_roles1` (`user_role`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1589,7 +1580,7 @@ CREATE TABLE `wfa_data` (
   `purpose` varchar(24) DEFAULT NULL,
   `nfs_export_rules` varchar(10) DEFAULT NULL,
   `dominant_protocol` varchar(10) DEFAULT NULL,
-  `migrationTarget` tinyint(1) DEFAULT '1',
+  `migration_target` tinyint(1) DEFAULT '1',
   `volume_size` float DEFAULT NULL,
   `high_overwrite` tinyint(1) DEFAULT NULL,
   `prod_datacenter` varchar(128) DEFAULT NULL,
@@ -1632,7 +1623,7 @@ CREATE TABLE `wfa_data` (
   `description` varchar(60) DEFAULT '1000',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`workflow_id`),
+  PRIMARY KEY (`id`),
   KEY `workflowId_idx` (`workflow_id`),
   CONSTRAINT `workflowId` FOREIGN KEY (`workflow_id`) REFERENCES `workflow` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1662,7 +1653,7 @@ CREATE TABLE `wfa_message` (
   `message` varchar(1024) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`workflow_id`),
+  PRIMARY KEY (`id`),
   KEY `wfa_message_workflow_idx` (`workflow_id`),
   CONSTRAINT `workflowId_fk` FOREIGN KEY (`workflow_id`) REFERENCES `workflow` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1735,22 +1726,23 @@ DROP TABLE IF EXISTS `workflow`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `workflow` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Workflow',
-  `migration_cutover_src_to_tgt_id` int(11) NOT NULL,
-  `migration_cutover_src_to_tgt_migration_cutover_event_id` int(11) NOT NULL,
-  `wfa_uuid` varchar(255) DEFAULT NULL,
-  `wfa_job_id` varchar(255) DEFAULT NULL,
-  `start_time` datetime DEFAULT NULL,
-  `error_code` varchar(60) DEFAULT NULL,
-  `error_description` varchar(128) DEFAULT NULL,
-  `job_type` varchar(255) DEFAULT NULL,
-  `workflow_status` varchar(60) NOT NULL DEFAULT 'Submitting',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`migration_cutover_src_to_tgt_id`,`migration_cutover_src_to_tgt_migration_cutover_event_id`),
-  UNIQUE KEY `wfa_job_id_idx` (`wfa_job_id`),
-  KEY `fk_workflow_migration_cutover_src_to_tgt1_idx` (`migration_cutover_src_to_tgt_id`,`migration_cutover_src_to_tgt_migration_cutover_event_id`),
-  CONSTRAINT `fk_workflow_migration_cutover_src_to_tgt1` FOREIGN KEY (`migration_cutover_src_to_tgt_id`, `migration_cutover_src_to_tgt_migration_cutover_event_id`) REFERENCES `migration_cutover_src_to_tgt` (`id`, `migration_cutover_event_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+	`id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Workflow',
+	`migration_cutover_src_to_tgt_id` INT(11) NOT NULL,
+	`migration_cutover_src_to_tgt_migration_cutover_event_id` INT(11) NOT NULL,
+	`wfa_uuid` VARCHAR(255) NULL DEFAULT NULL,
+	`wfa_job_id` VARCHAR(255) NULL DEFAULT NULL,
+	`start_time` DATETIME NULL DEFAULT NULL,
+	`error_code` VARCHAR(60) NULL DEFAULT NULL,
+	`error_description` VARCHAR(128) NULL DEFAULT NULL,
+	`job_type` VARCHAR(255) NULL DEFAULT NULL,
+	`workflow_status` VARCHAR(60) NOT NULL DEFAULT 'Submitting',
+	`create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+	`update_time` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX `wfa_job_id_idx` (`wfa_job_id`),
+	UNIQUE INDEX (`migration_cutover_src_to_tgt_id`, `migration_cutover_src_to_tgt_migration_cutover_event_id`),
+	CONSTRAINT `fk_workflow_migration_cutover_src_to_tgt1` FOREIGN KEY (`migration_cutover_src_to_tgt_id`) REFERENCES `migration_cutover_src_to_tgt` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `fk_workflow_migration_cutover_src_to_tgt2` FOREIGN KEY (`migration_cutover_src_to_tgt_migration_cutover_event_id`) REFERENCES `migration_cutover_src_to_tgt` (`migration_cutover_event_id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2148,5 +2140,31 @@ DELIMITER ;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+
+CREATE TABLE `preference` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `page_name` varchar(255) DEFAULT NULL,
+  `preference_type` varchar(255) DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `preference_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `preference_id` int(11) DEFAULT NULL,
+  `corp_user_id` int(11) DEFAULT NULL,
+  `native_user_id` int(11) DEFAULT NULL,
+  `field_name` varchar(255) DEFAULT NULL,
+  `field_order` int(11) DEFAULT NULL,
+  `field_visible` TINYINT(1) NULL DEFAULT 1,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `fk_preference_detail_preference` (`preference_id`),
+  CONSTRAINT `fk_preference_detail_preference` FOREIGN KEY (`preference_id`) REFERENCES `preference` (`id`)
+);
+
 
 -- Dump completed on 2018-01-23 10:00:53

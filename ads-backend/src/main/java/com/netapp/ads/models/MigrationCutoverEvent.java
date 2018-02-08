@@ -27,7 +27,7 @@ public class MigrationCutoverEvent implements Serializable {
 	@Column(name="application_id", nullable=false)
 	private Integer applicationId;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="high_over_write")
@@ -49,7 +49,7 @@ public class MigrationCutoverEvent implements Serializable {
 	@Column(name="migration_approved")
 	private boolean migrationApproved;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to ChangeManagement
