@@ -173,8 +173,8 @@ CREATE TABLE `aggregate` (
   `pool_iops_capability` int(11) DEFAULT NULL,
   `avg_iops` int(11) DEFAULT NULL,
   `peak_iops` int(11) DEFAULT NULL,
-  `assigned_iops` int(11) NOT NULL DEFAULT '0',
-  `assigned_capacity_gb` float(10,1) NOT NULL DEFAULT '0.0',
+  `assigned_iops` int(11) DEFAULT NULL,
+  `assigned_capacity_gb` float(10,1) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`,`controller_id`),
@@ -221,7 +221,8 @@ CREATE TABLE `application` (
   `information_owner` varchar(60) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_application_user_corporate` FOREIGN KEY (`owner_user_corporate_id`) REFERENCES `user_corporate` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -432,14 +433,14 @@ DROP TABLE IF EXISTS `controller`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `controller` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL COMMENT 'Not a Surrogate. ID of the Controller',
   `controller_name` varchar(255) NOT NULL,
   `serial_number` varchar(255) DEFAULT NULL,
   `storage_id` int(11) NOT NULL,
   `date_available` date DEFAULT '2050-12-31',
   `volume_tally` int(11) DEFAULT NULL,
   `data_center_id` int(11) NOT NULL,
-  `exports_id` int(11) NOT NULL,
+  `exports_id` int(11) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`,`storage_id`,`data_center_id`),
@@ -634,7 +635,7 @@ CREATE TABLE `data_center` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `datacenter_name_idx` (`data_center_name`)
+  UNIQUE KEY `datacenter_name_idx` (`data_center_name`, `region`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1188,7 +1189,7 @@ CREATE TABLE `nas_volume` (
   `justification` varchar(1024) DEFAULT NULL,
   `avg_iops` int(11) DEFAULT NULL,
   `peak_iops` int(11) DEFAULT NULL,
-  `qtree_tally` int(11) NOT NULL DEFAULT '0',
+  `qtree_tally` int(11) DEFAULT NULL,
   `snap_tally` int(11) DEFAULT '0',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -1386,7 +1387,7 @@ CREATE TABLE `storage` (
   `manufacturer` varchar(255) DEFAULT NULL,
   `microcode_version` varchar(255) DEFAULT NULL,
   `raw_capacity_mb` bigint(20) DEFAULT NULL,
-  `work_package_id` int(11) NULL,
+  `work_package_id` int(11) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

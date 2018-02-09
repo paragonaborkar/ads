@@ -23,6 +23,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+import org.springframework.web.filter.CorsFilter;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
@@ -78,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
-		.addFilterBefore(corsFilter, ChannelProcessingFilter.class)
+		//.addFilterBefore(corsFilter, ChannelProcessingFilter.class)
 		.httpBasic()
 		.realmName(securityRealm)
 		.and()

@@ -16,7 +16,6 @@
 		<java.version>1.8</java.version>		
 	</properties>
 
-
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -253,7 +252,33 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>			
+			</plugin>		
+			<plugin>
+				<!-- 
+					Following is required in Maven settings.xml for this to work
+					C:\Users\borkashi\.m2\settings.xml
+					<pluginGroups>  
+    					<pluginGroup>com.spotify</pluginGroup>  
+					</pluginGroups>
+				 -->
+				<groupId>com.spotify</groupId>
+			 	<artifactId>docker-maven-plugin</artifactId>
+			 	<version>1.0.0</version>
+			 	<configuration>
+			 		<imageName>ads-backend</imageName>
+					<dockerDirectory>src/main/docker</dockerDirectory>
+					<dockerHost>https://192.168.99.100:2376</dockerHost>
+					<dockerCertPath>C:/Users/borkashi/.docker/machine/machines/default</dockerCertPath>
+			 		<!-- copy the service's jar file from target into the root directory of the image   --> 
+			        <resources>
+			           <resource>
+			             <targetPath>/</targetPath>
+			             <directory>${project.build.directory}</directory>
+			             <include>${project.build.finalName}.jar</include>
+			           </resource>
+			        </resources>
+			 	</configuration>
+			 </plugin>				
 			<!-- <plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>

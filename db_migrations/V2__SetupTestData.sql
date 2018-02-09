@@ -706,6 +706,7 @@ UNLOCK TABLES;
 LOCK TABLES `user_native` WRITE;
 /*!40000 ALTER TABLE `user_native` DISABLE KEYS */;
 INSERT INTO `user_native`  (`email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`) VALUES ('jdoe@corp.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'Joe', 'Doe','sparky', 1);
+INSERT INTO `user_native`  (`email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`) VALUES ('jdoe2@corp.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','dog', 1);
 /*!40000 ALTER TABLE `user_native` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -715,6 +716,7 @@ UNLOCK TABLES;
 LOCK TABLES `preference` WRITE;
 /*!40000 ALTER TABLE `preference` DISABLE KEYS */;
 INSERT INTO `preference` (`id`, `page_name`, `preference_type`) VALUES (2, 'UserListing', 'USER');
+INSERT INTO `preference` (`id`, `page_name`, `preference_type`) VALUES (3, 'UserListing', 'SYSTEM');
 /*!40000 ALTER TABLE `preference` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -728,6 +730,11 @@ INSERT INTO `preference_detail` (`id`, `preference_id`, `corp_user_id`, `native_
 INSERT INTO `preference_detail` (`id`, `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (3, 2, NULL, 1, 'lastName', 2, '1');
 INSERT INTO `preference_detail` (`id`, `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (4, 2, NULL, 1, 'userName', 1, '0');
 INSERT INTO `preference_detail` (`id`, `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (5, 2, NULL, 1, 'email', 1, '1');
+INSERT INTO `preference_detail` ( `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (3, NULL, 1, 'firstName', 2, '0');
+INSERT INTO `preference_detail` ( `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (3, NULL, 1, 'active', 2, '1');
+INSERT INTO `preference_detail` ( `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (3, NULL, 1, 'lastName', 2, '1');
+INSERT INTO `preference_detail` ( `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (3, NULL, 1, 'userName', 1, '0');
+INSERT INTO `preference_detail` ( `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (3, NULL, 1, 'email', 1, '1');
 /*!40000 ALTER TABLE `preference_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
