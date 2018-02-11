@@ -31,12 +31,12 @@ export class UpdateUserComponent implements OnInit {
    }
     console.log('user Edit Form == > ' + JSON.stringify(this.User));
       this.yes.emit(this.User);
-      this.updateModal.hide();
+      // this.updateModal.hide();
   }
 
   close(event) {
     this.cancel.emit(event);
-    this.updateModal.hide();
+    // this.updateModal.hide();
   }
 
 }

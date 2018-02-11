@@ -1,0 +1,49 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Display Preferences</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+
+      <ng-template #itemTemplate let-item="item" let-index="index">
+        <span>
+          <i class="fa fa-bars" aria-hidden="true"></i>
+          <strong>&nbsp;{{item.initData.fieldName | friendlyLabel}}</strong>
+        </span>
+      </ng-template>
+
+
+      <div class="row mt-5 d-flex justify-content-center" *ngIf="showSettingsPanel">
+        <div class="col-xs-6 col-md-6 col-xl-6">
+          <div class="card no-select">
+            <div class="card-header bg-primary text-white">
+              Visible
+            </div>
+            <div class="card-body">
+              <bs-sortable [(ngModel)]="itemObjectsLeft" [itemTemplate]="itemTemplate" fieldName="fieldName" itemClass="sortable-item"
+                itemActiveClass="sortable-item-active" placeholderItem="Nothing visible, drag here to add." placeholderClass="sortable-item"
+                wrapperClass="sortable-wrapper" (drop)="drop()"></bs-sortable>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="col-xs-6 col-md-6 col-xl-6 ">
+          <div class="card no-select">
+            <div class="card-header bg-warning text-white">
+              Hidden
+            </div>
+            <div class="card-body">
+              <bs-sortable [(ngModel)]="itemObjectsRight" [itemTemplate]="itemTemplate" fieldName="fieldName" itemClass="sortable-item"
+                itemActiveClass="sortable-item-active" placeholderItem="Nothing hidden, drag here to hide." placeholderClass="sortable-item"
+                wrapperClass="sortable-wrapper" (drop)="drop()"></bs-sortable>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>

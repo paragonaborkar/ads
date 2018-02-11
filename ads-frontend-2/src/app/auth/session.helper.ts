@@ -16,19 +16,19 @@ export class SessionHelper {
     getToken() {
         return this.get<any>(this._tokenKey);
     }
-    
+
     set(key: string, value: any) {
         this._storage.setItem(key, JSON.stringify(value));
     }
 
     get<T>(key: string): T {
-        var item = this._storage.getItem(key);
+        let item = this._storage.getItem(key);
         if (!item || item == 'undefined' || item == null) return null;
         return <T>JSON.parse(item);
     }
 
     isAuthenticated() {
-        var token = this.getToken();
+        let token = this.getToken();
         if (!token || token == 'undefined' || token == null) return false;
         return token.expires_in > 0;
     }
@@ -38,8 +38,18 @@ export class SessionHelper {
     }
 
     public isTokenExpired(token?: string, offsetSeconds?: number) {
-        var expiresIn = this.get<any>(this._tokenKey).expires_in;
-        var date = new Date(0); // The 0 here is the key, which sets the date to the epoch
+        let expiresIn = 0;
+
+         if (this.get<any>(this._tokenKey) != null) {
+            expiresIn = this.get<any>(this._tokenKey).expires_in;
+
+        }
+        console.log("this._tokenKey:"+this._tokenKey);
+        console.log("expiresIn:"+expiresIn);
+
+
+        // let expiresIn = this.get<any>(this._tokenKey).expires_in;
+        let date = new Date(0); // The 0 here is the key, which sets the date to the epoch
         date.setUTCSeconds(expiresIn);
         offsetSeconds = offsetSeconds || 0;
         if (date === null) {

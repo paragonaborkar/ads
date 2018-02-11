@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GuardsComponent } from './guards.component';
+import { GuardsComponent } from './auth-guard.component';
 
 describe('GuardsComponent', () => {
   let component: GuardsComponent;

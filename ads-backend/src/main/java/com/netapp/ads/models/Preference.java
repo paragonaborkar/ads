@@ -19,10 +19,13 @@ public class Preference implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
 	private Integer id;
+	
+	@Column(name="corp_user_id")
+	private Integer corpUserId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_on")
-	private Date createdOn;
+	@Column(name="native_user_id")
+	private Integer nativeUserId;
+	
 
 	@Column(name="page_name", length=255)
 	private String pageName;
@@ -30,6 +33,11 @@ public class Preference implements Serializable {
 	@Column(name="preference_type", length=255)
 	private String preferenceType;
 
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_on")
+	private Date createdOn;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="updated_on")
 	private Date updatedOn;
@@ -44,9 +52,26 @@ public class Preference implements Serializable {
 	public Integer getId() {
 		return this.id;
 	}
-
+	
+	
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public Integer getCorpUserId() {
+		return this.corpUserId;
+	}
+
+	public void setCorpUserId(Integer corpUserId) {
+		this.corpUserId = corpUserId;
+	}
+	
+	public Integer getNativeUserId() {
+		return this.nativeUserId;
+	}
+
+	public void setNativeUserId(Integer nativeUserId) {
+		this.nativeUserId = nativeUserId;
 	}
 
 	public Date getCreatedOn() {

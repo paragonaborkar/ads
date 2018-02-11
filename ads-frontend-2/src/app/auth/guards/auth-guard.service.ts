@@ -15,6 +15,15 @@ export class AuthGuard implements CanActivate {
  
   // Method to secure all URL's
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+   
+    //FIXME: Need to check for expired and redirect!
+    // if (this._sessionHelper.isAuthenticated() && this._sessionHelper.isTokenExpired()) {
+    //   this._sessionHelper.removeAll();
+    //   console.log("Expired");
+    //   this.router.navigate(['login'], {queryParams: {redirectTo: state.url}});
+
+    // } else 
+    
     if (this._sessionHelper.isAuthenticated()) { 
       console.log(this._sessionHelper);
       console.log(this._sessionHelper.getToken());
@@ -27,7 +36,8 @@ export class AuthGuard implements CanActivate {
 
       return true;
     } else {
-    	console.log("Unauthorized");
+      console.log("Unauthorized");
+      this._sessionHelper.removeAll();
       this.router.navigate(['login'], {queryParams: {redirectTo: state.url}});
       return false;
     }

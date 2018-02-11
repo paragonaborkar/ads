@@ -11,21 +11,27 @@ import { SessionHelper } from '../../auth/session.helper';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-
+import {Page} from "../../common/page";
 
 @Injectable()
 export class UserAdminService {
 
   constructor(private http: HttpClient, private _sessionHelper: SessionHelper) { }
 
-  private serviceUrl = 'http://localhost:8080/userNatives';
-  // private headers = new Headers({ 'Content-Type': 'application/json' });
+  private serviceUrl = 'http://localhost:8080/userNatives/?projection=userNativeWithUserRole';
 
-  getUserNatives():Observable<any> {    
+  getUserNatives(e):Observable<any> {    
     return this.http.get(this.serviceUrl)
       .map((res: Response) => res)
       .catch(this.handleError);
   }
+
+  getUserNativesPaging(page:Page):Observable<any> {    
+    return this.http.get(this.serviceUrl+"&page=" + page.number+"&size=" + page.size)
+      .map((res: Response) => res)
+      .catch(this.handleError);
+  }
+  
 
   private handleError(error: Response | any) {
     // In a real world app, you might use a remote logging infrastructure
