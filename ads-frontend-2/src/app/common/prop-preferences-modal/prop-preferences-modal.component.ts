@@ -18,8 +18,7 @@ import { FriendlyLabelPipePipe } from '../../pipes/friendly-label-pipe.pipe';
 export class PropPreferencesModalComponent implements OnInit {
 
   @ViewChild('propPreferenceModal') public propPreferenceModal: ModalDirective;
-  @Output() yes = new EventEmitter();
-  @Output() cancel = new EventEmitter();
+  @Output() done = new EventEmitter();
   @Input() pageName: String;
 
 
@@ -38,6 +37,12 @@ export class PropPreferencesModalComponent implements OnInit {
 
   ngOnInit() {
     this.getPreferenceDetails(this.pageName);
+  }
+
+  close() {
+    console.log("Close() props");
+    console.log(event);
+    this.done.emit(event);
   }
 
   getPreferenceDetails(pageName: String) {

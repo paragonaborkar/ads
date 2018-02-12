@@ -46,15 +46,20 @@
 
 
 
-<app-prop-preferences-modal *ngIf="isPropPreferenceModal" (onHide)="onHide('propPreferenceModal')" [config]="{ show: true }" bsModal #propPreferenceModal="bs-modal" (yes)="addUser($event)"
-  (cancel)="onClose('propPreferenceModal')" [pageName]="pageName" class="modal fade"></app-prop-preferences-modal>
+<app-prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal"  [config]="{ show: true }" bsModal #propPreferenceModal="bs-modal" 
+  (done)="onHide('propPreferenceModal')" [pageName]="pageName" ></app-prop-preferences-modal>
+
+  <app-updateuser class="modal fade" bsModal #updateModal="bs-modal" *ngIf="isUpdateModal" 
+  [config]="{ show: true }"  
+  [User]="User"
+  (save)="updateUser($event)" 
+  (cancel)="onHide('update')" ></app-updateuser>
 
 
 <app-adduser *ngIf="isAddUserModal" (onHide)="onHide('add')" [config]="{ show: true }" bsModal #addModal="bs-modal" (yes)="addUser($event)"
   (cancel)="onClose('add')" class="modal fade"></app-adduser>
 
-<app-updateuser *ngIf="isUpdateModal" (onHide)="onHide('update')" [config]="{ show: true }" bsModal #updateModal="bs-modal"
-  (yes)="updateUser($event)" (cancel)="onClose('update')" class="modal fade" [User]="User"></app-updateuser>
+
 
 <app-deleteuser *ngIf="isDeleteModal" (onHide)="onHide('delete')" [config]="{ show: true }" bsModal #deleteModal="bs-modal"
   (yes)="deleteUser($event)" (cancel)="onClose('delete')" class="modal fade" [User]="User"></app-deleteuser>

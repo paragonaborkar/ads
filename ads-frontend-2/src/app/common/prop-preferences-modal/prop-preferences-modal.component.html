@@ -7,6 +7,7 @@
       </button>
     </div>
 
+    <div class="modal-body">
 
       <ng-template #itemTemplate let-item="item" let-index="index">
         <span>
@@ -16,7 +17,7 @@
       </ng-template>
 
 
-      <div class="row mt-5 d-flex justify-content-center" *ngIf="showSettingsPanel">
+      <div class="row d-flex justify-content-center" *ngIf="showSettingsPanel">
         <div class="col-xs-6 col-md-6 col-xl-6">
           <div class="card no-select">
             <div class="card-header bg-primary text-white">
@@ -45,5 +46,10 @@
 
         </div>
       </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary pull-right" (click)="close()">Done</button>
+      </div>
     </div>
   </div>
+</div>
