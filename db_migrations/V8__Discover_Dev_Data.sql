@@ -1,1 +1,0 @@
-INSERT INTO `ads`.`activity_response` (`activity_id`, `owner_user_corporate_id`, `is_owner`, `is_presumed`) VALUES ('47', '1', '0', '1');

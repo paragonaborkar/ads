@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+   ads-frontend:
+    build: ./ads-frontend-2 
+    ports:
+      - 4200:4200
+    links:
+      - ads-backend 
+
+   ads-backend:
+     build: ./ads-backend
+     ports:
+       - 8080:8080
+     links:
+        - database
+     volumes:
+        - "/c/Users/borkashi/dockerdata/backend:/ads-spring-boot-logs"
+
+   database:
+    image: mariadb
+    ports:
+      - 3308:3306
+    environment:
+     MYSQL_ROOT_PASSWORD: adsAdmin1
+     MYSQL_DATABASE: ads_dev
+#    volumes:
+#     - ./dockerdata:/var/lib/mysql"
+# To compose this YAML	  
+# docker-compose up -d
+# $env:COMPOSE_CONVERT_WINDOWS_PATHS=1
