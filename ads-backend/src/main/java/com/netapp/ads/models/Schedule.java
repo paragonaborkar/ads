@@ -21,7 +21,7 @@ public class Schedule implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="host_connection_booked", nullable=false)
@@ -45,7 +45,7 @@ public class Schedule implements Serializable {
 	@Column(name="schedule_status", length=45)
 	private String scheduleStatus;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	@Temporal(TemporalType.DATE)

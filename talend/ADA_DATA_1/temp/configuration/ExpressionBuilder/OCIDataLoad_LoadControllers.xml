@@ -1,0 +1,21 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<expression:EMFExpression xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:expression="http:///expression.ecore" id="tMap_1=>" expression="ADSStringUtils.getRestURLForId(context.REST_BASE_URL, ADSConstants.NODE_DATA_CENTERS,String.valueOf(dataCenter.value))">
+  <variables name="row1.id" value="0" talendType="id_Integer"/>
+  <variables name="row1.storageNodeName" value="null" talendType="id_String"/>
+  <variables name="row1.serialNumber" value="null" talendType="id_String" nullable="true"/>
+  <variables name="row1.storageId" value="0" talendType="id_Integer"/>
+  <variables name="row1.storageName" value="null" talendType="id_String"/>
+  <variables name="row1.model" value="null" talendType="id_String" nullable="true"/>
+  <variables name="row1.dataCenter" value="null" talendType="id_String"/>
+  <variables name="row1.todaysDate" value="null" talendType="id_String" nullable="true"/>
+  <variables name="row1.volTally" value="0" talendType="id_Long"/>
+  <variables name="dataCenter.Name" value="null" talendType="id_String" nullable="true"/>
+  <variables name="dataCenter.Value" value="null" talendType="id_String" nullable="true"/>
+  <variables name="ADSStringUtils.getRestURLForId(context.REST_BASE_URL, ADSConstants.NODE_DATA_CENTERS,String.valueOf(dataCenter.Value)) " value="null" talendType="id_String"/>
+  <variables name="ADSStringUtils.getRestURLForId(context.REST_BASE_URL, ADSConstants.NODE_STORAGES,String.valueOf(row1.storageId)) " value="null" talendType="id_String"/>
+  <variables name="row1.Region" value="null" talendType="id_String"/>
+  <variables name="dataCenter.name" value="null" talendType="id_String" nullable="true"/>
+  <variables name="dataCenter.region" value="null" talendType="id_String" nullable="true"/>
+  <variables name="dataCenter.value" value="null" talendType="id_String" nullable="true"/>
+  <variables name="ADSStringUtils.getRestURLForId(context.REST_BASE_URL, ADSConstants.NODE_DATA_CENTERS,String.valueOf(dataCenter.region)) " value="null" talendType="id_String"/>
+</expression:EMFExpression>

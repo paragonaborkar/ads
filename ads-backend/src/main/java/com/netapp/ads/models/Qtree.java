@@ -21,7 +21,7 @@ public class Qtree implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="qtree_name", length=225)
@@ -45,7 +45,7 @@ public class Qtree implements Serializable {
 	@Column(name="security_style", length=1)
 	private String securityStyle;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to Activity

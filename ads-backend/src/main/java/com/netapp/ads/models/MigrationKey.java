@@ -20,13 +20,13 @@ public class MigrationKey implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="migration_key", nullable=false, length=100)
 	private String migrationKey;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	@Column(name="user_corporate_id", nullable=false)

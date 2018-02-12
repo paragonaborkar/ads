@@ -31,7 +31,7 @@ public class Ical implements Serializable {
 	@Column(name="change_mgmt_url", length=255)
 	private String changeMgmtUrl;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Temporal(TemporalType.DATE)
@@ -53,7 +53,7 @@ public class Ical implements Serializable {
 	@Column(name="time_of_meeting", nullable=false)
 	private Time timeOfMeeting;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to Cutover

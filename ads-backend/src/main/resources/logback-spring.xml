@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/base.xml"/>
+	<property resource="application.properties" />
+	<!--  <property name="REMOTE_LOGGING_FILE_NAME" value="${BUILD_FOLDER:-build}/${springAppName}"/>-->​
+	<property name="REMOTE_LOGGING_FILE_NAME" value="${LOG_PATH}/${ads.remotelogging.file}"/>
+	
+    <appender name="REMOTE_LOGGING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>${FILE_LOG_PATTERN}</pattern>
+		</encoder>
+        <file>${REMOTE_LOGGING_FILE_NAME}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${REMOTE_LOGGING_FILE_NAME}.%i</fileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>10MB</MaxFileSize>
+		</triggeringPolicy>
+    </appender>
+    
+   	<root level="INFO">
+      <appender-ref ref="CONSOLE"/>
+      <appender-ref ref="FILE"/>
+	  <!-- <appender-ref ref="REMOTE_LOGGING_FILE"/>  -->
+	</root>
+	
+	<!-- Specify the level specific to co.myapp.notifier -->
+	<logger name="com.netapp.ads.controllers.RemoteLogController">
+	  <level value="ALL" />
+	  <appender-ref ref="REMOTE_LOGGING_FILE" />
+	</logger>
+	
+	<!--
+  <springProfile name="dev">
+    <root level="INFO">
+      <appender-ref ref="CONSOLE"/>
+      <appender-ref ref="FILE"/>
+	  <appender-ref ref="REMOTE_LOGGING_FILE"/>
+    </root>
+  </springProfile>
+
+  <springProfile name="prod">
+    <root level="info">
+      <appender-ref ref="SAVE-TO-FILE"/>
+      <appender-ref ref="FILE"/>
+	  <appender-ref ref="REMOTE_LOGGING_FILE"/>
+    </root>
+  </springProfile>-->
+  
+</configuration>

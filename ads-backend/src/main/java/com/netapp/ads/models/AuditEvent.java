@@ -20,7 +20,7 @@ public class AuditEvent implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="event_name", nullable=false, length=45)
@@ -32,7 +32,7 @@ public class AuditEvent implements Serializable {
 	@Column(name="resource_pattern", nullable=false, length=255)
 	private String resourcePattern;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to AuditReasonCode

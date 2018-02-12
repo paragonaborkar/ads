@@ -21,7 +21,7 @@ public class SchemaVersion implements Serializable {
 
 	private Integer checksum;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(nullable=false, length=200)
@@ -45,7 +45,7 @@ public class SchemaVersion implements Serializable {
 	@Column(nullable=false, length=20)
 	private String type;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	@Column(length=50)
