@@ -13,7 +13,11 @@ import { UserService } from './user.service';
 })
 export class LoginComponent implements OnInit {
 	result;
-	model: any = {};
+	model: any = {
+		username: "jdoe@corp.com",
+		password: "123"
+	};
+	
 	loading = false;
 	error = '';
 	redirectUrl: string;

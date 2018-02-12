@@ -6,24 +6,25 @@ import { AuthGuard } from './auth/guards/auth-guard.service';
 import { HomeComponent } from './common/home/home.component';
 import { LoginComponent } from './common/login/login.component';
 import { ReportListingComponent } from './admin/report-listing/report-listing.component';
-import { UserAdminComponent } from './admin/user-admin/user-admin.component';
+// import { UserAdminComponent } from './admin/user-admin/user-admin.component';
 import { PropPreferencesComponent } from './common/prop-preferences/prop-preferences.component';
 import { AppPropertiesComponent } from './admin/app-properties/app-properties.component';
 
 import { ConnectionsManualFunctionsComponent } from './connections/connections-manual-functions/connections-manual-functions.component';
 import { DiscoverManualFunctionsComponent } from './discover/discover-manual-functions/discover-manual-functions.component';
-
+import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native-user.component';
 
 // import { Error404LoggedInComponent } from './common/error-404-logged-in/error-404-logged-in.component';
 
 const routes: Routes = [
   //{ path: '', redirectTo: '/', pathMatch: 'full' },
   { path: 'login',  component: LoginComponent },
+   {path: 'admin/native-user-mgmt', component: AdminNativeUserComponent},
 
   { path: 'home',  component: HomeComponent, canActivate: [AuthGuard] },
  
   { path: 'admin/report-listing',  component: ReportListingComponent, canActivate: [AuthGuard] },
-  { path: 'admin/native-user-mgmt',  component: UserAdminComponent, canActivate: [AuthGuard] },
+  // { path: 'admin/native-user-mgmt',  component: UserAdminComponent, canActivate: [AuthGuard] },
   { path: 'admin/property-preferences',  component: PropPreferencesComponent, canActivate: [AuthGuard] },
   { path: 'admin/application-properties',  component: AppPropertiesComponent, canActivate: [AuthGuard] },
 

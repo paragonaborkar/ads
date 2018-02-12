@@ -1,0 +1,65 @@
+<div class="row mt-3 mb-2">
+    <div class="col-md-12">
+        <button class="btn btn-primary" (click)="add()">Add User</button>
+        <div class="pull-right">
+             <!-- TODO: Implement the column preferences for this page: -->
+        <a (click)="showPropertyModal()">
+            <i class="fa fa-cog fa-2x" title="Settings"></i>
+          </a>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="rows.length > 0 && columns.length > 0">
+  <ngx-datatable class="material" 
+        [rows]="rows" 
+        [columns]="columns" 
+        [columnMode]="'standard'"
+        [rowHeight]="auto" 
+        [externalPaging]="true"
+        [count]="page.totalElements"
+        [offset]="page.number"
+        [limit]="page.size"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        
+        
+        (page)='setPage($event)'>
+  </ngx-datatable>
+</div>
+
+<ng-template #hdrTmpl let-column="column">
+  Actions
+</ng-template>
+
+<ng-template #actionTmpl let-column="column" let-row="row">
+  <button class="btn btn-sm btn-primary"  (click)="update(row)">
+    <i class="fa fa-check"></i>
+  </button>
+  <button class="btn btn-sm btn-warning" md-icon-button (click)="changePassword(row)">
+    <i class="fa fa-key"></i>
+  </button>
+  <button class="btn btn-sm btn-danger" md-icon-button (click)="delete(row)">
+    <i class="fa fa-trash"></i>
+  </button>
+</ng-template>
+
+
+
+<app-prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal"  [config]="{ show: true }" bsModal #propPreferenceModal="bs-modal" 
+  (done)="onHide('propPreferenceModal')" [pageName]="pageName" ></app-prop-preferences-modal>
+
+  <app-updateuser class="modal fade" bsModal #updateModal="bs-modal" *ngIf="isUpdateModal" 
+  [config]="{ show: true }"  
+  [User]="User"
+  (save)="updateUser($event)" 
+  (cancel)="onHide('update')" ></app-updateuser>
+
+
+<app-adduser *ngIf="isAddUserModal" (onHide)="onHide('add')" [config]="{ show: true }" bsModal #addModal="bs-modal" (yes)="addUser($event)"
+  (cancel)="onClose('add')" class="modal fade"></app-adduser>
+
+
+
+<app-deleteuser *ngIf="isDeleteModal" (onHide)="onHide('delete')" [config]="{ show: true }" bsModal #deleteModal="bs-modal"
+  (yes)="deleteUser($event)" (cancel)="onClose('delete')" class="modal fade" [User]="User"></app-deleteuser>

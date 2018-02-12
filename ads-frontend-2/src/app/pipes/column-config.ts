@@ -1,5 +1,5 @@
 export class ColumnConfig {
-  field: String;
+  name: String;
   header: String;
   template: boolean;
   filterMatchMode: String;

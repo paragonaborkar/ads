@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SortableModule } from 'ngx-bootstrap/sortable';
 import { ApplicationConfigService } from '../application-config.service';
 import { PropertyPreferenceConstants } from './prop-preferences-const';
+import { FriendlyLabelPipePipe } from '../../pipes/friendly-label-pipe.pipe';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class PropPreferencesComponent implements OnInit {
 
   ngOnInit() {
     // Get the prefereces available. 
-    this.applicationConfigService.getPreferences()
+    this.applicationConfigService.getPreferencesForSystemAdmin()
       .subscribe(
       preferences => {
         this.preferences = preferences._embedded.preferences;
@@ -49,43 +50,46 @@ export class PropPreferencesComponent implements OnInit {
     // console.log( selectedPreferenceDetailsResource);
     if (selectedPreferenceDetailsResource !== '' && selectedPreferenceDetailsResource !== undefined) {
 
-          this.applicationConfigService.getPreferenceDetailsForPreference(selectedPreferenceDetailsResource).subscribe(
-            preferenceDetails => {
-              this.preferenceDetails = preferenceDetails._embedded.preferenceDetails;
-              // console.log("this.preferenceDetails");
-              // console.log(this.preferenceDetails);
+      this.applicationConfigService.getPreferenceDetailsForPreference(selectedPreferenceDetailsResource).subscribe(
+        preferenceDetails => {
+          this.preferenceDetails = preferenceDetails._embedded.preferenceDetails;
+          // console.log("this.preferenceDetails");
+          // console.log(this.preferenceDetails);
 
-              if (this.preferenceDetails !== undefined && this.preferenceDetails.length > 0) {
-                this.showSettingsPanel = true;
-                this.itemObjectsLeft = [];
-                this.itemObjectsRight = [];
+          if (this.preferenceDetails !== undefined && this.preferenceDetails.length > 0) {
+            this.showSettingsPanel = true;
+            this.itemObjectsLeft = [];
+            this.itemObjectsRight = [];
 
-                // For each column that's available, put it in the right "bucket" or in our case, items on the left or items on the right of the screen.
-                for (let j = 0; j < this.preferenceDetails.length; j++) {
+            // For each column that's available, put it in the right "bucket" or in our case, items on the left or items on the right of the screen.
+            for (let j = 0; j < this.preferenceDetails.length; j++) {
 
-                  if (this.preferenceDetails[j].fieldVisible === 1) {
-                    this.itemObjectsLeft.push(this.preferenceDetails[j]);
-                  } else {
-                    this.itemObjectsRight.push(this.preferenceDetails[j]);
-                  }
-                }
-
-                // Put the items on the left and right in the right order for display.
-                this.sortItems(this.itemObjectsLeft);
-                this.sortItems(this.itemObjectsRight);
+              if (this.preferenceDetails[j].fieldVisible === 1) {
+                this.itemObjectsLeft.push(this.preferenceDetails[j]);
               } else {
-                this.showSettingsPanel = false;
+                this.itemObjectsRight.push(this.preferenceDetails[j]);
               }
-            });
+            }
+
+            // Put the items on the left and right in the right order for display.
+            this.sortItems(this.itemObjectsLeft);
+            this.sortItems(this.itemObjectsRight);
+          } else {
+            this.showSettingsPanel = false;
+          }
+        });
     } else {
       this.showSettingsPanel = false;
     }
   }
 
+ 
+
   // When items are droped or moved this function is call to keep track of the updates.
   drop() {
-    this.updatedPreferences = [];
 
+    this.updatedPreferences = [];
+    console.log(this.itemObjectsLeft);
     this.itemObjectsLeft.forEach((leftItem, index) => {
       this.updatedPreference = {
         fieldOrder: index + 1,

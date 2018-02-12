@@ -628,12 +628,12 @@ INSERT INTO `user_api` (`id`, `client_id`, `client_secret`, `create_time`, `enab
 
 -- Dumping data for table vitae_data_refactor.user_roles: ~5 rows (approximately)
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
-INSERT INTO `user_roles` (`id`, `user_role`, `create_time`, `update_time`) VALUES
-	(1, 'ROLE_USER', '2017-09-27 12:52:27', NULL),
-	(2, 'ROLE_ADMIN', '2017-09-27 12:52:27', NULL),
-	(3, 'ROLE_RUSER', '2017-09-27 12:52:27', NULL),
-	(4, 'ROLE_SUPERUSER', '2017-09-27 12:52:27', NULL),
-	(5, 'ROLE_MSLEAD', '2017-09-27 12:52:27', NULL);
+INSERT INTO `user_roles` (`user_role`, `create_time`, `update_time`) VALUES
+	('ROLE_USER', '2017-09-27 12:52:27', NULL),
+	('ROLE_ADMIN', '2017-09-27 12:52:27', NULL),
+	('ROLE_RUSER', '2017-09-27 12:52:27', NULL),
+	('ROLE_SUPERUSER', '2017-09-27 12:52:27', NULL),
+	('ROLE_MSLEAD', '2017-09-27 12:52:27', NULL);
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 
 -- Dumping data for table vitae_data_refactor.work_package: ~2 rows (approximately)

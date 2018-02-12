@@ -19,8 +19,6 @@ public class PreferenceDetail implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Column(name="corp_user_id")
-	private Integer corpUserId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="created_on")
@@ -35,8 +33,6 @@ public class PreferenceDetail implements Serializable {
 	@Column(name="field_visible", length=255)
 	private Integer fieldVisible;
 
-	@Column(name="native_user_id")
-	private Integer nativeUserId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="updated_on")
@@ -56,14 +52,6 @@ public class PreferenceDetail implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getCorpUserId() {
-		return this.corpUserId;
-	}
-
-	public void setCorpUserId(Integer corpUserId) {
-		this.corpUserId = corpUserId;
 	}
 
 	public Date getCreatedOn() {
@@ -96,15 +84,7 @@ public class PreferenceDetail implements Serializable {
 
 	public void setFieldVisible(int fieldVisible) {
 		this.fieldVisible = fieldVisible;
-	}
-
-	public Integer getNativeUserId() {
-		return this.nativeUserId;
-	}
-
-	public void setNativeUserId(Integer nativeUserId) {
-		this.nativeUserId = nativeUserId;
-	}
+	}	
 
 	public Date getUpdatedOn() {
 		return this.updatedOn;
