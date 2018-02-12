@@ -4,7 +4,7 @@
     <contextParameter comment="" name="FORMAT_DATETIME_TO_STRING" prompt="FORMAT_DATETIME_TO_STRING?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;%Y-%m-%dT%H:%i:%s&quot;"/>
     <contextParameter comment="" name="LOAD_FILES_LOC" prompt="LOAD_FILES_LOC?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_Directory" value="C:/netapp/ads_setup_loadsheets/"/>
     <contextParameter comment="" name="logDir" prompt="logDir?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_Directory" value="C:/netapp/logs/"/>
-    <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoidGFsZW5kIiwiYWRzX21vZHVsZXMiOm51bGwsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJleHAiOjE1MTc0NTc0ODksImF1dGhvcml0aWVzIjpbIkNMSUVOVCJdLCJqdGkiOiIwNWUyN2NjMS04NzhkLTQ1OTUtOWEzZS0yYWMxODU0NDQ2ZWIiLCJjbGllbnRfaWQiOiJ0ZXN0and0Y2xpZW50aWQifQ.PdGJ8kKpJBP2qHYuQthzDwlmQ8MXBv0KtpZXrEjkSxE&quot;"/>
+    <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoidGFsZW5kIiwiYWRzX21vZHVsZXMiOnsiZGlzY292ZXIiOnRydWUsInJlcG9ydHMiOmZhbHNlLCJzY2hlZHVsZSI6ZmFsc2UsInBsYW5uaW5nIjpmYWxzZSwiZXhlY3V0ZSI6ZmFsc2UsImNvbm5lY3Rpb25zIjp0cnVlfSwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTUxODIwMDEwNSwiYXV0aG9yaXRpZXMiOlsiQ0xJRU5UIl0sImp0aSI6ImQ2NDZkMzk4LTM5NTMtNDUzZC04ZDVmLWVkNmQ1ODA0YmEyZSIsImNsaWVudF9pZCI6InRlc3Rqd3RjbGllbnRpZCJ9.MtRdiKsN_nGCtMmnxfMxDH0PWIEKYjrVqYe_u1i0Lw4"/>
     <contextParameter comment="" name="RESOURCE_XPATH_USER_NATIVE" prompt="RESOURCE_XPATH_USER_NATIVE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;/root/_links/userNative/href&quot;"/>
     <contextParameter comment="" name="REST_BASE_URL" prompt="REST_BASE_URL?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;http://localhost:9080/&quot;"/>
     <contextParameter comment="" name="REST_REQ_JSON" prompt="REST_REQ_JSON?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
@@ -19,7 +19,7 @@
     <contextParameter comment="" name="REST_URL_CONTROLLERS" prompt="REST_URL_CONTROLLERS?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;http://localhost:9080/controllers&quot;"/>
     <contextParameter comment="" name="FORMAT_DATE_TO_STRING" prompt="FORMAT_DATE_TO_STRING?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;%Y-%m-%d&quot;"/>
     <contextParameter comment="" name="REST_URL_AGGREGATES" prompt="REST_URL_AGGREGATES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;http://localhost:9080/aggregates&quot;"/>
-    <contextParameter comment="" name="REST_URL_NAS_VOLUMES" prompt="REST_URL_NAS_VOLUMES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;http://localhost:9080/nas_volumes&quot;"/>
+    <contextParameter comment="" name="REST_URL_NAS_VOLUMES" prompt="REST_URL_NAS_VOLUMES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;http://localhost:9080/nasVolumes&quot;"/>
     <contextParameter comment="" name="REST_URL_QTREES" prompt="REST_URL_QTREES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;http://localhost:9080/qtrees&quot;"/>
     <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_USER_ROLES_XLSX" prompt="ADS_CONFIGS_LOADSHEET_USER_ROLES_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_UserRoles_Template.xlsx"/>
     <contextParameter comment="" name="REST_URL_USER_ROLES" prompt="REST_URL_USER_ROLES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;http://localhost:9080/userRoles&quot;"/>
@@ -176,7 +176,7 @@
   <node componentName="tFileInputExcel" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="640" posY="128">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tFileInputExcel_1" show="false"/>
     <elementParameter field="CHECK" name="VERSION_2007" value="true"/>
-    <elementParameter field="FILE" name="FILENAME" value="context.LOAD_FILES_LOC+&quot;/&quot;+context.ADS_CONFIGS_LOADSHEET_APPLICATION_XLSX"/>
+    <elementParameter field="FILE" name="FILENAME" value="&quot;C:/netapp/ads_setup_loadsheets/LoadSheet_Application_Template.xlsx&quot;"/>
     <elementParameter field="CHECK" name="ALL_SHEETS" value="true"/>
     <elementParameter field="TABLE" name="SHEETLIST" show="false">
       <elementValue elementRef="SHEETNAME" value="&quot;user_src&quot;"/>
@@ -275,11 +275,13 @@
     </metadata>
     <nodeData xsi:type="TalendMapper:MapperData">
       <uiProperties/>
-      <varTables sizeState="INTERMEDIATE" name="Var"/>
+      <varTables sizeState="INTERMEDIATE" name="Var">
+        <mapperTableEntries name="var1" expression="(DataRow.archtype == null || DataRow.archtype.equals(&quot;&quot;))?&quot;''&quot;:DataRow.archtype+&quot;2&quot; " type="id_String"/>
+      </varTables>
       <outputTables sizeState="INTERMEDIATE" name="FormattedRow">
         <mapperTableEntries name="applicationCode" expression="DataRow.applicationCode " type="id_String" nullable="true"/>
         <mapperTableEntries name="applicationName" expression="DataRow.applicationName " type="id_String" nullable="true"/>
-        <mapperTableEntries name="archtype" expression="DataRow.archtype " type="id_String" nullable="true"/>
+        <mapperTableEntries name="archtype" expression=" Var.var1 " type="id_String" nullable="true"/>
         <mapperTableEntries name="informationOwner" expression="DataRow.informationOwner " type="id_String" nullable="true"/>
         <mapperTableEntries name="ownerUserCorporateId" expression="row1.Value " type="id_String" nullable="true"/>
       </outputTables>
@@ -346,7 +348,7 @@
   </node>
   <node componentName="tJavaRow" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="1216" posY="128">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tJavaRow_1" show="false"/>
-    <elementParameter field="MEMO_JAVA" name="CODE" value="context.REST_REQ_JSON= input_row.root;&#xA;"/>
+    <elementParameter field="MEMO_JAVA" name="CODE" value="context.REST_REQ_JSON=input_row.root.replaceAll(&quot;,\&quot;[a-zA-Z][a-zA-Z]*\&quot;:\\[\\]&quot;, &quot;&quot;);"/>
     <elementParameter field="MEMO_IMPORT" name="IMPORT" value="//import java.util.List;"/>
     <elementParameter field="TEXT" name="LABEL" value="setSubJobContext"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
@@ -477,7 +479,7 @@
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_4" show="false"/>
     <elementParameter field="CHECK" name="USE_DYNAMIC_JOB" value="false"/>
     <elementParameter field="TEXT" name="CONTEXT_JOB" value="" show="false"/>
-    <elementParameter field="PROCESS_TYPE" name="PROCESS" value="GetADSLookupData"/>
+    <elementParameter field="PROCESS_TYPE" name="PROCESS" value="GetADSLookupData_NameId"/>
     <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_CONTEXT" value="Default"/>
     <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_PROCESS" value="_8F6XEP_UEeeuIL132lN64w"/>
     <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_VERSION" value="Latest"/>

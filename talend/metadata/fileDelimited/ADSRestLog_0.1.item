@@ -6,7 +6,7 @@
       <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_NkWPKfs7Eee6ltYJbGhRvw" label="responseStatus" length="255" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
       <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_NkWPK_s7Eee6ltYJbGhRvw" label="rowId" length="255" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
       <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_NkWPLPs7Eee6ltYJbGhRvw" label="resourceId" length="255" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
-      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_NkWPKvs7Eee6ltYJbGhRvw" label="error" length="255" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_NkWPKvs7Eee6ltYJbGhRvw" label="error" length="-1" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
     </ownedElement>
   </orgomg.cwm.resource.record:RecordFile>
 </xmi:XMI>
