@@ -33,5 +33,12 @@ public class ADSStringUtils {
     	return strId;
     }
     
+    public static String getRestURLForId(String baseURL,String nodeName,String id) {
+    	
+    	String restURL=baseURL+"/"+nodeName+"/"+id;
+    	System.out.println(restURL);
+    	return restURL;
+    }
+    
     
 }
