@@ -9,11 +9,13 @@ import com.netapp.ads.models.PreferenceDetail;
 
 @Projection(name="preferenceDetailsWithPreference", types = { PreferenceDetail.class})
 public interface PreferenceDetailsProjection {
+	
 	Integer getCorpUserId();
 
-	Date getCreatedOn();
-
 	String getFieldName();
+	
+	Integer getFieldOrder();
+	Integer getFieldVisible();
 	
 	Preference getPreference();
 

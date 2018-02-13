@@ -1,6 +1,8 @@
 package com.netapp.ads.models;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -20,10 +22,6 @@ public class PreferenceDetail implements Serializable {
 	private Integer id;
 
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_on")
-	private Date createdOn;
-
 	@Column(name="field_name", length=255)
 	private String fieldName;
 
@@ -33,10 +31,12 @@ public class PreferenceDetail implements Serializable {
 	@Column(name="field_visible", length=255)
 	private Integer fieldVisible;
 
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
+	
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="updated_on")
-	private Date updatedOn;
 
 	//bi-directional many-to-one association to Preference
 	@ManyToOne
@@ -54,13 +54,7 @@ public class PreferenceDetail implements Serializable {
 		this.id = id;
 	}
 
-	public Date getCreatedOn() {
-		return this.createdOn;
-	}
-
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
+	
 
 	public String getFieldName() {
 		return this.fieldName;
@@ -86,12 +80,20 @@ public class PreferenceDetail implements Serializable {
 		this.fieldVisible = fieldVisible;
 	}	
 
-	public Date getUpdatedOn() {
-		return this.updatedOn;
+	public Timestamp getCreateTime() {
+		return this.createTime;
 	}
 
-	public void setUpdatedOn(Date updatedOn) {
-		this.updatedOn = updatedOn;
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+	
+	public Timestamp getUpdateTime() {
+		return this.updateTime;
+	}
+
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public Preference getPreference() {

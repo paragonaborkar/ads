@@ -74,11 +74,11 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="form-control-label" class="col-sm-3 col-form-label">Active</label>
+          <label class="form-control-label" class="col-sm-3 col-form-label">Enabled</label>
           <div class="col-sm-9">
             <select class="form-control" [(ngModel)]="User.enabled" name="User.enabled">
-                <option value=1>Yes</option>
-                <option value=0>No</option> 
+                <option value="true">Yes</option>
+                <option value="false">No</option> 
               </select>
           </div>
         </div>
@@ -86,7 +86,7 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary" (click)="save()">Cancel</button>
+      <button class="btn btn-secondary" (click)="close()">Cancel</button>
       <button class="btn btn-primary" (click)="save()">Save</button>
     </div>
   </div>

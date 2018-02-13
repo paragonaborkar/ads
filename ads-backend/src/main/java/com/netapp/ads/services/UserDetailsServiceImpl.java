@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.netapp.ads.AdsUserDetails;
 import com.netapp.ads.models.UserApi;
 import com.netapp.ads.models.UserNative;
 import com.netapp.ads.repos.UserApiRepository;
@@ -33,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	 * Checks Credentials in API and Native Table for Authentication
 	 */
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public User loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
@@ -41,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			UserApi userApi = userApiRepository.findByClientId(username).get(0);
 			if (userApi.getEnabled()) {
 				grantedAuthorities.add(new SimpleGrantedAuthority("CLIENT"));
-				return new User(userApi.getClientId(), userApi.getClientSecret(), grantedAuthorities);
+				return (User) new User(userApi.getClientId(), userApi.getClientSecret(), grantedAuthorities);
 			} else {
 				throw new UsernameNotFoundException(String.format("The user is not enabled", username));
 			}
@@ -54,7 +55,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			// FIXME: Get the user role and return it here. 
 			// Frontend needs to be update do that admin menus are not displayed.
 			grantedAuthorities.add(new SimpleGrantedAuthority("USER_TYPE"));
-			return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), grantedAuthorities);
+			return (User) new User(user.getUserName(), user.getPassword(), grantedAuthorities);
 		}
 	}
 

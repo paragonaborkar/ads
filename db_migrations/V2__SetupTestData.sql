@@ -628,12 +628,13 @@ INSERT INTO `user_api` (`id`, `client_id`, `client_secret`, `create_time`, `enab
 
 -- Dumping data for table vitae_data_refactor.user_roles: ~5 rows (approximately)
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
-INSERT INTO `user_roles` (`user_role`, `create_time`, `update_time`) VALUES
-	('ROLE_USER', '2017-09-27 12:52:27', NULL),
-	('ROLE_ADMIN', '2017-09-27 12:52:27', NULL),
-	('ROLE_RUSER', '2017-09-27 12:52:27', NULL),
-	('ROLE_SUPERUSER', '2017-09-27 12:52:27', NULL),
-	('ROLE_MSLEAD', '2017-09-27 12:52:27', NULL);
+truncate `user_roles`;
+INSERT INTO `user_roles` (`user_role`) VALUES
+	('ROLE_USER'),
+	('ROLE_ADMIN'),
+	('ROLE_RUSER'),
+	('ROLE_SUPERUSER'),
+	('ROLE_MSLEAD');
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 
 -- Dumping data for table vitae_data_refactor.work_package: ~2 rows (approximately)
@@ -743,32 +744,32 @@ INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `us
 /*!40000 ALTER TABLE `user_native` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Dumping data for table `preference`
---
-LOCK TABLES `preference` WRITE;
-/*!40000 ALTER TABLE `preference` DISABLE KEYS */;
-INSERT INTO `preference` (`id`, `page_name`, `preference_type`) VALUES (2, 'UserListing', 'USER');
-INSERT INTO `preference` (`id`, `page_name`, `preference_type`) VALUES (3, 'UserListing', 'SYSTEM');
-/*!40000 ALTER TABLE `preference` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
 -- Dumping data for table `preference`
---
-LOCK TABLES `preference_detail` WRITE;
-/*!40000 ALTER TABLE `preference_detail` DISABLE KEYS */;
-INSERT INTO `preference_detail` (`id`, `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (2, 2, NULL, 1, 'firstName', 2, '0');
-INSERT INTO `preference_detail` (`id`, `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (6, 2, NULL, 1, 'active', 2, '1');
-INSERT INTO `preference_detail` (`id`, `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (3, 2, NULL, 1, 'lastName', 2, '1');
-INSERT INTO `preference_detail` (`id`, `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (4, 2, NULL, 1, 'userName', 1, '0');
-INSERT INTO `preference_detail` (`id`, `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (5, 2, NULL, 1, 'email', 1, '1');
-INSERT INTO `preference_detail` ( `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (3, NULL, 1, 'firstName', 2, '0');
-INSERT INTO `preference_detail` ( `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (3, NULL, 1, 'active', 2, '1');
-INSERT INTO `preference_detail` ( `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (3, NULL, 1, 'lastName', 2, '1');
-INSERT INTO `preference_detail` ( `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (3, NULL, 1, 'userName', 1, '0');
-INSERT INTO `preference_detail` ( `preference_id`, `corp_user_id`, `native_user_id`, `field_name`, `field_order`, `field_visible`) VALUES (3, NULL, 1, 'email', 1, '1');
-/*!40000 ALTER TABLE `preference_detail` ENABLE KEYS */;
-UNLOCK TABLES;
+
+
+/*!40000 ALTER TABLE `preference` DISABLE KEYS */;
+INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (2, 'UserListing', 'USER', 0, 1);
+INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (3, 'UserListing', 'SYSTEM', 0, 0);
+/*!40000 ALTER TABLE `preference` ENABLE KEYS */;
+
+
+
+-- -- Dumping data for table `preference`
+
+-- LOCK TABLES `preference_detail` WRITE;
+-- /*!40000 ALTER TABLE `preference_detail` DISABLE KEYS */;
+INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (2,  'firstName', 2, '0');
+INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (2,  'active', 2, '1');
+INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (2,  'lastName', 2, '1');
+INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (2,  'userName', 1, '0');
+INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (2,  'email', 1, '1');
+INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (3,  'firstName', 2, '0');
+INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (3,  'active', 2, '1');
+INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (3,  'lastName', 2, '1');
+INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (3,  'userName', 1, '0');
+INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (3,  'email', 1, '1');
+-- /*!40000 ALTER TABLE `preference_detail` ENABLE KEYS */;
+-- UNLOCK TABLES;
 
 SET FOREIGN_KEY_CHECKS=1;

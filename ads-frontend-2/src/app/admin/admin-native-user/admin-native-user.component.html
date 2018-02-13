@@ -49,10 +49,11 @@
 <app-prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal"  [config]="{ show: true }" bsModal #propPreferenceModal="bs-modal" 
   (done)="onHide('propPreferenceModal')" [pageName]="pageName" ></app-prop-preferences-modal>
 
+  
   <app-updateuser class="modal fade" bsModal #updateModal="bs-modal" *ngIf="isUpdateModal" 
   [config]="{ show: true }"  
   [User]="User"
-  (save)="updateUser($event)" 
+  (saved)="onHide('update')"
   (cancel)="onHide('update')" ></app-updateuser>
 
 

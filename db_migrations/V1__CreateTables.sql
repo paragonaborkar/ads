@@ -1756,6 +1756,33 @@ LOCK TABLES `workflow` WRITE;
 /*!40000 ALTER TABLE `workflow` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+DROP TABLE IF EXISTS `preference`;
+CREATE TABLE `preference` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `page_name` varchar(255) DEFAULT NULL,
+  `preference_type` varchar(255) DEFAULT NULL,
+  `corp_user_id` int(11) DEFAULT NULL,
+  `native_user_id` int(11) DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+);
+
+DROP TABLE IF EXISTS `preference_detail`;
+CREATE TABLE `preference_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `preference_id` int(11) DEFAULT NULL,
+  `field_name` varchar(255) DEFAULT NULL,
+  `field_order` int(11) DEFAULT NULL,
+  `field_visible` TINYINT(1) NULL DEFAULT 1,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `fk_preference_detail_preference` (`preference_id`),
+  CONSTRAINT `fk_preference_detail_preference` FOREIGN KEY (`preference_id`) REFERENCES `preference` (`id`)
+);
+
 --
 -- Dumping events for database 'vitae_data_refactor'
 --
@@ -2128,44 +2155,4 @@ INSERT INTO vitae_data.qtree
 
 END ;;
 DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
-
-CREATE TABLE `preference` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `page_name` varchar(255) DEFAULT NULL,
-  `preference_type` varchar(255) DEFAULT NULL,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-);
-
-CREATE TABLE `preference_detail` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `preference_id` int(11) DEFAULT NULL,
-  `corp_user_id` int(11) DEFAULT NULL,
-  `native_user_id` int(11) DEFAULT NULL,
-  `field_name` varchar(255) DEFAULT NULL,
-  `field_order` int(11) DEFAULT NULL,
-  `field_visible` TINYINT(1) NULL DEFAULT 1,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `fk_preference_detail_preference` (`preference_id`),
-  CONSTRAINT `fk_preference_detail_preference` FOREIGN KEY (`preference_id`) REFERENCES `preference` (`id`)
-);
-
-
--- Dump completed on 2018-01-23 10:00:53

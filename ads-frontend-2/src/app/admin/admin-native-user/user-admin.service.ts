@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { RequestOptions } from '@angular/http';
 
-import { SessionHelper } from '../../auth/session.helper';
+
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
@@ -16,7 +16,7 @@ import {Page} from "../../common/page";
 @Injectable()
 export class UserAdminService {
 
-  constructor(private http: HttpClient, private _sessionHelper: SessionHelper) { }
+  constructor(private http: HttpClient) { }
 
   private serviceUrl = 'http://localhost:8080/userNatives/?projection=userNativeWithUserRole';
 

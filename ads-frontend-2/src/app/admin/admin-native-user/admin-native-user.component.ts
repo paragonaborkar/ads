@@ -2,20 +2,24 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/map';
+
+import { ModalDirective } from 'ngx-bootstrap';
 
 import { FriendlyLabelPipePipe } from '../../pipes/friendly-label-pipe.pipe';
 
 import { ApplicationConfigService } from '../../common/application-config.service';
+import { UserAdminService } from './user-admin.service';
+import { AdsHelperService } from '../../common/ads-helper.service';
 
 import { SpringRestResponse } from '../../spring-rest-response';
-import { UserAdminService } from './user-admin.service';
 
-import { ModalDirective } from 'ngx-bootstrap';
-import {Page} from "../../common/page";
+import { SessionHelper } from '../../auth/session.helper';
 
-import { AdsHelperService } from '../../common/ads-helper.service';
+import { Page } from "../../common/page";
+
+
 
 /**
  * An array of data with an associated page object used for paging
@@ -53,7 +57,7 @@ export class AdminNativeUserComponent implements OnInit {
   public isDeleteModal = false;
   public isPropPreferenceModal = false;
 
-  constructor(private usersService: UserAdminService, private applicationConfigService: ApplicationConfigService, private adsHelper: AdsHelperService) {
+  constructor(private usersService: UserAdminService, private applicationConfigService: ApplicationConfigService, private adsHelper: AdsHelperService, private sessionHelper: SessionHelper) {
     this.page.number = 1;
     this.page.pageNumber = 1;
     this.page.size = 3;
@@ -70,12 +74,13 @@ export class AdminNativeUserComponent implements OnInit {
    * Populate the table with new data based on the page number
    * @param page The page to select
    */
-  setPage(pageInfo){
+  setPage(pageInfo) {
+    console.log("Loading page...");
     this.page.number = pageInfo.offset;
     this.page.pageNumber = pageInfo.offset;
 
-     // This method is to get all the values from user_native table
-     this.usersService.getUserNativesPaging(this.page).subscribe(
+    // This method is to get all the values from user_native table
+    this.usersService.getUserNativesPaging(this.page).subscribe(
       usersNativeResponse => {
         console.log(usersNativeResponse);
         this.page = usersNativeResponse.page;
@@ -89,7 +94,7 @@ export class AdminNativeUserComponent implements OnInit {
 
   }
 
-  
+
 
   delete(row) {
     console.log(row._links.self.href);
@@ -102,12 +107,14 @@ export class AdminNativeUserComponent implements OnInit {
   }
 
   updateUser(data): void {
-    this.usersService.update(data).subscribe(function (resp) {
-      this.getUserNatives();
-      this.editModal.hide();
-    }, function (error) {
-      alert('Error to update user ' + data.firstName);
-    });
+    console.log("updateUser");
+    this.isUpdateModal = false;
+    // this.usersService.update(data).subscribe(function (resp) {
+    //   this.getUserNatives();
+    //   this.editModal.hide();
+    // }, function (error) {
+    //   alert('Error to update user ' + data.firstName);
+    // });
   }
 
   showPropertyModal() {
@@ -119,14 +126,18 @@ export class AdminNativeUserComponent implements OnInit {
   }
 
   // This method is to hide the modals  
-  onHide(event): void {
-    if (event === 'add') {
+  onHide(modalToHide): void {
+    console.log("onHide(event)");
+    console.log(modalToHide);
+
+    if (modalToHide === 'add') {
       this.isAddUserModal = false;
-    } else if (event === 'delete') {
+    } else if (modalToHide === 'delete') {
       this.isDeleteModal = false;
-    } else if (event === 'edit') {
+    } else if (modalToHide === 'update') {
       this.isUpdateModal = false;
-    } else if (event === 'propPreferenceModal') {
+      this.setPage({ offset: this.page.pageNumber });
+    } else if (modalToHide === 'propPreferenceModal') {
       this.isPropPreferenceModal = false;
       // this.setPage({ offset: this.page.pageNumber });
       this.applyPreferences();
@@ -134,74 +145,19 @@ export class AdminNativeUserComponent implements OnInit {
   }
 
 
-
-
   applyPreferences(): void {
+    console.log("applyPreferences Start");
 
-    this.applicationConfigService.getPreferencesForUser("UserListing", 2, 0)
-      .subscribe(
-      columnPreferences => {
-
+    this.applicationConfigService.getPreferencesForColumns(this.columns, this.hdrTmpl, this.actionTmpl)
+    .subscribe(columnPreferences => 
+      {
+        console.log("columnPreferences");
         console.log(columnPreferences);
-        console.log(columnPreferences._links.preferenceDetails.href);
-
-        this.applicationConfigService.getPreferenceDetailsForPreference(columnPreferences._links.preferenceDetails.href)
-          .subscribe(preferenceDetails => {
-
-            console.log(preferenceDetails);
-
-            preferenceDetails._embedded.preferenceDetails.forEach(preferenceDetail => {
-
-              var obj = this.columns.find(function (obj) {
-                return obj.name === preferenceDetail.fieldName;
-              }, preferenceDetail.fieldName);
-
-              if (obj == undefined) {
-                if (preferenceDetail.fieldVisible === 1) {
-                  this.columns.push({
-                    name: new FriendlyLabelPipePipe().transform(preferenceDetail.fieldName),
-                    prop: preferenceDetail.fieldName,
-                    order: preferenceDetail.fieldOrder
-                  });
-                }
-
-              } else {
-                // This is when we initialize the list of columns manually through this component.
-                this.columns.find(column => {
-                  if (column.name === preferenceDetail.fieldName) {
-                    // column.hidden = preferenceDetail.fieldVisible === 1 ? false : true;
-                    return true;
-                  }
-                });
-              }
-            });
-
-            this.columns.push({
-              headerTemplate: this.hdrTmpl,
-              cellTemplate: this.actionTmpl,
-              order: 1000
-            });
-
-
-            // Display the columns in the correct order now that we have the complete set of them.
-            this.sortColumns(this.columns);
-            console.log("Sorted: this.columns");
-            console.log(this.columns);
-          });
-
-        // });
-
-
-      });
-  }
-
-  sortColumns(items: any[]) {
-    items.sort(function (item1, item2) {
-      if (item1.order > item2.order) {
-        return 1;
-      } else {
-        return -1;
+        this.columns = columnPreferences;
       }
-    });
+    );
+
   }
+
+
 }

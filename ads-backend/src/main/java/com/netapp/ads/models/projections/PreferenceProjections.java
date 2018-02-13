@@ -1,5 +1,6 @@
 package com.netapp.ads.models.projections;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -22,9 +23,9 @@ public interface PreferenceProjections {
 
 	public Integer getNativeUserId();
 
-	public Date getCreatedOn();
+	public Timestamp getCreateTime();
 	
-	public Date getUpdatedOn();
+	public Timestamp getUpdateTime();
 
 	public List<PreferenceDetail> getPreferenceDetails();
 }
