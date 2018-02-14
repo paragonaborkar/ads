@@ -41,13 +41,15 @@ public class PreferenceController { // implements ResourceProcessor<RepositoryLi
 	private static final String USER_PREF_TYPE 	 = "USER";
 
 	private final PreferenceRepository preferenceRepo;
+	private final PreferenceDetailRepository preferenceDetailRepo;
 
 	@Autowired
 	RepositoryEntityLinks entityLinks;
-	
+
 	@Autowired
-	public PreferenceController(PreferenceRepository repo) { 
-		preferenceRepo = repo;
+	public PreferenceController(PreferenceRepository prefRepo, PreferenceDetailRepository prefDetailRepo) { 
+		preferenceRepo = prefRepo;
+		preferenceDetailRepo = prefDetailRepo;
 	}
 
 	@RequestMapping(value = "/getPreferencesForUser", method = RequestMethod.GET)
@@ -55,17 +57,20 @@ public class PreferenceController { // implements ResourceProcessor<RepositoryLi
 			@RequestParam("nativeUserId") Optional<String> nativeUserId,
 			@RequestParam("corpUserId")   Optional<String> corpUserId,
 			@RequestParam("pageName")     String pageName,
-			@RequestParam("preferenceType")   String preferenceType) throws Exception {
+			@RequestParam("preferenceType")   String preferenceType,
+			@RequestParam(value="copySystemToUser", required = false, defaultValue = "false")   boolean copySystemToUser) throws Exception {
 
 		Preference pref = null;
 		List<PreferenceDetail> userPrefDetails = null; 
 
-		
+		System.out.println("copySystemToUser:"+copySystemToUser);
+
 		// Get the User's existing Preference based on the information provided.
 		// Since native and corp user is optional, make sure we are always getting the right type of user.
 		if (nativeUserId.isPresent() && corpUserId.isPresent()) {
 			System.out.println("1:" + preferenceType + "," +  pageName + "," +  Integer.parseInt(nativeUserId.get())  + "," + Integer.parseInt(corpUserId.get()));
 			pref= preferenceRepo.findByPreferenceTypeAndPageNameAndNativeUserIdAndCorpUserId(preferenceType, pageName, Integer.parseInt(nativeUserId.get()), Integer.parseInt(corpUserId.get()));
+			
 		} else if (nativeUserId.isPresent()) {
 			System.out.println("2:" + preferenceType + "," +  pageName + "," +  Integer.parseInt(nativeUserId.get())  + ",");
 			pref = preferenceRepo.findByPreferenceTypeAndPageNameAndNativeUserIdAndCorpUserId(preferenceType, pageName, Integer.parseInt(nativeUserId.get()), 0);
@@ -77,9 +82,59 @@ public class PreferenceController { // implements ResourceProcessor<RepositoryLi
 			throw new Exception("Missing Paramaters");
 		}
 
+		// If the User doesn't have a Preference for the page and we don't want to create it, then return the System Preference for the page.
+		// If the User doesn't have a Preference for the page and we do want to create it, then get the existing System Preference for the page and copy it to the user.
+		if (pref == null && !copySystemToUser) {
+			System.out.println("4:" + SYSTEM_PREF_TYPE + "," +  pageName);
+			pref= preferenceRepo.findByPreferenceTypeAndPageName(SYSTEM_PREF_TYPE, pageName);
+		} else if (pref == null && copySystemToUser ) {		
+			// FIXME: Break this into a seperate method....
+			// If the Preference doesn't exist, determine if we should copy from the system preference to provide a starting point.
+			// We only do this when a system preference wasn't requested.
+			if (pref == null && preferenceType != SYSTEM_PREF_TYPE) {
+				System.out.println("Going to create new preferences for User");
+				// 1. Get the system preference.
+				pref = preferenceRepo.findByPreferenceTypeAndPageName(SYSTEM_PREF_TYPE, pageName);
+
+				// 2. Copy Preference to the current user.
+				Preference newPref = new Preference();
+				// FIXME: Do we need to validate the user?
+				newPref.setCorpUserId(Integer.parseInt(corpUserId.get()));
+				// FIXME: Do we need to validate the user?
+				newPref.setNativeUserId(Integer.parseInt(nativeUserId.get()));
+				newPref.setPageName(pageName);
+				newPref.setPreferenceType(USER_PREF_TYPE);
+				preferenceRepo.save(newPref);
+				
+				// 3. Copy Preference Details to the current user.
+				List<Resource<PreferenceDetail>> al = new ArrayList<Resource<PreferenceDetail>>();
+				userPrefDetails = pref.getPreferenceDetails();
+				for (PreferenceDetail prefDetail : userPrefDetails) {
+					PreferenceDetail newPrefDetail = new PreferenceDetail();
+					newPrefDetail.setPreference(newPref);
+					newPrefDetail.setFieldName(prefDetail.getFieldName());
+					newPrefDetail.setFieldOrder(prefDetail.getFieldOrder());
+					newPrefDetail.setFieldVisible(prefDetail.getFieldVisible());
+					preferenceDetailRepo.save(newPrefDetail);
+					
+					Link link = entityLinks.linkToSingleResource(PreferenceDetailRepository.class, newPrefDetail.getId());
+					Resource<PreferenceDetail> res = new Resource<PreferenceDetail>(newPrefDetail, link);
+					al.add(res);
+				}
+				
+				
+
+				// If we have a Preference, then return the Preference Details.
+				if (newPref != null) {
+					Resources<PreferenceDetail> resources2 = new Resources(al);
+					return new ResponseEntity(resources2, HttpStatus.OK);
+				}
+
+			}
+		}
+
 		// If we have a Preference, then return the Preference Details.
 		if (pref != null) {
-			
 			List<Resource<PreferenceDetail>> al = new ArrayList<Resource<PreferenceDetail>>();
 			Resources<PreferenceDetail> resources;
 			for (PreferenceDetail prefDetail : pref.getPreferenceDetails()) {
@@ -92,42 +147,12 @@ public class PreferenceController { // implements ResourceProcessor<RepositoryLi
 			}
 
 			Resources<PreferenceDetail> resources2 = new Resources(al);
-			
+
 			return new ResponseEntity(resources2, HttpStatus.OK);
 
 		}
 
-		// FIXME: Break this into a seperate method....
 		
-		// If the Preference doesn't exist, determine if we should copy from the system preference to provide a starting point.
-		// We only do this when a system preference wasn't requested.
-		if (pref == null && preferenceType != SYSTEM_PREF_TYPE && false) {
-			// 1. Get the system preference.
-			pref = preferenceRepo.findByPreferenceTypeAndPageName(SYSTEM_PREF_TYPE, pageName);
-
-			// 2. Copy Preference to the current user.
-			Preference newPref = new Preference();
-			newPref.setCorpUserId(Integer.parseInt(corpUserId.get()));
-			newPref.setNativeUserId(Integer.parseInt(nativeUserId.get()));
-			newPref.setPageName(pageName);
-			newPref.setPreferenceType(USER_PREF_TYPE);
-
-			// 3. Copy Preference Details to the current user.
-			userPrefDetails = pref.getPreferenceDetails();
-			for (PreferenceDetail prefDetail : userPrefDetails) {
-				PreferenceDetail newPrefDetail = new PreferenceDetail();
-				newPrefDetail.setPreference(newPref);
-				newPrefDetail.setFieldName(prefDetail.getFieldName());
-				newPrefDetail.setFieldOrder(prefDetail.getFieldOrder());
-				newPrefDetail.setFieldVisible(prefDetail.getFieldVisible());
-			}
-
-			// If we have a Preference, then return the Preference Details.
-			if (newPref != null) {
-				new ResponseEntity<List<PreferenceDetail>>(newPref.getPreferenceDetails(), HttpStatus.OK);
-			}
-
-		}
 
 		// If we got to here, we don't have it.
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -135,11 +160,11 @@ public class PreferenceController { // implements ResourceProcessor<RepositoryLi
 
 	}
 
-//	@Override
-//	public RepositoryLinksResource process(RepositoryLinksResource resource) {
-////		   resource.add(ControllerLinkBuilder.linkTo(CustomRootController.class).withRel("others"));
-//			super(resource);
-//	        return resource;
-//	}
+	//	@Override
+	//	public RepositoryLinksResource process(RepositoryLinksResource resource) {
+	////		   resource.add(ControllerLinkBuilder.linkTo(CustomRootController.class).withRel("others"));
+	//			super(resource);
+	//	        return resource;
+	//	}
 
 }

@@ -36,13 +36,13 @@ export class ApplicationConfigService {
   // Get Configurable screens for a specific User
   // First try to get the User's preference, should it previously exist.
   // Then try to get the System preference, it should exist.
-  getPreferencesForUser(pageName, nativeUserId, corpUserId): Observable<any> {
+  getPreferencesForUser(pageName, nativeUserId, corpUserId, copySystemToUser: boolean=false): Observable<any> {
 
     // let url = this.preferencesServiceUrl + "search/findByPreferenceTypeAndPageNameAndNativeUserIdAndCorpUserId"; { "projection": "preferenceWithPreferenceDetails" }
     let url = this.apiUrl + "/getPreferencesForUser";
     
     url = this.adsHelper.replaceParam(url,
-      [{ "preferenceType": "USER" }, { "pageName": pageName }, { "nativeUserId": nativeUserId }, { "corpUserId": corpUserId ], true);
+      [{ "preferenceType": "USER" }, { "pageName": pageName }, { "nativeUserId": nativeUserId }, { "corpUserId": corpUserId }, {"copySystemToUser":copySystemToUser} ], true);
     console.log("getPreferencesForUser Calling:" + url);
 
     // If the User doesn't have a preference for this screen, then copy the SYSTEM for the USER and return it.
@@ -55,7 +55,6 @@ export class ApplicationConfigService {
       }
       );
   }
-
 
 
   getPreferenceDetailsForPreference(selectedPreferenceDetailsResource: any): Observable<any> {
