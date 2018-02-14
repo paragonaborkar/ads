@@ -19,6 +19,9 @@ public interface PreferenceRepository extends JpaRepository<Preference, Integer>
 
 	List<Preference> findByPreferenceType(@Param("preferenceType") String preferenceType);
 	
+	Preference findByPreferenceTypeAndPageName(@Param("preferenceType") String preferenceType, @Param("pageName") String pageName);
+	
 	Preference findByPreferenceTypeAndPageNameAndNativeUserIdAndCorpUserId(@Param("preferenceType") String preferenceType, @Param("pageName") String pageName, @Param("nativeUserId") Integer nativeUserId, @Param("corpUserId") Integer corpUserId);
+	
 	
 }

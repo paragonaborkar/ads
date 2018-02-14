@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
+import { UserAdminService } from '../user-admin.service';
+
 @Component({
   selector: 'app-deleteuser',
   templateUrl: './deleteuser.component.html',
@@ -9,26 +11,29 @@ export class DeleteUserComponent implements OnInit {
   
   ngOnInit(): void {}
 
-  @Output() yes = new EventEmitter();
+  @Output() delete = new EventEmitter();
   @Output() cancel = new EventEmitter();
-  @Input() User: any;
+  @Input()  User: any;
 
-  constructor() {}
+  constructor(private usersService: UserAdminService) { }
 
-  /**
-   * This method is to delete user from the table
-   * @param
-   */
-  okay() {
+  deleteConfirmed() {
+    console.log("Delete modal delete()");
     console.log(this.User);
-    this.yes.emit(this.User);
+
+    // TODO: Handle an error and display a message in the modal.
+    this.usersService.delete(this.User).subscribe(
+      response => {
+        console.log(response);
+        console.log("Saved in modal");
+        this.delete.emit(this.User);
+      });
+
   }
 
-  /**
-   * This method is to close the deleteuser modal
-   * @param
-   */
-  close(event) {
-    this.cancel.emit(event);
+
+  close() {
+    console.log("Calling close");
+    this.cancel.emit();
   }
 }
