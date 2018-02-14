@@ -13,8 +13,17 @@ import { Globals} from '../../globals';
 })
 export class NavComponent implements OnInit {
 
+  public firstName:String;
+  public lastName:String;
+  public email:String;
+
   constructor(private userService: UserService, private _sessionHelper: SessionHelper, private globals: Globals) {
     console.log(globals.appModulesAvailable);
+    let tokenInfo = _sessionHelper.getToken();
+
+    this.firstName =  tokenInfo.firstName;
+    this.lastName=  tokenInfo.lastName;
+    this.email=  tokenInfo.email;
   }
 
   ngOnInit() {
