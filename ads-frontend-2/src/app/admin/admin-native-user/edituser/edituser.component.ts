@@ -18,40 +18,38 @@ export class UpdateUserComponent implements OnInit {
   @Output() cancel = new EventEmitter();
   @Input() User: any;
 
-  //FIXME: Get these values from a REST call.
-  roleArray = ['Migration Specialist', 'Storage Owner', 'ADS Admin'];
+  roleArray = [];
 
   constructor(private usersService: UserAdminService) { }
 
   ngOnInit() {
-  }
+     // This method is to get all the values from user_role table
+     this.usersService.getUserRoles().subscribe(
+      userRoles => {
+        console.log("userRoles");
+        console.log(userRoles);
+        this.roleArray = userRoles._embedded.userRoles;
+      });
 
+  }
 
   save() {
+    console.log("Edit modal save()");
     console.log(this.User);
-    if (this.User.enabled == 'Yes') {
-      this.User.enabled = 1;
-    } else {
-      this.User.enabled = 0;
-    }
-    console.log('user Edit Form == > ' + JSON.stringify(this.User));
 
+    // TODO: Handle an error and display a message in the modal.
+    this.usersService.update(this.User).subscribe(
+      response => {
+        console.log(response);
+        console.log("Saved in modal");
+        this.saved.emit(this.User);
+      });
 
-
-    this.usersService.update(this.User).subscribe(function (resp) {
-      this.getUserNatives();
-    }, function (error) {
-      alert('Error to update user; ');
-      console.log(this.User);
-    });
-
-
-    this.saved.emit(this.User);
-    // this.updateModal.hide();
   }
 
-  close(event) {
-    this.cancel.emit(event);
+  close() {
+    console.log("Calling close");
+    this.cancel.emit();
   }
 
 }

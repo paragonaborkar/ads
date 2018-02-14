@@ -29,7 +29,7 @@ public class Application implements Serializable {
 	@Column(length=255)
 	private String archtype;
 
-	@Column(name="update_time", insertable=false, updatable=false)
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Column(name="information_owner", length=60)

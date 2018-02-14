@@ -33,13 +33,13 @@
 </ng-template>
 
 <ng-template #actionTmpl let-column="column" let-row="row">
-  <button class="btn btn-sm btn-primary"  (click)="update(row)">
+  <button class="btn btn-sm btn-primary"  (click)="showUpdateModal(row)">
     <i class="fa fa-check"></i>
   </button>
   <button class="btn btn-sm btn-warning" md-icon-button (click)="changePassword(row)">
     <i class="fa fa-key"></i>
   </button>
-  <button class="btn btn-sm btn-danger" md-icon-button (click)="delete(row)">
+  <button class="btn btn-sm btn-danger" md-icon-button (click)="showDeleteModal(row)">
     <i class="fa fa-trash"></i>
   </button>
 </ng-template>
@@ -49,10 +49,11 @@
 <app-prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal"  [config]="{ show: true }" bsModal #propPreferenceModal="bs-modal" 
   (done)="onHide('propPreferenceModal')" [pageName]="pageName" ></app-prop-preferences-modal>
 
-  <app-updateuser class="modal fade" bsModal #updateModal="bs-modal" *ngIf="isUpdateModal" 
+  
+<app-updateuser class="modal fade" bsModal #updateModal="bs-modal" *ngIf="isUpdateModal" 
   [config]="{ show: true }"  
   [User]="User"
-  (save)="updateUser($event)" 
+  (saved)="onHide('update')"
   (cancel)="onHide('update')" ></app-updateuser>
 
 
@@ -61,5 +62,8 @@
 
 
 
-<app-deleteuser *ngIf="isDeleteModal" (onHide)="onHide('delete')" [config]="{ show: true }" bsModal #deleteModal="bs-modal"
-  (yes)="deleteUser($event)" (cancel)="onClose('delete')" class="modal fade" [User]="User"></app-deleteuser>
+<app-deleteuser class="modal fade" bsModal #deleteModal="bs-modal"  *ngIf="isDeleteModal" 
+  [config]="{ show: true }" 
+  [User]="User" 
+  (delete)="onHide('delete')"
+  (cancel)="onHide('delete')" ></app-deleteuser>
