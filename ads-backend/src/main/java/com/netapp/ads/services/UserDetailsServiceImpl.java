@@ -11,9 +11,11 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.netapp.ads.config.SecurityConfig;
 import com.netapp.ads.config.AdsUser;
 import com.netapp.ads.config.AdsUserDetails;
 import com.netapp.ads.models.UserApi;
@@ -33,11 +35,25 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	/**
 	 * Checks Credentials in API and Native Table for Authentication
+	 * Issues Token for SSO Login
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+		
+		if (username.indexOf("SSO") != -1) {
+			String split[] = username.split("-");
+			grantedAuthorities.add(new SimpleGrantedAuthority("USER_TYPE"));
+
+			if (SecurityConfig.authAssertionIdUserNameCache.get(split[1]) == null) {
+				throw new UsernameNotFoundException(String.format("The user is not enabled", username));
+			} else {
+				SecurityConfig.authAssertionIdUserNameCache.remove(split[1]);
+				return new org.springframework.security.core.userdetails.User(split[2],
+						new BCryptPasswordEncoder().encode(split[1]), grantedAuthorities);
+			}
+		}
 
 		if(!userApiRepository.findByClientId(username).isEmpty()) {
 			UserApi userApi = userApiRepository.findByClientId(username).get(0);

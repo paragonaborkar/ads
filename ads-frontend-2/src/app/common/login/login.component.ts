@@ -39,6 +39,12 @@ export class LoginComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		let response = (this.activatedRoute.snapshot.queryParams["response"]);	
+		if(response!==null && response!==undefined){
+			let res = JSON.parse(atob(response));
+			this.userService.login(res);
+			this.navigateAfterSuccess();
+		}
 	}
 
 	login(isValid) {
