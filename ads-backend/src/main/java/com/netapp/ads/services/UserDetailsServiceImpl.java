@@ -14,7 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.netapp.ads.AdsUserDetails;
+import com.netapp.ads.config.AdsUser;
+import com.netapp.ads.config.AdsUserDetails;
 import com.netapp.ads.models.UserApi;
 import com.netapp.ads.models.UserNative;
 import com.netapp.ads.repos.UserApiRepository;
@@ -34,7 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	 * Checks Credentials in API and Native Table for Authentication
 	 */
 	@Override
-	public User loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
@@ -42,20 +43,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			UserApi userApi = userApiRepository.findByClientId(username).get(0);
 			if (userApi.getEnabled()) {
 				grantedAuthorities.add(new SimpleGrantedAuthority("CLIENT"));
-				return (User) new User(userApi.getClientId(), userApi.getClientSecret(), grantedAuthorities);
+				return  new AdsUser(userApi.getClientId(), userApi.getClientSecret(), grantedAuthorities, userApi);
 			} else {
 				throw new UsernameNotFoundException(String.format("The user is not enabled", username));
 			}
 		} else {
-			UserNative user = userNativeRepository.findFirstByEmail(username);
-			if (user == null || !user.getEnabled()) {
+			UserNative userNative = userNativeRepository.findFirstByEmail(username);
+			if (userNative == null || !userNative.getEnabled()) {
 				throw new UsernameNotFoundException(String.format("The username %s doesn't exist", username));
 			}
 			
 			// FIXME: Get the user role and return it here. 
 			// Frontend needs to be update do that admin menus are not displayed.
 			grantedAuthorities.add(new SimpleGrantedAuthority("USER_TYPE"));
-			return (User) new User(user.getUserName(), user.getPassword(), grantedAuthorities);
+			
+//			return (User) new User(user.getUserName(), user.getPassword(), grantedAuthorities);
+			return  new AdsUser(userNative.getUserName(), userNative.getPassword(), grantedAuthorities,  userNative);
 		}
 	}
 

@@ -7,7 +7,7 @@ import { SortableModule } from 'ngx-bootstrap/sortable';
 import { ApplicationConfigService } from '../application-config.service';
 import { PropertyPreferenceConstants } from '../prop-preferences/prop-preferences-const';
 import { FriendlyLabelPipePipe } from '../../pipes/friendly-label-pipe.pipe';
-
+import { SessionHelper } from '../../auth/session.helper';
 
 @Component({
   selector: 'app-prop-preferences-modal',
@@ -33,7 +33,7 @@ export class PropPreferencesModalComponent implements OnInit {
 
   showSettingsPanel = false;
 
-  constructor(private applicationConfigService: ApplicationConfigService) { }
+  constructor(private applicationConfigService: ApplicationConfigService, private sessionHelper: SessionHelper) { }
 
   ngOnInit() {
     this.getPreferenceDetails(this.pageName);
@@ -49,17 +49,19 @@ export class PropPreferencesModalComponent implements OnInit {
 
     if (pageName !== '' && pageName !== undefined) {
 
-      this.applicationConfigService.getPreferencesForUser(pageName, 2, 0).subscribe(
-        preference => {
+      console.log("applyPreferences Start");
+      var loginInfo = this.sessionHelper.getToken();
 
-          this.applicationConfigService.getPreferenceDetailsForPreference(preference._links.preferenceDetails.href)
-            .subscribe(preferenceDetails => {
+      this.applicationConfigService.getPreferencesForUser(pageName, loginInfo.nativeUserId, loginInfo.corpUserId)
+  
+  
+            .subscribe(columnPreferences => {
               
               this.itemObjectsLeft = [];
               this.itemObjectsRight = [];
 
               // For each column that's available, put it in the right "bucket" or in our case, items on the left or items on the right of the screen.
-              preferenceDetails._embedded.preferenceDetails.forEach(preferenceDetail => {
+              columnPreferences._embedded.preferenceDetails.forEach(preferenceDetail => {
              
                 if (preferenceDetail.fieldVisible === 1) {
                   this.itemObjectsLeft.push(preferenceDetail);
@@ -75,7 +77,7 @@ export class PropPreferencesModalComponent implements OnInit {
               this.showSettingsPanel = true;
 
             });
-        });
+     
     } else {
       this.showSettingsPanel = false;
     }

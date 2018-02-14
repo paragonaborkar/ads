@@ -7,11 +7,15 @@
       </button>
     </div>
     <div class="modal-body">
-      <h3>Are you sure to delete?</h3>
+      
+      <h6>Are you sure to delete this User?</h6>
+      
+      <div><strong>Name: </strong>{{User.firstName}} {{User.lastName}}</div>
+      <div><strong>Email: </strong>{{User.email}}</div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-default" (click)="close()">Cancel</button>
-      <button class="btn btn-primary" (click)="okay()">Ok</button>
+      <button class="btn btn-primary" (click)="deleteConfirmed()">Delete</button>
     </div>
   </div>
 </div>

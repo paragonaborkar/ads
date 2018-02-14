@@ -18,13 +18,20 @@ export class UpdateUserComponent implements OnInit {
   @Output() cancel = new EventEmitter();
   @Input() User: any;
 
-  //FIXME: Get these values from a REST call.
-  roleArray = ['Migration Specialist', 'Storage Owner', 'ADS Admin'];
+  roleArray = [];
 
   constructor(private usersService: UserAdminService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+     // This method is to get all the values from user_role table
+     this.usersService.getUserRoles().subscribe(
+      userRoles => {
+        console.log("userRoles");
+        console.log(userRoles);
+        this.roleArray = userRoles._embedded.userRoles;
+      });
 
+  }
 
   save() {
     console.log("Edit modal save()");

@@ -19,6 +19,7 @@ export class UserAdminService {
   constructor(private http: HttpClient) { }
 
   private serviceUrl = 'http://localhost:8080/userNatives/?projection=userNativeWithUserRole';
+  private userRolesUrl = 'http://localhost:8080/userRoles';
 
   getUserNatives(e):Observable<any> {    
     return this.http.get(this.serviceUrl)
@@ -28,6 +29,12 @@ export class UserAdminService {
 
   getUserNativesPaging(page:Page):Observable<any> {    
     return this.http.get(this.serviceUrl+"&page=" + page.number+"&size=" + page.size)
+      .map((res: Response) => res)
+      .catch(this.handleError);
+  }
+
+  getUserRoles():Observable<any> {    
+    return this.http.get(this.userRolesUrl)
       .map((res: Response) => res)
       .catch(this.handleError);
   }
@@ -74,6 +81,8 @@ export class UserAdminService {
    */
   update(user: Object): Observable<Object> {
     const url = user['_links']['self']['href'];
+    console.log("Trying to Update user:");
+    console.log(user);
     return this.http
       .put(url, JSON.stringify(user))
       .map((res: Response) => res)

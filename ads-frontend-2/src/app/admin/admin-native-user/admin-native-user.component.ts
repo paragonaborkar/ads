@@ -42,7 +42,7 @@ export class AdminNativeUserComponent implements OnInit {
   @ViewChild('updateModal') public updateModal: ModalDirective;
 
   @ViewChild('propPreferenceModal') public propPreferenceModal: ModalDirective;
-
+ 
   page = new Page();
 
   // Listing of native users to display 
@@ -96,11 +96,13 @@ export class AdminNativeUserComponent implements OnInit {
 
 
 
-  delete(row) {
+  showDeleteModal(row) {
     console.log(row._links.self.href);
+    this.User = row;
+    this.isDeleteModal = true;
   }
 
-  update(row) {
+  showUpdateModal(row) {
     console.log(row._links.self.href);
     this.User = row;
     this.isUpdateModal = true;
@@ -134,6 +136,7 @@ export class AdminNativeUserComponent implements OnInit {
       this.isAddUserModal = false;
     } else if (modalToHide === 'delete') {
       this.isDeleteModal = false;
+      this.setPage({ offset: this.page.pageNumber });
     } else if (modalToHide === 'update') {
       this.isUpdateModal = false;
       this.setPage({ offset: this.page.pageNumber });
@@ -148,7 +151,7 @@ export class AdminNativeUserComponent implements OnInit {
   applyPreferences(): void {
     console.log("applyPreferences Start");
 
-    this.applicationConfigService.getPreferencesForColumns(this.columns, this.hdrTmpl, this.actionTmpl)
+    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.hdrTmpl, this.actionTmpl)
     .subscribe(columnPreferences => 
       {
         console.log("columnPreferences");
