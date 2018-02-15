@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import com.netapp.ads.models.UserApi;
+import com.netapp.ads.models.UserCorporate;
 import com.netapp.ads.models.UserNative;
 
 public class AdsUser extends User {
@@ -29,6 +30,13 @@ public class AdsUser extends User {
 		super(username, password, authorities);
 	}
 
+	public AdsUser(String username, String password, Collection<GrantedAuthority> authorities, UserCorporate userCorporate) {
+		super(username, password, authorities);
+		this.firstName = userCorporate.getFirstName();
+		this.lastName = userCorporate.getLastName();
+		this.email = userCorporate.getEmail();
+		this.corpUserId = userCorporate.getId();
+	}
 
 	public String getFirstName() {
 		return this.firstName;
