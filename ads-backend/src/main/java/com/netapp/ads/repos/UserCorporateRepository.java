@@ -16,4 +16,6 @@ public interface UserCorporateRepository extends JpaRepository<UserCorporate, In
 	@Query("select count(e)>0 from UserCorporate e where e.email=:email")
 	boolean isEmailExists(@Param("email") String email);
 	
+	UserCorporate findFirstByEmail(@Param("email") String email);
+	
 }

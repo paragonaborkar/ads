@@ -19,8 +19,10 @@ import com.netapp.ads.config.SecurityConfig;
 import com.netapp.ads.config.AdsUser;
 import com.netapp.ads.config.AdsUserDetails;
 import com.netapp.ads.models.UserApi;
+import com.netapp.ads.models.UserCorporate;
 import com.netapp.ads.models.UserNative;
 import com.netapp.ads.repos.UserApiRepository;
+import com.netapp.ads.repos.UserCorporateRepository;
 import com.netapp.ads.repos.UserNativeRepository;
 
 @Service
@@ -32,6 +34,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
 	private UserApiRepository userApiRepository;
+	
+	@Autowired
+	private UserCorporateRepository userCorporateRepository;
 
 	/**
 	 * Checks Credentials in API and Native Table for Authentication
@@ -50,8 +55,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				throw new UsernameNotFoundException(String.format("The user is not enabled", username));
 			} else {
 				SecurityConfig.authAssertionIdUserNameCache.remove(split[1]);
-				return new org.springframework.security.core.userdetails.User(split[2],
-						new BCryptPasswordEncoder().encode(split[1]), grantedAuthorities);
+				UserCorporate userCorporate = userCorporateRepository.findFirstByEmail(split[2]);
+				return new AdsUser(split[2],new BCryptPasswordEncoder().encode(split[1]), grantedAuthorities,userCorporate);
 			}
 		}
 
