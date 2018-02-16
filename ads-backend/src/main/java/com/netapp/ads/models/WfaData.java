@@ -34,9 +34,6 @@ public class WfaData implements Serializable {
 	@Column(length=255)
 	private String desc;
 
-	@Column(length=255)
-	private String desc0;
-
 	@Column(length=60)
 	private String description;
 
@@ -218,14 +215,6 @@ public class WfaData implements Serializable {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
-	}
-
-	public String getDesc0() {
-		return this.desc0;
-	}
-
-	public void setDesc0(String desc0) {
-		this.desc0 = desc0;
 	}
 
 	public String getDescription() {
