@@ -91,7 +91,7 @@ public class AuditInterceptor extends EmptyInterceptor {
 	@Override
 	public void postFlush(Iterator entities) {
 		
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
+/*		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = servletRequestAttributes.getRequest();
 		String url = request.getRequestURI();
@@ -174,7 +174,7 @@ public class AuditInterceptor extends EmptyInterceptor {
 				}
 				isMainEntity = false;
 			}
-		}
+		}*/
 	}
 
 	public String convertObjectToString(Object object) {
