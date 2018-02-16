@@ -7,11 +7,17 @@
       </button>
     </div>
     <div class="modal-body">
-      
+
+      <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+        <span>{{errorMessage}}</span>
+      </div>
+
       <h6>Are you sure to delete this User?</h6>
-      
-      <div><strong>Name: </strong>{{User.firstName}} {{User.lastName}}</div>
-      <div><strong>Email: </strong>{{User.email}}</div>
+
+      <div>
+        <strong>Name: </strong>{{User.firstName}} {{User.lastName}}</div>
+      <div>
+        <strong>Email: </strong>{{User.email}}</div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-default" (click)="close()">Cancel</button>

@@ -1,0 +1,69 @@
+{
+    "default": {
+        "4xx": "default default 4xx error message",
+        "500": "default default 500 error message",
+        "5xx": "default default 5xx error message",
+        "default": "Sorry, an application error has occurred."
+    },
+    "loginNative": {
+        "default": {
+            "4xx": "loginNative default 4xx error message",
+            "500": "loginNative default 500 error message"
+        },
+        "get": {
+            "4xx": "loginNative get 4xx error message",
+            "500": "loginNative get 500 error message"
+        },
+        "post": {
+            "4xx": "loginNative post 4xx error message",
+            "500": "loginNative post 500 error message"
+        }
+    },
+    "loginCorp": {
+        "default": {
+            "4xx": "loginCorp default 4xx error message",
+            "500": "loginCorp default 500 error message"
+        },
+        "get": {
+            "4xx": "loginCorp get 4xx error message",
+            "500": "loginCorp get 500 error message"
+        },
+        "post": {
+            "4xx": "loginCorp post 4xx error message",
+            "500": "loginCorp post 500 error message"
+        }
+    },
+    "loginCorpSSO": {
+        "default": {
+            "4xx": "loginCorpSSO default 4xx error message",
+            "500": "loginCorpSSO default 500 error message"
+        },
+        "get": {
+            "4xx": "loginCorpSSO get 4xx error message",
+            "500": "loginCorpSSO get 500 error message"
+        },
+        "post": {
+            "4xx": "loginCorpSSO post 4xx error message",
+            "500": "loginCorpSSO post 500 error message"
+        }
+    },
+    "deleteNativeUser": {
+        "default": {
+            "4xx": "default 4xx error message",
+            "500": "default 500 error message"
+        },
+        "get": {
+            "4xx": "get 4xx error message",
+            "500": "get 500 error message"
+        },
+        "post": {
+            "4xx": "post 4xx error message",
+            "500": "post 500 error message"
+        },
+        "delete": {
+            "4xx": "delete 4xx error message",
+            "5xx": "delete 5xx error message",
+            "500": "delete 500 error message"
+        }
+    }
+}

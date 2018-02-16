@@ -17,10 +17,10 @@ export class NavComponent implements OnInit {
   public lastName: String;
   public email: String;
 
-  constructor(private userService: UserService, private _sessionHelper: SessionHelper, private globals: Globals) {
+  constructor(private userService: UserService, private sessionHelper: SessionHelper, private globals: Globals) {
     if (this.isLogedIn()) {
       console.log(globals.appModulesAvailable);
-      let tokenInfo = _sessionHelper.getToken();
+      let tokenInfo = sessionHelper.getToken();
 
       this.firstName = tokenInfo.firstName;
       this.lastName = tokenInfo.lastName;
@@ -33,7 +33,7 @@ export class NavComponent implements OnInit {
   }
 
   isLogedIn() {
-    return this._sessionHelper.isAuthenticated();
+    return this.sessionHelper.isAuthenticated();
   }
 
   logout() {

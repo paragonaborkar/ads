@@ -40,7 +40,6 @@ export class AdminNativeUserComponent implements OnInit {
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
 
   @ViewChild('updateModal') public updateModal: ModalDirective;
-
   @ViewChild('propPreferenceModal') public propPreferenceModal: ModalDirective;
  
   page = new Page();
@@ -91,9 +90,7 @@ export class AdminNativeUserComponent implements OnInit {
         console.log(this.page);
         console.log("****");
       });
-
   }
-
 
 
   showDeleteModal(row) {
@@ -108,20 +105,16 @@ export class AdminNativeUserComponent implements OnInit {
     this.isUpdateModal = true;
   }
 
-  updateUser(data): void {
-    console.log("updateUser");
-    this.isUpdateModal = false;
-    // this.usersService.update(data).subscribe(function (resp) {
-    //   this.getUserNatives();
-    //   this.editModal.hide();
-    // }, function (error) {
-    //   alert('Error to update user ' + data.firstName);
-    // });
-  }
-
   showPropertyModal() {
     this.isPropPreferenceModal = true;
   }
+
+  updateUser(data): void {
+    console.log("updateUser");
+    this.isUpdateModal = false;
+  }
+
+
 
   changePassword(row) {
     console.log(row._links.self.href);
