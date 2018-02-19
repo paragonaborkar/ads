@@ -50,6 +50,7 @@
     "deleteNativeUser": {
         "default": {
             "4xx": "default 4xx error message",
+            "5xx": "default 5xx error message",
             "500": "default 500 error message"
         },
         "get": {
