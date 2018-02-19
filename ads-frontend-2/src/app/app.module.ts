@@ -35,6 +35,8 @@ import { UserAdminService } from './admin/admin-native-user/user-admin.service';
 import { PagerService } from './common/pager.service';      // Currently used in user admin. Possibly many pages.
 import { ApplicationConfigService } from './common/application-config.service';
 
+import { OwnerService } from './discover/owner.service';
+
 // Declarations
 import { AppComponent } from './app.component';
 import { HomeComponent } from './common/home/home.component';
@@ -59,6 +61,8 @@ import { ConnectionsManualFunctionsComponent } from './connections/connections-m
 import { DiscoverManualFunctionsComponent } from './discover/discover-manual-functions/discover-manual-functions.component';
 import { FriendlyLabelPipePipe } from './pipes/friendly-label-pipe.pipe';
 import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native-user.component';
+import { OwnerComponent } from './discover/owner/owner.component';
+import { OwnerNotFoundComponent } from './discover/owner-not-found/owner-not-found.component';
 /*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
 
@@ -81,7 +85,9 @@ import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native
     FriendlyLabelPipePipe,
     ConnectionsManualFunctionsComponent,
     DiscoverManualFunctionsComponent,
-    AdminNativeUserComponent
+    AdminNativeUserComponent,
+    OwnerComponent,
+    OwnerNotFoundComponent
     
 
   ],
@@ -105,7 +111,8 @@ import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native
     UserAdminService,
     PagerService,
     ApplicationConfigService,
-    AppPropertiesService
+    AppPropertiesService,
+    OwnerService
     ],
   bootstrap: [AppComponent]
 })
