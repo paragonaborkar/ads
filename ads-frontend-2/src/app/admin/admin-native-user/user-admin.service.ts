@@ -21,6 +21,7 @@ export class UserAdminService {
   constructor(private http: HttpClient, private errorService: AdsErrorService, private global: Globals) { }
 
   private servicePath = '/userNatives/?projection=userNativeWithUserRole';
+  private servicePathCreate = '/userNatives/';
   private userRolesPath = '/userRoles';
 
   getUserNatives(e): Observable<any> {
@@ -50,6 +51,34 @@ export class UserAdminService {
     //   );
   }
 
+
+
+  getUserRole(userRoleHref): Observable<any> {
+    console.log('Get User Role- ', userRoleHref);
+    return this.http
+      .get(userRoleHref)
+      .map(function (response) {
+        return response;
+      })
+    // .catch(
+    // Handle error in Subscribe() using the AdsErrorService      
+    // You can optionally handle it here, if needed
+    //   );
+  }
+
+  getUser(userHref): Observable<any> {
+    console.log('Get User - ', userHref);
+    return this.http
+      .get(userHref)
+      .map(function (response) {
+        return response;
+      })
+    // .catch(
+    // Handle error in Subscribe() using the AdsErrorService      
+    // You can optionally handle it here, if needed
+    //   );
+  }
+
   /**
    * This method is to add user  in the usernatives table
    * @param obj
@@ -57,7 +86,7 @@ export class UserAdminService {
   addUser(obj): Observable<any> {
     console.log('User Object in Add User - ', obj);
     return this.http
-      .post(this.global.apiUrl +this.servicePath, obj)
+      .post(this.global.apiUrl +this.servicePathCreate, obj)
       .map(function (response) {
         return response;
       })

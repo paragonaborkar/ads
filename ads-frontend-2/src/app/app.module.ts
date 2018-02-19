@@ -45,11 +45,13 @@ import { ReportListingComponent } from './admin/report-listing/report-listing.co
 
 // import { UserAdminComponent } from './admin/user-admin/user-admin.component';
 
-import { AddUserComponent } from './admin/admin-native-user/adduser/adduser.component';
-import { UpdateUserComponent } from './admin/admin-native-user/edituser/edituser.component';
-import { DeleteUserComponent } from './admin/admin-native-user/deleteuser/deleteuser.component';
+import { NativeUserCreateComponent } from './admin/admin-native-user/native-user-create/native-user-create.component';
+import { NativeUserUpdateComponent } from './admin/admin-native-user/native-user-update/native-user-update.component';
+import { NativeUserDeleteComponent } from './admin/admin-native-user/native-user-delete/native-user-delete.component';
+
 import { PropPreferencesComponent } from './common/prop-preferences/prop-preferences.component';
 import { PropPreferencesModalComponent } from './common/prop-preferences-modal/prop-preferences-modal.component';
+
 import { AppPropertiesComponent } from './admin/app-properties/app-properties.component';
 import { ArrayFilterPipePipe } from './pipes/array-filter-pipe.pipe';
 
@@ -68,9 +70,9 @@ import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native
     NavComponent,
     ReportListingComponent,
     // UserAdminComponent,
-    AddUserComponent,
-    UpdateUserComponent,
-    DeleteUserComponent,
+    NativeUserCreateComponent,
+    NativeUserUpdateComponent,
+    NativeUserDeleteComponent,
     FooterComponent,
     PropPreferencesComponent,
     PropPreferencesModalComponent,

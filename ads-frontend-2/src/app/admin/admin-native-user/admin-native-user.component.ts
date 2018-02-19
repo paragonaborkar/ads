@@ -41,7 +41,7 @@ export class AdminNativeUserComponent implements OnInit {
 
   @ViewChild('updateModal') public updateModal: ModalDirective;
   @ViewChild('propPreferenceModal') public propPreferenceModal: ModalDirective;
- 
+
   page = new Page();
 
   // Listing of native users to display 
@@ -51,7 +51,7 @@ export class AdminNativeUserComponent implements OnInit {
   // User to update or delete or change password
   public User = {};
   public pageName = "UserListing";
-  public isAddUserModal = false;
+  public isCreateModal = false;
   public isUpdateModal = false;
   public isDeleteModal = false;
   public isPropPreferenceModal = false;
@@ -93,10 +93,8 @@ export class AdminNativeUserComponent implements OnInit {
   }
 
 
-  showDeleteModal(row) {
-    console.log(row._links.self.href);
-    this.User = row;
-    this.isDeleteModal = true;
+  showCreateModal() {
+    this.isCreateModal = true;
   }
 
   showUpdateModal(row) {
@@ -105,28 +103,35 @@ export class AdminNativeUserComponent implements OnInit {
     this.isUpdateModal = true;
   }
 
+  showDeleteModal(row) {
+    console.log(row._links.self.href);
+    this.User = row;
+    this.isDeleteModal = true;
+  }
+
+  // TODO: This need to be implemented
+  showChangePassword(row) {
+    console.log(row._links.self.href);
+  }
+
   showPropertyModal() {
     this.isPropPreferenceModal = true;
   }
 
-  updateUser(data): void {
-    console.log("updateUser");
-    this.isUpdateModal = false;
-  }
+  // updateUser(data): void {
+  //   console.log("updateUser");
+  //   this.isUpdateModal = false;
+  // }
 
 
-
-  changePassword(row) {
-    console.log(row._links.self.href);
-  }
 
   // This method is to hide the modals  
   onHide(modalToHide): void {
     console.log("onHide(event)");
     console.log(modalToHide);
 
-    if (modalToHide === 'add') {
-      this.isAddUserModal = false;
+    if (modalToHide === 'create') {
+      this.isCreateModal = false;
     } else if (modalToHide === 'delete') {
       this.isDeleteModal = false;
       this.setPage({ offset: this.page.pageNumber });
@@ -135,7 +140,7 @@ export class AdminNativeUserComponent implements OnInit {
       this.setPage({ offset: this.page.pageNumber });
     } else if (modalToHide === 'propPreferenceModal') {
       this.isPropPreferenceModal = false;
-      // this.setPage({ offset: this.page.pageNumber });
+      this.columns = [];    // This makes the columns display refresh after the user updates it.
       this.applyPreferences();
     }
   }
@@ -145,13 +150,12 @@ export class AdminNativeUserComponent implements OnInit {
     console.log("applyPreferences Start");
 
     this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.hdrTmpl, this.actionTmpl)
-    .subscribe(columnPreferences => 
-      {
+      .subscribe(columnPreferences => {
         console.log("columnPreferences");
         console.log(columnPreferences);
         this.columns = columnPreferences;
       }
-    );
+      );
 
   }
 

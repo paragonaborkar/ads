@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeleteUserComponent } from './deleteuser.component';
+import { NativeUserDeleteComponent } from './native-user-delete.component';
 
-describe('DeleteuserComponent', () => {
-  let component: DeleteUserComponent;
-  let fixture: ComponentFixture<DeleteUserComponent>;
+describe('NativeUserDeleteComponent', () => {
+  let component: NativeUserDeleteComponent;
+  let fixture: ComponentFixture<NativeUserDeleteComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DeleteUserComponent ]
+      declarations: [ NativeUserDeleteComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeleteUserComponent);
+    fixture = TestBed.createComponent(NativeUserDeleteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

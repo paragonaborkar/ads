@@ -177,12 +177,5 @@ public class UserNative implements Serializable {
 		this.userRole = userRole;
 	}
 
-/*	public UserRole getUserRole2() {
-		return this.userRole2;
-	}
-
-	public void setUserRole2(UserRole userRole2) {
-		this.userRole2 = userRole2;
-	}*/
 
 }

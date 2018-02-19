@@ -4,11 +4,11 @@ import { UserAdminService } from '../user-admin.service';
 import { AdsErrorService } from '../../../common/ads-error.service';
 
 @Component({
-  selector: 'app-deleteuser',
-  templateUrl: './deleteuser.component.html',
-  styleUrls: ['./deleteuser.component.css']
+  selector: 'native-user-delete',
+  templateUrl: './native-user-delete.component.html',
+  styleUrls: ['./native-user-delete.component.css']
 })
-export class DeleteUserComponent implements OnInit {
+export class NativeUserDeleteComponent implements OnInit {
   public errorMessage = "";
 
   @Output() delete = new EventEmitter();
@@ -27,7 +27,7 @@ export class DeleteUserComponent implements OnInit {
       },
       err => {
         // Get the ADS configured error message to display.
-        this.errorMessage = this.errorService.processError(err, "deleteNativeUser", "delete");
+        this.errorMessage = this.errorService.processError(err, "deleteNativeUser", "DELETE");
       }
     );
   }

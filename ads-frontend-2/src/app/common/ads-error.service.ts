@@ -17,6 +17,14 @@ export class AdsErrorService {
       });
   }
 
+  getSafe(fn) {
+    try {
+        return fn();
+    } catch (e) {
+        return undefined;
+    }
+}
+
   processError(error: HttpErrorResponse | any, actionName, method): string {
    
     this.remoteLogError(error, actionName);
@@ -24,32 +32,32 @@ export class AdsErrorService {
     // Get the friendly error message based on the ADS error message configuration using the HTTP status response code:
     // Using actionName:
     // 1. Try to get the message by exact error code
-    if (this.errorMessages[actionName][method][error.status] != undefined)
+    if (this.getSafe(() => this.errorMessages[actionName][method][error.status])  != undefined)
       return this.errorMessages[actionName][method][error.status];
     else {
       // 2. Try to get the message by error code based on class. Eg.g 1xx, 2xx, 3xx, etc
       let errorClass = error.status.toString().substring(0, 1) + "xx";
-      if (this.errorMessages[actionName][method][errorClass] != undefined) {
+      if (this.getSafe(() => this.errorMessages[actionName][method][errorClass]) != undefined) {
         return this.errorMessages[actionName][method][errorClass];
       } else
         // 3. Try to get the  message using the default for the 
-        if (this.errorMessages[actionName][method]["default"] != undefined) {
+        if (this.getSafe(() => this.errorMessages[actionName][method]["default"]) != undefined) {
           return this.errorMessages[actionName][method]["default"];
         }
     }
 
     // If we didn't get an error message to display at this point, get a default one
     // 1. Try to get the message by exact error code
-    if (this.errorMessages["default"][error.status] != undefined)
+    if (this.getSafe(() => this.errorMessages["default"][error.status]) != undefined)
       return this.errorMessages["default"][error.status];
     else {
       // 2. Try to get the message by error code based on class. Eg.g 1xx, 2xx, 3xx, etc
       let errorClass = error.status.toString().substring(0, 1) + "xx";
-      if (this.errorMessages["default"][errorClass] != undefined) {
+      if (this.getSafe(() => this.errorMessages["default"][errorClass]) != undefined) {
         return this.errorMessages["default"][errorClass];
       } else
         // 3. Try to get the  message using the default for the 
-        if (this.errorMessages["default"]["default"] != undefined) {
+        if (this.getSafe(() => this.errorMessages["default"]["default"]) != undefined) {
           return this.errorMessages["default"]["default"];
         }
     }
