@@ -91,7 +91,7 @@ public class AuditInterceptor extends EmptyInterceptor {
 	@Override
 	public void postFlush(Iterator entities) {
 		
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
+/*		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = servletRequestAttributes.getRequest();
 		String url = request.getRequestURI();
@@ -99,12 +99,14 @@ public class AuditInterceptor extends EmptyInterceptor {
 		String userName = request.getUserPrincipal().getName();
 		String method = request.getMethod();
 		Object currentObject;
+		/*
 		if (isMainEntity) {
 			if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method)) {
 				currentObject = entities.next();
 			} else {
 				currentObject = null;
 			}
+		
 
 			UserApiRepository userApiRepo = ContextProvider.getBean(UserApiRepository.class);
 			UserNativeRepository userNativeRepo = ContextProvider.getBean(UserNativeRepository.class);
@@ -174,7 +176,7 @@ public class AuditInterceptor extends EmptyInterceptor {
 				}
 				isMainEntity = false;
 			}
-		}
+		}*/
 	}
 
 	public String convertObjectToString(Object object) {

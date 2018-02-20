@@ -1073,6 +1073,7 @@ CREATE TABLE `sys_config` (
   `encrypted` tinyint(1) NOT NULL DEFAULT '0',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `grouping` varchar(48) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_property_type` (`property_type_id`),
   CONSTRAINT `fk_property_type` FOREIGN KEY (`property_type_id`) REFERENCES `sys_config_property_type` (`id`)

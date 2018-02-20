@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeleteUserComponent } from './deleteuser.component';
+import { OwnerNotFoundComponent } from './owner-not-found.component';
 
-describe('DeleteuserComponent', () => {
-  let component: DeleteUserComponent;
-  let fixture: ComponentFixture<DeleteUserComponent>;
+describe('OwnerNotFoundComponent', () => {
+  let component: OwnerNotFoundComponent;
+  let fixture: ComponentFixture<OwnerNotFoundComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DeleteUserComponent ]
+      declarations: [ OwnerNotFoundComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeleteUserComponent);
+    fixture = TestBed.createComponent(OwnerNotFoundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

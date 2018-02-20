@@ -775,3 +775,6 @@ INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, 
 -- UNLOCK TABLES;
 
 SET FOREIGN_KEY_CHECKS=1;
+
+INSERT INTO `user_corporate` (`user_name`, `first_name`, `last_name`, `email`, `manager_user_corporate_id`) VALUES ('aborkar@consultparagon.com', 'adscorpuser', 'TEST', 'aborkar@consultparagon.com', '2');
+

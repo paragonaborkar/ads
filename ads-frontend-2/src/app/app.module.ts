@@ -35,6 +35,8 @@ import { UserAdminService } from './admin/admin-native-user/user-admin.service';
 import { PagerService } from './common/pager.service';      // Currently used in user admin. Possibly many pages.
 import { ApplicationConfigService } from './common/application-config.service';
 
+import { OwnerService } from './discover/owner.service';
+
 // Declarations
 import { AppComponent } from './app.component';
 import { HomeComponent } from './common/home/home.component';
@@ -45,11 +47,13 @@ import { ReportListingComponent } from './admin/report-listing/report-listing.co
 
 // import { UserAdminComponent } from './admin/user-admin/user-admin.component';
 
-import { AddUserComponent } from './admin/admin-native-user/adduser/adduser.component';
-import { UpdateUserComponent } from './admin/admin-native-user/edituser/edituser.component';
-import { DeleteUserComponent } from './admin/admin-native-user/deleteuser/deleteuser.component';
+import { NativeUserCreateComponent } from './admin/admin-native-user/native-user-create/native-user-create.component';
+import { NativeUserUpdateComponent } from './admin/admin-native-user/native-user-update/native-user-update.component';
+import { NativeUserDeleteComponent } from './admin/admin-native-user/native-user-delete/native-user-delete.component';
+
 import { PropPreferencesComponent } from './common/prop-preferences/prop-preferences.component';
 import { PropPreferencesModalComponent } from './common/prop-preferences-modal/prop-preferences-modal.component';
+
 import { AppPropertiesComponent } from './admin/app-properties/app-properties.component';
 import { ArrayFilterPipePipe } from './pipes/array-filter-pipe.pipe';
 
@@ -57,8 +61,13 @@ import { ConnectionsManualFunctionsComponent } from './connections/connections-m
 import { DiscoverManualFunctionsComponent } from './discover/discover-manual-functions/discover-manual-functions.component';
 import { FriendlyLabelPipePipe } from './pipes/friendly-label-pipe.pipe';
 import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native-user.component';
+
 import { QtreesOwnershipComponent } from './discover/qtrees-ownership/qtrees-ownership.component';
 import { QtreesService } from './discover/qtrees-ownership/qtrees-ownership.service';
+
+import { OwnerComponent } from './discover/owner/owner.component';
+import { OwnerNotFoundComponent } from './discover/owner-not-found/owner-not-found.component';
+
 /*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
 
@@ -70,9 +79,9 @@ import { QtreesService } from './discover/qtrees-ownership/qtrees-ownership.serv
     NavComponent,
     ReportListingComponent,
     // UserAdminComponent,
-    AddUserComponent,
-    UpdateUserComponent,
-    DeleteUserComponent,
+    NativeUserCreateComponent,
+    NativeUserUpdateComponent,
+    NativeUserDeleteComponent,
     FooterComponent,
     PropPreferencesComponent,
     PropPreferencesModalComponent,
@@ -82,7 +91,12 @@ import { QtreesService } from './discover/qtrees-ownership/qtrees-ownership.serv
     ConnectionsManualFunctionsComponent,
     DiscoverManualFunctionsComponent,
     AdminNativeUserComponent,
+
     QtreesOwnershipComponent
+
+    OwnerComponent,
+    OwnerNotFoundComponent
+
     
 
   ],
@@ -107,7 +121,11 @@ import { QtreesService } from './discover/qtrees-ownership/qtrees-ownership.serv
     PagerService,
     ApplicationConfigService,
     AppPropertiesService,
+
     QtreesService
+
+    OwnerService
+
     ],
   bootstrap: [AppComponent]
 })
