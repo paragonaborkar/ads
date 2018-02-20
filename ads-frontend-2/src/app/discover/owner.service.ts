@@ -24,6 +24,7 @@ export class OwnerService {
 
   getQTreesForOwner(migKey): Observable<any> {
     console.log("getQTreesForOwner:", migKey);
+    
     return this.http.get(this.global.apiUrl + this.servicePath)
       .map((res: Response) => res)
     // .catch(

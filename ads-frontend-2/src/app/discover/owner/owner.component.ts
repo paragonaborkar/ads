@@ -23,7 +23,7 @@ export class OwnerComponent implements OnInit {
 
     this.owerListing = this.route.paramMap
       .switchMap((params: ParamMap) =>
-        this.service.getQTreesForOwner(params.get('id')));
+        this.service.getQTreesForOwner(params.get('migKey')));
   }
 
 }

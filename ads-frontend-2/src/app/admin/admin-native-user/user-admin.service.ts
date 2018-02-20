@@ -100,12 +100,13 @@ export class UserAdminService {
    * This method is to edit user from usernatives table
    * @param user
    */
-  update(user: Object): Observable<Object> {
-    const url = user['_links']['self']['href'];
-    console.log("Trying to Update user:");
+  update(user: Object, url): Observable<Object> {
+    
+    console.log("Trying to Update user:"+url);
     console.log(user);
     return this.http
-      .put(url, JSON.stringify(user))
+      // .put(url, JSON.stringify(user))
+      .put(url, user)
       .map((res: Response) => res)
     // .catch(
     // Handle error in Subscribe() using the AdsErrorService      

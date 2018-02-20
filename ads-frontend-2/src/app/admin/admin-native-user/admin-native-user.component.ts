@@ -89,6 +89,10 @@ export class AdminNativeUserComponent implements OnInit {
         console.log(this.rows);
         console.log(this.page);
         console.log("****");
+        if (this.page.number > 0 && this.rows.length == 0) {
+          pageInfo.offset = pageInfo.offset - 1;
+          this.setPage(pageInfo);
+        }
       });
   }
 

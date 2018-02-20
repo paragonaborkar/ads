@@ -46,7 +46,7 @@
 <native-user-create class="modal fade" bsModal #addModal="bs-modal" *ngIf="isCreateModal" [config]="{ show: true }" (saved)="onHide('create')"
   (cancel)="onHide('create')"></native-user-create>
 
-<native-user-update class="modal fade" bsModal #updateModal="bs-modal" *ngIf="isUpdateModal" [config]="{ show: true }" [User]="User"
+<native-user-update class="modal fade" bsModal #updateModal="bs-modal" *ngIf="isUpdateModal" [config]="{ show: true }" [inputUser]="User"
   (saved)="onHide('update')" (cancel)="onHide('update')"></native-user-update>
 
 <native-user-delete class="modal fade" bsModal #deleteModal="bs-modal" *ngIf="isDeleteModal" [config]="{ show: true }" [User]="User"

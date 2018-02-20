@@ -16,6 +16,20 @@
         </div>
 
         <div class="form-group row">
+            <label for="firstName" class="col-sm-3 col-form-label">User Name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" [ngClass]="{'is-invalid':userUserName.errors?.required && userUserName.touched || userUserName.errors?.minlength && userUserName.touched}"
+                [(ngModel)]="user.userName" name="userName" #userUserName="ngModel" minlength="2" required placeholder="User Name">
+              <div *ngIf="userUserName.errors?.required && userUserName.touched" class="invalid-feedback">
+                User Name is required
+              </div>
+              <div *ngIf="userUserName.errors?.minlength && userUserName.touched" class="invalid-feedback">
+                Must be at least 2 characters
+              </div>
+            </div>
+          </div>
+
+        <div class="form-group row">
           <label for="firstName" class="col-sm-3 col-form-label">First Name</label>
           <div class="col-sm-9">
             <input type="text" class="form-control" [ngClass]="{'is-invalid':userFirstName.errors?.required && userFirstName.touched || userFirstName.errors?.minlength && userFirstName.touched}"
@@ -77,8 +91,8 @@
         <div class="form-group row">
           <label for="role" class="col-sm-3 col-form-label">Role</label>
           <div class="col-sm-9">
-            <select class="form-control" [(ngModel)]="user.userRoleId" name="userRoleId">
-              <option *ngFor="let role of roleArray" value="{{role._links.self.href}}">{{role.userRole}}</option>
+            <select class="form-control" [(ngModel)]="user.userRole" name="userRole">
+              <option *ngFor="let role of roleArray" [value]="role._links.self.href">{{role.userRole}}</option>
             </select>
           </div>
         </div>
@@ -101,6 +115,8 @@
       <button class="btn btn-default" (click)="close()">Cancel</button>
       <button class="btn btn-primary" (click)="save()">Add User</button>
     </div>
-
+  <pre>
+         {{user | json}}
+        </pre>
   </div>
 </div>
