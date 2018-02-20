@@ -32,6 +32,7 @@ public class AdsTokenEnhancer implements TokenEnhancer {
 		additionalInfo.put("lastName", user.getLastName());
 		additionalInfo.put("nativeUserId", user.getNativeUserId());
 		additionalInfo.put("corpUserId", user.getCorpUserId());
+		additionalInfo.put("userRole", user.getUserRole());
 		
 		((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
 		

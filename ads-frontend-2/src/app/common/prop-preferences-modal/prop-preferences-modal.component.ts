@@ -8,14 +8,17 @@ import { ApplicationConfigService } from '../application-config.service';
 import { PropertyPreferenceConstants } from '../prop-preferences/prop-preferences-const';
 import { FriendlyLabelPipePipe } from '../../pipes/friendly-label-pipe.pipe';
 import { SessionHelper } from '../../auth/session.helper';
+import { AdsErrorService } from '../../common/ads-error.service';
+
 
 @Component({
-  selector: 'app-prop-preferences-modal',
+  selector: 'prop-preferences-modal',
   templateUrl: './prop-preferences-modal.component.html',
   styleUrls: ['./prop-preferences-modal.component.scss']
 })
 
 export class PropPreferencesModalComponent implements OnInit {
+  public errorMessage:string = "";
 
   @ViewChild('propPreferenceModal') public propPreferenceModal: ModalDirective;
   @Output() done = new EventEmitter();
@@ -33,7 +36,7 @@ export class PropPreferencesModalComponent implements OnInit {
 
   showSettingsPanel = false;
 
-  constructor(private applicationConfigService: ApplicationConfigService, private sessionHelper: SessionHelper) { }
+  constructor(private applicationConfigService: ApplicationConfigService, private sessionHelper: SessionHelper, private errorService: AdsErrorService) { }
 
   ngOnInit() {
     this.getPreferenceDetails(this.pageName);
@@ -51,34 +54,37 @@ export class PropPreferencesModalComponent implements OnInit {
 
       console.log("applyPreferences Start");
       var loginInfo = this.sessionHelper.getToken();
-      
+
       // Since this modal allows users to modify and save their column preferences for a page, 
       // We will request that this service creates Preferences and Preference Details for this User by copying from the existing SYSTEM preference info.
       this.applicationConfigService.getPreferencesForUser(pageName, loginInfo.nativeUserId, loginInfo.corpUserId, true)
-  
-            .subscribe(columnPreferences => {
-              
-              this.itemObjectsLeft = [];
-              this.itemObjectsRight = [];
 
-              // For each column that's available, put it in the right "bucket" or in our case, items on the left or items on the right of the screen.
-              columnPreferences._embedded.preferenceDetails.forEach(preferenceDetail => {
-             
-                if (preferenceDetail.fieldVisible === 1) {
-                  this.itemObjectsLeft.push(preferenceDetail);
-                } else {
-                  this.itemObjectsRight.push(preferenceDetail);
-                }
-              
-              });
+        .subscribe(columnPreferences => {
 
-              // Put the items on the left and right in the right order for display.
-              this.sortItems(this.itemObjectsLeft);
-              this.sortItems(this.itemObjectsRight);
-              this.showSettingsPanel = true;
+          this.itemObjectsLeft = [];
+          this.itemObjectsRight = [];
 
-            });
-     
+          // For each column that's available, put it in the right "bucket" or in our case, items on the left or items on the right of the screen.
+          columnPreferences._embedded.preferenceDetails.forEach(preferenceDetail => {
+
+            if (preferenceDetail.fieldVisible === 1) {
+              this.itemObjectsLeft.push(preferenceDetail);
+            } else {
+              this.itemObjectsRight.push(preferenceDetail);
+            }
+
+          });
+
+          // Put the items on the left and right in the right order for display.
+          this.sortItems(this.itemObjectsLeft);
+          this.sortItems(this.itemObjectsRight);
+          this.showSettingsPanel = true;
+
+        }, err => {
+          // Get the ADS configured error message to display.
+          this.errorMessage = this.errorService.processError(err, "propPreferenceModal", "GET");
+        });
+
     } else {
       this.showSettingsPanel = false;
     }
@@ -110,11 +116,14 @@ export class PropPreferencesModalComponent implements OnInit {
     // Save each of the column information. 
     // TODO: Only make 1 call.
     this.updatedPreferences.forEach(updatedPreference => {
-      this.applicationConfigService.updatePreferenceDetails(updatedPreference).subscribe(function (response) {
-        console.log('Preference details were updated successfully.');
-      }, function (error) {
-        console.log(error);
-      });
+      if (this.errorMessage == '') {
+        this.applicationConfigService.updatePreferenceDetails(updatedPreference).subscribe(function (response) {
+          console.log('Preference details were updated successfully.');
+        }, err => {
+          // Get the ADS configured error message to display.
+          this.errorMessage = this.errorService.processError(err, "propPreferenceModal", "POST");
+        });
+      }
     });
   }
 

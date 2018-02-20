@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -38,7 +39,6 @@ public class UserNative implements Serializable {
 	@Column(name="last_name", length=45)
 	private String lastName;
 
-	@JsonIgnore
 	@Column(nullable=false, length=64)
 	private String password;
 
@@ -115,10 +115,12 @@ public class UserNative implements Serializable {
 		this.lastName = lastName;
 	}
 
+    @JsonIgnore
 	public String getPassword() {
 		return this.password;
 	}
 
+    @JsonProperty
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -177,12 +179,5 @@ public class UserNative implements Serializable {
 		this.userRole = userRole;
 	}
 
-/*	public UserRole getUserRole2() {
-		return this.userRole2;
-	}
-
-	public void setUserRole2(UserRole userRole2) {
-		this.userRole2 = userRole2;
-	}*/
 
 }

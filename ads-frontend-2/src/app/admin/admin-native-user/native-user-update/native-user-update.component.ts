@@ -7,11 +7,11 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { UserAdminService } from '../user-admin.service';
 
 @Component({
-  selector: 'app-updateuser',
-  templateUrl: './edituser.component.html',
-  styleUrls: ['./edituser.component.css']
+  selector: 'native-user-update',
+  templateUrl: './native-user-update.component.html',
+  styleUrls: ['./native-user-update.component.css']
 })
-export class UpdateUserComponent implements OnInit {
+export class NativeUserUpdateComponent implements OnInit {
 
   @ViewChild('updateModal') public updateModal: ModalDirective;
   @Output() saved = new EventEmitter();
@@ -31,6 +31,20 @@ export class UpdateUserComponent implements OnInit {
         this.roleArray = userRoles._embedded.userRoles;
       });
 
+      // This method is to get all the values from user_role table
+     this.usersService.getUser(this.User._links.self.href).subscribe(
+      user => {
+        console.log("user");
+        console.log(user);
+      });
+
+       // This method is to get all the values from user_role table
+     this.usersService.getUserRole(this.User._links.userRole.href).subscribe(
+      userRole => {
+        console.log("userRole");
+        console.log(userRole);
+      });
+ 
   }
 
   save() {

@@ -56,7 +56,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			} else {
 				SecurityConfig.authAssertionIdUserNameCache.remove(split[1]);
 				UserCorporate userCorporate = userCorporateRepository.findFirstByEmail(split[2]);
-				return new AdsUser(split[2],new BCryptPasswordEncoder().encode(split[1]), grantedAuthorities,userCorporate);
+				return new AdsUser(split[2],new BCryptPasswordEncoder().encode(split[1]), grantedAuthorities, userCorporate);
 			}
 		}
 

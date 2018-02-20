@@ -15,7 +15,7 @@ export class ApplicationConfigService {
   private apiUrl;
 
   constructor(private http: HttpClient, private globals: Globals, private adsHelper: AdsHelperService, private adsError: AdsErrorService, private sessionHelper: SessionHelper) {
-    this.apiUrl =  globals.apiUrl;
+    this.apiUrl = globals.apiUrl;
     this.preferencesServiceUrl = this.apiUrl + '/preferences/';
   }
 
@@ -29,38 +29,42 @@ export class ApplicationConfigService {
 
     return this.http.get(url)
       .map((res) => res)
-      .catch(error => error);
+    // .catch(
+    // Handle error in Subscribe() using the AdsErrorService      
+    // You can optionally handle it here, if needed
+    //   );
   }
 
 
   // Get Configurable screens for a specific User
   // First try to get the User's preference, should it previously exist.
   // Then try to get the System preference, it should exist.
-  getPreferencesForUser(pageName, nativeUserId, corpUserId, copySystemToUser: boolean=false): Observable<any> {
+  getPreferencesForUser(pageName, nativeUserId, corpUserId, copySystemToUser: boolean = false): Observable<any> {
 
     // let url = this.preferencesServiceUrl + "search/findByPreferenceTypeAndPageNameAndNativeUserIdAndCorpUserId"; { "projection": "preferenceWithPreferenceDetails" }
     let url = this.apiUrl + "/getPreferencesForUser";
-    
+
     url = this.adsHelper.replaceParam(url,
-      [{ "preferenceType": "USER" }, { "pageName": pageName }, { "nativeUserId": nativeUserId }, { "corpUserId": corpUserId }, {"copySystemToUser":copySystemToUser} ], true);
+      [{ "preferenceType": "USER" }, { "pageName": pageName }, { "nativeUserId": nativeUserId }, { "corpUserId": corpUserId }, { "copySystemToUser": copySystemToUser }], true);
     console.log("getPreferencesForUser Calling:" + url);
 
     // If the User doesn't have a preference for this screen, then copy the SYSTEM for the USER and return it.
     return this.http.get(url)
-      .map((res) => res)
-      .catch(error => {
+      .map((res) => res);
+    // .catch(
+    // Handle error in Subscribe() using the AdsErrorService      
+    // You can optionally handle it here, if needed
+    //   );
 
-        this.adsError.processErrorForGet(error, false);
-        return Observable.throw(error);
-      }
-      );
   }
 
 
   getPreferenceDetailsForPreference(selectedPreferenceDetailsResource: any): Observable<any> {
     return this.http.get(selectedPreferenceDetailsResource)
-      .map(response => response)
-      .catch(error => error);
+      .map(response => response);
+    // Handle error in Subscribe() using the AdsErrorService      
+    // You can optionally handle it here, if needed
+
   }
 
 
@@ -72,12 +76,12 @@ export class ApplicationConfigService {
       {
         fieldOrder: updatedPreferenceDetail.fieldOrder,
         fieldVisible: updatedPreferenceDetail.fieldVisible
-      }).map(function (response) {
+      }).map(response => response);
         // return response.json();
-        return response;
-      }).catch(function (err) {
-        return err;
-      });
+        // return response;
+      // });
+    // Handle error in Subscribe() using the AdsErrorService      
+    // You can optionally handle it here, if needed
   }
 
 
@@ -99,7 +103,8 @@ export class ApplicationConfigService {
               columns.push({
                 name: new FriendlyLabelPipePipe().transform(preferenceDetail.fieldName),
                 prop: preferenceDetail.fieldName,
-                order: preferenceDetail.fieldOrder
+                order: preferenceDetail.fieldOrder,
+                flexGrow: 1
               });
             }
 
@@ -117,7 +122,8 @@ export class ApplicationConfigService {
         columns.push({
           headerTemplate: hdrTmpl,
           cellTemplate: actionTmpl,
-          order: 1000
+          order: 1000,
+          flexGrow: 1
         });
 
 
