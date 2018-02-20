@@ -1,119 +1,204 @@
 package com.netapp.ads.models;
 
+import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
+import java.util.List;
 
+
+/**
+ * The persistent class for the host database table.
+ * 
+ */
 @Entity
-@Table(name = "host")
-public class Host {
-    private Integer id;
-    private String hostName;
-    private String ipAddr;
-    private Integer hostOwnerUserCorporateId;
-    private String note;
-    private Integer systemAdminId;
-    private Timestamp createTime;
-    private Timestamp updateTime;
+@Table(name="host")
+public class Host implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id", nullable = false)
-    public Integer getId() {
-        return id;
-    }
+	@Id
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
-    @Basic
-    @Column(name = "host_name", nullable = true, length = 255)
-    public String getHostName() {
-        return hostName;
-    }
+	@Column(name="host_name", length=255)
+	private String hostName;
 
-    public void setHostName(String hostName) {
-        this.hostName = hostName;
-    }
+	@Column(name="host_owner_user_corporate_id")
+	private Integer hostOwnerUserCorporateId;
 
-    @Basic
-    @Column(name = "ip_addr", nullable = true, length = 255)
-    public String getIpAddr() {
-        return ipAddr;
-    }
+	@Column(name="ip_addr", length=255)
+	private String ipAddr;
 
-    public void setIpAddr(String ipAddr) {
-        this.ipAddr = ipAddr;
-    }
+	@Column(length=255)
+	private String note;
 
-    @Basic
-    @Column(name = "host_owner_user_corporate_id", nullable = true)
-    public Integer getHostOwnerUserCorporateId() {
-        return hostOwnerUserCorporateId;
-    }
+	@Column(name="system_admin_id")
+	private Integer systemAdminId;
 
-    public void setHostOwnerUserCorporateId(Integer hostOwnerUserCorporateId) {
-        this.hostOwnerUserCorporateId = hostOwnerUserCorporateId;
-    }
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
 
-    @Basic
-    @Column(name = "note", nullable = true, length = 255)
-    public String getNote() {
-        return note;
-    }
+	//bi-directional many-to-many association to Application
+	@ManyToMany
+	@JoinTable(
+		name="host_application_x_ref"
+		, joinColumns={
+			@JoinColumn(name="host_id", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="application_id", nullable=false)
+			}
+		)
+	private List<Application> applications;
 
-    public void setNote(String note) {
-        this.note = note;
-    }
+	//bi-directional many-to-many association to Export
+	@ManyToMany
+	@JoinTable(
+		name="exports_host_x_ref"
+		, joinColumns={
+			@JoinColumn(name="host_id", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="exports_id", nullable=false)
+			}
+		)
+	private List<Export> exports;
 
-    @Basic
-    @Column(name = "system_admin_id", nullable = true)
-    public Integer getSystemAdminId() {
-        return systemAdminId;
-    }
+	//bi-directional many-to-one association to MountPoint
+	@OneToMany(mappedBy="host")
+	private List<MountPoint> mountPoints;
 
-    public void setSystemAdminId(Integer systemAdminId) {
-        this.systemAdminId = systemAdminId;
-    }
+	//bi-directional many-to-one association to Share
+	@OneToMany(mappedBy="host")
+	private List<Share> shares;
 
-    @Basic
-    @Column(name = "create_time", nullable = true)
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
+	public Host() {
+	}
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
+	public Integer getId() {
+		return this.id;
+	}
 
-    @Basic
-    @Column(name = "update_time", nullable = true)
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
+	public Timestamp getCreateTime() {
+		return this.createTime;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Host that = (Host) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(hostName, that.hostName) &&
-                Objects.equals(ipAddr, that.ipAddr) &&
-                Objects.equals(hostOwnerUserCorporateId, that.hostOwnerUserCorporateId) &&
-                Objects.equals(note, that.note) &&
-                Objects.equals(systemAdminId, that.systemAdminId) &&
-                Objects.equals(createTime, that.createTime) &&
-                Objects.equals(updateTime, that.updateTime);
-    }
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
 
-    @Override
-    public int hashCode() {
+	public String getHostName() {
+		return this.hostName;
+	}
 
-        return Objects.hash(id, hostName, ipAddr, hostOwnerUserCorporateId, note, systemAdminId, createTime, updateTime);
-    }
+	public void setHostName(String hostName) {
+		this.hostName = hostName;
+	}
+
+	public Integer getHostOwnerUserCorporateId() {
+		return this.hostOwnerUserCorporateId;
+	}
+
+	public void setHostOwnerUserCorporateId(Integer hostOwnerUserCorporateId) {
+		this.hostOwnerUserCorporateId = hostOwnerUserCorporateId;
+	}
+
+	public String getIpAddr() {
+		return this.ipAddr;
+	}
+
+	public void setIpAddr(String ipAddr) {
+		this.ipAddr = ipAddr;
+	}
+
+	public String getNote() {
+		return this.note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public Integer getSystemAdminId() {
+		return this.systemAdminId;
+	}
+
+	public void setSystemAdminId(Integer systemAdminId) {
+		this.systemAdminId = systemAdminId;
+	}
+
+	public Timestamp getUpdateTime() {
+		return this.updateTime;
+	}
+
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public List<Application> getApplications() {
+		return this.applications;
+	}
+
+	public void setApplications(List<Application> applications) {
+		this.applications = applications;
+	}
+
+	public List<Export> getExports() {
+		return this.exports;
+	}
+
+	public void setExports(List<Export> exports) {
+		this.exports = exports;
+	}
+
+	public List<MountPoint> getMountPoints() {
+		return this.mountPoints;
+	}
+
+	public void setMountPoints(List<MountPoint> mountPoints) {
+		this.mountPoints = mountPoints;
+	}
+
+	public MountPoint addMountPoint(MountPoint mountPoint) {
+		getMountPoints().add(mountPoint);
+		mountPoint.setHost(this);
+
+		return mountPoint;
+	}
+
+	public MountPoint removeMountPoint(MountPoint mountPoint) {
+		getMountPoints().remove(mountPoint);
+		mountPoint.setHost(null);
+
+		return mountPoint;
+	}
+
+	public List<Share> getShares() {
+		return this.shares;
+	}
+
+	public void setShares(List<Share> shares) {
+		this.shares = shares;
+	}
+
+	public Share addShare(Share share) {
+		getShares().add(share);
+		share.setHost(this);
+
+		return share;
+	}
+
+	public Share removeShare(Share share) {
+		getShares().remove(share);
+		share.setHost(null);
+
+		return share;
+	}
+
 }

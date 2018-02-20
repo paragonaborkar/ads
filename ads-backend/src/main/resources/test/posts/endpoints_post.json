@@ -1,0 +1,15 @@
+{
+    "activities": {
+	    "willDelete": 0,
+	    "willMigrate": 1,
+	    "migrateWeek": "2018-01-19",
+	    "migrateDay": 2,
+	    "callMe": 1,
+	    "bestNumber": null,
+	    "archiveCandidate": 0,
+	    "isLatest": 0,
+	    "adminOverride": 0,
+	    "mailCount": 0,
+	    "migrationTimeId": null
+    }
+}

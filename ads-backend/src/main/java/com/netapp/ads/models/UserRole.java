@@ -2,7 +2,8 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -11,24 +12,32 @@ import java.util.Date;
  */
 @Entity
 @Table(name="user_roles")
-@NamedQuery(name="UserRole.findAll", query="SELECT u FROM UserRole u")
 public class UserRole implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_time")
-	private Date createTime;
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_time")
-	private Date updateTime;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
 
-	@Column(name="user_role")
+	@Column(name="user_role", nullable=false, length=30)
 	private String userRole;
 
+	//bi-directional many-to-one association to UserNative
+	@OneToMany(mappedBy="userRole")
+	private List<UserNative> userNatives;
+
+/*	//bi-directional one-to-one association to UserNative
+	@OneToOne
+	@JoinColumn(name="id", nullable=false, insertable=false, updatable=false)
+	private UserNative userNative;
+*/
 	public UserRole() {
 	}
 
@@ -40,19 +49,19 @@ public class UserRole implements Serializable {
 		this.id = id;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
 
@@ -63,5 +72,35 @@ public class UserRole implements Serializable {
 	public void setUserRole(String userRole) {
 		this.userRole = userRole;
 	}
+
+	public List<UserNative> getUserNatives() {
+		return this.userNatives;
+	}
+
+	public void setUserNatives(List<UserNative> userNatives) {
+		this.userNatives = userNatives;
+	}
+
+	public UserNative addUserNative(UserNative userNative) {
+		getUserNatives().add(userNative);
+		userNative.setUserRole(this);
+
+		return userNative;
+	}
+
+	public UserNative removeUserNative(UserNative userNative) {
+		getUserNatives().remove(userNative);
+		userNative.setUserRole(null);
+
+		return userNative;
+	}
+/*
+	public UserNative getUserNative() {
+		return this.userNative;
+	}
+
+	public void setUserNative(UserNative userNative) {
+		this.userNative = userNative;
+	}*/
 
 }

@@ -2,7 +2,8 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -11,55 +12,97 @@ import java.util.Date;
  */
 @Entity
 @Table(name="line_of_business")
-@NamedQuery(name="LineOfBusiness.findAll", query="SELECT l FROM LineOfBusiness l")
 public class LineOfBusiness implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_time")
-	private Date createTime;
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
-	@Column(name="liason_contact_number")
+	@Column(name="liason_contact_number", nullable=false, length=255)
 	private String liasonContactNumber;
 
-	@Column(name="liason_email")
+	@Column(name="liason_email", nullable=false, length=255)
 	private String liasonEmail;
 
-	@Column(name="liason_first_name")
+	@Column(name="liason_first_name", nullable=false, length=255)
 	private String liasonFirstName;
 
-	@Column(name="liason_last_name")
+	@Column(name="liason_last_name", nullable=false, length=255)
 	private String liasonLastName;
 
-	@Column(name="liason_user_name")
+	@Column(name="liason_user_name", nullable=false, length=255)
 	private String liasonUserName;
 
-	@Column(name="lob_name")
+	@Column(name="lob_name", nullable=false, length=255)
 	private String lobName;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_time")
-	private Date updateTime;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
+
+	//bi-directional many-to-one association to Export
+	@OneToMany(mappedBy="lineOfBusiness")
+	private List<Export> exports;
+
+	//bi-directional many-to-many association to Activity
+	@ManyToMany
+	@JoinTable(
+		name="activity_lob_x_ref"
+		, joinColumns={
+			@JoinColumn(name="lob_id", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="activity_id", nullable=false)
+			}
+		)
+	private List<Activity> activitiesLobXRef;
+
+	//bi-directional many-to-many association to Activity
+	@ManyToMany
+	@JoinTable(
+		name="activity_presumed_lob_x_ref"
+		, joinColumns={
+			@JoinColumn(name="lob_id", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="activity_id", nullable=false)
+			}
+		)
+	private List<Activity> activitiesPresumedLobXRef;
+
+	//bi-directional many-to-many association to Application
+	@ManyToMany
+	@JoinTable(
+		name="application_lob_x_ref"
+		, joinColumns={
+			@JoinColumn(name="lob_id", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="application_id", nullable=false)
+			}
+		)
+	private List<Application> applications;
 
 	public LineOfBusiness() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
@@ -111,12 +154,58 @@ public class LineOfBusiness implements Serializable {
 		this.lobName = lobName;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public List<Export> getExports() {
+		return this.exports;
+	}
+
+	public void setExports(List<Export> exports) {
+		this.exports = exports;
+	}
+
+	public Export addExport(Export export) {
+		getExports().add(export);
+		export.setLineOfBusiness(this);
+
+		return export;
+	}
+
+	public Export removeExport(Export export) {
+		getExports().remove(export);
+		export.setLineOfBusiness(null);
+
+		return export;
+	}
+
+	public List<Activity> getActivitiesLobXRef() {
+		return this.activitiesLobXRef;
+	}
+
+	public void setActivitiesLobXRef(List<Activity> activities) {
+		this.activitiesLobXRef = activities;
+	}
+
+	public List<Activity> getActivitiesPresumedLobXRef() {
+		return this.activitiesPresumedLobXRef;
+	}
+
+	public void setActivitiesPresumedLobXRef(List<Activity> activities) {
+		this.activitiesPresumedLobXRef = activities;
+	}
+
+	public List<Application> getApplications() {
+		return this.applications;
+	}
+
+	public void setApplications(List<Application> applications) {
+		this.applications = applications;
 	}
 
 }
