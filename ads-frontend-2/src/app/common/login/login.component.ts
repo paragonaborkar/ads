@@ -34,7 +34,9 @@ export class LoginComponent implements OnInit {
 		private _sessionHelper: SessionHelper
 	) {
 		if (this._sessionHelper.isAuthenticated()) {
-			this.router.navigate(['/home']);
+			
+                this.router.navigate(['/home']);
+			
 		}
 	}
 
@@ -44,6 +46,10 @@ export class LoginComponent implements OnInit {
 			let res = JSON.parse(atob(response));
 			this.userService.login(res);
 			this.navigateAfterSuccess();
+		}
+		let err_msg = (this.activatedRoute.snapshot.queryParams["error"]);
+		if(err_msg!==null && err_msg!==undefined){
+			alert(err_msg);
 		}
 	}
 
@@ -82,11 +88,18 @@ export class LoginComponent implements OnInit {
 	}
 
 	private navigateAfterSuccess() {
-		this.redirectUrl = '/home';
-		if (this.redirectUrl) {
-			this.router.navigateByUrl(this.redirectUrl);
-		} else {
-			this.router.navigate(['/']);
+		var migkey=localStorage.getItem('migKey');
+		if(migkey!==null && migkey !=undefined){
+			this.router.navigate(['/discover/qtrees-ownership']);
 		}
+		else{
+			this.redirectUrl = '/home';
+			if (this.redirectUrl) {
+				this.router.navigateByUrl(this.redirectUrl);
+			} else {
+				this.router.navigate(['/']);
+			}
+		}
+		
 	}
 }

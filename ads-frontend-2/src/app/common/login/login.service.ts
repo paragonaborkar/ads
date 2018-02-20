@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 import { SessionHelper } from '../../auth/session.helper';
 import 'rxjs/add/operator/map';
@@ -15,7 +15,6 @@ export class LoginService {
   private TOKEN_AUTH_PASSWORD = '';
   private AUTH_TOKEN = '';
    
-
   constructor(private http: Http, private _sessionHelper: SessionHelper, private globals: Globals) {
     this.loginServiceUrl = globals.apiUrl;
     this.TOKEN_AUTH_USERNAME = globals.TOKEN_AUTH_USERNAME;
@@ -40,5 +39,4 @@ export class LoginService {
       return null;
     });
   }
-
 } 
