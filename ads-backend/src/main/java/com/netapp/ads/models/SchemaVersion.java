@@ -2,7 +2,7 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -11,68 +11,70 @@ import java.util.Date;
  */
 @Entity
 @Table(name="schema_version")
-@NamedQuery(name="SchemaVersion.findAll", query="SELECT s FROM SchemaVersion s")
 public class SchemaVersion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="installed_rank")
-	private int installedRank;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="installed_rank", unique=true, nullable=false)
+	private Integer installedRank;
 
-	private int checksum;
+	private Integer checksum;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_time")
-	private Date createTime;
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
+	@Column(nullable=false, length=200)
 	private String description;
 
-	@Column(name="execution_time")
-	private int executionTime;
+	@Column(name="execution_time", nullable=false)
+	private Integer executionTime;
 
-	@Column(name="installed_by")
+	@Column(name="installed_by", nullable=false, length=100)
 	private String installedBy;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="installed_on")
-	private Date installedOn;
+	@Column(name="installed_on", nullable=false)
+	private Timestamp installedOn;
 
+	@Column(nullable=false, length=1000)
 	private String script;
 
-	private byte success;
+	@Column(nullable=false)
+	private boolean success;
 
+	@Column(nullable=false, length=20)
 	private String type;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_time")
-	private Date updateTime;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
 
+	@Column(length=50)
 	private String version;
 
 	public SchemaVersion() {
 	}
 
-	public int getInstalledRank() {
+	public Integer getInstalledRank() {
 		return this.installedRank;
 	}
 
-	public void setInstalledRank(int installedRank) {
+	public void setInstalledRank(Integer installedRank) {
 		this.installedRank = installedRank;
 	}
 
-	public int getChecksum() {
+	public Integer getChecksum() {
 		return this.checksum;
 	}
 
-	public void setChecksum(int checksum) {
+	public void setChecksum(Integer checksum) {
 		this.checksum = checksum;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
@@ -84,11 +86,11 @@ public class SchemaVersion implements Serializable {
 		this.description = description;
 	}
 
-	public int getExecutionTime() {
+	public Integer getExecutionTime() {
 		return this.executionTime;
 	}
 
-	public void setExecutionTime(int executionTime) {
+	public void setExecutionTime(Integer executionTime) {
 		this.executionTime = executionTime;
 	}
 
@@ -100,11 +102,11 @@ public class SchemaVersion implements Serializable {
 		this.installedBy = installedBy;
 	}
 
-	public Date getInstalledOn() {
+	public Timestamp getInstalledOn() {
 		return this.installedOn;
 	}
 
-	public void setInstalledOn(Date installedOn) {
+	public void setInstalledOn(Timestamp installedOn) {
 		this.installedOn = installedOn;
 	}
 
@@ -116,11 +118,11 @@ public class SchemaVersion implements Serializable {
 		this.script = script;
 	}
 
-	public byte getSuccess() {
+	public boolean getSuccess() {
 		return this.success;
 	}
 
-	public void setSuccess(byte success) {
+	public void setSuccess(boolean success) {
 		this.success = success;
 	}
 
@@ -132,11 +134,11 @@ public class SchemaVersion implements Serializable {
 		this.type = type;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
 

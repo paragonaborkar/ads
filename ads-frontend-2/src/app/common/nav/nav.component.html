@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top">
+  <a class="navbar-brand" href="#">
+    <div  class="logo"></div> 
+   </a>
+
+  
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+    aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+  <div class="collapse navbar-collapse no-select" id="navbarsExampleDefault" *ngIf="isLogedIn()" >
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="home">Home <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="connectionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Connections</a>
+          <div class="dropdown-menu" aria-labelledby="connectionDropdown">
+            <a class="dropdown-item" routerLink="connections/manual-function">Manual Functions</a>
+            <a class="dropdown-item" href="#">Host Connection Status</a>
+          </div>
+        </li>
+  
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="discoverDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Discover</a>
+            <div class="dropdown-menu" aria-labelledby="discoverDropdown">
+              <a class="dropdown-item" routerLink="discover/qtrees-ownership">QTrees Ownership</a>
+              <a class="dropdown-item" routerLink="discover/manual-function">Manual Functions</a>
+            </div>
+          </li>
+  
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+              <div class="dropdown-menu" aria-labelledby="adminDropdown">
+                <a class="dropdown-item" routerLink="admin/report-listing">User Report</a>
+                <a class="dropdown-item" routerLink="admin/native-user-mgmt">Native User Management</a>
+                <a class="dropdown-item" routerLink="admin/property-preferences">Property Preferences</a>
+                <a class="dropdown-item" routerLink="admin/application-properties">Application Properties</a>
+              </div>
+            </li>
+
+    </ul>
+    <form class="form-inline my-2 my-lg-0" >
+      <div class="mr-2 text-white">{{firstName}} {{lastName }} ({{email}})</div>
+      <button class="btn btn-outline-light my-2 my-sm-0" type="button" (click)="logout()">Logout</button>
+    </form>
+  </div>
+</nav>

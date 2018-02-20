@@ -1,38 +1,48 @@
 package com.netapp.ads.models;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 
 /**
- * The persistent class for the preferences database table.
+ * The persistent class for the preference database table.
  * 
  */
 @Entity
-@Table(name="preferences")
-@NamedQuery(name="Preference.findAll", query="SELECT p FROM Preference p")
+@Table(name="preference")
 public class Preference implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
 	private Integer id;
+	
+	@Column(name="corp_user_id")
+	private Integer corpUserId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_on")
-	private Date createdOn;
+	@Column(name="native_user_id")
+	private Integer nativeUserId;
+	
 
-	@Column(name="page_name")
+	@Column(name="page_name", length=255)
 	private String pageName;
 
-	@Column(name="preference_type")
+	@Column(name="preference_type", length=255)
 	private String preferenceType;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="updated_on")
-	private Date updatedOn;
+	
+	
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
+	
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
+	
 
 	//bi-directional many-to-one association to PreferenceDetail
 	@OneToMany(mappedBy="preference")
@@ -44,18 +54,29 @@ public class Preference implements Serializable {
 	public Integer getId() {
 		return this.id;
 	}
-
+	
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public Date getCreatedOn() {
-		return this.createdOn;
+	
+	public Integer getCorpUserId() {
+		return this.corpUserId;
 	}
 
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
+	public void setCorpUserId(Integer corpUserId) {
+		this.corpUserId = corpUserId;
 	}
+	
+	public Integer getNativeUserId() {
+		return this.nativeUserId;
+	}
+
+	public void setNativeUserId(Integer nativeUserId) {
+		this.nativeUserId = nativeUserId;
+	}
+
+
 
 	public String getPageName() {
 		return this.pageName;
@@ -73,14 +94,22 @@ public class Preference implements Serializable {
 		this.preferenceType = preferenceType;
 	}
 
-	public Date getUpdatedOn() {
-		return this.updatedOn;
+	public Timestamp getCreateTime() {
+		return this.createTime;
 	}
 
-	public void setUpdatedOn(Date updatedOn) {
-		this.updatedOn = updatedOn;
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+	
+	public Timestamp getUpdateTime() {
+		return this.updateTime;
 	}
 
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
+	}
+	
 	public List<PreferenceDetail> getPreferenceDetails() {
 		return this.preferenceDetails;
 	}

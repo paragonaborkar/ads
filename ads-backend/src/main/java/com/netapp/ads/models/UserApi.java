@@ -1,50 +1,70 @@
 package com.netapp.ads.models;
 
 import java.io.Serializable;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
+/**
+ * The persistent class for the user_api database table.
+ * 
+ */
 @Entity
-@Table(name = "user_api")
-@NamedQuery(name="UserApi.findAll", query="SELECT u FROM UserApi u")
+@Table(name="user_api")
 public class UserApi implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Column(name = "create_time")
-	private Timestamp createTime;
-
-	private byte enabled;
-
-	@Column(name = "client_id")
+	@Column(name="client_id", length=45)
 	private String clientId;
 
-	private String purpose;
-	@Column(name = "client_secret")
+	@JsonIgnore
+	@Column(name="client_secret", length=45)
 	private String clientSecret;
 
-	@Column(name = "update_time")
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
+
+	private boolean enabled;
+
+	@Column(length=255)
+	private String purpose;
+
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	public UserApi() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getClientId() {
+		return this.clientId;
+	}
+
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
+	}
+
+	public String getClientSecret() {
+		return this.clientSecret;
+	}
+
+	public void setClientSecret(String clientSecret) {
+		this.clientSecret = clientSecret;
 	}
 
 	public Timestamp getCreateTime() {
@@ -55,11 +75,11 @@ public class UserApi implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public byte getEnabled() {
+	public boolean getEnabled() {
 		return this.enabled;
 	}
 
-	public void setEnabled(byte enabled) {
+	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
 
@@ -69,22 +89,6 @@ public class UserApi implements Serializable {
 
 	public void setPurpose(String purpose) {
 		this.purpose = purpose;
-	}
-
-	public String getClientId() {
-		return clientId;
-	}
-
-	public void setClientId(String clientId) {
-		this.clientId = clientId;
-	}
-
-	public String getClientSecret() {
-		return clientSecret;
-	}
-
-	public void setClientSecret(String clientSecret) {
-		this.clientSecret = clientSecret;
 	}
 
 	public Timestamp getUpdateTime() {
