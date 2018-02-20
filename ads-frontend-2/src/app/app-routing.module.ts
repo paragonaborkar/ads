@@ -45,7 +45,7 @@ const routes: Routes = [
 
 
   { path: 'discover/owner',  component: OwnerNotFoundComponent, canActivate: [AuthGuard] },
-  { path: 'discover/owner/:id',  component: OwnerComponent, canActivate: [AuthGuard] },
+  { path: 'discover/owner/:migKey',  component: OwnerComponent, canActivate: [AuthGuard] },
  
 
   

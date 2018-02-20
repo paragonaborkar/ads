@@ -22,7 +22,7 @@ public class MigrationKeyController {
 	 * @return
 	 */
 	@PreAuthorize("hasAuthority('CORP_USER')")
-	@RequestMapping(value = "/validate-migrationkey/{migrationKey}/{userCorporateId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/validate-migration-key/{migrationKey}/{userCorporateId}", method = RequestMethod.GET)
 	public boolean validateMigKey(@PathVariable(name = "migrationKey") String migrationKey,
 			@PathVariable(name = "userCorporateId") int userCorporateId) {
 		return migKeyRepo.isMigrationKeyExists(migrationKey, userCorporateId);

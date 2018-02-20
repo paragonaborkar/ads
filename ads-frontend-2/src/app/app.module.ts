@@ -92,7 +92,7 @@ import { OwnerNotFoundComponent } from './discover/owner-not-found/owner-not-fou
     DiscoverManualFunctionsComponent,
     AdminNativeUserComponent,
 
-    QtreesOwnershipComponent
+    QtreesOwnershipComponent,
 
     OwnerComponent,
     OwnerNotFoundComponent
@@ -122,7 +122,7 @@ import { OwnerNotFoundComponent } from './discover/owner-not-found/owner-not-fou
     ApplicationConfigService,
     AppPropertiesService,
 
-    QtreesService
+    QtreesService,
 
     OwnerService
 
