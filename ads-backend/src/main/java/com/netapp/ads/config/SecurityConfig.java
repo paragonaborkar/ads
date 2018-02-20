@@ -114,7 +114,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.netapp.ads.filter.CORSFilter;
-import com.netapp.ads.repos.UserCorporateRepository;
 import com.netapp.ads.services.SAMLUserDetailsServiceImpl;
 
 @Configuration
@@ -142,7 +141,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
+
 	@Autowired
 	private SAMLUserDetailsServiceImpl samlUserDetailsServiceImpl;
 
@@ -152,9 +151,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	@Autowired
-	private UserCorporateRepository userCorporateRepository;
-	
 	private Timer backgroundTaskTimer;
 	private MultiThreadedHttpConnectionManager multiThreadedHttpConnectionManager;
 	public static Map<String, String> authAssertionIdUserNameCache = new HashMap<>();
@@ -164,12 +160,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected AuthenticationManager authenticationManager() throws Exception {
 		return super.authenticationManager();
 	}
-	
+
 	// Initialization of OpenSAML library
-    @Bean
-    public static SAMLBootstrap sAMLBootstrap() {
-        return new SAMLBootstrap();
-    }
+	@Bean
+	public static SAMLBootstrap sAMLBootstrap() {
+		return new SAMLBootstrap();
+	}
 
 	/**
 	 * Encodes password to BCrypt
@@ -196,8 +192,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.antMatcher("/saml/**").httpBasic().authenticationEntryPoint(samlEntryPoint()).and().csrf().disable()
 				.addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
-				.addFilterAfter(samlFilter(), BasicAuthenticationFilter.class).authorizeRequests()
-				.anyRequest().authenticated();
+				.addFilterAfter(samlFilter(), BasicAuthenticationFilter.class).authorizeRequests().anyRequest()
+				.authenticated();
 
 	}
 
@@ -217,7 +213,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public TokenStore tokenStore() {
 		return new JwtTokenStore(accessTokenConverter());
 	}
-	
+
 	@Bean
 	public BCryptPasswordEncoder bcryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -450,24 +446,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 					Authentication auth) throws ServletException, IOException {
 				if (auth != null && auth instanceof ExpiringUsernameAuthenticationToken) {
-					String token = generateTokenForSAML(auth);
+					String token = null;
+					try {
+						token = generateTokenForSAML(auth);
+					} catch (Exception e) {
+						response.sendRedirect(successRedirectURL + "?error=" + "Error in SSO Login");
+					}
 
 					if (token != null) {
-
-						Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-						String currentPrincipalName = authentication.getName();
-
-						boolean _isExist = false;
-						_isExist = userCorporateRepository.isEmailExists(currentPrincipalName);
-
-						if (_isExist) {
-							final byte[] authBytes = token.getBytes(StandardCharsets.UTF_8);
-							final String encodedToken = Base64.getEncoder().encodeToString(authBytes);
-							response.sendRedirect(successRedirectURL + "?response=" + encodedToken);
-						} else {
-							response.sendRedirect(successRedirectURL + "?error=" + "Error in SSO Login");
-						}
-
+						final byte[] authBytes = token.getBytes(StandardCharsets.UTF_8);
+						final String encodedToken = Base64.getEncoder().encodeToString(authBytes);
+						response.sendRedirect(successRedirectURL + "?response=" + encodedToken);
 						SecurityContextHolder.clearContext();
 					}
 				}

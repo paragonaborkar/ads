@@ -57,6 +57,8 @@ import { ConnectionsManualFunctionsComponent } from './connections/connections-m
 import { DiscoverManualFunctionsComponent } from './discover/discover-manual-functions/discover-manual-functions.component';
 import { FriendlyLabelPipePipe } from './pipes/friendly-label-pipe.pipe';
 import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native-user.component';
+import { QtreesOwnershipComponent } from './discover/qtrees-ownership/qtrees-ownership.component';
+import { QtreesService } from './discover/qtrees-ownership/qtrees-ownership.service';
 /*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
 
@@ -79,7 +81,8 @@ import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native
     FriendlyLabelPipePipe,
     ConnectionsManualFunctionsComponent,
     DiscoverManualFunctionsComponent,
-    AdminNativeUserComponent
+    AdminNativeUserComponent,
+    QtreesOwnershipComponent
     
 
   ],
@@ -103,7 +106,8 @@ import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native
     UserAdminService,
     PagerService,
     ApplicationConfigService,
-    AppPropertiesService
+    AppPropertiesService,
+    QtreesService
     ],
   bootstrap: [AppComponent]
 })

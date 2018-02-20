@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 export class SessionHelper {
     private _storage: Storage;
     private _tokenKey: string = 'accessTokenInfo';
+    private _migKey: string='migKey';
 
     constructor() {
         this._storage = sessionStorage;
@@ -35,6 +36,7 @@ export class SessionHelper {
 
     removeAll() {
         this._storage.clear();
+        localStorage.clear();
     }
 
     public isTokenExpired(token?: string, offsetSeconds?: number) {
@@ -57,6 +59,14 @@ export class SessionHelper {
         }
         // Token expired?
         return !(date.valueOf() > (new Date().valueOf() + (offsetSeconds * 1000)));
+    }
+
+    setMigKey(migKey: any) {
+        this._storage.setItem(this._migKey, migKey);
+    }
+
+    getMigKey() {
+        return this.get<any>(this._migKey);
     }
 
 }

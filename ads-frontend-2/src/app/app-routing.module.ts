@@ -13,6 +13,8 @@ import { AppPropertiesComponent } from './admin/app-properties/app-properties.co
 import { ConnectionsManualFunctionsComponent } from './connections/connections-manual-functions/connections-manual-functions.component';
 import { DiscoverManualFunctionsComponent } from './discover/discover-manual-functions/discover-manual-functions.component';
 import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native-user.component';
+import { QtreesOwnershipComponent } from './discover/qtrees-ownership/qtrees-ownership.component';
+
 
 // import { Error404LoggedInComponent } from './common/error-404-logged-in/error-404-logged-in.component';
 
@@ -33,7 +35,8 @@ const routes: Routes = [
    
   
   { path: 'discover/manual-function',  component: DiscoverManualFunctionsComponent, canActivate: [AuthGuard] },
- 
+  
+  { path: 'discover/qtrees-ownership',  component: QtreesOwnershipComponent },
   
   { path: '',   component: LoginComponent},
 
