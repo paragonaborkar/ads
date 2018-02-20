@@ -1,5 +1,10 @@
 package routines;
 
+import java.util.Arrays;
+import java.util.List;
+
+import jdk.nashorn.internal.runtime.Context;
+
 /*
  * user specification: the function's comment should contain keys as follows: 1. write about the function's comment.but
  * it must be before the "{talendTypes}" key.
@@ -39,6 +44,20 @@ public class ADSStringUtils {
     	System.out.println(restURL);
     	return restURL;
     }
+
+    
+    public static List<String> convertStringToList(String line,String delimiter) {
+    	
+    	return Arrays.asList(line.split(delimiter));
+    }
+    
+    public static String getEndPointURL(String baseURL,String endPointName) {
+    	
+    	String restURL=baseURL+"/"+endPointName;
+    	System.out.println(restURL);
+    	return restURL;
+    }
+    
     
     
 }
