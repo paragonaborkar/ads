@@ -13,3 +13,6 @@ RemoteSystemsTempFiles/
 ads-backend/.factorypath
 package-lock.json
 
+# ---- SonarQube
+.sonar
+.scannerwor

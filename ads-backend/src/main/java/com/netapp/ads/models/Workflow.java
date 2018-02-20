@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -11,57 +12,69 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@NamedQuery(name="Workflow.findAll", query="SELECT w FROM Workflow w")
+@Table(name="workflow")
 public class Workflow implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private WorkflowPK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
-	@Column(name="error_code")
+	@Column(name="error_code", length=60)
 	private String errorCode;
 
-	@Column(name="error_description")
+	@Column(name="error_description", length=128)
 	private String errorDescription;
 
-	@Column(name="job_type")
+	@Column(name="job_type", length=255)
 	private String jobType;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="start_time")
 	private Date startTime;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
-	@Column(name="wfa_job_id")
+	@Column(name="wfa_job_id", length=255)
 	private String wfaJobId;
 
-	@Column(name="wfa_uuid")
+	@Column(name="wfa_uuid", length=255)
 	private String wfaUuid;
 
-	@Column(name="workflow_status")
+	@Column(name="workflow_status", nullable=false, length=60)
 	private String workflowStatus;
+
+	//bi-directional many-to-one association to WfaData
+	@OneToMany(mappedBy="workflow")
+	private List<WfaData> wfaData;
+
+	//bi-directional many-to-one association to WfaMessage
+	@OneToMany(mappedBy="workflow")
+	private List<WfaMessage> wfaMessages;
 
 	//bi-directional many-to-one association to MigrationCutoverSrcToTgt
 	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name="migration_cutover_src_to_tgt_id", referencedColumnName="id", insertable = false, updatable = false),
-		@JoinColumn(name="migration_cutover_src_to_tgt_migration_cutover_event_id", referencedColumnName="migration_cutover_event_id", insertable = false, updatable = false)
-		})
+	@JoinColumn(name="migration_cutover_src_to_tgt_id", nullable=false)
 	private MigrationCutoverSrcToTgt migrationCutoverSrcToTgt;
+
+	//bi-directional many-to-one association to MigrationCutoverSrcToTgt
+	@ManyToOne
+	@JoinColumn(name="migration_cutover_src_to_tgt_migration_cutover_event_id", nullable=false)
+	private MigrationCutoverSrcToTgt migrationCutoverSrcToTgtMigrationCutoverEvent;
 
 	public Workflow() {
 	}
 
-	public WorkflowPK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(WorkflowPK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -137,12 +150,64 @@ public class Workflow implements Serializable {
 		this.workflowStatus = workflowStatus;
 	}
 
+	public List<WfaData> getWfaData() {
+		return this.wfaData;
+	}
+
+	public void setWfaData(List<WfaData> wfaData) {
+		this.wfaData = wfaData;
+	}
+
+	public WfaData addWfaData(WfaData wfaData) {
+		getWfaData().add(wfaData);
+		wfaData.setWorkflow(this);
+
+		return wfaData;
+	}
+
+	public WfaData removeWfaData(WfaData wfaData) {
+		getWfaData().remove(wfaData);
+		wfaData.setWorkflow(null);
+
+		return wfaData;
+	}
+
+	public List<WfaMessage> getWfaMessages() {
+		return this.wfaMessages;
+	}
+
+	public void setWfaMessages(List<WfaMessage> wfaMessages) {
+		this.wfaMessages = wfaMessages;
+	}
+
+	public WfaMessage addWfaMessage(WfaMessage wfaMessage) {
+		getWfaMessages().add(wfaMessage);
+		wfaMessage.setWorkflow(this);
+
+		return wfaMessage;
+	}
+
+	public WfaMessage removeWfaMessage(WfaMessage wfaMessage) {
+		getWfaMessages().remove(wfaMessage);
+		wfaMessage.setWorkflow(null);
+
+		return wfaMessage;
+	}
+
 	public MigrationCutoverSrcToTgt getMigrationCutoverSrcToTgt() {
 		return this.migrationCutoverSrcToTgt;
 	}
 
 	public void setMigrationCutoverSrcToTgt(MigrationCutoverSrcToTgt migrationCutoverSrcToTgt) {
 		this.migrationCutoverSrcToTgt = migrationCutoverSrcToTgt;
+	}
+
+	public MigrationCutoverSrcToTgt getMigrationCutoverSrcToTgtMigrationCutoverEvent() {
+		return this.migrationCutoverSrcToTgtMigrationCutoverEvent;
+	}
+
+	public void setMigrationCutoverSrcToTgtMigrationCutoverEvent(MigrationCutoverSrcToTgt migrationCutoverSrcToTgt) {
+		this.migrationCutoverSrcToTgtMigrationCutoverEvent = migrationCutoverSrcToTgt;
 	}
 
 }

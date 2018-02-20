@@ -2,7 +2,8 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -10,43 +11,52 @@ import java.util.Date;
  * 
  */
 @Entity
-@NamedQuery(name="Application.findAll", query="SELECT a FROM Application a")
+@Table(name="application")
 public class Application implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Column(name="application_code")
+	@Column(name="application_code", nullable=false, length=255)
 	private String applicationCode;
 
-	@Column(name="application_name")
+	@Column(name="application_name", nullable=false, length=255)
 	private String applicationName;
 
+	@Column(length=255)
 	private String archtype;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_time")
-	private Date createTime;
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
-	@Column(name="information_owner")
+	@Column(name="information_owner", length=60)
 	private String informationOwner;
 
-	@Column(name="owner_user_corporate_id")
-	private int ownerUserCorporateId;
+	@Column(name="owner_user_corporate_id", nullable=false)
+	private Integer ownerUserCorporateId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_time")
-	private Date updateTime;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
+
+	//bi-directional many-to-many association to Host
+	@ManyToMany(mappedBy="applications")
+	private List<Host> hosts;
+
+	//bi-directional many-to-many association to LineOfBusiness
+	@ManyToMany(mappedBy="applications")
+	private List<LineOfBusiness> lineOfBusinesses;
 
 	public Application() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -74,11 +84,11 @@ public class Application implements Serializable {
 		this.archtype = archtype;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
@@ -90,20 +100,36 @@ public class Application implements Serializable {
 		this.informationOwner = informationOwner;
 	}
 
-	public int getOwnerUserCorporateId() {
+	public Integer getOwnerUserCorporateId() {
 		return this.ownerUserCorporateId;
 	}
 
-	public void setOwnerUserCorporateId(int ownerUserCorporateId) {
+	public void setOwnerUserCorporateId(Integer ownerUserCorporateId) {
 		this.ownerUserCorporateId = ownerUserCorporateId;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public List<Host> getHosts() {
+		return this.hosts;
+	}
+
+	public void setHosts(List<Host> hosts) {
+		this.hosts = hosts;
+	}
+
+	public List<LineOfBusiness> getLineOfBusinesses() {
+		return this.lineOfBusinesses;
+	}
+
+	public void setLineOfBusinesses(List<LineOfBusiness> lineOfBusinesses) {
+		this.lineOfBusinesses = lineOfBusinesses;
 	}
 
 }

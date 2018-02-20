@@ -2,7 +2,7 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -10,66 +10,65 @@ import java.util.Date;
  * 
  */
 @Entity
-@NamedQuery(name="Share.findAll", query="SELECT s FROM Share s")
+@Table(name="share")
 public class Share implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private SharePK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_time")
-	private Date createTime;
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
-	@Column(name="owner_user_corporate_id")
-	private int ownerUserCorporateId;
+	@Column(name="owner_user_corporate_id", nullable=false)
+	private Integer ownerUserCorporateId;
 
-	@Column(name="qtree_id")
-	private int qtreeId;
-
-	@Column(name="share_name")
+	@Column(name="share_name", nullable=false, length=255)
 	private String shareName;
 
-	@Column(name="share_type")
+	@Column(name="share_type", nullable=false, length=20)
 	private String shareType;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_time")
-	private Date updateTime;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
+
+	//bi-directional many-to-one association to Host
+	@ManyToOne
+	@JoinColumn(name="host_id", nullable=false)
+	private Host host;
+
+	//bi-directional many-to-one association to Qtree
+	@ManyToOne
+	@JoinColumn(name="qtree_id", nullable=false)
+	private Qtree qtree;
 
 	public Share() {
 	}
 
-	public SharePK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(SharePK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
-	public int getOwnerUserCorporateId() {
+	public Integer getOwnerUserCorporateId() {
 		return this.ownerUserCorporateId;
 	}
 
-	public void setOwnerUserCorporateId(int ownerUserCorporateId) {
+	public void setOwnerUserCorporateId(Integer ownerUserCorporateId) {
 		this.ownerUserCorporateId = ownerUserCorporateId;
-	}
-
-	public int getQtreeId() {
-		return this.qtreeId;
-	}
-
-	public void setQtreeId(int qtreeId) {
-		this.qtreeId = qtreeId;
 	}
 
 	public String getShareName() {
@@ -88,12 +87,28 @@ public class Share implements Serializable {
 		this.shareType = shareType;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public Host getHost() {
+		return this.host;
+	}
+
+	public void setHost(Host host) {
+		this.host = host;
+	}
+
+	public Qtree getQtree() {
+		return this.qtree;
+	}
+
+	public void setQtree(Qtree qtree) {
+		this.qtree = qtree;
 	}
 
 }

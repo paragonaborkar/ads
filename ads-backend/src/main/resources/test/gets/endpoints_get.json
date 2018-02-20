@@ -1,0 +1,185 @@
+{
+    "activities": {
+        "href": "activities"
+    },
+    "activityLobXRefs": {
+        "href": "activityLobXRefs"
+    },
+    "activityMigrationKeyXRefs": {
+        "href": "activityMigrationKeyXRefs"
+    },
+    "activityPresumedLobXRefs": {
+        "href": "activityPresumedLobXRefs"
+    },
+    "activityResponses": {
+        "href": "activityResponses"
+    },
+    "aggregatePurposes": {
+        "href": "aggregatePurposes"
+    },
+    "aggregates": {
+        "href": "aggregates"
+    },
+    "applicationLobXRefs": {
+        "href": "applicationLobXRefs"
+    },
+    "applications": {
+        "href": "applications"
+    },
+    "auditEvents": {
+        "href": "auditEvents"
+    },
+    "auditReasonCodes": {
+        "href": "auditReasonCodes"
+    },
+    "auditTrailApis": {
+        "href": "auditTrailApis"
+    },
+    "auditTrailCorporateUsers": {
+        "href": "auditTrailCorporateUsers"
+    },
+    "auditTrailNativeUsers": {
+        "href": "auditTrailNativeUsers"
+    },
+    "changeManagements": {
+        "href": "changeManagements"
+    },
+    "controllers": {
+        "href": "controllers"
+    },
+    "cutoverAssemblies": {
+        "href": "cutoverAssemblies"
+    },
+    "cutoverMountPoints": {
+        "href": "cutoverMountPoints"
+    },
+    "cutovers": {
+        "href": "cutovers"
+    },
+    "cutoverTimes": {
+        "href": "cutoverTimes"
+    },
+    "dataCenters": {
+        "href": "dataCenters"
+    },
+    "dataProtectionPolicies": {
+        "href": "dataProtectionPolicies"
+    },
+    "emailTemplates": {
+        "href": "emailTemplates"
+    },
+    "exports": {
+        "href": "exports"
+    },
+    "exportsHostXRefs": {
+        "href": "exportsHostXRefs"
+    },
+    "extendedInfoVarchars": {
+        "href": "extendedInfoVarchars"
+    },
+    "extendedInfoVarcharSettings": {
+        "href": "extendedInfoVarcharSettings"
+    },
+    "hostApplicationXRefs": {
+        "href": "hostApplicationXRefs"
+    },
+    "hosts": {
+        "href": "hosts"
+    },
+    "icals": {
+        "href": "icals"
+    },
+    "lineOfBusinesses": {
+        "href": "lineOfBusinesses"
+    },
+    "migrationCutoverEvents": {
+        "href": "migrationCutoverEvents"
+    },
+    "migrationCutoverSrcToTgts": {
+        "href": "migrationCutoverSrcToTgts"
+    },
+    "migrationCutoverTeams": {
+        "href": "migrationCutoverTeams"
+    },
+    "migrationTimes": {
+        "href": "migrationTimes"
+    },
+    "mountPoints": {
+        "href": "mountPoints"
+    },
+    "mstEmailingDates": {
+        "href": "mstEmailingDates"
+    },
+    "mstEmailTypes": {
+        "href": "mstEmailTypes"
+    },
+    "nasVolumes": {
+        "href": "nasVolumes"
+    },
+    "preferenceDetails": {
+        "href": "preferenceDetails"
+    },
+    "preferences": {
+        "href": "preferences"
+    },
+    "profile": {
+        "href": "profile"
+    },
+    "qtrees": {
+        "href": "qtrees"
+    },
+    "replications": {
+        "href": "replications"
+    },
+    "scheduleResets": {
+        "href": "scheduleResets"
+    },
+    "schedules": {
+        "href": "schedules"
+    },
+    "shares": {
+        "href": "shares"
+    },
+    "storages": {
+        "href": "storages"
+    },
+    "storagexes": {
+        "href": "storagexes"
+    },
+    "sysConfigPropertyTypes": {
+        "href": "sysConfigPropertyTypes"
+    },
+    "sysConfigs": {
+        "href": "sysConfigs"
+    },
+    "systemAdmins": {
+        "href": "systemAdmins"
+    },
+    "userApis": {
+        "href": "userApis"
+    },
+    "userCorporates": {
+        "href": "userCorporates"
+    },
+    "userNatives": {
+        "href": "userNatives"
+    },
+    "userRoles": {
+        "href": "userRoles"
+    },
+    "wfaDatas": {
+        "href": "wfaDatas"
+    },
+    "wfaMessages": {
+        "href": "wfaMessages"
+    },
+    "wfaOcumControllerDatas": {
+        "href": "wfaOcumControllerDatas"
+    },
+    "workflows": {
+        "href": "workflows"
+    },
+    "workPackages": {
+        "href": "workPackages"
+    }
+}
