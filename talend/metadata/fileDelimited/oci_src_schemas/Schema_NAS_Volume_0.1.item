@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendMetadata="http://www.talend.org/metadata/connection/2010" xmlns:orgomg.cwm.resource.record="http:///orgomg/cwm/resource/record.ecore">
+  <TalendMetadata:DelimitedFileConnection xmi:id="_aEgmIBLLEeiGnZNriZGEXw" name="Schema_NAS_Volume" dataPackage="_aEhNMBLLEeiGnZNriZGEXw" Server="Localhost 127.0.0.1" FilePath="C:/netapp/ads_setup_loadsheets/schemas/schema_nas_volume.csv" Encoding="US-ASCII" FieldSeparatorValue="&quot;,&quot;" RowSeparatorValue="&quot;\n&quot;" UseHeader="true" HeaderValue="1" FirstLineCaption="true" FieldSeparatorType="Comma"/>
+  <orgomg.cwm.resource.record:RecordFile xmi:id="_aEhNMBLLEeiGnZNriZGEXw" name="default" dataManager="_aEgmIBLLEeiGnZNriZGEXw">
+    <ownedElement xsi:type="TalendMetadata:MetadataTable" xmi:id="_aEhNMRLLEeiGnZNriZGEXw" id="_UHyJABLLEeiGnZNriZGEXw" label="SRC_DATA">
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_aEhNMhLLEeiGnZNriZGEXw" label="id" length="-1" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_aEhNMxLLEeiGnZNriZGEXw" label="vserver" length="-1" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_aEhNNBLLEeiGnZNriZGEXw" label="volumeName" length="-1" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_aEhNNRLLEeiGnZNriZGEXw" label="allocatedCapacityGb" length="-1" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_aEhNNhLLEeiGnZNriZGEXw" label="usedCapacityGb" length="-1" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_aEhNNxLLEeiGnZNriZGEXw" label="snapType" length="-1" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_aEhNOBLLEeiGnZNriZGEXw" label="snapSrcVolumeId" length="-1" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_aEhNORLLEeiGnZNriZGEXw" label="snapTgtVolumeId" length="-1" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_aEhNOhLLEeiGnZNriZGEXw" label="snapTally" length="-1" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_aEhNOxLLEeiGnZNriZGEXw" label="volumeStatus" length="-1" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_aEhNPBLLEeiGnZNriZGEXw" label="volumeLastAccessed" length="-1" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_aEhNPRLLEeiGnZNriZGEXw" label="avgIops" length="-1" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_aEhNPhLLEeiGnZNriZGEXw" label="peakIops" length="-1" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_aEhNPxLLEeiGnZNriZGEXw" label="controller" length="-1" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_aEhNQBLLEeiGnZNriZGEXw" label="aggregate" length="-1" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+    </ownedElement>
+  </orgomg.cwm.resource.record:RecordFile>
+</xmi:XMI>
