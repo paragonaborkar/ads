@@ -17,6 +17,7 @@ export class TokenInterceptor implements HttpInterceptor {
     
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
+      // This next line needs to use ` for Bearer, not '
       .set('Authorization', `Bearer ${this._sessionHelper.getToken().access_token}`);
 
     request = request.clone({ headers: headers });

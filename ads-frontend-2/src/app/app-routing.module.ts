@@ -13,13 +13,19 @@ import { AppPropertiesComponent } from './admin/app-properties/app-properties.co
 import { ConnectionsManualFunctionsComponent } from './connections/connections-manual-functions/connections-manual-functions.component';
 import { DiscoverManualFunctionsComponent } from './discover/discover-manual-functions/discover-manual-functions.component';
 import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native-user.component';
+import { QtreesOwnershipComponent } from './discover/qtrees-ownership/qtrees-ownership.component';
+
+
+import { OwnerComponent } from './discover/owner/owner.component';
+import { OwnerNotFoundComponent } from './discover/owner-not-found/owner-not-found.component';
 
 // import { Error404LoggedInComponent } from './common/error-404-logged-in/error-404-logged-in.component';
 
 const routes: Routes = [
   //{ path: '', redirectTo: '/', pathMatch: 'full' },
   { path: 'login',  component: LoginComponent },
-   {path: 'admin/native-user-mgmt', component: AdminNativeUserComponent},
+   
+  {path: 'admin/native-user-mgmt', component: AdminNativeUserComponent, canActivate: [AuthGuard] },
 
   { path: 'home',  component: HomeComponent, canActivate: [AuthGuard] },
  
@@ -33,7 +39,15 @@ const routes: Routes = [
    
   
   { path: 'discover/manual-function',  component: DiscoverManualFunctionsComponent, canActivate: [AuthGuard] },
+
+  
+  { path: 'discover/qtrees-ownership',  component: QtreesOwnershipComponent },
+
+
+  { path: 'discover/owner',  component: OwnerNotFoundComponent, canActivate: [AuthGuard] },
+  { path: 'discover/owner/:migKey',  component: OwnerComponent, canActivate: [AuthGuard] },
  
+
   
   { path: '',   component: LoginComponent},
 
