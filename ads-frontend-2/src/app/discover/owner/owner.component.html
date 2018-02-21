@@ -1,3 +1,38 @@
-<p>
-  owner works!
-</p>
+<div class="row d-flex justify-content-center">
+
+    <div class="col-md-8 mb-2">
+      <h2 class="h3">QTree Owners</h2>
+    </div>
+  
+    <div class="col-md-8">
+        <button class="btn btn-primary" (click)="showCreateModal()">Do Something</button>
+      <div class="pull-right">
+        <button type="button" class="btn btn-link" (click)="showPropertyModal()">
+          <i class="fa fa-cog fa-2x" title="Column Settings"></i>
+        </button>
+      </div>
+  
+      <div class=" mt-3" *ngIf="rows.length > 0 && columns.length > 0">
+        <ngx-datatable class="material" [rows]="rows" [columns]="columns" [columnMode]="'flex'" [rowHeight]="auto" [externalPaging]="true"
+          [count]="page.totalElements" [offset]="page.number" [limit]="page.size" [headerHeight]="50" [footerHeight]="50" (page)='setPage($event)'>
+        </ngx-datatable>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #hdrTmpl let-column="column">
+    Actions
+  </ng-template>
+  
+  <ng-template #actionTmpl let-column="column" let-row="row">
+    <button class="btn btn-sm btn-primary" (click)="showUpdateModal(row)">
+      <i class="fa fa-check"></i>
+    </button>
+    <button class="btn btn-sm btn-warning" md-icon-button (click)="changePassword(row)">
+      <i class="fa fa-key"></i>
+    </button>
+    <button class="btn btn-sm btn-danger" md-icon-button (click)="showDeleteModal(row)">
+      <i class="fa fa-trash"></i>
+    </button>
+  </ng-template>
+

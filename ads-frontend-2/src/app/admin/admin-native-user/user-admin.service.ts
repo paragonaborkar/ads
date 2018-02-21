@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { RequestOptions } from '@angular/http';
 
-import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/catch'; 
 import 'rxjs/add/operator/map';
 
 import { Page } from "../../common/page";
@@ -105,8 +105,7 @@ export class UserAdminService {
     console.log("Trying to Update user:"+url);
     console.log(user);
     return this.http
-      // .put(url, JSON.stringify(user))
-      .put(url, user)
+      .patch(url, user)
       .map((res: Response) => res)
     // .catch(
     // Handle error in Subscribe() using the AdsErrorService      
