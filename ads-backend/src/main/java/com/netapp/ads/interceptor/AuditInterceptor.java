@@ -99,12 +99,14 @@ public class AuditInterceptor extends EmptyInterceptor {
 		String userName = request.getUserPrincipal().getName();
 		String method = request.getMethod();
 		Object currentObject;
+		/*
 		if (isMainEntity) {
 			if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method)) {
 				currentObject = entities.next();
 			} else {
 				currentObject = null;
 			}
+		
 
 			UserApiRepository userApiRepo = ContextProvider.getBean(UserApiRepository.class);
 			UserNativeRepository userNativeRepo = ContextProvider.getBean(UserNativeRepository.class);

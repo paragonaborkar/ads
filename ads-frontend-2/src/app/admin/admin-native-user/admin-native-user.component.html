@@ -1,31 +1,24 @@
-<div class="row mt-3 mb-2">
-    <div class="col-md-12">
-        <button class="btn btn-primary" (click)="add()">Add User</button>
-        <div class="pull-right">
-             <!-- TODO: Implement the column preferences for this page: -->
-        <a (click)="showPropertyModal()">
-            <i class="fa fa-cog fa-2x" title="Settings"></i>
-          </a>
-        </div>
-    </div>
-</div>
+<div class="row d-flex justify-content-center">
 
-<div *ngIf="rows.length > 0 && columns.length > 0">
-  <ngx-datatable class="material" 
-        [rows]="rows" 
-        [columns]="columns" 
-        [columnMode]="'standard'"
-        [rowHeight]="auto" 
-        [externalPaging]="true"
-        [count]="page.totalElements"
-        [offset]="page.number"
-        [limit]="page.size"
-        [headerHeight]="50"
-        [footerHeight]="50"
-        
-        
-        (page)='setPage($event)'>
-  </ngx-datatable>
+  <div class="col-md-8 mb-2">
+    <h2 class="h3">Manage Native ADS Users</h2>
+  </div>
+
+  <div class="col-md-8">
+    <button class="btn btn-primary" (click)="showCreateModal()">Add User</button>
+    <div class="pull-right">
+
+      <button type="button" class="btn btn-link" (click)="showPropertyModal()">
+        <i class="fa fa-cog fa-2x" title="Column Settings"></i>
+      </button>
+    </div>
+
+    <div class=" mt-3" *ngIf="rows.length > 0 && columns.length > 0">
+      <ngx-datatable class="material" [rows]="rows" [columns]="columns" [columnMode]="'flex'" [rowHeight]="auto" [externalPaging]="true"
+        [count]="page.totalElements" [offset]="page.number" [limit]="page.size" [headerHeight]="50" [footerHeight]="50" (page)='setPage($event)'>
+      </ngx-datatable>
+    </div>
+  </div>
 </div>
 
 <ng-template #hdrTmpl let-column="column">
@@ -33,7 +26,7 @@
 </ng-template>
 
 <ng-template #actionTmpl let-column="column" let-row="row">
-  <button class="btn btn-sm btn-primary"  (click)="showUpdateModal(row)">
+  <button class="btn btn-sm btn-primary" (click)="showUpdateModal(row)">
     <i class="fa fa-check"></i>
   </button>
   <button class="btn btn-sm btn-warning" md-icon-button (click)="changePassword(row)">
@@ -46,24 +39,15 @@
 
 
 
-<app-prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal"  [config]="{ show: true }" bsModal #propPreferenceModal="bs-modal" 
-  (done)="onHide('propPreferenceModal')" [pageName]="pageName" ></app-prop-preferences-modal>
-
-  
-<app-updateuser class="modal fade" bsModal #updateModal="bs-modal" *ngIf="isUpdateModal" 
-  [config]="{ show: true }"  
-  [User]="User"
-  (saved)="onHide('update')"
-  (cancel)="onHide('update')" ></app-updateuser>
+<prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal" [config]="{ show: true }" bsModal #propPreferenceModal="bs-modal"
+  (done)="onHide('propPreferenceModal')" [pageName]="pageName"></prop-preferences-modal>
 
 
-<app-adduser *ngIf="isAddUserModal" (onHide)="onHide('add')" [config]="{ show: true }" bsModal #addModal="bs-modal" (yes)="addUser($event)"
-  (cancel)="onClose('add')" class="modal fade"></app-adduser>
+<native-user-create class="modal fade" bsModal #addModal="bs-modal" *ngIf="isCreateModal" [config]="{ show: true }" (saved)="onHide('create')"
+  (cancel)="onHide('create')"></native-user-create>
 
+<native-user-update class="modal fade" bsModal #updateModal="bs-modal" *ngIf="isUpdateModal" [config]="{ show: true }" [inputUser]="User"
+  (saved)="onHide('update')" (cancel)="onHide('update')"></native-user-update>
 
-
-<app-deleteuser class="modal fade" bsModal #deleteModal="bs-modal"  *ngIf="isDeleteModal" 
-  [config]="{ show: true }" 
-  [User]="User" 
-  (delete)="onHide('delete')"
-  (cancel)="onHide('delete')" ></app-deleteuser>
+<native-user-delete class="modal fade" bsModal #deleteModal="bs-modal" *ngIf="isDeleteModal" [config]="{ show: true }" [User]="User"
+  (delete)="onHide('delete')" (cancel)="onHide('delete')"></native-user-delete>

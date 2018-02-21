@@ -16,7 +16,7 @@ public class AdsUser extends User {
 	private int nativeUserId = 0;
 	private int corpUserId = 0;
 	private int apiUserId = 0;
-
+	private String userRole = "";
 	
 	public AdsUser(String username, String password, Collection<GrantedAuthority> authorities, UserNative user) {
 		super(username, password, authorities);
@@ -24,6 +24,7 @@ public class AdsUser extends User {
 		this.lastName = user.getLastName();
 		this.email = user.getEmail();
 		this.nativeUserId = user.getId();
+		this.userRole = user.getUserRole().getUserRole();
 	}
 
 	public AdsUser(String username, String password, Collection<GrantedAuthority> authorities, UserApi userApi) {
@@ -56,6 +57,10 @@ public class AdsUser extends User {
 
 	public int getCorpUserId() {
 		return this.corpUserId;
+	}
+	
+	public String getUserRole() {
+		return this.userRole;
 	}
 
 }

@@ -1,4 +1,6 @@
 
+
+// Pretty sure this file can be deleted since we are using HATEOS paging
 export class PagerService {
   getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10) {
     // calculate total pages

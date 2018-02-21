@@ -40,9 +40,8 @@ export class AdminNativeUserComponent implements OnInit {
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
 
   @ViewChild('updateModal') public updateModal: ModalDirective;
-
   @ViewChild('propPreferenceModal') public propPreferenceModal: ModalDirective;
- 
+
   page = new Page();
 
   // Listing of native users to display 
@@ -52,7 +51,7 @@ export class AdminNativeUserComponent implements OnInit {
   // User to update or delete or change password
   public User = {};
   public pageName = "UserListing";
-  public isAddUserModal = false;
+  public isCreateModal = false;
   public isUpdateModal = false;
   public isDeleteModal = false;
   public isPropPreferenceModal = false;
@@ -90,16 +89,16 @@ export class AdminNativeUserComponent implements OnInit {
         console.log(this.rows);
         console.log(this.page);
         console.log("****");
+        if (this.page.number > 0 && this.rows.length == 0) {
+          pageInfo.offset = pageInfo.offset - 1;
+          this.setPage(pageInfo);
+        }
       });
-
   }
 
 
-
-  showDeleteModal(row) {
-    console.log(row._links.self.href);
-    this.User = row;
-    this.isDeleteModal = true;
+  showCreateModal() {
+    this.isCreateModal = true;
   }
 
   showUpdateModal(row) {
@@ -108,32 +107,35 @@ export class AdminNativeUserComponent implements OnInit {
     this.isUpdateModal = true;
   }
 
-  updateUser(data): void {
-    console.log("updateUser");
-    this.isUpdateModal = false;
-    // this.usersService.update(data).subscribe(function (resp) {
-    //   this.getUserNatives();
-    //   this.editModal.hide();
-    // }, function (error) {
-    //   alert('Error to update user ' + data.firstName);
-    // });
+  showDeleteModal(row) {
+    console.log(row._links.self.href);
+    this.User = row;
+    this.isDeleteModal = true;
+  }
+
+  // TODO: This need to be implemented
+  showChangePassword(row) {
+    console.log(row._links.self.href);
   }
 
   showPropertyModal() {
     this.isPropPreferenceModal = true;
   }
 
-  changePassword(row) {
-    console.log(row._links.self.href);
-  }
+  // updateUser(data): void {
+  //   console.log("updateUser");
+  //   this.isUpdateModal = false;
+  // }
+
+
 
   // This method is to hide the modals  
   onHide(modalToHide): void {
     console.log("onHide(event)");
     console.log(modalToHide);
 
-    if (modalToHide === 'add') {
-      this.isAddUserModal = false;
+    if (modalToHide === 'create') {
+      this.isCreateModal = false;
     } else if (modalToHide === 'delete') {
       this.isDeleteModal = false;
       this.setPage({ offset: this.page.pageNumber });
@@ -142,7 +144,7 @@ export class AdminNativeUserComponent implements OnInit {
       this.setPage({ offset: this.page.pageNumber });
     } else if (modalToHide === 'propPreferenceModal') {
       this.isPropPreferenceModal = false;
-      // this.setPage({ offset: this.page.pageNumber });
+      this.columns = [];    // This makes the columns display refresh after the user updates it.
       this.applyPreferences();
     }
   }
@@ -152,13 +154,12 @@ export class AdminNativeUserComponent implements OnInit {
     console.log("applyPreferences Start");
 
     this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.hdrTmpl, this.actionTmpl)
-    .subscribe(columnPreferences => 
-      {
+      .subscribe(columnPreferences => {
         console.log("columnPreferences");
         console.log(columnPreferences);
         this.columns = columnPreferences;
       }
-    );
+      );
 
   }
 

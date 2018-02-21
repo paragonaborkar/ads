@@ -9,6 +9,10 @@
 
     <div class="modal-body">
 
+      <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+        <span>{{errorMessage}}</span>
+      </div>
+      
       <ng-template #itemTemplate let-item="item" let-index="index">
         <span>
           <i class="fa fa-bars" aria-hidden="true"></i>

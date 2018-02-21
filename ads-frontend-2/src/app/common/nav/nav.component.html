@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top">
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" href=""  routerLink="home">
     <div  class="logo"></div> 
    </a>
 
@@ -27,7 +27,11 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="discoverDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Discover</a>
             <div class="dropdown-menu" aria-labelledby="discoverDropdown">
-              <a class="dropdown-item" href="#">QTrees Ownership</a>
+              <a class="dropdown-item" routerLink="discover/qtrees-ownership">QTrees Ownership</a>
+
+              <a class="dropdown-item" routerLink="discover/owner">Owner (Key Missing)</a>
+              <a class="dropdown-item" routerLink="discover/owner/41">Owner (Key: 41)</a>
+
               <a class="dropdown-item" routerLink="discover/manual-function">Manual Functions</a>
             </div>
           </li>
