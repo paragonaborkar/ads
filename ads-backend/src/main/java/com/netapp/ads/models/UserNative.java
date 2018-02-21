@@ -115,12 +115,12 @@ public class UserNative implements Serializable {
 		this.lastName = lastName;
 	}
 
-    @JsonIgnore
+	@JsonIgnore
 	public String getPassword() {
 		return this.password;
 	}
 
-    @JsonProperty
+	@JsonProperty
 	public void setPassword(String password) {
 		this.password = password;
 	}
