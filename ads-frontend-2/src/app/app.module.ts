@@ -68,6 +68,7 @@ import { QtreesService } from './discover/qtrees-ownership/qtrees-ownership.serv
 import { OwnerComponent } from './discover/owner/owner.component';
 import { OwnerNotFoundComponent } from './discover/owner-not-found/owner-not-found.component';
 import { ScheduleComponent } from './discover/owner/schedule/schedule.component';
+import { ReportListingDisComponent } from './discover/report-listing-dis/report-listing-dis.component';
 
 /*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
@@ -97,7 +98,8 @@ import { ScheduleComponent } from './discover/owner/schedule/schedule.component'
 
     OwnerComponent,
     OwnerNotFoundComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    ReportListingDisComponent
 
     
 

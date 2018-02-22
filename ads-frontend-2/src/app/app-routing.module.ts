@@ -18,6 +18,8 @@ import { QtreesOwnershipComponent } from './discover/qtrees-ownership/qtrees-own
 
 import { OwnerComponent } from './discover/owner/owner.component';
 import { OwnerNotFoundComponent } from './discover/owner-not-found/owner-not-found.component';
+import { ReportListingDisComponent } from './discover/report-listing-dis/report-listing-dis.component';
+
 
 // import { Error404LoggedInComponent } from './common/error-404-logged-in/error-404-logged-in.component';
 
@@ -40,14 +42,11 @@ const routes: Routes = [
   
   { path: 'discover/manual-function',  component: DiscoverManualFunctionsComponent, canActivate: [AuthGuard] },
 
-  
   { path: 'discover/qtrees-ownership',  component: QtreesOwnershipComponent },
-
-
   { path: 'discover/owner',  component: OwnerNotFoundComponent, canActivate: [AuthGuard] },
   { path: 'discover/owner/:migKey',  component: OwnerComponent, canActivate: [AuthGuard] },
  
-
+  { path: 'discover/report-listing',  component: ReportListingDisComponent, canActivate: [AuthGuard] },
   
   { path: '',   component: LoginComponent},
 
