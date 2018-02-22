@@ -12,10 +12,10 @@ package refactor.rules;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.easyrules.annotation.Action;
-import org.easyrules.annotation.Condition;
-import org.easyrules.annotation.Priority;
-import org.easyrules.annotation.Rule;
+import org.jeasy.rules.annotation.Action;
+import org.jeasy.rules.annotation.Condition;
+import org.jeasy.rules.annotation.Priority;
+import org.jeasy.rules.annotation.Rule;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 import org.joda.time.Months;
@@ -25,8 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.netapp.ads.exception.NetAppAdsException;
-import com.netapp.ads.models.Aggregate;
-import com.netapp.ads.models.Controller;
 import com.netapp.ads.models.NasVolume;
 import com.netapp.ads.repos.AggregateRepository;
 import com.netapp.ads.repos.ControllerRepository;
