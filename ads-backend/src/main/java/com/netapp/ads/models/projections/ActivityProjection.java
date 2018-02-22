@@ -59,6 +59,7 @@ public interface ActivityProjection {
 
 	public boolean getWillMigrate();
 
+	
 	public List<Qtree> getQtree();
 	
 	//Projection specifically created for this method which gets Controller as well as Data Center for a NAS Volume

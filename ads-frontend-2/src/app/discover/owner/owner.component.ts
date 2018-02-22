@@ -19,6 +19,10 @@ export class OwnerComponent implements OnInit {
   @ViewChild('hdrTmpl') hdrTmpl: TemplateRef<any>;
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
 
+  public isScheduleModal = false;
+  public activityToSchedule:any = [];
+  public scheduleAction = '';
+
   page = new Page();
 
   constructor(private route: ActivatedRoute, private ownerService: OwnerService, private sessionHelper: SessionHelper, private applicationConfigService: ApplicationConfigService) {
@@ -29,7 +33,7 @@ export class OwnerComponent implements OnInit {
 
   // owerListing: any = [];
   public pageName = "OwnerListing";
-  public isPropPreferenceModal = false;
+  
 
   // Listing of actvities/owner information to display 
   rows: any[] = [];
@@ -88,5 +92,20 @@ export class OwnerComponent implements OnInit {
       }
       );
 
+  }
+
+  pagingUpdated() {
+    this.setPage(this.page);
+  }
+
+
+  showScheduleModal(row, action) {
+    this.activityToSchedule = row;
+    this.scheduleAction = action;
+    this.isScheduleModal = true;
+  }
+
+  hideScheduleModal(){
+    this.isScheduleModal = false;
   }
 }

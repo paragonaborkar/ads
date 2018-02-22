@@ -1,0 +1,74 @@
+package refactor.rules;
+/*******************************************************************************
+ * Copyright (c) 2016 NetApp Inc. All Rights Reserved
+ *
+ * CONFIDENTIALITY NOTICE: 
+ *     THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION OF 
+ *     NETAPP, INC. USE, DISCLOSURE OR REPRODUCTION IS PROHIBITED 
+ *     WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF NETAPP, INC.
+ *******************************************************************************/
+
+
+import org.easyrules.annotation.Action;
+import org.easyrules.annotation.Condition;
+import org.easyrules.annotation.Priority;
+import org.easyrules.annotation.Rule;
+//import org.easyrules.core.BasicRule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.netapp.ads.exception.NetAppAdsException;
+import com.netapp.ads.models.NasVolume;
+import refactor.services.VolumeService;
+
+@Rule (name = "Discover Owner", description = "Rule to determine if a volume was for dicovery")
+@Service
+public class DiscoveryRule {
+	
+	private static final Logger logger = LoggerFactory.getLogger(DiscoveryRule.class);
+	private NasVolume volume;
+	private String  volDisposition;
+	private boolean response;
+	private final static String DISCOVER_OWNER="DiscoverOwner";
+	private final static String JUSTIFICATION="No Rules Matched";
+	
+	public void setVolume(NasVolume volume) {
+		this.volume = volume;
+	}
+
+	@Autowired
+	VolumeService volService;
+	
+	@Priority
+	public int getPriority(){
+		return 100;
+	}
+	
+	@Condition
+	public boolean when() {
+		logger.debug("In Discover Rule");
+		volDisposition  = volume.getDisposition();
+		if (volDisposition==null||volDisposition.isEmpty()) {
+			response=true;
+		} else {
+			response=false;
+		}
+		return response;
+	}
+	
+	@Action (order=1)
+	public void then() {
+		logger.debug("In Discover Rule catch 2:"+volume.getId());
+		volume.setDisposition(DISCOVER_OWNER);
+		volume.setJustification(JUSTIFICATION);
+		try{
+			volService.updateDispositionById(volume.getId(), volume.getDisposition(),volume.getJustification());
+		} catch (NetAppAdsException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage(),e);
+		}		
+		logger.debug("Discover Rule disposition : "+volume.getId()+":"+volume.getDisposition());
+	}
+}

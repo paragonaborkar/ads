@@ -15,4 +15,9 @@ public interface NasVolumeRepository extends JpaRepository<NasVolume, Integer> {
 	
 	//@Query("SELECT n FROM NasVolume n JOIN n.controller c JOIN c.dataCenter d WHERE n.id = :id")
 	//List<NasVolume> findControllerAndDataCenter(@Param("id") Integer id);
+	
+	@Query("SELECT COUNT(u) FROM share s JOIN qtree	ON qtree.id = s.qtree_id JOIN nas_volume ON qtree.nas_volume_id = nas_volume.id WHERE nas_volume.id = :nasVolumeId")
+    Long countOfSharesForOneVolume(@Param("nasVolumeId") int nasVolumeId);
+	
+	Long countByControllerId(@Param("controllerId") int controllerId);
 }

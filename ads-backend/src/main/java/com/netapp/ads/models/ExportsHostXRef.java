@@ -21,6 +21,11 @@ public class ExportsHostXRef implements Serializable {
 	@JoinColumn(name="exports_id", nullable=false, insertable=false, updatable=false)
 	private Export export;
 
+	//bi-directional many-to-one association to Host
+	@ManyToOne
+	@JoinColumn(name="host_id", nullable=false, insertable=false, updatable=false)
+	private Host host;
+	
 	public ExportsHostXRef() {
 	}
 
@@ -38,6 +43,14 @@ public class ExportsHostXRef implements Serializable {
 
 	public void setExport(Export export) {
 		this.export = export;
+	}
+	
+	public Host getHost() {
+		return this.host;
+	}
+
+	public void setHost(Host host) {
+		this.host = host;
 	}
 
 }
