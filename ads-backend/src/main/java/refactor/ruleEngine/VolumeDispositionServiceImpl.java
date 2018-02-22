@@ -130,11 +130,27 @@ public class VolumeDispositionServiceImpl implements VolumeDispositionService{
             kSession.setGlobal("ruleContIdList", ruleContIdList);//This is for missingRoot
             kSession.fireAllRules();
             kSession.dispose();
+            
 			for (NasVolume ruleVolume: ruleVolumeList){
 				logger.debug("Volume back from rule: "+ruleVolume.toString());
 				callService(ruleVolume);
 			}            
             
+			
+			//FIXME: Make this code work, or replace it work working code.
+			 // create facts
+	        Facts facts = new Facts();
+	 
+	        // create rules
+	        Rules rules = new Rules();
+	        rules.register(new HelloWorldRule());
+	 
+	        // create a rules engine and fire rules on known facts
+	        RulesEngine rulesEngine = new DefaultRulesEngine();
+	        rulesEngine.fire(rules, facts);
+	        // END REPLACE CODE
+	        
+	        
         } catch (Exception e) {
             e.printStackTrace();
 			logger.error("Unable to execute one or more rules",e); 
