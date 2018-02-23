@@ -47,7 +47,7 @@ import refactor.rules.DiscoveryRule;
  *
  */
 @Service
-public class VolumeDispositionServiceImpl implements VolumeDispositionService{
+public class VolumeDispositionServiceImpl implements VolumeDispositionService {
 
 	private static final Logger logger = LoggerFactory.getLogger(VolumeDispositionServiceImpl.class);
 	
@@ -74,6 +74,7 @@ public class VolumeDispositionServiceImpl implements VolumeDispositionService{
 	
 	private List<NasVolume> ruleVolumeList = new ArrayList<NasVolume>();
 	private List<Integer> ruleContIdList = new ArrayList<Integer>();//This is for missing root rule
+	
 	public void volDisposition(List<NasVolume> volList) {
 
 		logger.info("Start rule engine in volDisposition");

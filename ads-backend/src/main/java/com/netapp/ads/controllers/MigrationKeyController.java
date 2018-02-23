@@ -13,14 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.netapp.ads.models.Activity;
 import com.netapp.ads.models.Controller;
 import com.netapp.ads.models.NasVolume;
+import com.netapp.ads.models.Qtree;
 import com.netapp.ads.models.Schedule;
 import com.netapp.ads.repos.ActivityRepository;
 import com.netapp.ads.repos.ControllerRepository;
 import com.netapp.ads.repos.MigrationKeyRepository;
 import com.netapp.ads.repos.ScheduleRepository;
+import com.netapp.vitae.model.VolumeEntity;
+import com.netapp.vitae.ruleEngine.ExceptionRuleService;
 
+import refactor.ruleEngine.VolumeDispositionService;
 
 
 @RestController
@@ -50,10 +55,15 @@ public class MigrationKeyController {
 
 	@Autowired
 	ScheduleRepository scheduleRepo;
-	
+
 	@Autowired
 	ControllerRepository controllerRepo;
 
+	@Autowired
+	VolumeDispositionService volumeDispositionService;
+
+	@Autowired
+	ExceptionRuleService exceptionRuleService;
 
 	@RequestMapping(value = "/populate-activity", method = RequestMethod.GET)
 	public boolean populateActivity() {
@@ -73,7 +83,7 @@ public class MigrationKeyController {
 		}
 		//call jpmc api to populate preassumed owner id for activity table
 		identificationService.identifyOwner();*/
-		
+
 		// FIXME: Get from DB
 		// QUESTION: Manual function does not start by processing any "weeks". why?
 		int leadWeeks=8; // Integer.parseInt(config.getProperty("schedule.migrate.filter.weeks"));
@@ -95,6 +105,9 @@ public class MigrationKeyController {
 			populateActivity(0);
 		}
 
+		//call jpmc api to populate preassumed owner id for activity table
+		identificationService.identifyOwner();
+
 		return true;
 	}
 
@@ -108,27 +121,36 @@ public class MigrationKeyController {
 
 		boolean result=false;
 		if(kickOffEngine(migProjId)){
-			for (CtrlReleaseEntity ctrl : ctrlReleaseList){
-				tempVolList=pullVolumes(ctrl.getSrcControllerId());
-				for(VolumeEntity vol : tempVolList){
-					ActivityEntity a=new ActivityEntity();
-					a.setAggrName(vol.getAggregateEntity().getName());
-					a.setVolName(vol.getVolName());
-					a.setDisposition(vol.getDisposition());
-					a.setMigProjId(ctrl.getMigProjId());
-					a.setVolId(vol.getIntVolId());
-					a.setAggrId(vol.getAggrId());
-					a.setMigKeyId("Not Assigned");
-					a.setMailingDate(new LocalDate("1000-01-01"));
-					a.setCreationDate(new LocalDate());
-					//Below need come back to check for performance
-					try{
-						a.setCtrlName(controllerService.getById(vol.getContId()).getControllerName());
-						activityService.create(a);
-					}catch( Exception e )
-					{
-						logger.error( e.getMessage(),e);
+			// We do not have CtrlRelease in ADS
+			//			for (CtrlReleaseEntity ctrl : ctrlReleaseList){
+			// FIXME: Process all Controllers - What tells us if a controller is a source?
+			for (Controller ctrl : controllerRepo.findAll()){
+				//				List<NasVolume> tempVolList=pullVolumes(ctrl.getSrcControllerId());  // pullVolumes just gets the volumes for each controller. n:1
+				List<NasVolume> tempVolList=ctrl.getNasVolumes();
+				for(NasVolume vol : tempVolList){
 
+					for(Qtree qtree : vol.getQtrees()){		// We are doing Qtree migration, not volume like MMS.
+
+						Activity a=new Activity();
+						a.setQtree(qtree);
+						a.setDisposition(vol.getDisposition());		// We may need to change VolumeDispositionService to a QTree disposition service.
+
+						//						a.setAggrName(vol.getAggregateEntity().getName());
+						//						a.setVolName(vol.getVolumeName()));
+						//					a.setMigProjId(ctrl.getMigProjId()); 		// Migration Project removed from ADS
+						//						a.setVolId(vol.getIntVolId());
+						//						a.setAggrId(vol.getAggrId());
+						//						a.setMigKeyId("Not Assigned");
+						//					a.setMailingDate(new LocalDate("1000-01-01"));
+						//					a.setCreationDate(new LocalDate());
+						//Below need come back to check for performance
+						/*try{
+							a.setCtrlName(controllerService.getById(vol.getContId()).getControllerName());
+							activityService.create(a);
+						} catch( Exception e )
+						{
+							log.error( e.getMessage(),e);
+						}*/
 					}
 				}
 			}
@@ -147,7 +169,7 @@ public class MigrationKeyController {
 
 		List<NasVolume> volList = new ArrayList<NasVolume>();
 		// FIXME: In ADS how do we not process all controllers at once? Could be overload on the users.		
-//		for (CtrlReleaseEntity ctrl : ctrlReleaseList){
+		//		for (CtrlReleaseEntity ctrl : ctrlReleaseList){
 		for (Controller ctrl : controllerRepo.findAll()){
 			// QUESTION: How do we know what the source controllers are?
 			// tempVolList=pullVolumes(ctrl.getSrcControllerId());   // pullVolumes just gets the volumes for each controller. n:1
@@ -159,7 +181,8 @@ public class MigrationKeyController {
 		volumeDispositionService.volDisposition(volList);
 
 		// Check for exceptions
-		exceptionRuleService.exceptionRule(ctrlReleaseList);
+		//		exceptionRuleService.exceptionRule(ctrlReleaseList);
+		exceptionRuleService.exceptionRule(controllerRepo.findAll());
 
 		result=true;
 
