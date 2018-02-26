@@ -1,6 +1,5 @@
 *.log
 *.class
-.project
 .metadata
 **/.recommenders
 **/ads-backend/target
