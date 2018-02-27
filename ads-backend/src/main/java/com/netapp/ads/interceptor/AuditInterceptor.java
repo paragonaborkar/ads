@@ -12,12 +12,14 @@ import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.netapp.ads.exception.NetAppAdsException;
 import com.netapp.ads.models.AuditEvent;
 import com.netapp.ads.models.AuditTrailApi;
@@ -36,7 +38,7 @@ import com.netapp.ads.util.DateUtils;
 public class AuditInterceptor extends EmptyInterceptor {
 
 	private static final Logger log = LoggerFactory.getLogger(AuditInterceptor.class);
-	
+
 	boolean isMainEntity = false;
 	Object deleteObj, oldUpdate;
 
@@ -90,8 +92,8 @@ public class AuditInterceptor extends EmptyInterceptor {
 	 */
 	@Override
 	public void postFlush(Iterator entities) {
-		
-/*		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
+
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		HttpServletRequest request = servletRequestAttributes.getRequest();
 		String url = request.getRequestURI();
@@ -99,25 +101,25 @@ public class AuditInterceptor extends EmptyInterceptor {
 		String userName = request.getUserPrincipal().getName();
 		String method = request.getMethod();
 		Object currentObject;
-		/*
+
 		if (isMainEntity) {
 			if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method)) {
 				currentObject = entities.next();
 			} else {
 				currentObject = null;
 			}
-		
-
-			UserApiRepository userApiRepo = ContextProvider.getBean(UserApiRepository.class);
-			UserNativeRepository userNativeRepo = ContextProvider.getBean(UserNativeRepository.class);
 			
-			AuditTrailApiRepository auditTrailApiRepositories = ContextProvider.getBean(AuditTrailApiRepository.class);
-			AuditTrailNativeUserRepository auditTrailNativeUserRepositories = ContextProvider
+			ApplicationContext ctx = AppContext.getApplicationContext();
+			UserApiRepository userApiRepo = ctx.getBean(UserApiRepository.class);
+			UserNativeRepository userNativeRepo = ctx.getBean(UserNativeRepository.class);
+
+			AuditTrailApiRepository auditTrailApiRepositories = ctx.getBean(AuditTrailApiRepository.class);
+			AuditTrailNativeUserRepository auditTrailNativeUserRepositories = ctx
 					.getBean(AuditTrailNativeUserRepository.class);
 
-			AuditEventRepository auditEventRepositories = ContextProvider.getBean(AuditEventRepository.class);
-			
-			//Finding Audit Event
+			AuditEventRepository auditEventRepositories = ctx.getBean(AuditEventRepository.class);
+
+			// Finding Audit Event
 			List<AuditEvent> auditEvent = auditEventRepositories.findByHttpMethodAndResourcePattern(method,
 					resourcePattern);
 
@@ -127,15 +129,15 @@ public class AuditInterceptor extends EmptyInterceptor {
 
 				List<UserApi> newUserApi = userApiRepo.findByClientId(userName);
 				List<UserNative> newUserNative = userNativeRepo.findByUserName(userName);
-				
+
 				if (!newUserNative.isEmpty()) {
 					log.debug("***: " + getClass().getName() + ": postFlush: in first if");
 					UserNative userNative = newUserNative.get(0);
 
 					AuditTrailNativeUser auditTrailNativeUser = new AuditTrailNativeUser();
-					//AuditTrailNativeUserPK auditTrailNativeUserPK = new AuditTrailNativeUserPK();
-					//auditTrailNativeUserPK.setAuditEventId(auditId);
-					//auditTrailNativeUser.setId(auditTrailNativeUserPK);
+					// AuditTrailNativeUserPK auditTrailNativeUserPK = new AuditTrailNativeUserPK();
+					// auditTrailNativeUserPK.setAuditEventId(auditId);
+					// auditTrailNativeUser.setId(auditTrailNativeUserPK);
 					auditTrailNativeUser.setAuditEvent(auditEventRepositories.findOne(auditId));
 					auditTrailNativeUser.setCreateTime((Timestamp) dateUtils.convertToUtc());
 					auditTrailNativeUser.setUserNativeId(userNative.getId());
@@ -155,9 +157,9 @@ public class AuditInterceptor extends EmptyInterceptor {
 					UserApi userApi = newUserApi.get(0);
 
 					AuditTrailApi auditTrailApi = new AuditTrailApi();
-					//AuditTrailApiPK auditTrailApiPK = new AuditTrailApiPK();
-					//auditTrailApiPK.setAuditEventId(auditId);
-					//auditTrailApi.setId(auditTrailApiPK);
+					// AuditTrailApiPK auditTrailApiPK = new AuditTrailApiPK();
+					// auditTrailApiPK.setAuditEventId(auditId);
+					// auditTrailApi.setId(auditTrailApiPK);
 					auditTrailApi.setAuditEvent(auditEventRepositories.findOne(auditId));
 					auditTrailApi.setCreateTime((Timestamp) dateUtils.convertToUtc());
 					auditTrailApi.setUserApiId(userApi.getId());
@@ -176,13 +178,16 @@ public class AuditInterceptor extends EmptyInterceptor {
 				}
 				isMainEntity = false;
 			}
-		}*/
+		}
 	}
 
 	public String convertObjectToString(Object object) {
 		ObjectMapper mapper = new ObjectMapper();
+		Hibernate5Module hibernate5Module = new Hibernate5Module();
+		mapper.registerModule(hibernate5Module);
 		try {
-			return mapper.writeValueAsString(object);
+		    String response= mapper.writeValueAsString(object);
+			return response;
 		} catch (JsonProcessingException e) {
 			throw new NetAppAdsException("Error while parsing Object To Json");
 		}
