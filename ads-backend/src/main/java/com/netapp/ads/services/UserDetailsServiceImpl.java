@@ -7,7 +7,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,9 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.netapp.ads.config.SecurityConfig;
 import com.netapp.ads.config.AdsUser;
-import com.netapp.ads.config.AdsUserDetails;
+import com.netapp.ads.config.SecurityConfig;
 import com.netapp.ads.models.UserApi;
 import com.netapp.ads.models.UserCorporate;
 import com.netapp.ads.models.UserNative;
@@ -60,8 +58,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			}
 		}
 
-		if(!userApiRepository.findByClientId(username).isEmpty()) {
-			UserApi userApi = userApiRepository.findByClientId(username).get(0);
+		UserApi userApi = userApiRepository.findByClientId(username);
+		if(userApi != null) {
 			if (userApi.getEnabled()) {
 				grantedAuthorities.add(new SimpleGrantedAuthority("CLIENT"));
 				return  new AdsUser(userApi.getClientId(), userApi.getClientSecret(), grantedAuthorities, userApi);
