@@ -28,9 +28,12 @@ public class ADSConstants {
 	public static String NODE_QTREES="gtrees";
 	public static String NODE_NASVOLUMES="nasVolumes";
 	
+
+	public static String LOGTYPE_PRE="PreJobLog";
+	public static String LOGTYPE_POST="PostJobLog";
 	
-	
-	
-	
+	public static String LOG_JOB_STATUS_NEW="New";
+	public static String LOG_JOB_STATUS_INPROGRESS="InProgress";
+	public static String LOG_JOB_STATUS_FINISHED="Finished";
 	
 }

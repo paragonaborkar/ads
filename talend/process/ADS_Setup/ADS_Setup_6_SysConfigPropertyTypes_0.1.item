@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <talendfile:ProcessType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendMapper="http://www.talend.org/mapper" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" defaultContext="Default" jobType="Standard">
   <context confirmationNeeded="false" name="Default">
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_APPLICATION_XLSX" prompt="ADS_CONFIGS_LOADSHEET_APPLICATION_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_Application_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_AUDIT_EVENT_XLSX" prompt="ADS_CONFIGS_LOADSHEET_AUDIT_EVENT_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_AuditEvent_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_AUDIT_REASON_CODE_XLSX" prompt="ADS_CONFIGS_LOADSHEET_AUDIT_REASON_CODE_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_AuditReasonCode_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_MIGRATION_TIME_XLSX" prompt="ADS_CONFIGS_LOADSHEET_MIGRATION_TIME_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_MigrationTime_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_MST_EMAIL_TYPE_XLSX" prompt="ADS_CONFIGS_LOADSHEET_MST_EMAIL_TYPE_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_MstEmailType_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_SCHEDULE_XLSX" prompt="ADS_CONFIGS_LOADSHEET_SCHEDULE_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_Schedule_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_SYS_CONFIG_PROPERTY_TYPE_XLSX" prompt="ADS_CONFIGS_LOADSHEET_SYS_CONFIG_PROPERTY_TYPE_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_SysConfigPropertyType_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_USER_NATIVES_XLSX" prompt="ADS_CONFIGS_LOADSHEET_USER_NATIVES_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_UserNative_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_USER_ROLES_XLSX" prompt="ADS_CONFIGS_LOADSHEET_USER_ROLES_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_UserRoles_Template.xlsx"/>
+    <contextParameter comment="" name="ADS_SETUP_LOADSHEET_APPLICATION_XLSX" prompt="ADS_SETUP_LOADSHEET_APPLICATION_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_Application_Template.xlsx"/>
+    <contextParameter comment="" name="ADS_SETUP_LOADSHEET_AUDIT_EVENT_XLSX" prompt="ADS_SETUP_LOADSHEET_AUDIT_EVENT_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_AuditEvent_Template.xlsx"/>
+    <contextParameter comment="" name="ADS_SETUP_LOADSHEET_AUDIT_REASON_CODE_XLSX" prompt="ADS_SETUP_LOADSHEET_AUDIT_REASON_CODE_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_AuditReasonCode_Template.xlsx"/>
+    <contextParameter comment="" name="ADS_SETUP_LOADSHEET_MIGRATION_TIME_XLSX" prompt="ADS_SETUP_LOADSHEET_MIGRATION_TIME_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_MigrationTime_Template.xlsx"/>
+    <contextParameter comment="" name="ADS_SETUP_LOADSHEET_MST_EMAIL_TYPE_XLSX" prompt="ADS_SETUP_LOADSHEET_MST_EMAIL_TYPE_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_MstEmailType_Template.xlsx"/>
+    <contextParameter comment="" name="ADS_SETUP_LOADSHEET_SCHEDULE_XLSX" prompt="ADS_SETUP_LOADSHEET_SCHEDULE_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_Schedule_Template.xlsx"/>
+    <contextParameter comment="" name="ADS_SETUP_LOADSHEET_SYS_CONFIG_PROPERTY_TYPE_XLSX" prompt="ADS_SETUP_LOADSHEET_SYS_CONFIG_PROPERTY_TYPE_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_SysConfigPropertyType_Template.xlsx"/>
+    <contextParameter comment="" name="ADS_SETUP_LOADSHEET_USER_NATIVES_XLSX" prompt="ADS_SETUP_LOADSHEET_USER_NATIVES_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_UserNative_Template.xlsx"/>
+    <contextParameter comment="" name="ADS_SETUP_LOADSHEET_USER_ROLES_XLSX" prompt="ADS_SETUP_LOADSHEET_USER_ROLES_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_UserRoles_Template.xlsx"/>
     <contextParameter comment="" name="ADS_EMAIL_AUTHENTICATION_PASSWORD" prompt="ADS_EMAIL_AUTHENTICATION_PASSWORD?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="Paragon123"/>
     <contextParameter comment="" name="ADS_EMAIL_AUTHENTICATION_USER" prompt="ADS_EMAIL_AUTHENTICATION_USER?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="ads.sendemail@gmail.com"/>
     <contextParameter comment="" name="ADS_EMAIL_FROM" prompt="ADS_EMAIL_FROM?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="mohan.bondada@gmail.com"/>
@@ -20,6 +20,8 @@
     <contextParameter comment="" name="ENV_CONTEXT_FILE" prompt="ENV_CONTEXT_FILE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="C:\projects\backup\ADS_DATA\context\ads_context.properties"/>
     <contextParameter comment="" name="FORMAT_DATE_TO_STRING" prompt="FORMAT_DATE_TO_STRING?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="%Y-%m-%d"/>
     <contextParameter comment="" name="FORMAT_DATETIME_TO_STRING" prompt="FORMAT_DATETIME_TO_STRING?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="%Y-%m-%dT%H:%i:%s"/>
+    <contextParameter comment="" name="JOB_ID_XPATH" prompt="JOB_ID_XPATH?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
+    <contextParameter comment="" name="JOB_NAME" prompt="JOB_NAME?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;talendJob&quot;"/>
     <contextParameter comment="" name="LOAD_FILES_LOC" prompt="LOAD_FILES_LOC?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_Directory" value="C:/netapp/ads_setup_loadsheets/"/>
     <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoidGFsZW5kIiwiYWRzX21vZHVsZXMiOnsiZGlzY292ZXIiOnRydWUsInJlcG9ydHMiOmZhbHNlLCJzY2hlZHVsZSI6ZmFsc2UsInBsYW5uaW5nIjpmYWxzZSwiZXhlY3V0ZSI6ZmFsc2UsImNvbm5lY3Rpb25zIjp0cnVlfSwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTUxODgwNzc2MiwiYXV0aG9yaXRpZXMiOlsiQ0xJRU5UIl0sImp0aSI6ImNhMmZmYzRlLTNhMzYtNDNjOS1hMDFhLWY2ZDBjMjI1MzVlMyIsImNsaWVudF9pZCI6InRlc3Rqd3RjbGllbnRpZCJ9.Tubc_IKt1H-9F7KJJGZbxutoRljhHRt8MD9eev4oOYY"/>
     <contextParameter comment="" name="RESOURCE_XPATH_USER_NATIVE" prompt="RESOURCE_XPATH_USER_NATIVE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/root/_links/userNative/href"/>
@@ -56,7 +58,7 @@
     <contextParameter comment="" name="dwh_inventory_AdditionalParams" prompt="dwh_inventory_AdditionalParams?" promptNeeded="false" repositoryContextId="_L5Et0BXOEeizGJW94Gy4tQ" type="id_String" value="noDatetimeStringSync=true"/>
   </context>
   <parameters>
-    <elementParameter field="TEXT" name="SCREEN_OFFSET_X" value="0" show="false"/>
+    <elementParameter field="TEXT" name="SCREEN_OFFSET_X" value="160" show="false"/>
     <elementParameter field="TEXT" name="SCREEN_OFFSET_Y" value="0" show="false"/>
     <elementParameter field="TEXT" name="REPOSITORY_CONNECTION_ID" value="" show="false"/>
     <elementParameter field="TEXT" name="OOZIE_PROPERTY_TYPENAME" value="" show="false"/>
@@ -159,6 +161,7 @@
     <routinesParameter id="_3KOcgJMxEeewYaXDqjyo4w" name="TalendStringUtil"/>
     <routinesParameter id="_3KIV4JMxEeewYaXDqjyo4w" name="TalendString"/>
     <routinesParameter id="_ayyqMP_MEeeuIL132lN64w" name="ADSStringUtils"/>
+    <routinesParameter id="_nrPQkAwzEeiiuqmUHsf0Sw" name="ADSConstants"/>
   </parameters>
   <node componentName="tSetGlobalVar" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="128" posY="192">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tSetGlobalVar_1" show="false"/>
@@ -181,7 +184,7 @@
   <node componentName="tFileInputExcel" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="320" posY="192">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tFileInputExcel_1" show="false"/>
     <elementParameter field="CHECK" name="VERSION_2007" value="true"/>
-    <elementParameter field="FILE" name="FILENAME" value="context.LOAD_FILES_LOC+&quot;/&quot;+context.ADS_CONFIGS_LOADSHEET_SYS_CONFIG_PROPERTY_TYPE_XLSX"/>
+    <elementParameter field="FILE" name="FILENAME" value="context.LOAD_FILES_LOC+&quot;/&quot;+context.ADS_SETUP_LOADSHEET_SYS_CONFIG_PROPERTY_TYPE_XLSX"/>
     <elementParameter field="CHECK" name="ALL_SHEETS" value="true"/>
     <elementParameter field="TABLE" name="SHEETLIST" show="false">
       <elementValue elementRef="SHEETNAME" value="&quot;user_src&quot;"/>
@@ -293,7 +296,7 @@
   </node>
   <node componentName="tJavaRow" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="928" posY="192">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tJavaRow_1" show="false"/>
-    <elementParameter field="MEMO_JAVA" name="CODE" value="context.REST_REQ_JSON= input_row.root;&#xA;"/>
+    <elementParameter field="MEMO_JAVA" name="CODE" value="context.REST_REQ_JSON=input_row.root.replaceAll(&quot;,\&quot;[a-zA-Z][a-zA-Z]*\&quot;:\\[\\]&quot;, &quot;&quot;);"/>
     <elementParameter field="MEMO_IMPORT" name="IMPORT" value="//import java.util.List;"/>
     <elementParameter field="TEXT" name="LABEL" value="setSubJobContext"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
@@ -324,6 +327,8 @@
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="ADSStringUtils.getEndPointURL(context.REST_URL_BASE,context.REST_URL_SYS_CONFIG_PROPERTY_TYPES);"/>
       <elementValue elementRef="PARAM_NAME_COLUMN" value="REST_REQ_JSON"/>
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.REST_REQ_JSON"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="OAUTH_BEARER_TOKEN"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.OAUTH_BEARER_TOKEN"/>
     </elementParameter>
     <elementParameter field="CHECK" name="PROPAGATE_CHILD_RESULT" value="false"/>
     <elementParameter field="CHECK" name="PRINT_PARAMETER" value="false"/>
@@ -366,37 +371,6 @@
     <metadata connector="FLOW" label="WriteToSrcFile" name="tFileOutputDelimited_1">
       <column comment="" key="false" length="-1" name="propertyType" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
     </metadata>
-  </node>
-  <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="128" posY="480">
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_1" show="false"/>
-    <elementParameter field="CHECK" name="USE_DYNAMIC_JOB" value="false"/>
-    <elementParameter field="TEXT" name="CONTEXT_JOB" value="" show="false"/>
-    <elementParameter field="PROCESS_TYPE" name="PROCESS" value="ADSLoad_SubJob_SendEmail"/>
-    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_CONTEXT" value="Default"/>
-    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_PROCESS" value="_1_nMgPvJEee6ltYJbGhRvw"/>
-    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_VERSION" value="Latest"/>
-    <elementParameter field="TEXT" name="CONTEXT_NAME" value="Default" show="false"/>
-    <elementParameter field="CHECK" name="USE_INDEPENDENT_PROCESS" value="false"/>
-    <elementParameter field="CHECK" name="DIE_ON_CHILD_ERROR" value="true"/>
-    <elementParameter field="CHECK" name="TRANSMIT_WHOLE_CONTEXT" value="false"/>
-    <elementParameter field="TABLE" name="CONTEXTPARAMS">
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="SUCCESS_LOG"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="((String)globalMap.get(&quot;successLogName&quot;));"/>
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="FAILURE_LOG"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="((String)globalMap.get(&quot;failureLogName&quot;));"/>
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="logEmail"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="((String)globalMap.get(&quot;logEmail&quot;));"/>
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_NAME"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="jobName"/>
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="SRC_LOAD_SHEET"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="((String)globalMap.get(&quot;sourceLoadDoc&quot;))"/>
-    </elementParameter>
-    <elementParameter field="CHECK" name="PROPAGATE_CHILD_RESULT" value="false"/>
-    <elementParameter field="CHECK" name="PRINT_PARAMETER" value="false"/>
-    <elementParameter field="CHECK" name="TRANSMIT_ORIGINAL_CONTEXT" value="true" show="false"/>
-    <elementParameter field="TEXT" name="LABEL" value="SendMail"/>
-    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
-    <metadata connector="FLOW" name="tRunJob_1"/>
   </node>
   <node componentName="tPrejob" componentVersion="0.102" offsetLabelX="50" offsetLabelY="0" posX="128" posY="64">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tPrejob_1" show="false"/>
@@ -474,36 +448,97 @@
       <column defaultValue="" key="false" length="255" name="value" nullable="true" precision="0" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
     </metadata>
   </node>
-  <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="320" posY="480">
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_3" show="false"/>
+  <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="-128" posY="192">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_4" show="false"/>
     <elementParameter field="CHECK" name="USE_DYNAMIC_JOB" value="false"/>
     <elementParameter field="TEXT" name="CONTEXT_JOB" value="" show="false"/>
-    <elementParameter field="PROCESS_TYPE" name="PROCESS" value="DeleteTemporaryFiles"/>
+    <elementParameter field="PROCESS_TYPE" name="PROCESS" value="logJobDetails"/>
     <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_CONTEXT" value="Default"/>
-    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_PROCESS" value="_sb9OoBK3EeiGnZNriZGEXw"/>
+    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_PROCESS" value="_FmufQBftEei3QLi0rlyf8A"/>
     <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_VERSION" value="Latest"/>
     <elementParameter field="TEXT" name="CONTEXT_NAME" value="Default" show="false"/>
     <elementParameter field="CHECK" name="USE_INDEPENDENT_PROCESS" value="false"/>
     <elementParameter field="CHECK" name="DIE_ON_CHILD_ERROR" value="true"/>
     <elementParameter field="CHECK" name="TRANSMIT_WHOLE_CONTEXT" value="false"/>
     <elementParameter field="TABLE" name="CONTEXTPARAMS">
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_NAME"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="ADSStringUtils.getJobInstanceName((String)jobName)"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_START_TIME"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="ADSStringUtils.getCurrentTimeInRestFormat()"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_SUBMITTED_BY"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="&quot;talend&quot;"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_STATUS"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="ADSConstants.LOG_JOB_STATUS_INPROGRESS"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="OAUTH_BEARER_TOKEN"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.OAUTH_BEARER_TOKEN"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="RESPONSE_RESOURCE_XPATH"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="&quot;/root/_links/jobData/href&quot;"/>
+    </elementParameter>
+    <elementParameter field="CHECK" name="PROPAGATE_CHILD_RESULT" value="false"/>
+    <elementParameter field="CHECK" name="PRINT_PARAMETER" value="false"/>
+    <elementParameter field="CHECK" name="TRANSMIT_ORIGINAL_CONTEXT" value="true" show="false"/>
+    <elementParameter field="TEXT" name="LABEL" value="LogPreJobDetails"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
+    <metadata connector="FLOW" name="tRunJob_4">
+      <column comment="" key="false" length="-1" name="resourceId" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+    </metadata>
+  </node>
+  <node componentName="tJavaRow" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="0" posY="192">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tJavaRow_2" show="false"/>
+    <elementParameter field="MEMO_JAVA" name="CODE" value="globalMap.put(&quot;jobId&quot;, input_row.resourceId);&#xA;&#xA;"/>
+    <elementParameter field="MEMO_IMPORT" name="IMPORT" value="//import java.util.List;"/>
+    <elementParameter field="TEXT" name="LABEL" value="setJobId"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
+    <metadata connector="FLOW" name="tJavaRow_2"/>
+  </node>
+  <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="128" posY="352">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_1" show="false"/>
+    <elementParameter field="CHECK" name="USE_DYNAMIC_JOB" value="false"/>
+    <elementParameter field="TEXT" name="CONTEXT_JOB" value="" show="false"/>
+    <elementParameter field="PROCESS_TYPE" name="PROCESS" value="PostProcess"/>
+    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_CONTEXT" value="Default"/>
+    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_PROCESS" value="_mcj4wBqeEeiTUOi_dA55ag"/>
+    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_VERSION" value="Latest"/>
+    <elementParameter field="TEXT" name="CONTEXT_NAME" value="Default" show="false"/>
+    <elementParameter field="CHECK" name="USE_INDEPENDENT_PROCESS" value="false"/>
+    <elementParameter field="CHECK" name="DIE_ON_CHILD_ERROR" value="true"/>
+    <elementParameter field="CHECK" name="TRANSMIT_WHOLE_CONTEXT" value="false"/>
+    <elementParameter field="TABLE" name="CONTEXTPARAMS">
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="SUCCESS_LOG"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="((String)globalMap.get(&quot;successLogName&quot;));"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="FAILURE_LOG"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="((String)globalMap.get(&quot;failureLogName&quot;));"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="logEmail"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="((String)globalMap.get(&quot;logEmail&quot;));"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_NAME"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="jobName"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="SRC_LOAD_SHEET"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="((String)globalMap.get(&quot;sourceLoadDoc&quot;));"/>
       <elementValue elementRef="PARAM_NAME_COLUMN" value="DELETE_LOG_DIR"/>
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_LOG_DIRECTORY"/>
       <elementValue elementRef="PARAM_NAME_COLUMN" value="DELETE_FILE_MASK"/>
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="jobName+&quot;_*.*&quot;"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_END_TIME"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="ADSStringUtils.getCurrentTimeInRestFormat()"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_STATUS"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="ADSConstants.LOG_JOB_STATUS_FINISHED"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_ID"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="globalMap.get(&quot;jobId&quot;)"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="OAUTH_BEARER_TOKEN"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.OAUTH_BEARER_TOKEN"/>
     </elementParameter>
     <elementParameter field="CHECK" name="PROPAGATE_CHILD_RESULT" value="false"/>
     <elementParameter field="CHECK" name="PRINT_PARAMETER" value="false"/>
     <elementParameter field="CHECK" name="TRANSMIT_ORIGINAL_CONTEXT" value="true" show="false"/>
     <elementParameter field="TEXT" name="LABEL" value="__PROCESS__"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
-    <metadata connector="FLOW" name="tRunJob_3"/>
+    <metadata connector="FLOW" name="tRunJob_1"/>
   </node>
-  <connection connectorName="SUBJOB_OK" label="OnSubjobOk" lineStyle="1" metaname="tSetGlobalVar_1" offsetLabelX="0" offsetLabelY="0" source="tSetGlobalVar_1" target="tRunJob_1">
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="OnSubjobOk2" show="false"/>
-  </connection>
   <connection connectorName="COMPONENT_OK" label="OnComponentOk" lineStyle="3" metaname="tSetGlobalVar_1" offsetLabelX="0" offsetLabelY="0" source="tSetGlobalVar_1" target="tFileInputExcel_1">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="OnComponentOk3" show="false"/>
+  </connection>
+  <connection connectorName="SUBJOB_OK" label="OnSubjobOk" lineStyle="1" metaname="tSetGlobalVar_1" offsetLabelX="0" offsetLabelY="0" source="tSetGlobalVar_1" target="tRunJob_1">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="OnSubjobOk2" show="false"/>
   </connection>
   <connection connectorName="FLOW" label="DataRow" lineStyle="0" metaname="tFileInputExcel_1" offsetLabelX="0" offsetLabelY="0" source="tFileInputExcel_1" target="tMap_3">
     <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
@@ -549,9 +584,6 @@
     <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="row3" show="false"/>
   </connection>
-  <connection connectorName="SUBJOB_OK" label="OnSubjobOk" lineStyle="1" metaname="tRunJob_1" offsetLabelX="0" offsetLabelY="0" source="tRunJob_1" target="tRunJob_3">
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="OnSubjobOk3" show="false"/>
-  </connection>
   <connection connectorName="COMPONENT_OK" label="OnComponentOk" lineStyle="3" metaname="tPrejob_1" offsetLabelX="11" offsetLabelY="1" source="tPrejob_1" target="tFileInputDelimited_1">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="OnComponentOk1" show="false"/>
   </connection>
@@ -567,6 +599,13 @@
     <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="row4" show="false"/>
   </connection>
+  <connection connectorName="FLOW" label="row2" lineStyle="0" metaname="tRunJob_4" offsetLabelX="0" offsetLabelY="0" source="tRunJob_4" target="tJavaRow_2">
+    <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="row2" show="false"/>
+  </connection>
+  <connection connectorName="COMPONENT_OK" label="OnComponentOk" lineStyle="3" metaname="tJavaRow_2" offsetLabelX="0" offsetLabelY="0" source="tJavaRow_2" target="tSetGlobalVar_1">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="OnComponentOk4" show="false"/>
+  </connection>
   <subjob>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tSetGlobalVar_1" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="92;131;150" show="false"/>
@@ -574,12 +613,6 @@
   </subjob>
   <subjob>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tFileInputExcel_1" show="false"/>
-    <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="92;131;150" show="false"/>
-    <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
-  </subjob>
-  <subjob>
-    <elementParameter field="CHECK" name="COLLAPSED" value="true" show="false"/>
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_1" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="92;131;150" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
   </subjob>
@@ -595,7 +628,12 @@
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
   </subjob>
   <subjob>
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_3" show="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_4" show="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="92;131;150" show="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
+  </subjob>
+  <subjob>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_1" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="92;131;150" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
   </subjob>

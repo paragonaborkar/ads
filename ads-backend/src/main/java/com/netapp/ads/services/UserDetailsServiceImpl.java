@@ -49,7 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		if (username.indexOf("SSO") != -1) {
 			String split[] = username.split("-");
-			grantedAuthorities.add(new SimpleGrantedAuthority("USER_TYPE"));
+			grantedAuthorities.add(new SimpleGrantedAuthority("CORP_USER"));
 
 			if (SecurityConfig.authAssertionIdUserNameCache.get(split[1]) == null) {
 				throw new UsernameNotFoundException(String.format("The user is not enabled", username));
