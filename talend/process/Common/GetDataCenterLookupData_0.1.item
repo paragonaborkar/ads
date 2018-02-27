@@ -7,53 +7,7 @@
     <contextParameter comment="" name="REST_RESPONSE_XPATH_VALUE" prompt="REST_RESPONSE_XPATH_VALUE?" promptNeeded="false" type="id_String" value=""/>
     <contextParameter comment="" name="REST_RESPONSE_RESULT_FILE" prompt="REST_RESPONSE_RESULT_FILE?" promptNeeded="false" type="id_String" value=""/>
     <contextParameter comment="" name="REST_RESPONSE_XPATH_REGION" prompt="REST_RESPONSE_XPATH_REGION?" promptNeeded="false" type="id_String" value=""/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_APPLICATION_XLSX" prompt="ADS_CONFIGS_LOADSHEET_APPLICATION_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_Application_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_AUDIT_EVENT_XLSX" prompt="ADS_CONFIGS_LOADSHEET_AUDIT_EVENT_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_AuditEvent_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_AUDIT_REASON_CODE_XLSX" prompt="ADS_CONFIGS_LOADSHEET_AUDIT_REASON_CODE_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_AuditReasonCode_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_MIGRATION_TIME_XLSX" prompt="ADS_CONFIGS_LOADSHEET_MIGRATION_TIME_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_MigrationTime_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_MST_EMAIL_TYPE_XLSX" prompt="ADS_CONFIGS_LOADSHEET_MST_EMAIL_TYPE_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_MstEmailType_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_SCHEDULE_XLSX" prompt="ADS_CONFIGS_LOADSHEET_SCHEDULE_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_Schedule_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_SYS_CONFIG_PROPERTY_TYPE_XLSX" prompt="ADS_CONFIGS_LOADSHEET_SYS_CONFIG_PROPERTY_TYPE_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_SysConfigPropertyType_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_USER_NATIVES_XLSX" prompt="ADS_CONFIGS_LOADSHEET_USER_NATIVES_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_UserNative_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_CONFIGS_LOADSHEET_USER_ROLES_XLSX" prompt="ADS_CONFIGS_LOADSHEET_USER_ROLES_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_UserRoles_Template.xlsx"/>
-    <contextParameter comment="" name="ADS_EMAIL_AUTHENTICATION_PASSWORD" prompt="ADS_EMAIL_AUTHENTICATION_PASSWORD?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="Paragon123"/>
-    <contextParameter comment="" name="ADS_EMAIL_AUTHENTICATION_USER" prompt="ADS_EMAIL_AUTHENTICATION_USER?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="ads.sendemail@gmail.com"/>
-    <contextParameter comment="" name="ADS_EMAIL_FROM" prompt="ADS_EMAIL_FROM?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="mohan.bondada@gmail.com"/>
-    <contextParameter comment="" name="ADS_EMAIL_SMTP_NAME" prompt="ADS_EMAIL_SMTP_NAME?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="smtp.gmail.com"/>
-    <contextParameter comment="" name="ADS_EMAIL_SMTP_PORT" prompt="ADS_EMAIL_SMTP_PORT?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="587"/>
-    <contextParameter comment="" name="ADS_EMAIL_TO" prompt="ADS_EMAIL_TO?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
-    <contextParameter comment="" name="ENV_CONTEXT_FILE" prompt="ENV_CONTEXT_FILE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="C:\projects\backup\ADS_DATA\context\ads_context.properties"/>
-    <contextParameter comment="" name="FORMAT_DATE_TO_STRING" prompt="FORMAT_DATE_TO_STRING?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="%Y-%m-%d"/>
-    <contextParameter comment="" name="FORMAT_DATETIME_TO_STRING" prompt="FORMAT_DATETIME_TO_STRING?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="%Y-%m-%dT%H:%i:%s"/>
-    <contextParameter comment="" name="LOAD_FILES_LOC" prompt="LOAD_FILES_LOC?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_Directory" value="C:/netapp/ads_setup_loadsheets/"/>
-    <contextParameter comment="" name="logDir" prompt="logDir?" promptNeeded="false" type="id_Directory" value="C:/netapp/logs/"/>
-    <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoidGFsZW5kIiwiYWRzX21vZHVsZXMiOnsiZGlzY292ZXIiOnRydWUsInJlcG9ydHMiOmZhbHNlLCJzY2hlZHVsZSI6ZmFsc2UsInBsYW5uaW5nIjpmYWxzZSwiZXhlY3V0ZSI6ZmFsc2UsImNvbm5lY3Rpb25zIjp0cnVlfSwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTUxODgwNzc2MiwiYXV0aG9yaXRpZXMiOlsiQ0xJRU5UIl0sImp0aSI6ImNhMmZmYzRlLTNhMzYtNDNjOS1hMDFhLWY2ZDBjMjI1MzVlMyIsImNsaWVudF9pZCI6InRlc3Rqd3RjbGllbnRpZCJ9.Tubc_IKt1H-9F7KJJGZbxutoRljhHRt8MD9eev4oOYY"/>
-    <contextParameter comment="" name="RESOURCE_XPATH_USER_NATIVE" prompt="RESOURCE_XPATH_USER_NATIVE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/root/_links/userNative/href"/>
-    <contextParameter comment="" name="REST_DATA_RESOURCE_XPATH" prompt="REST_DATA_RESOURCE_XPATH?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/root/_links/self/href"/>
-    <contextParameter comment="" name="REST_REQ_JSON" prompt="REST_REQ_JSON?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
-    <contextParameter comment="" name="REST_RESPONSE_SELF_HREF_VALUE" prompt="REST_RESPONSE_SELF_HREF_VALUE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="./_links/self/href"/>
-    <contextParameter comment="" name="REST_URL_AGGREGATES" prompt="REST_URL_AGGREGATES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/aggregates"/>
-    <contextParameter comment="" name="REST_URL_APPLICATIONS" prompt="REST_URL_APPLICATIONS?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/applications"/>
-    <contextParameter comment="" name="REST_URL_AUDIT_EVENTS" prompt="REST_URL_AUDIT_EVENTS?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/auditEvents"/>
-    <contextParameter comment="" name="REST_URL_AUDIT_REASON_CODES" prompt="REST_URL_AUDIT_REASON_CODES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/auditReasonCodes"/>
-    <contextParameter comment="" name="REST_URL_BASE" prompt="REST_URL_BASE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="http://localhost:9080/"/>
-    <contextParameter comment="" name="REST_URL_CONTROLLERS" prompt="REST_URL_CONTROLLERS?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/controllers"/>
-    <contextParameter comment="" name="REST_URL_DATA_CENTERS" prompt="REST_URL_DATA_CENTERS?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/dataCenters"/>
-    <contextParameter comment="" name="REST_URL_EMAIL_TYPES" prompt="REST_URL_EMAIL_TYPES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/mstEmailTypes"/>
-    <contextParameter comment="" name="REST_URL_HOSTS" prompt="REST_URL_HOSTS?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/hosts"/>
-    <contextParameter comment="" name="REST_URL_MIGRATION_TIMES" prompt="REST_URL_MIGRATION_TIMES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/migrationTimes"/>
-    <contextParameter comment="" name="REST_URL_MST_EMAILTYPES" prompt="REST_URL_MST_EMAILTYPES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/mstEmailTypes"/>
-    <contextParameter comment="" name="REST_URL_NAS_VOLUMES" prompt="REST_URL_NAS_VOLUMES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/nasVolumes"/>
-    <contextParameter comment="" name="REST_URL_QTREES" prompt="REST_URL_QTREES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/qtrees"/>
-    <contextParameter comment="" name="REST_URL_SCHEDULES" prompt="REST_URL_SCHEDULES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/schedules"/>
-    <contextParameter comment="" name="REST_URL_SHARES" prompt="REST_URL_SHARES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/shares"/>
-    <contextParameter comment="" name="REST_URL_STORAGE" prompt="REST_URL_STORAGE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/storages"/>
-    <contextParameter comment="" name="REST_URL_SYS_CONFIG_PROPERTY_TYPES" prompt="REST_URL_SYS_CONFIG_PROPERTY_TYPES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/sysConfigPropertyTypes"/>
-    <contextParameter comment="" name="REST_URL_USER_CORPORATE" prompt="REST_URL_USER_CORPORATE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/userCorporates"/>
-    <contextParameter comment="" name="REST_URL_USER_NATIVES" prompt="REST_URL_USER_NATIVES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/userNatives"/>
-    <contextParameter comment="" name="REST_URL_USER_ROLES" prompt="REST_URL_USER_ROLES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/userRoles"/>
-    <contextParameter comment="" name="ROLE_LOOKUP_CSV" prompt="ROLE_LOOKUP_CSV?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="ADS_User_Roles.csv"/>
-    <contextParameter comment="" name="TEST_ROW_COUNT_LIMIT" prompt="TEST_ROW_COUNT_LIMIT?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LIMIT 10"/>
+    <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" type="id_String" value=""/>
   </context>
   <parameters>
     <elementParameter field="TEXT" name="SCREEN_OFFSET_X" value="0" show="false"/>
@@ -160,7 +114,7 @@
     <routinesParameter id="_3KIV4JMxEeewYaXDqjyo4w" name="TalendString"/>
     <routinesParameter id="_ayyqMP_MEeeuIL132lN64w" name="ADSStringUtils"/>
   </parameters>
-  <node componentName="tFixedFlowInput" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="96" posY="224">
+  <node componentName="tFixedFlowInput" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="192" posY="224">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tFixedFlowInput_1" show="false"/>
     <elementParameter field="TEXT" name="NB_ROWS" value="1"/>
     <elementParameter field="RADIO" name="USE_SINGLEMODE" value="true"/>
@@ -186,7 +140,7 @@
       <column comment="" key="false" length="-1" name="statusCode" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
     </metadata>
   </node>
-  <node componentName="tJava" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="224" posY="224">
+  <node componentName="tJava" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="320" posY="224">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tJava_1" show="false"/>
     <elementParameter field="MEMO_JAVA" name="CODE" value="System.out.println(context.REST_URL_NAME_VALUE);&#xA;System.out.println(context.REST_RESPONSE_XPATH);&#xA;System.out.println(context.REST_RESPONSE_XPATH_NAME);&#xA;System.out.println(context.REST_RESPONSE_XPATH_VALUE);&#xA;System.out.println(context.REST_RESPONSE_RESULT_FILE);&#xA;&#xA;&#xA;&#xA;"/>
     <elementParameter field="MEMO_IMPORT" name="IMPORT" value="//import java.util.List;"/>
@@ -198,7 +152,7 @@
       <column comment="" key="false" length="-1" name="statusCode" nullable="true" pattern="" precision="-1" sourceType="" type="id_Integer" originalLength="-1" usefulColumn="true"/>
     </metadata>
   </node>
-  <node componentName="tRESTClient" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="352" posY="224">
+  <node componentName="tRESTClient" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="448" posY="224">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRESTClient_2" show="false"/>
     <elementParameter field="TEXT" name="URL" value="context.REST_URL_NAME_VALUE"/>
     <elementParameter field="TEXT" name="PATH" value="&quot;&quot;"/>
@@ -298,7 +252,7 @@
       <column defaultValue="" key="false" length="255" name="errorMessage" nullable="true" precision="0" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
     </metadata>
   </node>
-  <node componentName="tMap" componentVersion="2.1" offsetLabelX="0" offsetLabelY="0" posX="832" posY="224">
+  <node componentName="tMap" componentVersion="2.1" offsetLabelX="0" offsetLabelY="0" posX="736" posY="224">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tMap_1" show="false"/>
     <elementParameter field="EXTERNAL" name="MAP" value=""/>
     <elementParameter field="CLOSED_LIST" name="LINK_STYLE" value="AUTO"/>
@@ -332,7 +286,7 @@
       </inputTables>
     </nodeData>
   </node>
-  <node componentName="tFileOutputExcel" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="992" posY="224">
+  <node componentName="tFileOutputExcel" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="896" posY="224">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tFileOutputExcel_1" show="false"/>
     <elementParameter field="CHECK" name="VERSION_2007" value="true"/>
     <elementParameter field="CHECK" name="USESTREAM" value="false"/>
@@ -374,80 +328,6 @@
       <column comment="" key="false" length="-1" name="value" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
     </metadata>
   </node>
-  <node componentName="tPrejob" componentVersion="0.102" offsetLabelX="50" offsetLabelY="0" posX="96" posY="64">
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tPrejob_1" show="false"/>
-    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
-  </node>
-  <node componentName="tFileInputDelimited" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="320" posY="64">
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tFileInputDelimited_1" show="false"/>
-    <elementParameter field="LABEL" name="FILENAMETEXT" value="&quot;When the input source is a stream or a zip file,footer and random shouldn't be bigger than 0.&quot;"/>
-    <elementParameter field="FILE" name="FILENAME" value="context.ENV_CONTEXT_FILE"/>
-    <elementParameter field="CHECK" name="CSV_OPTION" value="false"/>
-    <elementParameter field="TEXT" name="ROWSEPARATOR" value="&quot;\n&quot;"/>
-    <elementParameter field="OPENED_LIST" name="CSVROWSEPARATOR" value="&quot;\n&quot;" show="false"/>
-    <elementParameter field="TEXT" name="FIELDSEPARATOR" value="&quot;=&quot;"/>
-    <elementParameter field="TEXT" name="ESCAPE_CHAR" value="&quot;&quot;&quot;" show="false"/>
-    <elementParameter field="TEXT" name="TEXT_ENCLOSURE" value="&quot;&quot;&quot;" show="false"/>
-    <elementParameter field="TEXT" name="HEADER" value="0"/>
-    <elementParameter field="TEXT" name="FOOTER" value="0"/>
-    <elementParameter field="TEXT" name="LIMIT" value=""/>
-    <elementParameter field="CHECK" name="REMOVE_EMPTY_ROW" value="true"/>
-    <elementParameter field="CHECK" name="UNCOMPRESS" value="false"/>
-    <elementParameter field="CHECK" name="DIE_ON_ERROR" value="false"/>
-    <elementParameter field="DIRECTORY" name="TEMP_DIR" value="&quot;C:/projects/backup&quot;" show="false"/>
-    <elementParameter field="CHECK" name="ADVANCED_SEPARATOR" value="false"/>
-    <elementParameter field="TEXT" name="THOUSANDS_SEPARATOR" value="&quot;,&quot;" show="false"/>
-    <elementParameter field="TEXT" name="DECIMAL_SEPARATOR" value="&quot;.&quot;" show="false"/>
-    <elementParameter field="CHECK" name="RANDOM" value="false"/>
-    <elementParameter field="TEXT" name="NB_RANDOM" value="10" show="false"/>
-    <elementParameter field="CHECK" name="TRIMALL" value="false"/>
-    <elementParameter field="TABLE" name="TRIMSELECT">
-      <elementValue elementRef="SCHEMA_COLUMN" value="key"/>
-      <elementValue elementRef="TRIM" value="false"/>
-      <elementValue elementRef="SCHEMA_COLUMN" value="value"/>
-      <elementValue elementRef="TRIM" value="false"/>
-    </elementParameter>
-    <elementParameter field="CHECK" name="CHECK_FIELDS_NUM" value="false"/>
-    <elementParameter field="CHECK" name="CHECK_DATE" value="false"/>
-    <elementParameter field="ENCODING_TYPE" name="ENCODING" value="&quot;ISO-8859-15&quot;"/>
-    <elementParameter field="TECHNICAL" name="ENCODING:ENCODING_TYPE" value="ISO-8859-15"/>
-    <elementParameter field="CHECK" name="SPLITRECORD" value="false"/>
-    <elementParameter field="CHECK" name="ENABLE_DECODE" value="false"/>
-    <elementParameter field="TABLE" name="DECODE_COLS" show="false">
-      <elementValue elementRef="SCHEMA_COLUMN" value="key"/>
-      <elementValue elementRef="DECODE" value="false"/>
-      <elementValue elementRef="SCHEMA_COLUMN" value="value"/>
-      <elementValue elementRef="DECODE" value="false"/>
-    </elementParameter>
-    <elementParameter field="TEXT" name="DESTINATION" value="" show="false"/>
-    <elementParameter field="TEXT" name="SCHEMA_OPT_NUM" value="100" show="false"/>
-    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
-    <metadata connector="FLOW" name="tFileInputDelimited_1">
-      <column comment="" key="false" length="-1" name="key" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
-      <column comment="" key="false" length="-1" name="value" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
-    </metadata>
-    <metadata connector="REJECT" name="REJECT">
-      <column comment="" key="false" length="-1" name="key" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
-      <column comment="" key="false" length="-1" name="value" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
-      <column defaultValue="" key="false" length="255" name="errorCode" nullable="true" precision="0" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
-      <column defaultValue="" key="false" length="255" name="errorMessage" nullable="true" precision="0" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
-    </metadata>
-  </node>
-  <node componentName="tContextLoad" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="512" posY="64">
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tContextLoad_1" show="false"/>
-    <elementParameter field="CLOSED_LIST" name="LOAD_NEW_VARIABLE" value="Warning"/>
-    <elementParameter field="CLOSED_LIST" name="NOT_LOAD_OLD_VARIABLE" value="Warning"/>
-    <elementParameter field="CHECK" name="PRINT_OPERATIONS" value="true"/>
-    <elementParameter field="CHECK" name="DISABLE_ERROR" value="false"/>
-    <elementParameter field="CHECK" name="DISABLE_WARNINGS" value="true"/>
-    <elementParameter field="CHECK" name="DISABLE_INFO" value="true"/>
-    <elementParameter field="CHECK" name="DIEONERROR" value="false"/>
-    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
-    <metadata connector="FLOW" name="tContextLoad_1">
-      <column defaultValue="" key="false" length="255" name="key" nullable="true" precision="0" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
-      <column defaultValue="" key="false" length="255" name="value" nullable="true" precision="0" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
-    </metadata>
-  </node>
   <connection connectorName="FLOW" label="row3" lineStyle="0" metaname="tFixedFlowInput_1" offsetLabelX="0" offsetLabelY="0" source="tFixedFlowInput_1" target="tJava_1">
     <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="row3" show="false"/>
@@ -481,34 +361,8 @@
     <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="out" show="false"/>
   </connection>
-  <connection connectorName="COMPONENT_OK" label="OnComponentOk" lineStyle="3" metaname="tPrejob_1" offsetLabelX="11" offsetLabelY="1" source="tPrejob_1" target="tFileInputDelimited_1">
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="OnComponentOk1" show="false"/>
-  </connection>
-  <connection connectorName="FLOW" label="row5" lineStyle="0" metaname="tFileInputDelimited_1" offsetLabelX="0" offsetLabelY="0" source="tFileInputDelimited_1" target="tContextLoad_1">
-    <elementParameter field="TABLE" name="TRACES_CONNECTION_FILTER" show="false">
-      <elementValue elementRef="TRACE_COLUMN" value="value"/>
-      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true"/>
-      <elementValue elementRef="TRACE_COLUMN_CONDITION" value=""/>
-      <elementValue elementRef="TRACE_COLUMN" value="key"/>
-      <elementValue elementRef="TRACE_COLUMN_CHECKED" value="true"/>
-      <elementValue elementRef="TRACE_COLUMN_CONDITION" value=""/>
-    </elementParameter>
-    <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="row5" show="false"/>
-  </connection>
   <subjob>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tFixedFlowInput_1" show="false"/>
-    <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="92;131;150" show="false"/>
-    <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
-  </subjob>
-  <subjob>
-    <elementParameter field="CHECK" name="SHOW_SUBJOB_TITLE" value="true"/>
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tPrejob_1" show="false"/>
-    <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="230;100;0"/>
-    <elementParameter field="COLOR" name="SUBJOB_COLOR" value="255;220;180"/>
-  </subjob>
-  <subjob>
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tFileInputDelimited_1" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="92;131;150" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
   </subjob>

@@ -17,7 +17,7 @@ export class NativeUserUpdateComponent implements OnInit {
   @Output() saved = new EventEmitter();
   @Output() cancel = new EventEmitter();
   @Input() inputUser: any;
-
+ 
   roleArray = [];
 
   User:any = [];

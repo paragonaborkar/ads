@@ -1,5 +1,7 @@
 package routines;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,5 +61,40 @@ public class ADSStringUtils {
     }
     
     
+    public static boolean isIdNull(String id) {
+    	
+    	if(id==null || id.equalsIgnoreCase("null")||id.trim().equalsIgnoreCase(""))
+    		return true;
+    	else 
+    		return false;
+    	
+/*    	if(strLogType.equalsIgnoreCase(ADSConstants.LOGTYPE_PRE))
+    		return true;
+    	else
+    		return false;
+*/    }
+
+    public static boolean isPostJobLog(String strLogType) {
+    	
+    	if(strLogType.equalsIgnoreCase(ADSConstants.LOGTYPE_POST))
+    		return true;
+    	else
+    		return false;
+    }
+
+    public static String getCurrentTimeInRestFormat() {
+    	
+    	LocalDateTime date = LocalDateTime.now();
+    	DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+    	
+    	String str = date.format(fmt);
+    	System.out.println(str);
+    	return str;
+    }
     
+    public static String getJobInstanceName(String jobName) {
+    	
+    	
+    	return (jobName+"_"+System.currentTimeMillis());
+    }
 }

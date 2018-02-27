@@ -156,10 +156,12 @@ public class Controller implements Serializable {
 		this.dataCenter = dataCenter;
 	}
 
+	// FIXME: There can be multiple exports for 1 controller.
 	public Export getExport() {
 		return this.export;
 	}
 
+	// FIXME: There can be multiple exports for 1 controller.
 	public void setExport(Export export) {
 		this.export = export;
 	}

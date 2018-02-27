@@ -21,6 +21,12 @@ public class ActivityMigrationKeyXRef implements Serializable {
 	@JoinColumn(name="migration_key_id", nullable=false, insertable=false, updatable=false)
 	private MigrationKey migrationKey;
 
+
+	//bi-directional many-to-one association to MigrationKey
+	@ManyToOne
+	@JoinColumn(name="activity_id", nullable=false, insertable=false, updatable=false)
+	private Activity activity;
+
 	public ActivityMigrationKeyXRef() {
 	}
 
@@ -38,6 +44,14 @@ public class ActivityMigrationKeyXRef implements Serializable {
 
 	public void setMigrationKey(MigrationKey migrationKey) {
 		this.migrationKey = migrationKey;
+	}
+
+	public Activity getActivity() {
+		return this.activity;
+	}
+
+	public void setActivity(Activity activity) {
+		this.activity = activity;
 	}
 
 }
