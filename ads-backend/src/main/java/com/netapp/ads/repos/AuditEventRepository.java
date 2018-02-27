@@ -1,6 +1,5 @@
 package com.netapp.ads.repos;
 
-import java.util.List;
 import com.netapp.ads.models.AuditEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -12,5 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AuditEventRepository extends JpaRepository<AuditEvent, Integer>, JpaSpecificationExecutor<AuditEvent> {
 	AuditEvent findByEventName(String eventName);
-	List<AuditEvent> findByHttpMethodAndResourcePattern(String httpMethod, String resourcePattern);
+	AuditEvent findByHttpMethodAndResourcePattern(String httpMethod, String resourcePattern);
 }

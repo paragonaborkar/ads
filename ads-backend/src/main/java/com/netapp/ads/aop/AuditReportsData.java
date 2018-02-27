@@ -1,7 +1,6 @@
 package com.netapp.ads.aop;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,8 +21,8 @@ import com.netapp.ads.repos.AuditTrailApiRepository;
 import com.netapp.ads.repos.AuditTrailNativeUserRepository;
 import com.netapp.ads.repos.UserApiRepository;
 import com.netapp.ads.repos.UserNativeRepository;
-import com.netapp.ads.util.RequestUtils;
 import com.netapp.ads.util.DateUtils;
+import com.netapp.ads.util.RequestUtils;
 
 @Component
 public class AuditReportsData {
@@ -74,26 +73,22 @@ public class AuditReportsData {
 			url = urlInfo.substring(1);
 		}
 
-		List<AuditEvent> auditEvent = auditEventRepository.findByHttpMethodAndResourcePattern(method, url);
-		if (!auditEvent.isEmpty()) {
-			AuditEvent audit = auditEvent.get(0);
-			int auditId = audit.getId();
+		AuditEvent auditEvent = auditEventRepository.findByHttpMethodAndResourcePattern(method, url);
+		if (auditEvent != null) {
+			int auditId = auditEvent.getId();
 
-			List<UserNative> firstUserNative;
-			List<UserApi> firstUserApi = userApiRepository.findByClientId(userName);
+			UserNative userNative;
+			UserApi userApi = userApiRepository.findByClientId(userName);
 
 			if (!isLogin(urlInfo)) {
-				firstUserNative = userNativeRepository.findByUserName((userName));
+				userNative = userNativeRepository.findByUserName((userName));
 			} else {
-				firstUserNative = userNativeRepository.findByEmail((userName));
+				userNative = userNativeRepository.findFirstByEmail((userName));
 			}
 
-			if (!firstUserApi.isEmpty()) {
-				UserApi userApi = firstUserApi.get(0);
+			if (userApi != null) {
 				AuditTrailApi auditTrailApi = new AuditTrailApi();
-				//auditTrailApiPK.setAuditEventId(auditId);
 				auditTrailApi.setAuditEvent(auditEventRepository.findOne(auditId));
-				//auditTrailApi.setId(auditTrailApiPK);
 				auditTrailApi.setUserApiId(userApi.getId());
 				auditTrailApi.setCreateTime((Timestamp) dateUtils.convertToUtc());
 				auditTrailApi.setAuditedResource(urlInfo);
@@ -116,14 +111,9 @@ public class AuditReportsData {
 				}
 				auditTrailApiRepository.saveAndFlush(auditTrailApi);
 
-			} else if (!firstUserNative.isEmpty()) {
-
-				UserNative userNative = firstUserNative.get(0);
+			} else if (userNative != null) {
 				AuditTrailNativeUser auditTrailNativeUser = new AuditTrailNativeUser();
-				//AuditTrailNativeUserPK auditTrailNativeUserPK = new AuditTrailNativeUserPK();
 				auditTrailNativeUser.setAuditEvent(auditEventRepository.findOne(auditId));
-				//auditTrailNativeUserPK.setAuditEventId(auditId);
-				//auditTrailNativeUser.setId(auditTrailNativeUserPK);
 				auditTrailNativeUser.setUserNativeId(userNative.getId());
 				auditTrailNativeUser.setAuditedResource(urlInfo);
 				auditTrailNativeUser.setCreateTime((Timestamp) dateUtils.convertToUtc());
