@@ -1,0 +1,3652 @@
+{
+	"info": {
+		"name": "ADS EndPoints",
+		"_postman_id": "46cd4f3b-6e04-7bbf-6934-ba0dd212d901",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API Token",
+			"description": "",
+			"item": [
+				{
+					"name": "Step 1: Request API Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "talend",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "secret",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://testjwtclientid:XY7kmzoNzl100@{{apiurl}}/oauth/token",
+							"protocol": "http",
+							"host": [
+								"{{apiurl}}"
+							],
+							"auth": {
+								"user": "testjwtclientid",
+								"password": "XY7kmzoNzl100"
+							},
+							"path": [
+								"oauth",
+								"token"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Step 2: Use Token in header - Get all rest end points",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoidGFsZW5kIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTUxNjQyNDg0OCwiYXV0aG9yaXRpZXMiOlsiQ0xJRU5UIl0sImp0aSI6IjcyZTExODNmLTU3MzYtNDUzMy1hMDExLThiOTNhNThhOTgwMiIsImNsaWVudF9pZCI6InRlc3Rqd3RjbGllbnRpZCJ9.90hWrkIyUD-InSEfaZehCXr8uI1kHIBYqsI0oGCyWEI"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://dv2-ls-cts-1:9080/userNatives",
+							"protocol": "http",
+							"host": [
+								"dv2-ls-cts-1"
+							],
+							"port": "9080",
+							"path": [
+								"userNatives"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Activity",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All Activities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/activities",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activities"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get 1 Activity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/activities/54",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activities",
+								"54"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Pending - Create Activity",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"willDelete\": 0,\n    \"willMigrate\": 1,\n    \"migrateWeek\": \"2018-01-19\",\n    \"migrateDay\": 2,\n    \"callMe\": 1,\n    \"bestNumber\": null,\n    \"archiveCandidate\": 0,\n    \"isLatest\": 0,\n    \"adminOverride\": 0,\n    \"mailCount\": 0,\n    \"migrationTimeId\": null\n}"
+						},
+						"url": {
+							"raw": "{{url}}/activities",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activities"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Activity Lob X Refs",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/activityLobXRefs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activityLobXRefs"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/activityLobXRefs/54-1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activityLobXRefs",
+								"54-1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "050d8764-b2e2-4d6a-9875-1af9f618a48a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "9f6c3068-cb5e-4fd1-9af1-a8d71ababa45",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Activity Migration Key X Refs",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/activityMigrationKeyXRefs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activityMigrationKeyXRefs"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/activityMigrationKeyXRefs/54-2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"activityMigrationKeyXRefs",
+								"54-2"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5b78cd24-17d7-496e-987a-13b9295e13bd",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "6391f0bd-0797-43ef-8dae-8795db39bdc5",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Activity Presumed Lob X Refs",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/activityPresumedLobXRefs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activityPresumedLobXRefs"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/activityPresumedLobXRefs/54-1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activityPresumedLobXRefs",
+								"54-1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Activity Responses",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/activityResponses",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activityResponses"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n                \"ownerUserCorporateId\": 0,\n                \"isOwner\": 1,\n                \"isPresumed\": 0,\n                \"activityId\": 101\n\n}"
+						},
+						"url": {
+							"raw": "{{url}}/activityResponses",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activityResponses"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/activityResponses/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activityResponses",
+								"4"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Aggregates",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/aggregates",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"aggregates"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\t\t\t\t\n\t\t\t\t\"aggregateName\": \"test_aggregate_1\",\n                \"aggregateSizeGb\": 503981,\n                \"isHybrid\": 0,\n                \"aggregateType\": \"AGGREGATE\",\n                \"controllerId\": 1,\n                \"poolAllocatedCapacityGb\": 503981,\n                \"poolUsedCapacityGb\": 480501,\n                \"poolIopsCapability\": 510,\n                \"avgIops\": 4,\n                \"peakIops\": 5,\n                \"assignedIops\": 0,\n                \"assignedCapacityGb\": 0\n}                "
+						},
+						"url": {
+							"raw": "{{url}}/aggregates",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"aggregates"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/aggregates/414",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"aggregates",
+								"414"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Aggregate Purpose",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/aggregatePurposes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"aggregatePurposes"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Aggregate Purpose",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\t\t\t\t\n\t\t\t\t\"storageType\": null,\n                \"serviceLevel\": null,\n                \"aggregateFunction\": null,\n                \"aggregateId\": 417\n}                "
+						},
+						"url": {
+							"raw": "{{url}}/aggregatePurposes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"aggregatePurposes"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/aggregatePurposes/606",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"aggregatePurposes",
+								"606"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Applications",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/applications",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"applications"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/applications/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"applications",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"applicationCode\": \"1242018\",\n    \"applicationName\": \"postman_test1\",\n    \"ownerUserCorporateId\": 1\n    \n}"
+						},
+						"url": {
+							"raw": "{{url}}/applications",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"applications"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Application Lob X Refs",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/applicationLobXRefs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"applicationLobXRefs"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/applicationLobXRefs/1-1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"applicationLobXRefs",
+								"1-1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "42b74ca0-a510-4708-956f-563c3ee1f32b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "2953575d-41ec-4633-89b1-e562046d8ef6",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Audit Events",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/auditEvents",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auditEvents"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/auditEvents/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auditEvents",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Audit Reason Codes",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/auditReasonCodes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auditReasonCodes"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/auditReasonCodes/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auditReasonCodes",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Pending - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\t\"reason\": \"Postman - Test Create\",\n    \"auditEventId\": 272\n}   "
+						},
+						"url": {
+							"raw": "{{url}}/auditReasonCodes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auditReasonCodes"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "90c7ac07-09af-4bc9-a06f-fd701f6110d9",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "63c9ddb9-ce36-4af8-9273-ba337236858c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Audit Trail Apis",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/auditTrailApis",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auditTrailApis"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/auditTrailApis/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auditTrailApis",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Audit Trail Corporate Users",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/auditTrailCorporateUsers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auditTrailCorporateUsers"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/auditTrailCorporateUsers/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auditTrailCorporateUsers",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Audit Trail Native Users",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/auditTrailNativeUsers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auditTrailNativeUsers"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/auditTrailNativeUsers/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auditTrailNativeUsers",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Change Managements",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/changeManagements",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"changeManagements"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/changeManagements/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"changeManagements",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Controller",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/controllers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"controllers"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Pending - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n                \"controllerName\": \"Postman - Test Post 1\",\n                \"serialNumber\": \"100000000817\",\n                \"storageId\": 17,\n                \"dateAvailable\": \"2017-05-07\",\n                \"volumeTally\": 23,\n                \"dataCenterId\": 1,\n                \"exportsId\": 0,\n                \"createTime\": \"2017-09-27T16:52:26.000+0000\",\n                \"updateTime\": null,\n                \"_links\": {\n                    \"self\": {\n                        \"href\": \"http://localhost:8080/controllers/1\"\n                    },\n                    \"controller\": {\n                        \"href\": \"http://localhost:8080/controllers/1\"\n                    }\n                }"
+						},
+						"url": {
+							"raw": "{{url}}/controllers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"controllers"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/controllers/409",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"controllers",
+								"409"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "072bf2b1-5c2d-42b4-a74b-172b9a0349ba",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a29c539-9b38-4d9e-a27d-808eaa181ecf",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Cutover",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/cutovers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cutovers"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/cutovers/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cutovers",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "33efd456-891d-4ae3-8dac-5f5d2f28eae9",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3950a1dc-3838-42d4-be70-d71eb3693c78",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Cutover Assemblies",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/cutoverAssemblies",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cutoverAssemblies"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/cutoverAssemblies/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cutoverAssemblies",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cutover Mount Points",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/cutoverMountPoints",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cutoverMountPoints"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/cutoverMountPoints/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cutoverMountPoints",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cutover Times",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/cutoverTimes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cutoverTimes"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/cutoverTimes/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cutoverTimes",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Data Center",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/dataCenters",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dataCenters"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/dataCenters/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dataCenters",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"dataCenterName\": \"Postman - Test Post 1\",\n    \"dataCenterFullName\": \"Postman - Test Post 1\",\n    \"city\": \"Cranford\",\n    \"country\": \"USA\",\n    \"region\": \"NA\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/dataCenters",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dataCenters"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Data Protection Policy",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/dataProtectionPolicies",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dataProtectionPolicies"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"dataProtectionPolicyName\": \"Postman - Test Post 1\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/dataProtectionPolicies",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dataProtectionPolicies"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/dataProtectionPolicies/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dataProtectionPolicies",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Email Templates",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/emailTemplates",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emailTemplates"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/emailTemplates/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emailTemplates",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"templateName\": \"postman - test post.vm\",\n    \"templateLocation\": \"C:\\temp\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/emailTemplates",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"emailTemplates"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Exports",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/exports",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"exports"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/exports/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"exports",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Exports Host X Ref",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/exportsHostXRefs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"exportsHostXRefs"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/exportsHostXRefs/1-1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"exportsHostXRefs",
+								"1-1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Extended Info Varchars",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/extendedInfoVarchars",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"extendedInfoVarchars"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/extendedInfoVarchars/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"extendedInfoVarchars",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Extended Info Varchar Settings",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/extendedInfoVarcharSettings",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"extendedInfoVarcharSettings"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/extendedInfoVarcharSettings/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"extendedInfoVarcharSettings",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Hosts",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/hosts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"hosts"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/hosts/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"hosts",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Pending - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\t\t\t\"id\": 6,\n                \"hostName\": null,\n                \"ipAddr\": \"p.o.s.t.t.e.s.t\",\n                \"hostOwnerUserCorporateId\": 0\n\n}"
+						},
+						"url": {
+							"raw": "{{url}}/hosts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"hosts"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Host Application X Refs",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/hostApplicationXRefs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"hostApplicationXRefs"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/hostApplicationXRefs/1-1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"hostApplicationXRefs",
+								"1-1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "iCals",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/icals",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"icals"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/icals/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"icals",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Line of Business",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/lineOfBusinesses",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"lineOfBusinesses"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"lobName\" : \"Postmane - Test Post 1\",\n\t\"liasonFirstName\" : \"Liason First Name\",\n\t\"liasonLastName\": \"Liason Last Name\",\n\t\"liasonUserName\": \"Liason User Name\",\n\t\"liasonContactNumber\": \"22244223\",\n\t\"liasonEmail\": \"jd@corp.com\"\t\n}"
+						},
+						"url": {
+							"raw": "{{url}}/lineOfBusinesses",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"lineOfBusinesses"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/lineOfBusinesses/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"lineOfBusinesses",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Migration Cutover Event",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/migrationCutoverEvents",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"migrationCutoverEvents"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"migrateWeek\": \"1000-01-01\",\n\t\"migrateDay\": \"3\",\n\t\"migrateTime\": \"08:00 AM\",\n\t\"appOwnerUserCorporateId\": 1,\n\t\"applicationId\": 1,\n\t\"migrationApproved\": 1,\n\t\"highOverWrite\" : 1,\n\t\"lobId\": 1\n\t\n}"
+						},
+						"url": {
+							"raw": "{{url}}/migrationCutoverEvents",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"migrationCutoverEvents"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/migrationCutoverEvents/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"migrationCutoverEvents",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Migration Cutover Src To Tgts",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/migrationCutoverSrcToTgts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"migrationCutoverSrcToTgts"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/migrationCutoverSrcToTgts/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"migrationCutoverSrcToTgts",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Migration Cutover Teams",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/migrationCutoverTeams",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"migrationCutoverTeams"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/migrationCutoverTeams/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"migrationCutoverTeams",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Migration Keys",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/migrationKeys",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"migrationKeys"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/migrationKeys/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"migrationKeys",
+								"2"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Pending - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"migrationKey\": \"Postmane - Test Post 1\",\n    \"userCorporateId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{url}}/migrationKeys",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"migrationKeys"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Migration Times",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/migrationTimes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"migrationTimes"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/migrationTimes/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"migrationTimes",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"timeSlot\": \"2340\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/migrationTimes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"migrationTimes"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mount Point",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/mountPoints",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mountPoints"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/mountPoints/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mountPoints",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Pending - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mountLocation\": \"/postman/test post 1\",\n    \"inventoryNumber\": \"927335\",\n\t\"hostId\": 4    \n}"
+						},
+						"url": {
+							"raw": "{{url}}/mountPoints",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mountPoints"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mst Emailing Date",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/mstEmailingDates",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mstEmailingDates"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/mstEmailingDates/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mstEmailingDates",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mst Email Type",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"emailType\": \"AppOwner\",\n    \"createTime\": \"2017-09-27T16:52:27.000+0000\",\n    \"updateTime\": null,\n    \"_links\": {\n        \"self\": {\n            \"href\": \"http://localhost:8080/mstEmailTypes/1\"\n        },\n        \"mstEmailType\": {\n            \"href\": \"http://localhost:8080/mstEmailTypes/1\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{url}}/mstEmailTypes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mstEmailTypes"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/mstEmailTypes/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mstEmailTypes",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"emailType\": \"Postman - Test Post 1\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/mstEmailTypes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mstEmailTypes"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Nas Volumes",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/nasVolumes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nasVolumes"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/nasVolumes/1752",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nasVolumes",
+								"1752"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vserver\": \"postman-test-post1\",\n    \"volumeName\": \"vol0\",\n    \"allocatedCapacityGb\": 467,\n    \"usedCapacityGb\": 467,\n    \"snapType\": null,\n    \"snapSrcVolumeId\": null,\n    \"snapTgtVolumeId\": null,\n    \"snapDestinationVolume\": null,\n    \"volumeStatus\": \"ONLINE\",\n    \"volumeLastAccessed\": null,\n    \"disposition\": null,\n    \"justification\": null,\n    \"avgIops\": 25,\n    \"peakIops\": 127,\n    \"qtreeTally\": 1,\n    \"snapTally\": 8,\n    \"id\": {\n        \"id\": 3416,\n        \"controlledId\": 1,\n        \"aggregateId\": 23\n    }\n}"
+						},
+						"url": {
+							"raw": "{{url}}/nasVolumes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nasVolumes"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Preferences",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/preferences",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"preferences"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pageName\": \"ABC\",\n\t\"preferenceType\": \"USER\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/preferences",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"preferences"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/preferences/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"preferences",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Preference Details",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/preferenceDetails",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"preferenceDetails"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"preferenceId\" : 1,\n\t\"fieldName\": \"ABC\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/preferenceDetails",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"preferenceDetails"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/preferenceDetails/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"preferenceDetails",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Qtree",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/qtrees",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"qtrees"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/qtrees/1762",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"qtrees",
+								"1762"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"qtreeName\": \"Postman - Post Test 1\",\n    \"qtreeType\": \"DEFAULT\",\n    \"securityStyle\": \"UNIX\",\n    \"qtreeStatus\": \"NORMAL\",\n    \"id\": {\n    \t\"nasVolumeId\": 313,\n    \t\"id\": 3426\n    }\n}"
+						},
+						"url": {
+							"raw": "{{url}}/qtrees",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"qtrees"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Replications",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/replications",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"replications"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/replications/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"replications",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Schedules",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n}"
+						},
+						"url": {
+							"raw": "{{url}}/schedules",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"schedules"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/schedules/54",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"schedules",
+								"54"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"weekDate\": \"2018-01-22\",\n    \"hostConnectionBooked\": 1\n}"
+						},
+						"url": {
+							"raw": "{{url}}/schedules",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"schedules"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Schedule Reset",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/scheduleResets",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"scheduleResets"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/scheduleResets/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"scheduleResets",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"hostCount\": 10\n}"
+						},
+						"url": {
+							"raw": "{{url}}/scheduleResets",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"scheduleResets"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Schema Versions",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/schemaVersions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"schemaVersions"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/schemaVersions/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"schemaVersions",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"installedRank\" : 8,\n    \"description\": \"Postman - Test Post\",\n    \"type\": \"HTTP\",\n    \"script\": \"V1__Vitae-DB-Dump20170829_Starting_Point.sql\",\n    \"checksum\": 1743239658,\n    \"installedBy\": \"root\",\n    \"installedOn\": \"2017-09-14T01:35:15.000+0000\",\n    \"executionTime\": 2689,\n    \"success\": 1\n}"
+						},
+						"url": {
+							"raw": "{{url}}/schemaVersions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"schemaVersions"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shares",
+			"description": "",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": {\n\t\t\"id\": 5,\n\t\t\"hostId\": 4\n\t},\n\t\"qtreeId\": 328,\n\t\"shareName\": \"Postman - Test Post\",\n\t\"shareType\": \"Dont know\",\n\t\"ownerUserCorporateId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{url}}/shares",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"shares"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/shares/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"shares",
+								"5"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/shares",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"shares"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Storages",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/storages",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"storages"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/storages/41",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"storages",
+								"41"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Storagexes",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/storagexes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"storagexes"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/storagexes/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"storagexes",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "System Admins",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/systemAdmins",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"systemAdmins"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/systemAdmins/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"systemAdmins",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sys Config",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/sysConfigs",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sysConfigs"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/sysConfigs/1851",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sysConfigs",
+								"1851"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sys Config Property Types",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/sysConfigPropertyTypes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sysConfigPropertyTypes"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/sysConfigPropertyTypes/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sysConfigPropertyTypes",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User API",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/userApis",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userApis"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/userApis/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userApis",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Corporate",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/userCorporates",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userCorporates"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/userCorporates/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userCorporates",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Natives",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/userNatives",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userNatives"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/userNatives/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userNatives",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Roles",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/userRoles",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userRoles"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/userRoles/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userRoles",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "WFA Data",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/wfaDatas",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"wfaDatas"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/wfaDatas/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"wfaDatas",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "WFA Messages",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/wfaMessages",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"wfaMessages"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/wfaMessages/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"wfaMessages",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "WFA Ocum Controller Data",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/wfaOcumControllerDatas",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"wfaOcumControllerDatas"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/wfaOcumControllerDatas/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"wfaOcumControllerDatas",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "ad35b4d7-9f00-4bbf-bd77-91c61a9f76c0",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6bb5ab49-2eb4-4b05-818e-127c230de46a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

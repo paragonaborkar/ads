@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendMetadata="http://www.talend.org/metadata/connection/2010" xmlns:orgomg.cwm.resource.record="http:///orgomg/cwm/resource/record.ecore">
+  <TalendMetadata:FileExcelConnection xmi:id="_5Sfo4PshEeeJ7Ia1X_-gbA" name="SchemaUserNatives" dataPackage="_5Sfo4fshEeeJ7Ia1X_-gbA" Server="Localhost 127.0.0.1" FilePath="C:/netapp/ads_load/UserNativeLoadSheetTemplate.xlsx" Encoding="UTF-8" UseHeader="true" HeaderValue="1" FirstLineCaption="true" SheetName="UserNativeLoadSheet" firstColumn="1" thousandSeparator="','" decimalSeparator="'.'" selectAllSheets="true" sheetList="UserNativeLoadSheet:w&#xA;">
+    <sheetColumns>A</sheetColumns>
+    <sheetColumns>B</sheetColumns>
+    <sheetColumns>C</sheetColumns>
+    <sheetColumns>D</sheetColumns>
+    <sheetColumns>E</sheetColumns>
+    <sheetColumns>F</sheetColumns>
+    <sheetColumns>G</sheetColumns>
+  </TalendMetadata:FileExcelConnection>
+  <orgomg.cwm.resource.record:RecordFile xmi:id="_5Sfo4fshEeeJ7Ia1X_-gbA" name="default" dataManager="_5Sfo4PshEeeJ7Ia1X_-gbA">
+    <ownedElement xsi:type="TalendMetadata:MetadataTable" xmi:id="_5Sfo4vshEeeJ7Ia1X_-gbA" id="_VHxjIPshEeeJ7Ia1X_-gbA" label="metadata">
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_5Sfo4_shEeeJ7Ia1X_-gbA" label="firstName" length="255" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_5Sfo5PshEeeJ7Ia1X_-gbA" label="lastName" length="255" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_5Sfo5fshEeeJ7Ia1X_-gbA" label="userName" length="255" talendType="id_String" nullable="false" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_5Sfo5vshEeeJ7Ia1X_-gbA" label="email" length="255" talendType="id_String" nullable="false" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_5Sfo5_shEeeJ7Ia1X_-gbA" label="password" length="255" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_5Sfo6PshEeeJ7Ia1X_-gbA" label="enabled" length="-1" talendType="id_Boolean" pattern="&quot;dd-MM-yyyy&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_5Sfo6fshEeeJ7Ia1X_-gbA" label="userRoleId" length="255" talendType="id_String" pattern="&quot;dd-MM-yyyy&quot;"/>
+    </ownedElement>
+  </orgomg.cwm.resource.record:RecordFile>
+</xmi:XMI>

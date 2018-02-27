@@ -12,24 +12,31 @@ public class ApplicationLobXRefPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="application_id")
-	private int applicationId;
+	@Column(name="application_id", insertable=false, updatable=false, unique=true, nullable=false)
+	private Integer applicationId;
 
-	@Column(name="lob_id")
-	private int lobId;
+	@Column(name="lob_id", insertable=false, updatable=false, unique=true, nullable=false)
+	private Integer lobId;
 
 	public ApplicationLobXRefPK() {
 	}
-	public int getApplicationId() {
+	
+	public ApplicationLobXRefPK(Integer applicationId, Integer lobId) {
+		super();
+		this.applicationId = applicationId;
+		this.lobId = lobId;
+	}
+
+	public Integer getApplicationId() {
 		return this.applicationId;
 	}
-	public void setApplicationId(int applicationId) {
+	public void setApplicationId(Integer applicationId) {
 		this.applicationId = applicationId;
 	}
-	public int getLobId() {
+	public Integer getLobId() {
 		return this.lobId;
 	}
-	public void setLobId(int lobId) {
+	public void setLobId(Integer lobId) {
 		this.lobId = lobId;
 	}
 

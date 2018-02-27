@@ -2,7 +2,7 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -11,58 +11,51 @@ import java.util.Date;
  */
 @Entity
 @Table(name="extended_info_varchar")
-@NamedQuery(name="ExtendedInfoVarchar.findAll", query="SELECT e FROM ExtendedInfoVarchar e")
 public class ExtendedInfoVarchar implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_time")
-	private Date createTime;
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
-	@Column(name="field_id")
-	private int fieldId;
-
-	@Column(name="field_value")
+	@Column(name="field_value", length=255)
 	private String fieldValue;
 
 	@Column(name="row_id")
-	private int rowId;
+	private Integer rowId;
 
-	@Column(name="table_name")
+	@Column(name="table_name", length=45)
 	private String tableName;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_time")
-	private Date updateTime;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
+
+	//bi-directional many-to-one association to ExtendedInfoVarcharSetting
+	@ManyToOne
+	@JoinColumn(name="field_id")
+	private ExtendedInfoVarcharSetting extendedInfoVarcharSetting;
 
 	public ExtendedInfoVarchar() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
-	}
-
-	public int getFieldId() {
-		return this.fieldId;
-	}
-
-	public void setFieldId(int fieldId) {
-		this.fieldId = fieldId;
 	}
 
 	public String getFieldValue() {
@@ -73,11 +66,11 @@ public class ExtendedInfoVarchar implements Serializable {
 		this.fieldValue = fieldValue;
 	}
 
-	public int getRowId() {
+	public Integer getRowId() {
 		return this.rowId;
 	}
 
-	public void setRowId(int rowId) {
+	public void setRowId(Integer rowId) {
 		this.rowId = rowId;
 	}
 
@@ -89,12 +82,20 @@ public class ExtendedInfoVarchar implements Serializable {
 		this.tableName = tableName;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public ExtendedInfoVarcharSetting getExtendedInfoVarcharSetting() {
+		return this.extendedInfoVarcharSetting;
+	}
+
+	public void setExtendedInfoVarcharSetting(ExtendedInfoVarcharSetting extendedInfoVarcharSetting) {
+		this.extendedInfoVarcharSetting = extendedInfoVarcharSetting;
 	}
 
 }

@@ -12,24 +12,33 @@ public class ActivityMigrationKeyXRefPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="activity_id")
-	private int activityId;
+	@Column(name="activity_id", unique=true, nullable=false)
+	private Integer activityId;
 
-	@Column(name="migration_key_id")
-	private int migrationKeyId;
+	@Column(name="migration_key_id", insertable=false, updatable=false, unique=true, nullable=false)
+	private Integer migrationKeyId;
 
 	public ActivityMigrationKeyXRefPK() {
 	}
-	public int getActivityId() {
+	
+	public ActivityMigrationKeyXRefPK(Integer activityId, Integer migrationKeyId) {
+		super();
+		this.activityId = activityId;
+		this.migrationKeyId = migrationKeyId;
+	}
+
+
+
+	public Integer getActivityId() {
 		return this.activityId;
 	}
-	public void setActivityId(int activityId) {
+	public void setActivityId(Integer activityId) {
 		this.activityId = activityId;
 	}
-	public int getMigrationKeyId() {
+	public Integer getMigrationKeyId() {
 		return this.migrationKeyId;
 	}
-	public void setMigrationKeyId(int migrationKeyId) {
+	public void setMigrationKeyId(Integer migrationKeyId) {
 		this.migrationKeyId = migrationKeyId;
 	}
 

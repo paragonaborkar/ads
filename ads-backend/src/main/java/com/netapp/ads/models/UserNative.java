@@ -2,7 +2,12 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -11,47 +16,62 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="user_native")
-@NamedQuery(name="UserNative.findAll", query="SELECT u FROM UserNative u")
 public class UserNative implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
+	@Column(nullable=false, length=255)
 	private String email;
 
-	private byte enabled;
+	@Column(nullable=false)
+	private boolean enabled;
 
-	@Column(name="first_name")
+	@Column(name="first_name", length=45)
 	private String firstName;
 
-	@Column(name="last_name")
+	@Column(name="last_name", length=45)
 	private String lastName;
 
+	@Column(nullable=false, length=64)
 	private String password;
 
+	@Column(length=64)
 	private String salt;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
-	@Column(name="user_name")
+	@Column(name="user_name", nullable=false, length=100)
 	private String userName;
 
-	@Column(name="user_role_id")
-	private int userRoleId;
+	//bi-directional many-to-one association to Cutover
+	@OneToMany(mappedBy="userNative")
+	private List<Cutover> cutovers;
+
+	//bi-directional many-to-one association to UserRole
+	@ManyToOne
+	@JoinColumn(name="user_role_id")
+	private UserRole userRole;
+
+	//bi-directional one-to-one association to UserRole
+	//@OneToOne(mappedBy="userNative")
+	//private UserRole userRole2;
 
 	public UserNative() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -71,11 +91,11 @@ public class UserNative implements Serializable {
 		this.email = email;
 	}
 
-	public byte getEnabled() {
+	public boolean getEnabled() {
 		return this.enabled;
 	}
 
-	public void setEnabled(byte enabled) {
+	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
 
@@ -95,10 +115,12 @@ public class UserNative implements Serializable {
 		this.lastName = lastName;
 	}
 
+	@JsonIgnore
 	public String getPassword() {
 		return this.password;
 	}
 
+	@JsonProperty
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -127,12 +149,35 @@ public class UserNative implements Serializable {
 		this.userName = userName;
 	}
 
-	public int getUserRoleId() {
-		return this.userRoleId;
+	public List<Cutover> getCutovers() {
+		return this.cutovers;
 	}
 
-	public void setUserRoleId(int userRoleId) {
-		this.userRoleId = userRoleId;
+	public void setCutovers(List<Cutover> cutovers) {
+		this.cutovers = cutovers;
 	}
+
+	public Cutover addCutover(Cutover cutover) {
+		getCutovers().add(cutover);
+		cutover.setUserNative(this);
+
+		return cutover;
+	}
+
+	public Cutover removeCutover(Cutover cutover) {
+		getCutovers().remove(cutover);
+		cutover.setUserNative(null);
+
+		return cutover;
+	}
+
+	public UserRole getUserRole() {
+		return this.userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
+	}
+
 
 }

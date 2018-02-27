@@ -27,9 +27,9 @@ public class EmailService {
     private String EMAIL_FROM_ALIAS;
     @Value("${mail.to}")
     private String EMAIL_TO;
-    @Autowired
+    //@Autowired
     private TemplateEngine templateEngine;
-    @Autowired
+    //@Autowired
     public JavaMailSender emailSender;
 
     public void sendSimpleMessage(String to, String subject, String text) {

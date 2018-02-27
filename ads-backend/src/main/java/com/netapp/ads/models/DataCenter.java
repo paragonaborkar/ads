@@ -1,7 +1,5 @@
 package com.netapp.ads.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -14,47 +12,58 @@ import java.util.List;
  */
 @Entity
 @Table(name="data_center")
-@NamedQuery(name="DataCenter.findAll", query="SELECT d FROM DataCenter d")
 public class DataCenter implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
+	@Column(length=255)
 	private String city;
 
+	@Column(length=255)
 	private String country;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
-	@Column(name="data_center_full_name")
+	@Column(name="data_center_full_name", length=1024)
 	private String dataCenterFullName;
 
-	@Column(name="data_center_name")
+	@Column(name="data_center_name", nullable=false, length=24)
 	private String dataCenterName;
 
 	@Column(name="data_geo_location")
 	private String dataGeoLocation;
 
+	@Column(nullable=false, length=60)
 	private String region;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to Controller
-	@JsonBackReference
-	@OneToMany(mappedBy="dataCenter", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="dataCenter")
 	private List<Controller> controllers;
+
+	//bi-directional many-to-one association to Replication
+	@OneToMany(mappedBy="targetVaultDataCenter")
+	private List<Replication> targetVaultDataCenterReplications;
+
+	//bi-directional many-to-one association to Replication
+	@OneToMany(mappedBy="targetMirroDataCenter")
+	private List<Replication> targetMirroDataCenterReplications;
 
 	public DataCenter() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -142,6 +151,50 @@ public class DataCenter implements Serializable {
 		controller.setDataCenter(null);
 
 		return controller;
+	}
+
+	public List<Replication> getTargetVaultDataCenterReplications() {
+		return this.targetVaultDataCenterReplications;
+	}
+
+	public void setTargetVaultDataCenterReplications(List<Replication> targetVaultDataCenterReplications) {
+		this.targetVaultDataCenterReplications = targetVaultDataCenterReplications;
+	}
+
+	public Replication addTargetVaultDataCenterReplication(Replication replication) {
+		getTargetVaultDataCenterReplications().add(replication);
+		replication.setTargetVaultDataCenter(this);
+
+		return replication;
+	}
+
+	public Replication removeTargetVaultDataCenterReplication(Replication replication) {
+		getTargetVaultDataCenterReplications().remove(replication);
+		replication.setTargetVaultDataCenter(null);
+
+		return replication;
+	}
+
+	public List<Replication> getTargetMirroDataCenterReplications() {
+		return this.targetMirroDataCenterReplications;
+	}
+
+	public void setTargetMirroDataCenterReplications(List<Replication> replications) {
+		this.targetMirroDataCenterReplications = replications;
+	}
+
+	public Replication addReplications2(Replication replication) {
+		getTargetMirroDataCenterReplications().add(replication);
+		replication.setTargetMirrorDataCenter(this);
+
+		return replication;
+	}
+
+	public Replication removeReplications2(Replication replication) {
+		getTargetMirroDataCenterReplications().remove(replication);
+		replication.setTargetMirrorDataCenter(null);
+
+		return replication;
 	}
 
 }

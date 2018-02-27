@@ -2,7 +2,7 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -11,43 +11,47 @@ import java.util.Date;
  */
 @Entity
 @Table(name="mount_point")
-@NamedQuery(name="MountPoint.findAll", query="SELECT m FROM MountPoint m")
 public class MountPoint implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private MountPointPK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_time")
-	private Date createTime;
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
-	@Column(name="inventory_number")
+	@Column(name="inventory_number", nullable=false, length=45)
 	private String inventoryNumber;
 
-	@Column(name="mount_location")
+	@Column(name="mount_location", nullable=false, length=255)
 	private String mountLocation;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_time")
-	private Date updateTime;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
+
+	//bi-directional many-to-one association to Host
+	@ManyToOne
+	@JoinColumn(name="host_id", nullable=false)
+	private Host host;
 
 	public MountPoint() {
 	}
 
-	public MountPointPK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(MountPointPK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
@@ -67,12 +71,20 @@ public class MountPoint implements Serializable {
 		this.mountLocation = mountLocation;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public Host getHost() {
+		return this.host;
+	}
+
+	public void setHost(Host host) {
+		this.host = host;
 	}
 
 }

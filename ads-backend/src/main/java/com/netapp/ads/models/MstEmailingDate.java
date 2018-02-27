@@ -3,6 +3,7 @@ package com.netapp.ads.models;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -11,59 +12,63 @@ import java.util.Date;
  */
 @Entity
 @Table(name="mst_emailing_date")
-@NamedQuery(name="MstEmailingDate.findAll", query="SELECT m FROM MstEmailingDate m")
 public class MstEmailingDate implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private MstEmailingDatePK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
 	@Column(name="app_owner_user_corporate_id")
-	private int appOwnerUserCorporateId;
+	private Integer appOwnerUserCorporateId;
+
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_time")
-	private Date createTime;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="mailing_date_time")
+	@Column(name="mailing_date_time", nullable=false)
 	private Date mailingDateTime;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="migrate_week")
+	@Column(name="migrate_week", nullable=false)
 	private Date migrateWeek;
 
 	@Column(name="system_admin_id")
-	private int systemAdminId;
+	private Integer systemAdminId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_time")
-	private Date updateTime;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
+
+	//bi-directional many-to-one association to MstEmailType
+	@ManyToOne
+	@JoinColumn(name="email_type_id", nullable=false)
+	private MstEmailType mstEmailType;
 
 	public MstEmailingDate() {
 	}
 
-	public MstEmailingDatePK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(MstEmailingDatePK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getAppOwnerUserCorporateId() {
+	public Integer getAppOwnerUserCorporateId() {
 		return this.appOwnerUserCorporateId;
 	}
 
-	public void setAppOwnerUserCorporateId(int appOwnerUserCorporateId) {
+	public void setAppOwnerUserCorporateId(Integer appOwnerUserCorporateId) {
 		this.appOwnerUserCorporateId = appOwnerUserCorporateId;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
@@ -83,20 +88,28 @@ public class MstEmailingDate implements Serializable {
 		this.migrateWeek = migrateWeek;
 	}
 
-	public int getSystemAdminId() {
+	public Integer getSystemAdminId() {
 		return this.systemAdminId;
 	}
 
-	public void setSystemAdminId(int systemAdminId) {
+	public void setSystemAdminId(Integer systemAdminId) {
 		this.systemAdminId = systemAdminId;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public MstEmailType getMstEmailType() {
+		return this.mstEmailType;
+	}
+
+	public void setMstEmailType(MstEmailType mstEmailType) {
+		this.mstEmailType = mstEmailType;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.netapp.ads.models;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -11,30 +12,35 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="mst_email_type")
-@NamedQuery(name="MstEmailType.findAll", query="SELECT m FROM MstEmailType m")
 public class MstEmailType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
-	@Column(name="email_type")
+	@Column(name="email_type", nullable=false, length=45)
 	private String emailType;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
+
+	//bi-directional many-to-one association to MstEmailingDate
+	@OneToMany(mappedBy="mstEmailType")
+	private List<MstEmailingDate> mstEmailingDates;
 
 	public MstEmailType() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -60,6 +66,28 @@ public class MstEmailType implements Serializable {
 
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public List<MstEmailingDate> getMstEmailingDates() {
+		return this.mstEmailingDates;
+	}
+
+	public void setMstEmailingDates(List<MstEmailingDate> mstEmailingDates) {
+		this.mstEmailingDates = mstEmailingDates;
+	}
+
+	public MstEmailingDate addMstEmailingDate(MstEmailingDate mstEmailingDate) {
+		getMstEmailingDates().add(mstEmailingDate);
+		mstEmailingDate.setMstEmailType(this);
+
+		return mstEmailingDate;
+	}
+
+	public MstEmailingDate removeMstEmailingDate(MstEmailingDate mstEmailingDate) {
+		getMstEmailingDates().remove(mstEmailingDate);
+		mstEmailingDate.setMstEmailType(null);
+
+		return mstEmailingDate;
 	}
 
 }
