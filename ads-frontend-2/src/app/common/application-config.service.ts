@@ -77,9 +77,9 @@ export class ApplicationConfigService {
         fieldOrder: updatedPreferenceDetail.fieldOrder,
         fieldVisible: updatedPreferenceDetail.fieldVisible
       }).map(response => response);
-        // return response.json();
-        // return response;
-      // });
+    // return response.json();
+    // return response;
+    // });
     // Handle error in Subscribe() using the AdsErrorService      
     // You can optionally handle it here, if needed
   }
@@ -119,12 +119,14 @@ export class ApplicationConfigService {
           }
         });
 
-        columns.push({
-          headerTemplate: hdrTmpl,
-          cellTemplate: actionTmpl,
-          order: 1000,
-          flexGrow: 1
-        });
+        if (hdrTmpl != null) {
+          columns.push({
+            headerTemplate: hdrTmpl,
+            cellTemplate: actionTmpl,
+            order: 1000,
+            flexGrow: 1
+          });
+        }
 
 
         // Display the columns in the correct order now that we have the complete set of them.

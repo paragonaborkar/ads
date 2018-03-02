@@ -1,0 +1,64 @@
+<div class="row d-flex justify-content-center">
+
+  <div class="col-md-8">
+    <div class="col-md-12  mb-2">
+      <h2 class="h3">ADS Application Properties</h2>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <button class="btn btn-primary" (click)="showCreateModal()">Add Property</button>
+      </div>
+
+      <div class="col-md-6">
+        <div class="pull-right">
+          <form class="form-inline">
+            <div class="form-group">
+              <label for="pagesPerPage">Rows:&nbsp;</label>
+              <select class="form-control form-control-sm" name="pagesPerPage" [(ngModel)]="page.size" (change)="pagingUpdated()">
+                <option value=1>1</option>
+                <option value=3>3</option>
+                <option value=10>10</option>
+                <option value=25>25</option>
+                <option value=50>50</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+
+
+
+    <div class=" mt-3" *ngIf="rows.length > 0 && columns.length > 0">
+
+      <ngx-datatable class="material" [rows]="rows" [columns]="columns" [columnMode]="'flex'" [rowHeight]="auto" [externalPaging]="true"
+        [count]="page.totalElements" [offset]="page.number" [limit]="page.size" [headerHeight]="50" [footerHeight]="50" (page)='setPage($event)'>
+      </ngx-datatable>
+
+    </div>
+
+
+  </div>
+</div>
+
+<ng-template #hdrTmpl let-column="column">
+  <!-- Actions -->
+</ng-template>
+
+<ng-template #actionTmpl let-column="column" let-row="row">
+  <!-- <button class="btn btn-sm btn-danger" md-icon-button (click)="showDeleteModal(row)">
+      <i class="fa fa-trash"></i>
+    </button> -->
+</ng-template>
+
+<ng-template #stringEditTmpl ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-column="column">
+  <span title="Double click to edit" (dblclick)="editing[rowIndex + column.prop] = true" *ngIf="!editing[rowIndex + column.prop]">
+    {{value}}
+  </span>
+  <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, column.prop, rowIndex, row)" *ngIf="editing[rowIndex+ column.prop]"
+    type="text" [value]="value" />
+</ng-template>

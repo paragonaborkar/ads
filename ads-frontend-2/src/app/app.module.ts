@@ -30,6 +30,8 @@ import { TokenInterceptor } from './auth/token.interceptor';
 
 import { ReportService } from './admin/report-listing/report.service';   // RENAME TO "admin-."
 import { AppPropertiesService } from './admin/app-properties/app-properties.service'
+import { AppPropsService } from './admin/app-props/app-props.service'
+
 
 import { UserAdminService } from './admin/admin-native-user/user-admin.service';
 import { PagerService } from './common/pager.service';      // Currently used in user admin. Possibly many pages.
@@ -71,6 +73,7 @@ import { ScheduleComponent } from './discover/owner/schedule/schedule.component'
 import { ReportListingDisComponent } from './discover/report-listing-dis/report-listing-dis.component';
 
 import { ReportListingConnComponent } from './connections/report-listing-conn/report-listing-conn.component';
+import { AppPropsComponent } from './admin/app-props/app-props.component';
 
 /*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
@@ -102,7 +105,8 @@ import { ReportListingConnComponent } from './connections/report-listing-conn/re
     OwnerNotFoundComponent,
     ScheduleComponent,
     ReportListingDisComponent,
-    ReportListingConnComponent
+    ReportListingConnComponent,
+    AppPropsComponent
 
     
 
@@ -128,6 +132,7 @@ import { ReportListingConnComponent } from './connections/report-listing-conn/re
     PagerService,
     ApplicationConfigService,
     AppPropertiesService,
+    AppPropsService,
 
     QtreesService,
 

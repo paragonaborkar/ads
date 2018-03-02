@@ -21,6 +21,7 @@ import { OwnerNotFoundComponent } from './discover/owner-not-found/owner-not-fou
 import { ReportListingDisComponent } from './discover/report-listing-dis/report-listing-dis.component';
 import { ReportListingConnComponent } from './connections/report-listing-conn/report-listing-conn.component';
 
+import { AppPropsComponent } from './admin/app-props/app-props.component';
 
 // import { Error404LoggedInComponent } from './common/error-404-logged-in/error-404-logged-in.component';
 
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: 'admin/property-preferences',  component: PropPreferencesComponent, canActivate: [AuthGuard] },
   { path: 'admin/application-properties',  component: AppPropertiesComponent, canActivate: [AuthGuard] },
 
+  { path: 'admin/application-props',  component: AppPropsComponent, canActivate: [AuthGuard] },
 
   { path: 'connections/manual-function',  component: ConnectionsManualFunctionsComponent, canActivate: [AuthGuard] },
   { path: 'connections/report-listing',  component: ReportListingConnComponent, canActivate: [AuthGuard] },
@@ -50,7 +52,7 @@ const routes: Routes = [
  
   { path: 'discover/report-listing',  component: ReportListingDisComponent, canActivate: [AuthGuard] },
   
-  
+
   { path: '',   component: LoginComponent},
 
 
