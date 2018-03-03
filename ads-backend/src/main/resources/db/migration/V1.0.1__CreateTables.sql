@@ -1219,6 +1219,9 @@ CREATE TABLE `qtree` (
   `quota_used_capacity_limit_mb` bigint(20) DEFAULT NULL,
   `qtree_type` enum('DEFAULT','EXPLICIT') DEFAULT NULL,
   `security_style` enum('UNIX','NTFS','MIXED') DEFAULT NULL,
+  `last_accessed` datetime DEFAULT '1980-01-01 00:00:01',
+  `disposition` varchar(1024) DEFAULT NULL,
+  `justification` varchar(1024) DEFAULT NULL,  
   `qtree_status` varchar(225) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -1783,6 +1786,19 @@ CREATE TABLE `preference_detail` (
   KEY `fk_preference_detail_preference` (`preference_id`),
   CONSTRAINT `fk_preference_detail_preference` FOREIGN KEY (`preference_id`) REFERENCES `preference` (`id`)
 );
+
+DROP TABLE IF EXISTS `controller_release`;
+CREATE TABLE IF NOT EXISTS `controller_release` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `src_controller_id` INT(11) NULL DEFAULT NULL,
+  `tgt_controller_id` INT(11) NULL DEFAULT NULL,
+  `processed` TINYINT(1) NULL DEFAULT 0,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_controller_id_src` FOREIGN KEY (`src_controller_id`) REFERENCES `controller` (`id`)
+);
+
 
 --
 -- Dumping events for database 'vitae_data_refactor'

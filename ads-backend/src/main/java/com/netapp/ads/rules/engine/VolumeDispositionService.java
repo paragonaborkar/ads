@@ -1,3 +1,4 @@
+package com.netapp.ads.rules.engine;
 /*******************************************************************************
  * Copyright (c) 2016 NetApp Inc. All Rights Reserved
  *
@@ -6,18 +7,14 @@
  *     NETAPP, INC. USE, DISCLOSURE OR REPRODUCTION IS PROHIBITED 
  *     WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF NETAPP, INC.
  *******************************************************************************/
-package refactor.ruleEngine;
+
 
 import java.util.List;
 
-import com.netapp.ads.models.Controller;
+import com.netapp.ads.models.NasVolume;
 
-public interface ExceptionRuleService {
-	
-//	 void exceptionRule(List<CtrlReleaseEntity> crList);
-//	 void fireDroolsExceptionRule(List<CtrlReleaseEntity> crList);
-	 
-	 void exceptionRule(List<Controller> controllers);
-	 void fireDroolsExceptionRule(List<Controller> controllers);
-	 
+public interface  VolumeDispositionService{
+
+	 void volDisposition(List<NasVolume> list);
+	 void fireDroolsRules(List<NasVolume> list);
 }

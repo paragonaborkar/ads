@@ -1,4 +1,3 @@
-package refactor.ruleEngine;
 /*******************************************************************************
  * Copyright (c) 2016 NetApp Inc. All Rights Reserved
  *
@@ -7,14 +6,14 @@ package refactor.ruleEngine;
  *     NETAPP, INC. USE, DISCLOSURE OR REPRODUCTION IS PROHIBITED 
  *     WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF NETAPP, INC.
  *******************************************************************************/
-
+package com.netapp.ads.rules.engine;
 
 import java.util.List;
 
-import com.netapp.ads.models.NasVolume;
+import com.netapp.ads.models.Qtree;
 
-public interface  VolumeDispositionService{
-
-	 void volDisposition(List<NasVolume> list);
-	 void fireDroolsRules(List<NasVolume> list);
+public interface ExceptionRuleService {
+	
+	void executeQtreeExceptionRules(List<Qtree> qtrees);
+	 
 }
