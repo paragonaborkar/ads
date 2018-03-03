@@ -3,8 +3,10 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/timer';
 
 import { Page } from "../../common/page";
 
@@ -24,24 +26,45 @@ export class AppPropsComponent implements OnInit {
   @ViewChild('stringEditTmpl') stringEditTmpl: TemplateRef<any>;
 
   public pageName = "SysPropListing";
-
+  configGroups:any[] = [];
   page = new Page();
 
+  
   // Listing of native users to display 
   rows: any[] = [];
   columns: any = [];
   editing = {};
+  grouping = '';
+  
+  public showSuccess: boolean = false; 
+  public errorMessage: string = '';
+
+  private subscription: Subscription;
+  private timer: Observable<any>;
 
   constructor(private appPropService: AppPropsService, private applicationConfigService: ApplicationConfigService,  private errorService: AdsErrorService) {
     this.page.number = 1;
     this.page.pageNumber = 1;
     this.page.size = 3;
+    
   }
 
   ngOnInit() {
-    this.setPage({ offset: 0 });
-    this.applyPreferences();
+    this.appPropService.getSysConfigGroups().subscribe(
+      sysConfigGroups => {
+        this.configGroups = sysConfigGroups;
+        console.log(sysConfigGroups);
+        this.grouping = sysConfigGroups[0];
 
+        this.setPage({ offset: 0 });
+        this.applyPreferences(); 
+      });
+  }
+
+  public ngOnDestroy() {
+    if ( this.subscription && this.subscription instanceof Subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   /**
@@ -54,7 +77,8 @@ export class AppPropsComponent implements OnInit {
     this.page.pageNumber = pageInfo.offset;
 
     // This method is to get all the values from user_native table
-    this.appPropService.getSysConfigsByPage(this.page).subscribe(
+    this.appPropService.getSysConfigData(this.page, this.grouping).subscribe(
+    // this.appPropService.getSysConfigsByPage(this.page).subscribe(
       configs => {
         console.log(configs);
         this.page = configs.page;
@@ -74,8 +98,13 @@ export class AppPropsComponent implements OnInit {
   pagingUpdated() {
     this.setPage(this.page);
   }
-  
-  updateValue(event, cell, rowIndex, row) {
+
+  updateTableRows(grouping) {
+    this.grouping = grouping;
+    this.setPage(this.page);
+  }
+
+  updateTableValue(event, cell, rowIndex, row) {
     this.editing[rowIndex +  cell] = false;
     this.rows[rowIndex][cell] = event.target.value;
 
@@ -84,7 +113,25 @@ export class AppPropsComponent implements OnInit {
       response => {
         console.log(response);
         console.log("Saved row");
+
+        // call this setTimer method to start 
+        this.setSuccessTimer();
+      }, err => {
+        // Get the ADS configured error message to display.
+        this.errorMessage = this.errorService.processError(err, "updateApplicationProperty", "PATCH");
       });
+  }
+
+  public setSuccessTimer(){
+    this.errorMessage = '';
+    // set to true to show loading div
+    this.showSuccess = true;
+
+    this.timer        = Observable.timer(5000); // 5000 millisecond means 5 seconds
+    this.subscription = this.timer.subscribe(() => {
+        // set to false to hide loading div from view after 5 seconds
+        this.showSuccess = false;
+    });
   }
 
   applyPreferences(): void {

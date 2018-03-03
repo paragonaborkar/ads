@@ -1,29 +1,45 @@
-<div class="row d-flex justify-content-center">
+<div class="row d-flex justify-content-center pb-5">
 
   <div class="col-md-8">
     <div class="col-md-12  mb-2">
       <h2 class="h3">ADS Application Properties</h2>
     </div>
 
-    <div class="row">
+    <div class="col-md-12 mt-3 mb-2">
+      <ul class="nav nav-tabs">
+        <li *ngFor="let groupName of configGroups" class="nav-item">
+          <a href="" class="nav-link" [ngClass]="{'active': groupName === grouping}" data-toggle="tab" role="tab" ng-model="myVar"
+            data-dismiss="modal" (click)="updateTableRows(groupName)">{{groupName}}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="row  mt-2">
       <div class="col-md-6">
-        <button class="btn btn-primary" (click)="showCreateModal()">Add Property</button>
+        <form class="form-inline">
+          <div class="form-group">
+            <label for="pagesPerPage">Rows:&nbsp;</label>
+            <select class="form-control form-control-sm" name="pagesPerPage" [(ngModel)]="page.size" (change)="pagingUpdated()">
+              <option value=1>1</option>
+              <option value=3>3</option>
+              <option value=10>10</option>
+              <option value=25>25</option>
+              <option value=50>50</option>
+            </select>
+          </div>
+        </form>
       </div>
 
       <div class="col-md-6">
         <div class="pull-right">
-          <form class="form-inline">
-            <div class="form-group">
-              <label for="pagesPerPage">Rows:&nbsp;</label>
-              <select class="form-control form-control-sm" name="pagesPerPage" [(ngModel)]="page.size" (change)="pagingUpdated()">
-                <option value=1>1</option>
-                <option value=3>3</option>
-                <option value=10>10</option>
-                <option value=25>25</option>
-                <option value=50>50</option>
-              </select>
-            </div>
-          </form>
+          <div class="alert alert-success mb-0 pb-0 pt-0 fade show" role="alert" *ngIf="showSuccess">
+            Saved update!
+          </div>
+
+          <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="errorMessage">
+            <span>{{errorMessage}}</span>
+          </div>
+
         </div>
       </div>
     </div>
@@ -59,6 +75,7 @@
   <span title="Double click to edit" (dblclick)="editing[rowIndex + column.prop] = true" *ngIf="!editing[rowIndex + column.prop]">
     {{value}}
   </span>
-  <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, column.prop, rowIndex, row)" *ngIf="editing[rowIndex+ column.prop]"
-    type="text" [value]="value" />
+  <input class="form-control form-control-sm" autofocus (keyup.enter)="updateTableValue($event, column.prop, rowIndex, row)"
+    (blur)="updateTableValue($event, column.prop, rowIndex, row)" *ngIf="editing[rowIndex+ column.prop]" type="text" [value]="value"
+  />
 </ng-template>
