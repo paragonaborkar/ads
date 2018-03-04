@@ -11,16 +11,17 @@ import { PropPreferencesComponent } from './common/prop-preferences/prop-prefere
 import { AppPropertiesComponent } from './admin/app-properties/app-properties.component';
 
 import { ConnectionsManualFunctionsComponent } from './connections/connections-manual-functions/connections-manual-functions.component';
-import { DiscoverManualFunctionsComponent } from './discover/discover-manual-functions/discover-manual-functions.component';
+import { ReportListingConnComponent } from './connections/report-listing-conn/report-listing-conn.component';
+
 import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native-user.component';
 import { QtreesOwnershipComponent } from './discover/qtrees-ownership/qtrees-ownership.component';
 
 
+import { DiscoverManualFunctionsComponent } from './discover/discover-manual-functions/discover-manual-functions.component';
 import { OwnerComponent } from './discover/owner/owner.component';
 import { OwnerNotFoundComponent } from './discover/owner-not-found/owner-not-found.component';
 import { ReportListingDisComponent } from './discover/report-listing-dis/report-listing-dis.component';
-import { ReportListingConnComponent } from './connections/report-listing-conn/report-listing-conn.component';
-
+import { ControllerReleaseComponent } from './discover/controller-release/controller-release.component';
 
 // import { Error404LoggedInComponent } from './common/error-404-logged-in/error-404-logged-in.component';
 
@@ -47,7 +48,7 @@ const routes: Routes = [
   { path: 'discover/qtrees-ownership',  component: QtreesOwnershipComponent },
   { path: 'discover/owner',  component: OwnerNotFoundComponent, canActivate: [AuthGuard] },
   { path: 'discover/owner/:migKey',  component: OwnerComponent, canActivate: [AuthGuard] },
- 
+  { path: 'discover/controller-release',  component: ControllerReleaseComponent, canActivate: [AuthGuard] },
   { path: 'discover/report-listing',  component: ReportListingDisComponent, canActivate: [AuthGuard] },
   
   

@@ -36,6 +36,7 @@ import { PagerService } from './common/pager.service';      // Currently used in
 import { ApplicationConfigService } from './common/application-config.service';
 
 import { OwnerService } from './discover/owner.service';
+import { ControllerReleaseService } from './discover/controller-release/controller-release.service';
 
 // Declarations
 import { AppComponent } from './app.component';
@@ -71,6 +72,7 @@ import { ScheduleComponent } from './discover/owner/schedule/schedule.component'
 import { ReportListingDisComponent } from './discover/report-listing-dis/report-listing-dis.component';
 
 import { ReportListingConnComponent } from './connections/report-listing-conn/report-listing-conn.component';
+import { ControllerReleaseComponent } from './discover/controller-release/controller-release.component';
 
 /*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
@@ -102,7 +104,8 @@ import { ReportListingConnComponent } from './connections/report-listing-conn/re
     OwnerNotFoundComponent,
     ScheduleComponent,
     ReportListingDisComponent,
-    ReportListingConnComponent
+    ReportListingConnComponent,
+    ControllerReleaseComponent
 
     
 
@@ -128,10 +131,9 @@ import { ReportListingConnComponent } from './connections/report-listing-conn/re
     PagerService,
     ApplicationConfigService,
     AppPropertiesService,
-
     QtreesService,
-
-    OwnerService
+    OwnerService,
+    ControllerReleaseService
 
     ],
   bootstrap: [AppComponent]

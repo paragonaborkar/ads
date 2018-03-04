@@ -1,0 +1,49 @@
+<div class="row d-flex justify-content-center">
+
+    <div class="col-md-8 mb-2">
+      <h2 class="h3">Batch Release of Controllers</h2>
+    </div>
+  
+    <div class="col-md-7">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="pagesPerPage">Rows:&nbsp;</label>
+          <select class="form-control form-control-sm" name="pagesPerPage" [(ngModel)]="page.size" (change)="pagingUpdated()">
+            <option value=1>1</option>
+            <option value=3>3</option>
+            <option value=10>10</option>
+            <option value=25>25</option>
+            <option value=50>50</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-1">
+      <div class="pull-right">
+        <button type="button" class="btn btn-link" (click)="showPropertyModal()">
+          <i class="fa fa-cog fa-2x" title="Column Settings"></i>
+        </button>
+      </div>
+    </div>
+  
+    <div class="col-md-8" *ngIf="rows.length > 0 && columns.length > 0">
+      <ngx-datatable class="material" [rows]="rows" [columns]="columns" [columnMode]="'flex'" [rowHeight]="auto" [externalPaging]="true"
+        [count]="page.totalElements" [offset]="page.number" [limit]="page.size" [headerHeight]="50" [footerHeight]="50" (page)='setPage($event)'>
+      </ngx-datatable>
+    </div>
+  </div>
+  
+  
+  
+  <ng-template #hdrTmpl let-column="column">
+    Actions
+  </ng-template>
+  
+  <ng-template #actionTmpl let-column="column" let-row="row">
+    <button class="btn btn-sm btn-primary" (click)="showScheduleModal(row, 'Schedule')">
+      <i class="fa fa-check"></i> Schedule
+    </button>
+    <button class="btn btn-sm btn-warning" md-icon-button (click)="showScheduleModal(row, 'Reschedule')">
+      <i class="fa fa-calendar"></i> Re-Schedule
+    </button>
+  </ng-template>
