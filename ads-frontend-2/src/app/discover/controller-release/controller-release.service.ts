@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 // Don't use Promise, use Observable...
 import { Observable } from 'rxjs/Observable';
@@ -20,11 +20,34 @@ export class ControllerReleaseService {
   getControllerReleasesByProcessed(page: Page, processed: boolean): Observable<any> {
     let search = "search/findByProcessedFalse";
     if (processed)
-      search = "search/findByProcessedTrue";     
-    
+      search = "search/findByProcessedTrue";
+
     // return this.http.get(this.global.apiUrl + this.servicePath + search + "?page=" + page.number + "&size=" + page.size)
-    return this.http.get(this.global.apiUrl + this.servicePath + "search/findByProcessed?processed=" + processed +  "&page=" + page.number + "&size=" + page.size + "&projection=ControllerReleaseListing")
+    return this.http.get(this.global.apiUrl + this.servicePath + "search/findByProcessed?processed=" + processed + "&page=" + page.number + "&size=" + page.size + "&projection=ControllerReleaseListing")
       .map((res: Response) => res)
+      .catch((error: HttpErrorResponse) => {
+        console.log("ERROR *********************** ");
+        console.log(error.status);
+        if (error.status === 401) {
+          console.log("GOT 401");
+        } else {
+          return Observable.throw(error);
+        }
+      }
+      );
+
+    // .catch(
+    // Handle error in Subscribe() using the AdsErrorService  
+    // You can optionally handle it here, if needed    
+    //   );
+  }
+
+  searchForControllerReleases(page: Page, criteria: String): Observable<any> {
+
+    // return this.http.get(this.global.apiUrl + this.servicePath + search + "?page=" + page.number + "&size=" + page.size)
+    return this.http.get(this.global.apiUrl + this.servicePath + "search/findByProcessed?criteria=" + criteria + "&page=" + page.number + "&size=" + page.size + "&projection=ControllerReleaseListing")
+      .map((res: Response) => res);
+
     // .catch(
     // Handle error in Subscribe() using the AdsErrorService  
     // You can optionally handle it here, if needed    

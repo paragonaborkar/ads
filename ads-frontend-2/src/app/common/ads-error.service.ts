@@ -3,14 +3,14 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { SessionHelper } from '../auth/session.helper';
 import { NGXLogger } from 'ngx-logger';
-
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AdsErrorService {
 
   public errorMessages;
 
-  constructor(private http: HttpClient, private logger: NGXLogger, private sessionHelper: SessionHelper) {
+  constructor(private router: Router, private http: HttpClient, private logger: NGXLogger, private sessionHelper: SessionHelper) {
     this.errorMessages = this.http.get('assets/errorMessages.json')
       .subscribe(data => {
         this.errorMessages = data;
@@ -28,6 +28,15 @@ export class AdsErrorService {
   processError(error: HttpErrorResponse | any, actionName, method): string {
    
     this.remoteLogError(error, actionName);
+
+    // First - if 401: Unauthorized, sent to the login page.
+    if (this.getSafe(() => error.status)  != undefined){
+      console.log("REDIRECT 1", error);
+      if (error.status == 401) {
+        console.log("REDIRECT 2");
+        this.router.navigate(['login']);
+      }
+    }
 
     // Get the friendly error message based on the ADS error message configuration using the HTTP status response code:
     // Using actionName:

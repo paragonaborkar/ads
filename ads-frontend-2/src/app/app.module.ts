@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+// import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -8,9 +10,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { AppRoutingModule } from './app-routing.module';
 import { saveAs as importedSaveAs} from "file-saver";
+
+// NGX Modules: https://valor-software.com/ngx-bootstrap/#/getting-started
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SortableModule } from 'ngx-bootstrap/sortable';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
+//  Data Table
 import { DataTablesModule } from 'angular-datatables';
 
 import { Ng2SearchTableModule } from "ng2-search-table/ng2-search-table";
@@ -73,6 +79,7 @@ import { ReportListingDisComponent } from './discover/report-listing-dis/report-
 
 import { ReportListingConnComponent } from './connections/report-listing-conn/report-listing-conn.component';
 import { ControllerReleaseComponent } from './discover/controller-release/controller-release.component';
+import { ControllerTypeaheadComponent } from './discover/controller-release/controller-typeahead/controller-typeahead.component';
 
 /*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
@@ -105,7 +112,8 @@ import { ControllerReleaseComponent } from './discover/controller-release/contro
     ScheduleComponent,
     ReportListingDisComponent,
     ReportListingConnComponent,
-    ControllerReleaseComponent
+    ControllerReleaseComponent,
+    ControllerTypeaheadComponent
 
     
 
@@ -113,12 +121,14 @@ import { ControllerReleaseComponent } from './discover/controller-release/contro
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HttpModule,
+    // HttpModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
     DataTablesModule,
     NgxDatatableModule,
+    TypeaheadModule.forRoot(),
     Ng2SearchTableModule.forRoot(),
     ModalModule.forRoot(), 
     SortableModule.forRoot(),

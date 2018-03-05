@@ -1,10 +1,14 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+// import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { Page } from "../../common/page";
 import { ApplicationConfigService } from '../../common/application-config.service';
 import { ControllerReleaseService } from './controller-release.service';
 import { AdsErrorService } from '../../common/ads-error.service';
+
+
+
 
 @Component({
   selector: 'app-controller-release',
@@ -13,6 +17,7 @@ import { AdsErrorService } from '../../common/ads-error.service';
 })
 export class ControllerReleaseComponent implements OnInit {
   public pageName = "ControllerReleaseListing";
+  errorMessage = "";
 
   @ViewChild('hdrTmpl') hdrTmpl: TemplateRef<any>;
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
@@ -28,6 +33,9 @@ export class ControllerReleaseComponent implements OnInit {
     this.page.number = 1;
     this.page.pageNumber = 1;
     this.page.size = 3;
+
+
+
   }
 
   ngOnInit() {
@@ -61,6 +69,9 @@ export class ControllerReleaseComponent implements OnInit {
           pageInfo.offset = pageInfo.offset - 1;
           this.setPage(pageInfo);
         }
+      }, err => {
+        // Get the ADS configured error message to display.
+        this.errorMessage = this.errorService.processError(err, "getControllerReleaseList", "GET");
       });
   }
 
@@ -70,22 +81,18 @@ export class ControllerReleaseComponent implements OnInit {
     this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.hdrTmpl, this.actionTmpl)
       .subscribe(columnPreferences => {
         this.columns = columnPreferences;
-
-        console.log("this.columns");
-        console.log(this.columns);
-        // console.log(this.columns[0]["prop"]);
-        // this.columns[0]["prop"] = "srcController.controllerName";
-        // this.columns.forEach(column => {
-        //   if (this.errorService.getSafe(() => column["cellTemplate"]) == undefined) {
-        //     column["cellTemplate"] = this.stringEditTmpl;
-        //   }
-
-      }
-      );
+      });
   }
 
   pagingUpdated() {
     this.setPage(this.page);
   }
+
+
+
+
+
+
+
 
 }
