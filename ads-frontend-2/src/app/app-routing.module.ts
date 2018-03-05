@@ -8,7 +8,7 @@ import { LoginComponent } from './common/login/login.component';
 import { ReportListingComponent } from './admin/report-listing/report-listing.component';
 // import { UserAdminComponent } from './admin/user-admin/user-admin.component';
 import { PropPreferencesComponent } from './common/prop-preferences/prop-preferences.component';
-import { AppPropertiesComponent } from './admin/app-properties/app-properties.component';
+
 
 import { ConnectionsManualFunctionsComponent } from './connections/connections-manual-functions/connections-manual-functions.component';
 import { DiscoverManualFunctionsComponent } from './discover/discover-manual-functions/discover-manual-functions.component';
@@ -21,6 +21,8 @@ import { OwnerNotFoundComponent } from './discover/owner-not-found/owner-not-fou
 import { ReportListingDisComponent } from './discover/report-listing-dis/report-listing-dis.component';
 import { ReportListingConnComponent } from './connections/report-listing-conn/report-listing-conn.component';
 
+import { AppPropsComponent } from './admin/app-props/app-props.component';
+import { Error404Component } from './error-404/error-404.component';
 
 // import { Error404LoggedInComponent } from './common/error-404-logged-in/error-404-logged-in.component';
 
@@ -35,8 +37,8 @@ const routes: Routes = [
   { path: 'admin/report-listing',  component: ReportListingComponent, canActivate: [AuthGuard] },
   // { path: 'admin/native-user-mgmt',  component: UserAdminComponent, canActivate: [AuthGuard] },
   { path: 'admin/property-preferences',  component: PropPreferencesComponent, canActivate: [AuthGuard] },
-  { path: 'admin/application-properties',  component: AppPropertiesComponent, canActivate: [AuthGuard] },
-
+  
+  { path: 'admin/application-properties',  component: AppPropsComponent, canActivate: [AuthGuard] },
 
   { path: 'connections/manual-function',  component: ConnectionsManualFunctionsComponent, canActivate: [AuthGuard] },
   { path: 'connections/report-listing',  component: ReportListingConnComponent, canActivate: [AuthGuard] },
@@ -50,12 +52,12 @@ const routes: Routes = [
  
   { path: 'discover/report-listing',  component: ReportListingDisComponent, canActivate: [AuthGuard] },
   
-  
+
   { path: '',   component: LoginComponent},
 
 
   // Error paths
-//   { path: '404', component: Error404LoggedInComponent},
+  { path: '404', component:Error404Component},
   { path: '**', redirectTo: '/404'}
 
 ];

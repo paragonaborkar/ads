@@ -24,14 +24,6 @@ public class SystemPropertiesServiceImpl implements SystemPropertiesService {
 		return null;
 	}
 
-	@Override
-	public List<SysConfig> findByGroupName(String grouping) {
-		try {
-			return sysConfigRepository.findByGrouping(grouping);
-		} catch (Exception e) {
 
-		}
-		return null;
-	}
 
 }

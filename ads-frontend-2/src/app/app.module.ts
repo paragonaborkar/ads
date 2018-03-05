@@ -29,7 +29,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
 
 import { ReportService } from './admin/report-listing/report.service';   // RENAME TO "admin-."
-import { AppPropertiesService } from './admin/app-properties/app-properties.service'
+
+import { AppPropsService } from './admin/app-props/app-props.service';
+
 
 import { UserAdminService } from './admin/admin-native-user/user-admin.service';
 import { PagerService } from './common/pager.service';      // Currently used in user admin. Possibly many pages.
@@ -54,7 +56,6 @@ import { NativeUserDeleteComponent } from './admin/admin-native-user/native-user
 import { PropPreferencesComponent } from './common/prop-preferences/prop-preferences.component';
 import { PropPreferencesModalComponent } from './common/prop-preferences-modal/prop-preferences-modal.component';
 
-import { AppPropertiesComponent } from './admin/app-properties/app-properties.component';
 import { ArrayFilterPipePipe } from './pipes/array-filter-pipe.pipe';
 
 import { ConnectionsManualFunctionsComponent } from './connections/connections-manual-functions/connections-manual-functions.component';
@@ -71,6 +72,8 @@ import { ScheduleComponent } from './discover/owner/schedule/schedule.component'
 import { ReportListingDisComponent } from './discover/report-listing-dis/report-listing-dis.component';
 
 import { ReportListingConnComponent } from './connections/report-listing-conn/report-listing-conn.component';
+import { AppPropsComponent } from './admin/app-props/app-props.component';
+import { Error404Component } from './error-404/error-404.component';
 
 /*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
@@ -89,7 +92,6 @@ import { ReportListingConnComponent } from './connections/report-listing-conn/re
     FooterComponent,
     PropPreferencesComponent,
     PropPreferencesModalComponent,
-    AppPropertiesComponent,
     ArrayFilterPipePipe,
     FriendlyLabelPipePipe,
     ConnectionsManualFunctionsComponent,
@@ -102,7 +104,9 @@ import { ReportListingConnComponent } from './connections/report-listing-conn/re
     OwnerNotFoundComponent,
     ScheduleComponent,
     ReportListingDisComponent,
-    ReportListingConnComponent
+    ReportListingConnComponent,
+    AppPropsComponent,
+    Error404Component
 
     
 
@@ -127,7 +131,7 @@ import { ReportListingConnComponent } from './connections/report-listing-conn/re
     UserAdminService,
     PagerService,
     ApplicationConfigService,
-    AppPropertiesService,
+    AppPropsService,
 
     QtreesService,
 

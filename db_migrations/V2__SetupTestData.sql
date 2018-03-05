@@ -711,8 +711,8 @@ UNLOCK TABLES;
 --
 LOCK TABLES `user_native` WRITE;
 /*!40000 ALTER TABLE `user_native` DISABLE KEYS */;
-INSERT INTO `user_native`  (`email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`) VALUES ('jdoe@corp.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'Joe', 'Doe','sparky', 1);
-INSERT INTO `user_native`  (`email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`) VALUES ('jdoe2@corp.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','dog', 1);
+INSERT INTO `user_native`  (`email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('jdoe@corp.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'Joe', 'Doe','sparky', 1, 2);
+INSERT INTO `user_native`  (`email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('jdoe2@corp.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','dog', 1, 2);
 INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('1@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','1-name', 1, 2);
 INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('2@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','2-name', 1, 2);
 INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('3@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','3-name', 1, 2);
@@ -783,3 +783,8 @@ SET FOREIGN_KEY_CHECKS=1;
 
 INSERT INTO `user_corporate` (`user_name`, `first_name`, `last_name`, `email`, `manager_user_corporate_id`) VALUES ('aborkar@consultparagon.com', 'adscorpuser', 'TEST', 'aborkar@consultparagon.com', '2');
 
+
+INSERT INTO `preference` (`page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES ('SysPropListing', 'SYSTEM', '0', '0');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'propertyName', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'propertyValue', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'grouping', '1');

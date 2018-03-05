@@ -2,9 +2,12 @@ package com.netapp.ads.repos;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.netapp.ads.models.SysConfig;
@@ -18,5 +21,5 @@ public interface SysConfigRepository extends JpaRepository<SysConfig, Integer>, 
 	@Query("SELECT DISTINCT config.grouping FROM SysConfig config")
 	List<String> findDistinctGroupNames();
 	
-	List<SysConfig> findByGrouping(String grouping);
+	Page<SysConfig> findByGrouping(@Param("grouping") String grouping, Pageable p);
 }
