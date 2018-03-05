@@ -756,6 +756,8 @@ UNLOCK TABLES;
 /*!40000 ALTER TABLE `preference` DISABLE KEYS */;
 INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (2, 'UserListing', 'USER', 0, 1);
 INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (3, 'UserListing', 'SYSTEM', 0, 0);
+INSERT INTO `preference` (`id`,`page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (4, 'SysPropListing', 'SYSTEM', '0', '0');
+
 /*!40000 ALTER TABLE `preference` ENABLE KEYS */;
 
 
@@ -776,6 +778,10 @@ INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, 
 INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (3,  'userName', 1, '0');
 INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (3,  'email', 1, '1');
 INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (3,  'userRole', 1, '1');
+
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (4, 'propertyName', '1', 1);
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (4, 'propertyValue', '1', 1);
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (4, 'grouping', '1', 1);
 -- /*!40000 ALTER TABLE `preference_detail` ENABLE KEYS */;
 -- UNLOCK TABLES;
 
