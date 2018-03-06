@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+// import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -8,13 +10,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { AppRoutingModule } from './app-routing.module';
 import { saveAs as importedSaveAs} from "file-saver";
+
+// NGX Modules: https://valor-software.com/ngx-bootstrap/#/getting-started
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SortableModule } from 'ngx-bootstrap/sortable';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
+//  Data Table
 import { DataTablesModule } from 'angular-datatables';
 
 import { Ng2SearchTableModule } from "ng2-search-table/ng2-search-table";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 // Providers
 import {Globals} from './globals';
@@ -38,6 +45,8 @@ import { PagerService } from './common/pager.service';      // Currently used in
 import { ApplicationConfigService } from './common/application-config.service';
 
 import { OwnerService } from './discover/owner.service';
+import { ControllerReleaseService } from './discover/controller-release/controller-release.service';
+import { ControllerTargetService } from './discover/controller-targets/controller-target.service';
 
 // Declarations
 import { AppComponent } from './app.component';
@@ -52,7 +61,7 @@ import { ReportListingComponent } from './admin/report-listing/report-listing.co
 import { NativeUserCreateComponent } from './admin/admin-native-user/native-user-create/native-user-create.component';
 import { NativeUserUpdateComponent } from './admin/admin-native-user/native-user-update/native-user-update.component';
 import { NativeUserDeleteComponent } from './admin/admin-native-user/native-user-delete/native-user-delete.component';
-
+import { AdminManualFunctionsComponent } from './admin/admin-manual-functions/admin-manual-functions.component';
 import { PropPreferencesComponent } from './common/prop-preferences/prop-preferences.component';
 import { PropPreferencesModalComponent } from './common/prop-preferences-modal/prop-preferences-modal.component';
 
@@ -74,6 +83,10 @@ import { ReportListingDisComponent } from './discover/report-listing-dis/report-
 import { ReportListingConnComponent } from './connections/report-listing-conn/report-listing-conn.component';
 import { AppPropsComponent } from './admin/app-props/app-props.component';
 import { Error404Component } from './error-404/error-404.component';
+import { ControllerReleaseComponent } from './discover/controller-release/controller-release.component';
+import { ControllerTypeaheadComponent } from './discover/controller-release/controller-typeahead/controller-typeahead.component';
+import { ControllerTargetsComponent } from './discover/controller-targets/controller-targets.component';
+import { ControllerTargetsCreateComponent } from './discover/controller-targets/controller-targets-create/controller-targets-create.component';
 
 /*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
@@ -89,6 +102,7 @@ import { Error404Component } from './error-404/error-404.component';
     NativeUserCreateComponent,
     NativeUserUpdateComponent,
     NativeUserDeleteComponent,
+    AdminManualFunctionsComponent,
     FooterComponent,
     PropPreferencesComponent,
     PropPreferencesModalComponent,
@@ -106,7 +120,11 @@ import { Error404Component } from './error-404/error-404.component';
     ReportListingDisComponent,
     ReportListingConnComponent,
     AppPropsComponent,
-    Error404Component
+    Error404Component,
+    ControllerReleaseComponent,
+    ControllerTypeaheadComponent,
+    ControllerTargetsComponent,
+    ControllerTargetsCreateComponent
 
     
 
@@ -114,15 +132,18 @@ import { Error404Component } from './error-404/error-404.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HttpModule,
+    // HttpModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
     DataTablesModule,
     NgxDatatableModule,
+    TypeaheadModule.forRoot(),
     Ng2SearchTableModule.forRoot(),
     ModalModule.forRoot(), 
     SortableModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     LoggerModule.forRoot({serverLoggingUrl: 'http://localhost:8080/remoteLog', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR})
   ],
   providers: [Globals, AuthGuard,  SessionHelper, UserService, LoginService, AdsHelperService, AdsErrorService, 
@@ -134,8 +155,9 @@ import { Error404Component } from './error-404/error-404.component';
     AppPropsService,
 
     QtreesService,
-
-    OwnerService
+    OwnerService,
+    ControllerReleaseService,
+    ControllerTargetService
 
     ],
   bootstrap: [AppComponent]

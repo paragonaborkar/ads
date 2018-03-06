@@ -1219,6 +1219,9 @@ CREATE TABLE `qtree` (
   `quota_used_capacity_limit_mb` bigint(20) DEFAULT NULL,
   `qtree_type` enum('DEFAULT','EXPLICIT') DEFAULT NULL,
   `security_style` enum('UNIX','NTFS','MIXED') DEFAULT NULL,
+  `last_accessed` datetime DEFAULT '1980-01-01 00:00:01',
+  `disposition` varchar(1024) DEFAULT NULL,
+  `justification` varchar(1024) DEFAULT NULL,  
   `qtree_status` varchar(225) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -1784,6 +1787,19 @@ CREATE TABLE `preference_detail` (
   CONSTRAINT `fk_preference_detail_preference` FOREIGN KEY (`preference_id`) REFERENCES `preference` (`id`)
 );
 
+DROP TABLE IF EXISTS `controller_release`;
+CREATE TABLE IF NOT EXISTS `controller_release` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `src_controller_id` INT(11) NULL DEFAULT NULL,
+  `tgt_controller_id` INT(11) NULL DEFAULT NULL,
+  `processed` TINYINT(1) NULL DEFAULT 0,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_controller_id_src` FOREIGN KEY (`src_controller_id`) REFERENCES `controller` (`id`)
+);
+
+
 --
 -- Dumping events for database 'vitae_data_refactor'
 --
@@ -2154,6 +2170,39 @@ INSERT INTO vitae_data.qtree
         last_upd_user='system'
 	;
 
+
+
+
+
+-- REFACTOR work_package to controller_targets_available
+ALTER TABLE `storage` 
+DROP FOREIGN KEY `fk_storage_work_package1`;
+
+ALTER TABLE `storage` 
+DROP COLUMN `work_package_id`,
+DROP INDEX `fk_storage_work_package1_idx` ;
+
+DROP TABLE `work_package` ;
+
+CREATE TABLE IF NOT EXISTS `controller_targets_available` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Work Package',
+  `controller_id` INT(11) NULL DEFAULT NULL,
+  `target_group_name` VARCHAR(255) NOT NULL,
+  `asset_number` VARCHAR(60) NULL DEFAULT NULL,
+  `controller_installed_date` DATE NULL,
+  `priority` INT(11) NULL DEFAULT NULL,
+  `processed` TINYINT(1) NULL DEFAULT '0',
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  INDEX `fk_controller_targets_available_controller1_idx` (`controller_id` ASC),
+  CONSTRAINT `fk_controller_targets_available_controller1`
+    FOREIGN KEY (`controller_id`)
+    REFERENCES `controller` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
 END ;;
 DELIMITER ;
-

@@ -762,7 +762,7 @@ INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, 
 
 
 
--- -- Dumping data for table `preference`
+-- -- Dumping data for table `preference_detail`
 
 -- LOCK TABLES `preference_detail` WRITE;
 -- /*!40000 ALTER TABLE `preference_detail` DISABLE KEYS */;
@@ -788,5 +788,11 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (5, 'willMigrate', '1', 1);
 -- /*!40000 ALTER TABLE `preference_detail` ENABLE KEYS */;
 -- UNLOCK TABLES;
+
+-- -- Dumping data for table `controller_release`
+INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (1, 1, NULL, 0);
+INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (2, 2, NULL, 0);
+INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (3, 3, NULL, 0);
+
 
 SET FOREIGN_KEY_CHECKS=1;

@@ -784,7 +784,25 @@ SET FOREIGN_KEY_CHECKS=1;
 INSERT INTO `user_corporate` (`user_name`, `first_name`, `last_name`, `email`, `manager_user_corporate_id`) VALUES ('aborkar@consultparagon.com', 'adscorpuser', 'TEST', 'aborkar@consultparagon.com', '2');
 
 
+<<<<<<< HEAD
 INSERT INTO `preference` (`page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES ('SysPropListing', 'SYSTEM', '0', '0');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'propertyName', '1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'propertyValue', '1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'grouping', '1');
+=======
+INSERT INTO `preference` (`page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES ('ControllerReleaseListing', 'SYSTEM', 0, 0);
+
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'Source Controller', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'tgtControllerId', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'processed', '1');
+
+
+ALTER TABLE `preference_detail`	ADD COLUMN `field_prop` VARCHAR(50) NULL DEFAULT NULL AFTER `field_name`;
+
+INSERT INTO `preference` (`page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES ('SysPropListing', 'SYSTEM', '0', '0');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'propertyName', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'propertyValue', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'grouping', '1');
+
+UPDATE `ads_dev`.`preference_detail` SET `field_prop`='srcController.controllerName' WHERE  `id`=13;
+>>>>>>> m2_populate_activity

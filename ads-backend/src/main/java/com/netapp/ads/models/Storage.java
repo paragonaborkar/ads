@@ -56,10 +56,6 @@ public class Storage implements Serializable {
 	@OneToMany(mappedBy="targetMirrorStorage")
 	private List<Replication> targetMirrorStorageReplications;
 
-	//bi-directional many-to-one association to WorkPackage
-	@ManyToOne
-	@JoinColumn(name="work_package_id")
-	private WorkPackage workPackage;
 
 	public Storage() {
 	}
@@ -202,12 +198,5 @@ public class Storage implements Serializable {
 		return replication;
 	}
 
-	public WorkPackage getWorkPackage() {
-		return this.workPackage;
-	}
-
-	public void setWorkPackage(WorkPackage workPackage) {
-		this.workPackage = workPackage;
-	}
 
 }

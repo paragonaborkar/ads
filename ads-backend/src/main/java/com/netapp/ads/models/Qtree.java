@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 
@@ -60,6 +61,16 @@ public class Qtree implements Serializable {
 	//bi-directional many-to-one association to Share
 	@OneToMany(mappedBy="qtree")
 	private List<Share> shares;
+	
+	@Column(length=1024)
+	private String disposition;
+
+	@Column(length=1024)
+	private String justification;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="last_accessed")
+	private Date lastAccessed;
 
 	public Qtree() {
 	}
@@ -196,5 +207,28 @@ public class Qtree implements Serializable {
 		return share;
 	}
 
+	public String getDisposition() {
+		return disposition;
+	}
+
+	public void setDisposition(String disposition) {
+		this.disposition = disposition;
+	}
+
+	public String getJustification() {
+		return justification;
+	}
+
+	public void setJustification(String justification) {
+		this.justification = justification;
+	}
+
+	public Date getLastAccessed() {
+		return lastAccessed;
+	}
+
+	public void setLastAccessed(Date lastAccessed) {
+		this.lastAccessed = lastAccessed;
+	}
 }
 

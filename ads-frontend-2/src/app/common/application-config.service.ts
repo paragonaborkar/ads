@@ -102,7 +102,7 @@ export class ApplicationConfigService {
             if (preferenceDetail.fieldVisible === 1) {
               columns.push({
                 name: new FriendlyLabelPipePipe().transform(preferenceDetail.fieldName),
-                prop: preferenceDetail.fieldName,
+                prop: preferenceDetail.fieldProp == "" ? preferenceDetail.fieldName: preferenceDetail.fieldProp,
                 order: preferenceDetail.fieldOrder,
                 flexGrow: 1
               });

@@ -14,6 +14,10 @@ import org.springframework.stereotype.Repository;
 public interface ShareRepository extends JpaRepository<Share, Integer>, JpaSpecificationExecutor<Share> {
 
 	// FUTURE USE: Populate Activity table
-//	@Query("SELECT COUNT(*) FROM share s JOIN qtree	ON qtree.id = s.qtree_id JOIN nas_volume ON qtree.nas_volume_id = nas_volume.id WHERE nas_volume.id = :nasVolumeId")
-//    Long countOfSharesForOneVolume(@Param("nasVolumeId") int nasVolumeId);
+	//	@Query("SELECT COUNT(*) FROM share s JOIN qtree	ON qtree.id = s.qtree_id JOIN nas_volume ON qtree.nas_volume_id = nas_volume.id WHERE nas_volume.id = :nasVolumeId")
+	//    Long countOfSharesForOneVolume(@Param("nasVolumeId") int nasVolumeId);
+	
+	// FUTURE USE: Populate Activity table
+	@Query("SELECT COUNT(s) FROM Share s JOIN s.qtree q JOIN q.nasVolume n WHERE n.id = :nasVolumeId")
+    Long countOfSharesForOneVolume(@Param("nasVolumeId") int nasVolumeId);
 }
