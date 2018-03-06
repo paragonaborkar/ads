@@ -1,232 +1,31 @@
-<h3 class="title"> Connection Manual Functions (Template)</h3>
+<div class="row d-flex justify-content-center">
 
-<!-- Nav tabs -->
-<ul class="nav nav-pills">
-  <li class="nav-item"> <a href="" class="nav-link active" data-target="#home-pills" aria-controls="home-pills" data-toggle="tab" role="tab" aria-expanded="true">Upload</a>    </li>
-  <li class="nav-item"> <a href="" class="nav-link " data-target="#profile-pills" aria-controls="profile-pills" data-toggle="tab" role="tab" aria-expanded="false"
-      aria-expanded="true">Data Load</a> </li>
-  <li class="nav-item"> <a href="" class="nav-link" data-target="#messages-pills" aria-controls="messages-pills" data-toggle="tab" role="tab" aria-expanded="false">Emails</a>    </li>
-</ul>
-
-
-<!-- Tab panes -->
-<div class="tab-content">
-
-  <br>
-  <!-- FIXME: Replace BR with proper spacing. bs probably has a helper class so we don't need to create a new class. -->
-
-  <div class="tab-pane fade" id="home-pills" aria-expanded="false">
-    <h4>Upload</h4>
-
-    <div class="row">
-      <div class="col-md-3 col-form-label">
-        <strong>Controller Batch Release</strong>
+    <div class="col-md-8 mb-2">
+      <h2 class="h3">Host Connections - Manual Actions</h2>
+  
+      <div class="row">
+        <div class="col-md-4 col-form-label">
+          <strong>Run Host Connections - CFIS </strong>
+        </div>
+        <div class="col col-md-auto">
+          <button class="btn btn-sm btn-success">Run</button>
+        </div>
+        <div class="col col-md-auto col-form-label">
+          <div class="text-success">Completed successfully!</div>
+        </div>
       </div>
-      <div class="col col-md-auto">
-        <label class="custom-file">
-        <input type="file" id="file" class="custom-file-input">
-    <span class="custom-file-control"></span>
-  </label>
+  
+      <div class="row">
+        <div class="col-md-4 col-form-label">
+            <strong>Run Host Connections - NFS </strong>
+        </div>
+        <div class="col col-md-auto">
+          <button class="btn btn-sm btn-success">Run</button>
+        </div>
+        <div class="col col-md-auto col-form-label">
+          <div class="text-success">Completed successfully!</div>
+        </div>
       </div>
-      <div class="col col-md-auto ">
-        <button class="btn btn-sm btn-success">Upload</button>
-      </div>
-      <div class="col col-md-auto col-form-label">
-        <div class="text-success">Uploaded the file!</div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3 col-form-label">
-        <strong>NetApp ASUP Data</strong>
-      </div>
-      <div class="col col-md-auto ">
-        <label class="custom-file">
-                                    <input type="file" id="file2" class="custom-file-input">
-                                    <span class="custom-file-control"></span>
-                                </label>
-      </div>
-      <div class="col col-md-auto">
-        <button class="btn btn-sm btn-success">Upload</button>
-      </div>
-      <div class="col col-md-auto col-form-label">
-        <div class="text-warning">Uploaded the file! But we have some errors.</div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3 col-form-label">
-        <strong>Pre-plan Data</strong>
-      </div>
-      <div class="col col-md-auto">
-        <label class="custom-file">
-                                    <input type="file" id="file3" class="custom-file-input">
-                                    <span class="custom-file-control"></span>
-                                </label>
-      </div>
-      <div class="col col-md-auto">
-        <button class="btn btn-sm btn-success">Upload</button>
-      </div>
-      <div class="col col-md-auto col-form-label">
-        <div class="text-danger">Could not upload the file!</div>
-      </div>
+  
     </div>
   </div>
-
-  <div class="tab-pane fade active in" id="profile-pills" aria-expanded="true">
-    <h4>Data Load</h4>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-3 col-form-label">
-          <strong>Kick Off Engine</strong>
-        </div>
-
-        <div class="col col-md-auto">
-          <button class="btn btn-sm btn-success">Run</button>
-        </div>
-        <div class="col col-md-auto col-form-label">
-          <div class="text-success">Completed successfully!</div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-3 col-form-label">
-          <strong>Generate Keys</strong>
-        </div>
-
-        <div class="col col-md-auto">
-          <button class="btn btn-sm btn-success">Run</button>
-        </div>
-        <div class="col col-md-auto col-form-label">
-          <div class="text-success">Completed successfully!</div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-3 col-form-label">
-          <strong>Start Close Schedule</strong>
-        </div>
-
-        <div class="col col-md-auto">
-          <button class="btn btn-sm btn-success">Run</button>
-        </div>
-        <div class="col col-md-auto col-form-label">
-          <div class="text-success">Completed successfully!</div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-3 col-form-label">
-          <strong>Populate Resolver List</strong>
-        </div>
-
-        <div class="col col-md-auto">
-          <button class="btn btn-sm btn-success">Run</button>
-        </div>
-        <div class="col col-md-auto col-form-label">
-          <div class="text-success">Completed successfully!</div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-3 col-form-label">
-          <strong>Populate Migration Resolvers</strong>
-        </div>
-
-        <div class="col col-md-auto">
-          <button class="btn btn-sm btn-success">Run</button>
-        </div>
-        <div class="col col-md-auto col-form-label">
-          <div class="text-success">Completed successfully!</div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-3 col-form-label">
-          <strong>Load OCUM Data</strong>
-        </div>
-
-        <div class="col col-md-auto">
-          <button class="btn btn-sm btn-success">Run</button>
-        </div>
-        <div class="col col-md-auto col-form-label">
-          <div class="text-success">Completed successfully!</div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-3 col-form-label">
-          <strong>Load SORD Data</strong>
-        </div>
-
-        <div class="col col-md-auto">
-          <button class="btn btn-sm btn-success">Run</button>
-        </div>
-        <div class="col col-md-auto col-form-label">
-          <div class="text-success">Completed successfully!</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="tab-pane fade" id="messages-pills" aria-expanded="false">
-    <h4>Emails</h4>
-    <div class="row">
-      <div class="col-md-3 col-form-label">
-        <strong>Send emails with key</strong>
-      </div>
-
-      <div class="col col-md-auto">
-        <button class="btn btn-sm btn-success">Run</button>
-      </div>
-      <div class="col col-md-auto col-form-label">
-        <div class="text-success">Completed successfully!</div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3 col-form-label">
-        <strong>Send reminder email</strong>
-      </div>
-
-      <div class="col col-md-auto">
-        <button class="btn btn-sm btn-success">Run</button>
-      </div>
-      <div class="col col-md-auto col-form-label">
-        <div class="text-success">Completed successfully!</div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3 col-form-label">
-        <strong>Send email to App Owner</strong>
-      </div>
-
-      <div class="col col-md-auto">
-        <button class="btn btn-sm btn-success">Run</button>
-      </div>
-      <div class="col col-md-auto col-form-label">
-        <div class="text-success">Completed successfully!</div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3 col-form-label">
-        <strong>Send email to Server Admin</strong>
-      </div>
-
-      <div class="col col-md-auto">
-        <button class="btn btn-sm btn-success">Run</button>
-      </div>
-      <div class="col col-md-auto col-form-label">
-        <div class="text-success">Completed successfully!</div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3 col-form-label">
-        <strong>Send email to NAS Engineer</strong>
-      </div>
-
-      <div class="col col-md-auto">
-        <button class="btn btn-sm btn-success">Run</button>
-      </div>
-      <div class="col col-md-auto col-form-label">
-        <div class="text-success">Completed successfully!</div>
-      </div>
-    </div>
-
-
-  </div>
-
-</div>
