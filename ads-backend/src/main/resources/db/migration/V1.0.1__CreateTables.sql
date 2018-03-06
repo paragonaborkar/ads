@@ -2204,5 +2204,8 @@ CREATE TABLE IF NOT EXISTS `controller_targets_available` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+
 END ;;
 DELIMITER ;
+
+ALTER TABLE `preference_detail`	ADD COLUMN `field_prop` VARCHAR(50) NULL DEFAULT NULL AFTER `field_name`;
