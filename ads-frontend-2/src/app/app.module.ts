@@ -57,7 +57,7 @@ import { ReportListingComponent } from './admin/report-listing/report-listing.co
 import { NativeUserCreateComponent } from './admin/admin-native-user/native-user-create/native-user-create.component';
 import { NativeUserUpdateComponent } from './admin/admin-native-user/native-user-update/native-user-update.component';
 import { NativeUserDeleteComponent } from './admin/admin-native-user/native-user-delete/native-user-delete.component';
-
+import { AdminManualFunctionsComponent } from './admin/admin-manual-functions/admin-manual-functions.component';
 import { PropPreferencesComponent } from './common/prop-preferences/prop-preferences.component';
 import { PropPreferencesModalComponent } from './common/prop-preferences-modal/prop-preferences-modal.component';
 
@@ -95,6 +95,7 @@ import { ControllerTypeaheadComponent } from './discover/controller-release/cont
     NativeUserCreateComponent,
     NativeUserUpdateComponent,
     NativeUserDeleteComponent,
+    AdminManualFunctionsComponent,
     FooterComponent,
     PropPreferencesComponent,
     PropPreferencesModalComponent,
