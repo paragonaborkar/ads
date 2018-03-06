@@ -1792,7 +1792,7 @@ CREATE TABLE IF NOT EXISTS `controller_release` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `src_controller_id` INT(11) NULL DEFAULT NULL,
   `tgt_controller_id` INT(11) NULL DEFAULT NULL,
-  `processed` NULL DEFAULT 0,
+  `processed` TINYINT(1) NULL DEFAULT 0,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

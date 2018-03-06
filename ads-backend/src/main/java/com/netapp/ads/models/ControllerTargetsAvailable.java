@@ -4,22 +4,26 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
- * The persistent class for the work_package database table.
+ * The persistent class for the controller_targets_available database table.
  * 
  */
 @Entity
-@Table(name="work_package")
-public class WorkPackage implements Serializable {
+@Table(name="controller_targets_available")
+public class ControllerTargetsAvailable implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
 	private Integer id;
+
+	//uni-directional one-to-one association to Controller
+	@OneToOne
+	@JoinColumn(name = "controller_id")
+	private Controller controller;
 
 	@Column(name="asset_number", length=60)
 	private String assetNumber;
@@ -38,14 +42,11 @@ public class WorkPackage implements Serializable {
 	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
-	@Column(name="work_package_name", nullable=false, length=255)
-	private String workPackageName;
+	@Column(name="target_group_name", nullable=false, length=255)
+	private String targetGroupName;
 
-	//bi-directional many-to-one association to Storage
-	@OneToMany(mappedBy="workPackage")
-	private List<Storage> storages;
 
-	public WorkPackage() {
+	public ControllerTargetsAvailable() {
 	}
 
 	public Integer getId() {
@@ -104,34 +105,23 @@ public class WorkPackage implements Serializable {
 		this.updateTime = updateTime;
 	}
 
-	public String getWorkPackageName() {
-		return this.workPackageName;
+	public String getTargetGroupName() {
+		return this.targetGroupName;
 	}
 
-	public void setWorkPackageName(String workPackageName) {
-		this.workPackageName = workPackageName;
+	public void setTargetGroupName(String targetGroupName) {
+		this.targetGroupName = targetGroupName;
 	}
 
-	public List<Storage> getStorages() {
-		return this.storages;
+
+	public Controller getController() {
+		return controller;
 	}
 
-	public void setStorages(List<Storage> storages) {
-		this.storages = storages;
+	public void setController(Controller controller) {
+		this.controller = controller;
 	}
-
-	public Storage addStorage(Storage storage) {
-		getStorages().add(storage);
-		storage.setWorkPackage(this);
-
-		return storage;
-	}
-
-	public Storage removeStorage(Storage storage) {
-		getStorages().remove(storage);
-		storage.setWorkPackage(null);
-
-		return storage;
-	}
+	
+	
 
 }
