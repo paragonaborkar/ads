@@ -80,6 +80,8 @@ import { ReportListingDisComponent } from './discover/report-listing-dis/report-
 import { ReportListingConnComponent } from './connections/report-listing-conn/report-listing-conn.component';
 import { ControllerReleaseComponent } from './discover/controller-release/controller-release.component';
 import { ControllerTypeaheadComponent } from './discover/controller-release/controller-typeahead/controller-typeahead.component';
+import { ControllerTargetsComponent } from './discover/controller-targets/controller-targets.component';
+import { ControllerTargetsCreateComponent } from './discover/controller-release/controller-targets-create/controller-targets-create.component';
 
 /*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
@@ -114,7 +116,9 @@ import { ControllerTypeaheadComponent } from './discover/controller-release/cont
     ReportListingDisComponent,
     ReportListingConnComponent,
     ControllerReleaseComponent,
-    ControllerTypeaheadComponent
+    ControllerTypeaheadComponent,
+    ControllerTargetsComponent,
+    ControllerTargetsCreateComponent
 
     
 
