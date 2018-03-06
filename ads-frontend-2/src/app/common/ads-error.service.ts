@@ -25,8 +25,8 @@ export class AdsErrorService {
     }
 }
 
-  processError(error: HttpErrorResponse | any, actionName, method): string {
-   
+processError(error: HttpErrorResponse | any, actionName, method): string {
+  
     this.remoteLogError(error, actionName);
 
     // First - if 401: Unauthorized, sent to the login page.

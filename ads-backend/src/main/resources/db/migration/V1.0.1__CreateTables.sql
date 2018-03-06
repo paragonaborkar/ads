@@ -2189,7 +2189,7 @@ CREATE TABLE IF NOT EXISTS `controller_targets_available` (
   `controller_id` INT(11) NULL DEFAULT NULL,
   `target_group_name` VARCHAR(255) NOT NULL,
   `asset_number` VARCHAR(60) NULL DEFAULT NULL,
-  `controller_installed_date` DATE NOT NULL,
+  `controller_installed_date` DATE NULL,
   `priority` INT(11) NULL DEFAULT NULL,
   `processed` TINYINT(1) NULL DEFAULT '0',
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,

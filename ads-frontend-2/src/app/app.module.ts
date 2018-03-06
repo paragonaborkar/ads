@@ -21,6 +21,7 @@ import { DataTablesModule } from 'angular-datatables';
 
 import { Ng2SearchTableModule } from "ng2-search-table/ng2-search-table";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 // Providers
 import {Globals} from './globals';
@@ -43,6 +44,7 @@ import { ApplicationConfigService } from './common/application-config.service';
 
 import { OwnerService } from './discover/owner.service';
 import { ControllerReleaseService } from './discover/controller-release/controller-release.service';
+import { ControllerTargetService } from './discover/controller-targets/controller-target.service';
 
 // Declarations
 import { AppComponent } from './app.component';
@@ -81,7 +83,7 @@ import { ReportListingConnComponent } from './connections/report-listing-conn/re
 import { ControllerReleaseComponent } from './discover/controller-release/controller-release.component';
 import { ControllerTypeaheadComponent } from './discover/controller-release/controller-typeahead/controller-typeahead.component';
 import { ControllerTargetsComponent } from './discover/controller-targets/controller-targets.component';
-import { ControllerTargetsCreateComponent } from './discover/controller-release/controller-targets-create/controller-targets-create.component';
+import { ControllerTargetsCreateComponent } from './discover/controller-targets/controller-targets-create/controller-targets-create.component';
 
 /*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
@@ -137,6 +139,7 @@ import { ControllerTargetsCreateComponent } from './discover/controller-release/
     Ng2SearchTableModule.forRoot(),
     ModalModule.forRoot(), 
     SortableModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     LoggerModule.forRoot({serverLoggingUrl: 'http://localhost:8080/remoteLog', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR})
   ],
   providers: [Globals, AuthGuard,  SessionHelper, UserService, LoginService, AdsHelperService, AdsErrorService, 
@@ -148,7 +151,8 @@ import { ControllerTargetsCreateComponent } from './discover/controller-release/
     AppPropertiesService,
     QtreesService,
     OwnerService,
-    ControllerReleaseService
+    ControllerReleaseService,
+    ControllerTargetService
 
     ],
   bootstrap: [AppComponent]

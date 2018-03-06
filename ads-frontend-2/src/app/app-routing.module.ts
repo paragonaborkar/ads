@@ -24,7 +24,9 @@ import { OwnerComponent } from './discover/owner/owner.component';
 import { OwnerNotFoundComponent } from './discover/owner-not-found/owner-not-found.component';
 import { ReportListingDisComponent } from './discover/report-listing-dis/report-listing-dis.component';
 import { ControllerReleaseComponent } from './discover/controller-release/controller-release.component';
-import { ControllerTargetsCreateComponent } from './discover/controller-release/controller-targets-create/controller-targets-create.component';
+import { ControllerTargetsCreateComponent } from './discover/controller-targets/controller-targets-create/controller-targets-create.component';
+
+import { ControllerTargetsComponent } from './discover/controller-targets/controller-targets.component';
 
 // import { Error404LoggedInComponent } from './common/error-404-logged-in/error-404-logged-in.component';
 
@@ -55,7 +57,10 @@ const routes: Routes = [
   { path: 'discover/controller-release',  component: ControllerReleaseComponent, canActivate: [AuthGuard] },
   { path: 'discover/report-listing',  component: ReportListingDisComponent, canActivate: [AuthGuard] },
   
+  { path: 'discover/controller-target',  component: ControllerTargetsComponent, canActivate: [AuthGuard] },
   { path: 'discover/controller-target-create',  component: ControllerTargetsCreateComponent, canActivate: [AuthGuard] },
+  
+  
   
 
   { path: '',   component: LoginComponent},
