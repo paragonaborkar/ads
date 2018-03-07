@@ -619,10 +619,10 @@ INSERT INTO `schedule` (`id`, `week_date`, `schedule_status`, `migration_limit`,
 
 -- Dumping data for table vitae_data_refactor.storage: ~3 rows (approximately)
 /*!40000 ALTER TABLE `storage` DISABLE KEYS */;
-INSERT INTO `storage` (`id`, `storage_name`, `model`, `family`, `manufacturer`, `microcode_version`, `raw_capacity_mb`, `work_package_id`, `create_time`, `update_time`) VALUES
-	(17, 'fspodrtp03.rdc.lab', 'FAS3270', 'FAS3200', 'NetApp', '8.2.4P1 clustered Data ONTAP', 48535982, 1, '2017-09-27 12:52:27', '2018-01-19 12:12:09'),
-	(18, 'fspodrtp04.rdc.lab', 'FAS3270', 'FAS3200', 'NetApp', '8.3.1P1 clustered Data ONTAP', 102302404, 1, '2017-09-27 12:52:27', '2018-01-19 12:12:11'),
-	(41, '7GN1-RTPRDC,7GN2-RTPRDC', 'FAS3140', 'FAS3100', 'NetApp', '8.2.4P6 7-Mode', 17782053, 1, '2017-09-27 12:52:27', '2018-01-19 12:12:13');
+INSERT INTO `storage` (`id`, `storage_name`, `model`, `family`, `manufacturer`, `microcode_version`, `raw_capacity_mb`, `create_time`, `update_time`) VALUES
+	(17, 'fspodrtp03.rdc.lab', 'FAS3270', 'FAS3200', 'NetApp', '8.2.4P1 clustered Data ONTAP', 48535982, '2017-09-27 12:52:27', '2018-01-19 12:12:09'),
+	(18, 'fspodrtp04.rdc.lab', 'FAS3270', 'FAS3200', 'NetApp', '8.3.1P1 clustered Data ONTAP', 102302404, '2017-09-27 12:52:27', '2018-01-19 12:12:11'),
+	(41, '7GN1-RTPRDC,7GN2-RTPRDC', 'FAS3140', 'FAS3100', 'NetApp', '8.2.4P6 7-Mode', 17782053,  '2017-09-27 12:52:27', '2018-01-19 12:12:13');
 /*!40000 ALTER TABLE `storage` ENABLE KEYS */;
 
 -- Dumping data for table vitae_data_refactor.user_api: ~1 rows (approximately)
@@ -642,12 +642,6 @@ INSERT INTO `user_roles` (`user_role`) VALUES
 	('ROLE_MSLEAD');
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 
--- Dumping data for table vitae_data_refactor.work_package: ~2 rows (approximately)
-/*!40000 ALTER TABLE `work_package` DISABLE KEYS */;
-INSERT INTO `work_package` (`id`, `work_package_name`, `asset_number`, `controller_installed_date`, `priority`, `processed`, `create_time`, `update_time`) VALUES
-	(1, 'QA1', 'Z00000', '1999-01-24', 1, 1, '2017-09-27 12:52:28', NULL),
-	(2, 'QA1', 'Z00000', '1999-01-24', 1, 1, '2017-09-27 12:52:28', NULL);
-/*!40000 ALTER TABLE `work_package` ENABLE KEYS */;
 
 -- Dumping data for table vitae_data_refactor.aggregate: ~16 rows (approximately)
 /*!40000 ALTER TABLE `aggregate` DISABLE KEYS */;

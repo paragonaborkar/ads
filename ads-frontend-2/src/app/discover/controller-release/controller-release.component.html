@@ -1,7 +1,7 @@
 <div class="row d-flex justify-content-center">
     <div class="col-md-8 mb-2">
 
-    <app-controller-typeahead></app-controller-typeahead>
+    <app-controller-typeahead (selectedController)="filterByController($event)" #selectedControllerControl></app-controller-typeahead>
 </div>
   <div class="col-md-8 mb-2">
     <h2 class="h3">Batch Release of Controllers</h2>

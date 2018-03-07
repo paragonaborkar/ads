@@ -1,6 +1,17 @@
-<pre class="card card-block card-header">Model: {{asyncSelected | json}}</pre>
-<input [(ngModel)]="asyncSelected" [typeahead]="dataSource" (typeaheadLoading)="changeTypeaheadLoading($event)" (typeaheadNoResults)="changeTypeaheadNoResults($event)"
-  (typeaheadOnSelect)="typeaheadOnSelect($event)" [typeaheadOptionsLimit]="7" typeaheadOptionField="name" placeholder="Locations loaded with timeout"
-  class="form-control">
-<div *ngIf="typeaheadLoading===true">Loading</div>
-<div *ngIf="typeaheadNoResults===true">&#10060; No Results Found</div>
+<!-- <pre class="card card-block card-header">Model: {{asyncSelected | json}}</pre> -->
+
+<div class="form-group ">
+  <input class="form-control" [required]="valueRequired" name="controllerName" #assetNumber="ngModel"  
+  [(ngModel)]="asyncSelected" #controllerName="ngModel"  placeholder="Controller Lookup"
+  [typeahead]="dataSource" (typeaheadLoading)="changeTypeaheadLoading($event)"
+  (typeaheadNoResults)="changeTypeaheadNoResults($event)" (typeaheadOnSelect)="typeaheadOnSelect($event)"
+  [typeaheadOptionsLimit]="7" typeaheadOptionField="controllerName" >
+
+  <!-- Add d-block due message not displaed issue. See: https://stackoverflow.com/questions/48401656/bootstrap-4-0-non-beta-invalid-feedback-doesnt-show -->
+  <div *ngIf="typeaheadNoResults===true" class="invalid-feedback  d-block">  Controller Name does not exist</div>
+
+  <div *ngIf="controllerName.errors?.required && controllerName.touched"  class="invalid-feedback  d-block" >
+      Controller Name is required
+    </div>
+  
+</div>

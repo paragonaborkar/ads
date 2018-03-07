@@ -8,8 +8,6 @@ import { ControllerReleaseService } from './controller-release.service';
 import { AdsErrorService } from '../../common/ads-error.service';
 
 
-
-
 @Component({
   selector: 'app-controller-release',
   templateUrl: './controller-release.component.html',
@@ -39,7 +37,7 @@ export class ControllerReleaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setPage({ offset: 0 });
+    this.setPage({ offset: 0 }, '');
     this.applyPreferences();
   }
 
@@ -48,31 +46,39 @@ export class ControllerReleaseComponent implements OnInit {
  * Populate the table with new data based on the page number
  * @param page The page to select
  */
-  setPage(pageInfo) {
+  setPage(pageInfo, filter) {
     console.log("Loading page...");
     this.page.number = pageInfo.offset;
     this.page.pageNumber = pageInfo.offset;
 
+    if (filter == '') {
     // This method is to get all the values from user_native table
     this.contrllerReleaseService.getControllerReleasesByProcessed(this.page, this.controllerProcessed).subscribe(
       data => {
-        console.log(data);
-        this.page = data.page;
-        this.page.pageNumber = this.page.number;
-        this.rows = data._embedded.controllerReleases;
-        // this.rows = this.adsHelper.ungroupJson(usersNativeResponse._embedded.userNatives, "userRole", ["createTime", "updateTime"]);
-        console.log("******************");
-        console.log(this.rows);
-        console.log(this.page);
-        console.log("****");
-        if (this.page.number > 0 && this.rows.length == 0) {
-          pageInfo.offset = pageInfo.offset - 1;
-          this.setPage(pageInfo);
-        }
+        this.setupPaging(data, pageInfo, filter);
       }, err => {
         // Get the ADS configured error message to display.
         this.errorMessage = this.errorService.processError(err, "getControllerReleaseList", "GET");
       });
+    } else {
+
+    }
+  }
+
+  setupPaging(data, pageInfo, filter) {
+    console.log(data);
+    this.page = data.page;
+    this.page.pageNumber = this.page.number;
+    this.rows = data._embedded.controllerReleases;
+    // this.rows = this.adsHelper.ungroupJson(usersNativeResponse._embedded.userNatives, "userRole", ["createTime", "updateTime"]);
+    console.log("******************");
+    console.log(this.rows);
+    console.log(this.page);
+    console.log("****");
+    if (this.page.number > 0 && this.rows.length == 0) {
+      pageInfo.offset = pageInfo.offset - 1;
+      this.setPage(pageInfo, filter);
+    }
   }
 
   applyPreferences(): void {
@@ -85,14 +91,13 @@ export class ControllerReleaseComponent implements OnInit {
   }
 
   pagingUpdated() {
-    this.setPage(this.page);
+    // Need to get the filter value!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    this.setPage(this.page, '');
   }
 
-
-
-
-
-
-
+  filterByController(filterObject) {
+    console.log("filterObject", filterObject);
+    console.log(filterObject["_links"]["self"]["href"]);
+  }
 
 }

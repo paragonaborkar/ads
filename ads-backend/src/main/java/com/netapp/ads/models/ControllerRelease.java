@@ -32,14 +32,14 @@ public class ControllerRelease implements Serializable {
 
 	//uni-directional one-to-one association to Controller
 	@OneToOne
-	@JoinColumn(name = "src_controller_id")
+	@JoinColumn(name = "src_controller_id", nullable=false)
 	private Controller srcController;
 
 	//uni-directional one-to-one association to Controller
-	//@OneToOne
-	//@JoinColumn(name = "tgt_controller_id", referencedColumnName = "id")
-	//@JoinColumn(name = "tgtController")
-	@Column(name="tgt_controller_id", insertable=false, updatable=false)
+//	@Column(name="tgt_controller_id", insertable=false, updatable=false, nullable=false)
+	@OneToOne
+	@JoinColumn(name = "tgt_controller_id", nullable=false)
+	
 	private Controller tgtController;
 
 	public ControllerRelease() {
