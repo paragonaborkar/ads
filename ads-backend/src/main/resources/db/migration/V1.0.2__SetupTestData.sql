@@ -776,8 +776,8 @@ INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, 
 INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (3,  'email', 1, '1');
 INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (3,  'userRole', 1, '1');
 
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (4, 'propertyName', '1', 1);
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (4, 'propertyValue', '1', 1);
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`, `field_template`) VALUES (4, 'propertyName', '1', 1, 'stringEdit');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`, `field_template`) VALUES (4, 'propertyValue', '1', 1, 'stringEdit');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (4, 'grouping', '1', 1);
 
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (5, 'disposition', '1', 1);

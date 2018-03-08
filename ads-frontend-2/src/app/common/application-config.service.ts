@@ -113,6 +113,10 @@ export class ApplicationConfigService {
                   template = columnTemplates.dateTmpl;
                   break;
                 }
+                case "stringEdit": {
+                  template = columnTemplates.stringEditTmpl;
+                  break;
+                }
               }
 
               columns.push({

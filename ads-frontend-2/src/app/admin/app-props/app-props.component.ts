@@ -15,6 +15,8 @@ import { ApplicationConfigService } from '../../common/application-config.servic
 import { AdsErrorService } from '../../common/ads-error.service';
 import { SaveMessageTimerComponent } from '../../common/save-message-timer/save-message-timer.component';
 
+import { DataTableColTemplatesComponent } from '../../common/data-table-col-templates/data-table-col-templates.component'
+
 
 @Component({
   selector: 'app-app-props',
@@ -22,8 +24,8 @@ import { SaveMessageTimerComponent } from '../../common/save-message-timer/save-
   styleUrls: ['./app-props.component.scss']
 })
 export class AppPropsComponent implements OnInit {
-  @ViewChild('hdrTmpl') hdrTmpl: TemplateRef<any>;
-  @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
+  @ViewChild(DataTableColTemplatesComponent) dataTableColsTemplate :DataTableColTemplatesComponent;
+  columnTemplates = {};
   @ViewChild('stringEditTmpl') stringEditTmpl: TemplateRef<any>;
   @ViewChild(SaveMessageTimerComponent) saveTimerChild: SaveMessageTimerComponent;
 
@@ -53,7 +55,14 @@ export class AppPropsComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnInit() {   
+  }
+
+
+  ngAfterViewInit() {
+    this.columnTemplates = this.dataTableColsTemplate.getTemplates();
+    this.columnTemplates["stringEditTmpl"] =this.stringEditTmpl;
+
     this.appPropService.getSysConfigGroups().subscribe(
       sysConfigGroups => {
         this.configGroups = sysConfigGroups;
@@ -64,6 +73,7 @@ export class AppPropsComponent implements OnInit {
         this.applyPreferences();
       });
   }
+
 
   // public ngOnDestroy() {
   //   if ( this.subscription && this.subscription instanceof Subscription) {
@@ -129,35 +139,11 @@ export class AppPropsComponent implements OnInit {
       });
   }
 
-  // public setSuccessTimer(){
-  //   this.errorMessage = '';
-  //   // set to true to show loading div
-  //   this.showSuccess = true;
-
-  //   this.timer        = Observable.timer(5000); // 5000 millisecond means 5 seconds
-  //   this.subscription = this.timer.subscribe(() => {
-  //       // set to false to hide loading div from view after 5 seconds
-  //       this.showSuccess = false;
-  //   });
-  // }
 
   applyPreferences(): void {
-    console.log("applyPreferences Start");
-
-    // this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.hdrTmpl, this.actionTmpl)
-    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, null, null)
+    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.columnTemplates)
       .subscribe(columnPreferences => {
-        console.log("columnPreferences");
-        console.log(columnPreferences);
         this.columns = columnPreferences;
-
-        this.columns.forEach(column => {
-          if (this.errorService.getSafe(() => column["cellTemplate"]) == undefined) {
-            column["cellTemplate"] = this.stringEditTmpl;
-          }
-
-        });
-
 
       });
   }
