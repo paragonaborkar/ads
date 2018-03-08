@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 
-import { ControllerReleaseService } from '../controller-release/controller-release.service';
+import { ControllerTypeaheadService } from './controller-typeahead.service';
 
 @Component({
   selector: 'app-controller-typeahead',
@@ -19,13 +19,17 @@ export class ControllerTypeaheadComponent implements OnInit {
   @Output() selectedController = new EventEmitter();
 
   @Input() valueRequired: string;
-  
+  @Input() controllerTypeName: string;
+  @Input() controllerName: string;
+  @Input() selectOptionsDataSource: string;
+ 
+  selectedItem: any;
   asyncSelected: any;
   typeaheadLoading: boolean;
   typeaheadNoResults: boolean;
   dataSource: Observable<any>;
 
-  constructor(private controllerReleaseService: ControllerReleaseService) {
+  constructor(private controllerTypeaheadService: ControllerTypeaheadService) {
     
     this.dataSource = Observable.create((observer: any) => {
       // Runs on every search
@@ -36,10 +40,8 @@ export class ControllerTypeaheadComponent implements OnInit {
 
   ngOnInit() {  }
 
-
   getStatesAsObservable(token: string) {
-    console.log(token);
-    return this.controllerReleaseService.searchForController(token);
+    return this.controllerTypeaheadService.getData(this.selectOptionsDataSource, token);
   }
 
   changeTypeaheadLoading(e: boolean): void {
@@ -48,15 +50,15 @@ export class ControllerTypeaheadComponent implements OnInit {
 
   changeTypeaheadNoResults(e: boolean): void {
     this.typeaheadNoResults = e;
+    this.selectedItem = null;
     this.selectedController.emit({ selectedItem: null });
   }
 
   typeaheadOnSelect(e: TypeaheadMatch): void {
     console.log('Selected value: ', e);
-    console.log('Selected value: ', e.item);
-    console.log('Selected value: ', e.value);
+    this.selectedItem = e.item;
     this.asyncSelected = e.value;
-    this.selectedController.emit({ selectedItem: e.item });
+    this.selectedController.emit({ selectedItem: this.selectedItem, controllerName: this.controllerName});
 
   }
 }

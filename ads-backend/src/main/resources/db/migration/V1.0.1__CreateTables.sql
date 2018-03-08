@@ -1776,30 +1776,33 @@ CREATE TABLE `preference` (
 
 
 DROP TABLE IF EXISTS `preference_detail`;
-CREATE TABLE `preference_detail` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `preference_id` int(11) DEFAULT NULL,
-  `field_name` varchar(255) DEFAULT NULL,
-  `field_prop` VARCHAR(50) NULL DEFAULT NULL,
-  `field_order` int(11) DEFAULT NULL,
-  `field_visible` TINYINT(1) NULL DEFAULT 1,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `fk_preference_detail_preference` (`preference_id`),
-  CONSTRAINT `fk_preference_detail_preference` FOREIGN KEY (`preference_id`) REFERENCES `preference` (`id`)
+CREATE TABLE IF NOT EXISTS `preference_detail` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`preference_id` INT(11) NULL DEFAULT NULL,
+	`field_name` VARCHAR(255) NULL DEFAULT NULL,
+	`field_prop` VARCHAR(50) NULL DEFAULT NULL,
+	`field_order` INT(11) NULL DEFAULT NULL,
+	`field_template` VARCHAR(50) NULL DEFAULT NULL,
+	`field_visible` TINYINT(1) NULL DEFAULT '1',
+	`create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+	`update_time` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`),
+	INDEX `fk_preference_detail_preference` (`preference_id`),
+	CONSTRAINT `fk_preference_detail_preference` FOREIGN KEY (`preference_id`) REFERENCES `preference` (`id`)
 );
 
 DROP TABLE IF EXISTS `controller_release`;
 CREATE TABLE IF NOT EXISTS `controller_release` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `src_controller_id` INT(11) NULL DEFAULT NULL,
-  `tgt_controller_id` INT(11) NULL DEFAULT NULL,
-  `processed` TINYINT(1) NULL DEFAULT 0,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_controller_id_src` FOREIGN KEY (`src_controller_id`) REFERENCES `controller` (`id`)
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`src_controller_id` INT(11) NOT NULL,
+	`tgt_controller_id` INT(11) NULL DEFAULT NULL,
+	`processed` TINYINT(1) NULL DEFAULT '0',
+	`create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+	`update_time` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`, `src_controller_id`),
+	UNIQUE INDEX `src_and_tgt_controller_unique_combo` (`src_controller_id`, `tgt_controller_id`),
+	INDEX `fk_controller_release_controller2_idx` (`tgt_controller_id`),
+	CONSTRAINT `fk_controller_id_src` FOREIGN KEY (`src_controller_id`) REFERENCES `controller` (`id`)
 );
 
 
@@ -1818,61 +1821,22 @@ DROP INDEX `fk_storage_work_package1_idx` ;
 DROP TABLE `work_package` ;
 
 CREATE TABLE IF NOT EXISTS `controller_targets_available` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Work Package',
-  `controller_id` INT(11) NULL DEFAULT NULL,
-  `target_group_name` VARCHAR(255) NOT NULL,
-  `asset_number` VARCHAR(60) NULL DEFAULT NULL,
-  `controller_installed_date` DATE NULL,
-  `priority` INT(11) NULL DEFAULT NULL,
-  `processed` TINYINT(1) NULL DEFAULT '0',
-  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  INDEX `fk_controller_targets_available_controller1_idx` (`controller_id` ASC),
-  CONSTRAINT `fk_controller_targets_available_controller1`
-    FOREIGN KEY (`controller_id`)
-    REFERENCES `controller` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+	`id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Work Package',
+	`controller_id` INT(11) NOT NULL,
+	`target_group_name` VARCHAR(255) NOT NULL,
+	`asset_number` VARCHAR(60) NULL DEFAULT NULL,
+	`controller_installed_date` DATE NULL DEFAULT NULL,
+	`priority` INT(11) NULL DEFAULT NULL,
+	`processed` TINYINT(1) NULL DEFAULT '0',
+	`create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+	`update_time` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`, `controller_id`),
+	UNIQUE INDEX `controller_id_unique` (`controller_id`),
+	INDEX `fk_controller_targets_available_controller1_idx` (`controller_id`),
+	CONSTRAINT `fk_controller_targets_available_controller1` FOREIGN KEY (`controller_id`) REFERENCES `controller` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+);
 
 
-
-ALTER TABLE `controller_targets_available` 
-DROP FOREIGN KEY IF EXISTS `fk_controller_targets_available_controller1`;
-
-ALTER TABLE `controller_release` 
-DROP FOREIGN KEY  IF EXISTS  `fk_controller_release_controller1`;
-
-
-ALTER TABLE `controller_targets_available` 
-CHANGE COLUMN `controller_id` `controller_id` INT(11) NOT NULL ,
-DROP PRIMARY KEY,
-ADD PRIMARY KEY (`id`, `controller_id`);
-
-ALTER TABLE `controller_release` 
-CHANGE COLUMN `src_controller_id` `src_controller_id` INT(11) NOT NULL ,
-DROP PRIMARY KEY,
-ADD PRIMARY KEY (`id`, `src_controller_id`);
-
-ALTER TABLE `controller_release` 
-ADD INDEX `fk_controller_release_controller2_idx` (`tgt_controller_id` ASC);
-
-ALTER TABLE `controller_targets_available` 
-ADD CONSTRAINT `fk_controller_targets_available_controller1`
-  FOREIGN KEY (`controller_id`)
-  REFERENCES `controller` (`id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION;
-
-ALTER TABLE `controller_release` 
-ADD CONSTRAINT `fk_controller_release_controller1`
-  FOREIGN KEY (`src_controller_id`)
-  REFERENCES `controller` (`id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION;
-  
 --
 -- Dumping events for database 'vitae_data_refactor'
 --
@@ -1951,4 +1915,3 @@ BEGIN
 
 END ;;
 DELIMITER ;
-

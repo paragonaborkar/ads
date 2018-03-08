@@ -107,8 +107,11 @@ public class PreferenceController { // implements ResourceProcessor<RepositoryLi
 					PreferenceDetail newPrefDetail = new PreferenceDetail();
 					newPrefDetail.setPreference(newPref);
 					newPrefDetail.setFieldName(prefDetail.getFieldName());
+					newPrefDetail.setFieldProp(prefDetail.getFieldProp());
+					newPrefDetail.setFieldTemplate(prefDetail.getFieldTemplate());					
 					newPrefDetail.setFieldOrder(prefDetail.getFieldOrder());
 					newPrefDetail.setFieldVisible(prefDetail.getFieldVisible());
+					
 					preferenceDetailRepo.save(newPrefDetail);
 					
 					Link link = entityLinks.linkToSingleResource(PreferenceDetailRepository.class, newPrefDetail.getId());

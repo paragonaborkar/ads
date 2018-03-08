@@ -25,32 +25,32 @@ export class AppPropsComponent implements OnInit {
   @ViewChild('hdrTmpl') hdrTmpl: TemplateRef<any>;
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
   @ViewChild('stringEditTmpl') stringEditTmpl: TemplateRef<any>;
-  @ViewChild(SaveMessageTimerComponent) saveTimerChild:SaveMessageTimerComponent;
+  @ViewChild(SaveMessageTimerComponent) saveTimerChild: SaveMessageTimerComponent;
 
   public pageName = "SysPropListing";
-  configGroups:any[] = [];
+  configGroups: any[] = [];
   page = new Page();
 
   showSuccessMsg = '';
 
-  
+
   // Listing of native users to display 
   rows: any[] = [];
   columns: any = [];
   editing = {};
   grouping = '';
-  
+
   // public showSuccess: boolean = false; 
   public errorMessage: string = '';
 
   // private subscription: Subscription;
   // private timer: Observable<any>;
 
-  constructor(private appPropService: AppPropsService, private applicationConfigService: ApplicationConfigService,  private errorService: AdsErrorService) {
+  constructor(private appPropService: AppPropsService, private applicationConfigService: ApplicationConfigService, private errorService: AdsErrorService) {
     this.page.number = 1;
     this.page.pageNumber = 1;
     this.page.size = 3;
-    
+
   }
 
   ngOnInit() {
@@ -61,7 +61,7 @@ export class AppPropsComponent implements OnInit {
         this.grouping = sysConfigGroups[0];
 
         this.setPage({ offset: 0 });
-        this.applyPreferences(); 
+        this.applyPreferences();
       });
   }
 
@@ -82,12 +82,15 @@ export class AppPropsComponent implements OnInit {
 
     // This method is to get all the values from user_native table
     this.appPropService.getSysConfigData(this.page, this.grouping).subscribe(
-    // this.appPropService.getSysConfigsByPage(this.page).subscribe(
+      // this.appPropService.getSysConfigsByPage(this.page).subscribe(
       configs => {
         console.log(configs);
         this.page = configs.page;
         this.page.pageNumber = this.page.number;
-        this.rows = configs._embedded.sysConfigs;
+        // Don't set rows to undefined, it'll break the listing!    
+        if (configs.page.totalElements > 0) {
+          this.rows = configs._embedded.sysConfigs;
+        }
         // console.log("******************");
         // console.log(this.rows);
         // console.log(this.page);
@@ -109,7 +112,7 @@ export class AppPropsComponent implements OnInit {
   }
 
   updateTableValue(event, cell, rowIndex, row) {
-    this.editing[rowIndex +  cell] = false;
+    this.editing[rowIndex + cell] = false;
     this.rows[rowIndex][cell] = event.target.value;
 
     // TODO: Handle an error and display a message

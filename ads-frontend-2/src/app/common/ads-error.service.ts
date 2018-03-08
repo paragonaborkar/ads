@@ -78,7 +78,7 @@ processError(error: HttpErrorResponse | any, actionName, method): string {
   remoteLogError(error: HttpErrorResponse | any, actionName) {
     console.log("remoteLogError");
     console.error(error);
-    console.error(error.status.toString());
+    
 
     let tokenInfo = this.sessionHelper.getToken();
 
@@ -92,7 +92,7 @@ processError(error: HttpErrorResponse | any, actionName, method): string {
       corpUserId = tokenInfo.corpUserId
     }
 
-    this.logger.error(actionName, "corpUserId:" + corpUserId, "nativeUserId:" + nativeUserId, error.status.toString(), error.message);
+    this.logger.error(actionName, "corpUserId:" + corpUserId, "nativeUserId:" + nativeUserId, error.status, error.message);
   }
 
 }

@@ -1,17 +1,20 @@
 <!-- <pre class="card card-block card-header">Model: {{asyncSelected | json}}</pre> -->
-
+<!-- <pre class="card card-block card-header">controllerName.touched: {{controllerName.touched}}</pre>
+<pre class="card card-block card-header">selectedItem: {{ selectedItem==null }}</pre> -->
+<!--   [ngClass]="{'ng-invalid': selectedItem==null }" -->
+<!-- FIXME: Green vertical bars shows when there's an invalid controller name -->
 <div class="form-group ">
   <input class="form-control" [required]="valueRequired" name="controllerName" #assetNumber="ngModel"  
   [(ngModel)]="asyncSelected" #controllerName="ngModel"  placeholder="Controller Lookup"
   [typeahead]="dataSource" (typeaheadLoading)="changeTypeaheadLoading($event)"
   (typeaheadNoResults)="changeTypeaheadNoResults($event)" (typeaheadOnSelect)="typeaheadOnSelect($event)"
-  [typeaheadOptionsLimit]="7" typeaheadOptionField="controllerName" >
+  [typeaheadOptionsLimit]="7" typeaheadOptionField="controllerName">
 
-  <!-- Add d-block due message not displaed issue. See: https://stackoverflow.com/questions/48401656/bootstrap-4-0-non-beta-invalid-feedback-doesnt-show -->
-  <div *ngIf="typeaheadNoResults===true" class="invalid-feedback  d-block">Controller Name does not exist</div>
+  <!-- Add d-block due message not displayed issue. See: https://stackoverflow.com/questions/48401656/bootstrap-4-0-non-beta-invalid-feedback-doesnt-show -->
+  <div *ngIf="!controllerName.errors?.required && (typeaheadNoResults===true || (!selectedItem && controllerName.touched))" class="invalid-feedback  d-block">{{controllerTypeName}} Controller does not exist</div>
 
   <div *ngIf="controllerName.errors?.required && controllerName.touched"  class="invalid-feedback  d-block" >
-      Controller Name is required
+      {{controllerTypeName}} Controller is required
   </div>
   
 </div>

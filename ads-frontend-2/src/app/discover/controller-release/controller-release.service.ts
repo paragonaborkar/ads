@@ -58,6 +58,7 @@ export class ControllerReleaseService {
     // You can optionally handle it here, if needed    
     //   );
   }
+  
 
   searchForController(criteria: String): Observable<any> {
 
@@ -70,6 +71,18 @@ export class ControllerReleaseService {
     // .catch(
     // Handle error in Subscribe() using the AdsErrorService  
     // You can optionally handle it here, if needed    
+    //   );
+  }
+
+
+  create(obj): Observable<any> {
+    console.log('create controllerRelease:', obj);
+    return this.http
+      .post(this.global.apiUrl +this.servicePath, obj)
+      .map((res: Response) => res);
+    // .catch(
+    // Handle error in Subscribe() using the AdsErrorService      
+    // You can optionally handle it here, if needed
     //   );
   }
 }

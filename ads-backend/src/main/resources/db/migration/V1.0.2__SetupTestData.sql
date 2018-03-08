@@ -753,6 +753,7 @@ INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, 
 INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (4, 'SysPropListing', 'SYSTEM', '0', 0);
 INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (5, 'OwnerListing', 'SYSTEM', '0', 0);
 INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (6, 'ControllerReleaseListing', 'SYSTEM', 0, 0);
+INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (7, 'ControllerTargetListing', 'SYSTEM', 0, 0);
 
 /*!40000 ALTER TABLE `preference` ENABLE KEYS */;
 
@@ -784,17 +785,23 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (5, 'willMigrate', '1', 1);
 
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`) VALUES (6, 'Source Controller', '1', 'srcController.controllerName');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`) VALUES (6, 'Target Controller', '1', 'tgtController.controllerName');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (6, 'tgtControllerId', '1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (6, 'processed', '1');
+
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`) VALUES (7, 'Controller', '1', 'controller.controllerName');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (7, 'targetGroupName', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`, `field_template`) VALUES (7, 'Installed Date', '1', 'controllerInstalledDate', 'date');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (7, 'priority', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (7, 'processed', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (7, 'assetNumber', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_template`) VALUES (7, 'createTime', '1', 'dateTime');
 
 
 -- /*!40000 ALTER TABLE `preference_detail` ENABLE KEYS */;
 -- UNLOCK TABLES;
 
--- -- Dumping data for table `controller_release`
-INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (1, 1, NULL, 0);
-INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (2, 2, NULL, 0);
-INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (3, 3, NULL, 0);
+
 
 
 SET FOREIGN_KEY_CHECKS=1;

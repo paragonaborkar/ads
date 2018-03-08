@@ -85,7 +85,9 @@ export class ApplicationConfigService {
   }
 
 
-  getPreferencesForColumns(pageName, columns, hdrTmpl, actionTmpl): Observable<any> {
+  // getPreferencesForColumns(pageName, columns, hdrTmpl, actionTmpl, dateTimeTmpl, asIsTmpl): Observable<any> {
+    getPreferencesForColumns(pageName, columns, columnTemplates): Observable<any> {
+    
     var loginInfo = this.sessionHelper.getToken();
 
     return this.getPreferencesForUser(pageName, loginInfo.nativeUserId, loginInfo.corpUserId)
@@ -100,12 +102,27 @@ export class ApplicationConfigService {
 
           if (obj == undefined) {
             if (preferenceDetail.fieldVisible === 1) {
+              
+              let template = columnTemplates.asIsTmpl;
+              switch (preferenceDetail.fieldTemplate) {
+                case "dateTime": {
+                  template = columnTemplates.dateTimeTmpl;
+                  break;
+                }
+                case "date": {
+                  template = columnTemplates.dateTmpl;
+                  break;
+                }
+              }
+
               columns.push({
                 name: new FriendlyLabelPipePipe().transform(preferenceDetail.fieldName),
                 prop: preferenceDetail.fieldProp == "" ? preferenceDetail.fieldName: preferenceDetail.fieldProp,
                 order: preferenceDetail.fieldOrder,
-                flexGrow: 1
+                flexGrow: 1,
+                cellTemplate: template
               });
+
             }
 
           } else {
@@ -119,10 +136,10 @@ export class ApplicationConfigService {
           }
         });
 
-        if (hdrTmpl != null) {
+        if (columnTemplates.actionHeaderTmpl != null) {
           columns.push({
-            headerTemplate: hdrTmpl,
-            cellTemplate: actionTmpl,
+            headerTemplate:columnTemplates.actionHeaderTmpl,
+            cellTemplate: columnTemplates.actionTmpl,
             order: 1000,
             flexGrow: 1
           });
@@ -135,67 +152,6 @@ export class ApplicationConfigService {
         console.log(columns);
         return columns;
       });
-  }
-
-
-  // This method is not in use. 
-  getPreferencesForColumns2(pageName, columns, hdrTmpl, actionTmpl): Observable<any> {
-
-    var loginInfo = this.sessionHelper.getToken();
-
-    return this.getPreferencesForUser(pageName, loginInfo.nativeUserId, loginInfo.corpUserId)
-      .map(columnPreferences => columnPreferences._links.preferenceDetails.href)
-      .switchMap(preferenceDetailsHref => {
-        if (preferenceDetailsHref !== null && preferenceDetailsHref !== undefined) {
-          return this.getPreferenceDetailsForPreference(preferenceDetailsHref);
-        }
-        else {
-          return Observable.empty()
-        }
-      })
-      .map(preferenceDetails => {
-        console.log(preferenceDetails);
-
-        preferenceDetails._embedded.preferenceDetails.forEach(preferenceDetail => {
-
-          var obj = columns.find(function (obj) {
-            return obj.name === preferenceDetail.fieldName;
-          }, preferenceDetail.fieldName);
-
-          if (obj == undefined) {
-            if (preferenceDetail.fieldVisible === 1) {
-              columns.push({
-                name: new FriendlyLabelPipePipe().transform(preferenceDetail.fieldName),
-                prop: preferenceDetail.fieldName,
-                order: preferenceDetail.fieldOrder
-              });
-            }
-
-          } else {
-            // This is when we initialize the list of columns manually through this component.
-            columns.find(column => {
-              if (column.name === preferenceDetail.fieldName) {
-                // column.hidden = preferenceDetail.fieldVisible === 1 ? false : true;
-                return true;
-              }
-            });
-          }
-        });
-
-        columns.push({
-          headerTemplate: hdrTmpl,
-          cellTemplate: actionTmpl,
-          order: 1000
-        });
-
-
-        // Display the columns in the correct order now that we have the complete set of them.
-        this.sortColumns(columns);
-        console.log("Sorted: this.columns");
-        console.log(columns);
-        return columns;
-      });
-
   }
 
 

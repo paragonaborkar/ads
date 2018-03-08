@@ -8,6 +8,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import { Globals } from '../../globals';
+import { Page } from "../../common/page";
 
 
 @Injectable()
@@ -15,8 +16,22 @@ export class ControllerTargetService {
 
   constructor(private http: HttpClient, private global: Globals) { }
 
-  private servicePath = '/controllerTargetsAvailables';
+  private servicePath = '/controllerTargetsAvailables/';
 
+
+  getControllerTargetByProcessed(page: Page, processed: boolean): Observable<any> {
+
+    let pageParam = "&page=" + page.number  + "&size=" + page.size;;
+    let projectionParam = "&projection=ControllerTargetListing";
+    let sortParm = "&sort=createTime,desc";
+
+    return this.http.get(this.global.apiUrl + this.servicePath + "search/findByProcessed?processed=" + processed + pageParam + sortParm + projectionParam)
+      .map((res: Response) => res)
+      .catch(e => {
+        return Observable.throw(Observable.of({error: e}));
+      });
+
+  }
 
   create(obj): Observable<any> {
     console.log('create controllerTargetsAvailable ', obj);
