@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ReportService } from './report.service';
 import { HttpClient } from '@angular/common/http';
 import { SessionHelper } from '../../auth/session.helper';
+import { Globals } from '../../globals';
 
 @Component({
     selector: 'app-report-listing',
@@ -20,21 +21,23 @@ export class ReportListingComponent implements OnInit {
     showJasperReport;
     pageCount;
     output;
+    reportName = this.globals.userNativeReportName;
 
-    constructor(private reportService: ReportService, private _sessionHelper: SessionHelper) { }
+    constructor(private reportService: ReportService, private _sessionHelper: SessionHelper, private globals: Globals) { }
 
 
     ngOnInit(): void {
         this.pageCount = 1;
     }
 
-    // TODO: Do some further testing of requestedPageNumber and how it's used.
-    openJasperReport(requestedPageNumber): void {
+    openJasperReport(requestedPageNumber,reportName): void {
         this.showJasperReport = true;
         if (!requestedPageNumber)
             requestedPageNumber = 1;
         this.pageCount = requestedPageNumber;
-        this.reportService.openJasperReport(requestedPageNumber)
+        reportName = this.globals.userNativeReportName;
+          
+        this.reportService.openJasperReport(requestedPageNumber,reportName)
             .subscribe(
             res => {
                 this.report = res;
@@ -49,16 +52,17 @@ export class ReportListingComponent implements OnInit {
 
     goToPrevious(): void {
         this.pageCount = --this.pageCount;
-        this.openJasperReport(this.pageCount);
+        this.openJasperReport(this.pageCount,this.reportName);
     }
 
     goToNext(): void {
         this.pageCount = ++this.pageCount;
-        this.openJasperReport(this.pageCount);
+        this.openJasperReport(this.pageCount,this.reportName);
     }
 
-    downloadJasperReport() {
-        this.reportService.downloadJasperReport();
+    downloadJasperReport(reportName) {
+        reportName = this.globals.userNativeReportName;
+        this.reportService.downloadJasperReport(reportName);
     }
 
     
