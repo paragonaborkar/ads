@@ -19,8 +19,6 @@ public interface ControllerReleaseListingProjection {
 	
 	public boolean getProcessed();
 
-	
-
 	public Timestamp getCreateTime();
 	
 	public Timestamp getUpdateTime();

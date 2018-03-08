@@ -22,7 +22,7 @@ public class ControllerTargetsAvailable implements Serializable {
 
 	//uni-directional one-to-one association to Controller
 	@OneToOne
-	@JoinColumn(name = "controller_id")
+	@JoinColumn(name = "controller_id", unique=true)
 	private Controller controller;
 
 	@Column(name="asset_number", length=60)

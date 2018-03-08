@@ -10,17 +10,21 @@ import { ApplicationConfigService } from '../../common/application-config.servic
 
 import { Page } from "../../common/page";
 
+import { DataTableColTemplatesComponent} from '../../common/data-table-col-templates/data-table-col-templates.component'
+
+
 @Component({
   selector: 'app-owner',
   templateUrl: './owner.component.html',
   styleUrls: ['./owner.component.scss']
 })
 export class OwnerComponent implements OnInit {
-  @ViewChild('hdrTmpl') hdrTmpl: TemplateRef<any>;
+  @ViewChild(DataTableColTemplatesComponent) dataTableColsTemplate :DataTableColTemplatesComponent;
+  columnTemplates = {};
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
 
   public isScheduleModal = false;
-  public activityToSchedule:any = [];
+  public activityToSchedule: any = [];
   public scheduleAction = '';
 
   page = new Page();
@@ -28,12 +32,12 @@ export class OwnerComponent implements OnInit {
   constructor(private route: ActivatedRoute, private ownerService: OwnerService, private sessionHelper: SessionHelper, private applicationConfigService: ApplicationConfigService) {
     this.page.number = 1;
     this.page.pageNumber = 1;
-    this.page.size = 3;   
+    this.page.size = 3;
   }
 
   // owerListing: any = [];
   public pageName = "OwnerListing";
-  
+
 
   // Listing of actvities/owner information to display 
   rows: any[] = [];
@@ -48,15 +52,22 @@ export class OwnerComponent implements OnInit {
     //   .switchMap((params: ParamMap) => this.ownerService.validateMigKeyExists(params['migKey'], loginInfo.corpUserId))
     //   .subscribe((data) => this.owerListing = data);
 
-      this.setPage({ offset: 0 });
-      this.applyPreferences();
   }
 
 
-    /**
-   * Populate the table with new data based on the page number
-   * @param page The page to select
-   */
+  ngAfterViewInit() {
+    this.columnTemplates = this.dataTableColsTemplate.getTemplates();
+    this.columnTemplates["actionTmpl"] =this.actionTmpl;
+
+    this.setPage({ offset: 0 });
+    this.applyPreferences();
+  }
+
+
+  /**
+ * Populate the table with new data based on the page number
+ * @param page The page to select
+ */
   setPage(pageInfo) {
     console.log("Loading page...");
     this.page.number = pageInfo.offset;
@@ -68,7 +79,10 @@ export class OwnerComponent implements OnInit {
         console.log(data);
         this.page = data.page;
         this.page.pageNumber = this.page.number;
-        this.rows = data._embedded.activities;
+        // Don't set rows to undefined, it'll break the listing!    
+        if (data.page.totalElements > 0) {
+          this.rows = data._embedded.activities;
+        }
         // this.rows = this.adsHelper.ungroupJson(usersNativeResponse._embedded.userNatives, "userRole", ["createTime", "updateTime"]);
         console.log("******************");
         console.log(this.rows);
@@ -82,12 +96,8 @@ export class OwnerComponent implements OnInit {
   }
 
   applyPreferences(): void {
-    // console.log("applyPreferences Start");
-
-    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.hdrTmpl, this.actionTmpl)
+    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.columnTemplates)
       .subscribe(columnPreferences => {
-        // console.log("columnPreferences");
-        // console.log(columnPreferences);
         this.columns = columnPreferences;
       }
       );
@@ -105,7 +115,7 @@ export class OwnerComponent implements OnInit {
     this.isScheduleModal = true;
   }
 
-  hideScheduleModal(){
+  hideScheduleModal() {
     this.isScheduleModal = false;
   }
 }

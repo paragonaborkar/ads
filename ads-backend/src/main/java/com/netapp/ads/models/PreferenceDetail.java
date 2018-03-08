@@ -25,8 +25,11 @@ public class PreferenceDetail implements Serializable {
 	@Column(name="field_name", length=255)
 	private String fieldName;
 
-	@Column(name="field_prop", length=255)
+	@Column(name="field_prop", length=50)
 	private String fieldProp;
+	
+	@Column(name="field_template", length=50)
+	private String fieldTemplate;
 	
 	@Column(name="field_order")
 	private Integer fieldOrder;
@@ -72,6 +75,14 @@ public class PreferenceDetail implements Serializable {
 
 	public void setFieldProp(String fieldProp) {
 		this.fieldProp = fieldProp;
+	}
+	
+	public String getFieldTemplate() {
+		return this.fieldTemplate;
+	}
+
+	public void setFieldTemplate(String fieldTemplate) {
+		this.fieldTemplate = fieldTemplate;
 	}
 	
 

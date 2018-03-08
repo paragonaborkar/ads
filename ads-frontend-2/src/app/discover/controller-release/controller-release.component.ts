@@ -7,8 +7,7 @@ import { ApplicationConfigService } from '../../common/application-config.servic
 import { ControllerReleaseService } from './controller-release.service';
 import { AdsErrorService } from '../../common/ads-error.service';
 
-
-
+import { DataTableColTemplatesComponent} from '../../common/data-table-col-templates/data-table-col-templates.component'
 
 @Component({
   selector: 'app-controller-release',
@@ -16,15 +15,16 @@ import { AdsErrorService } from '../../common/ads-error.service';
   styleUrls: ['./controller-release.component.scss']
 })
 export class ControllerReleaseComponent implements OnInit {
+  @ViewChild(DataTableColTemplatesComponent) dataTableColsTemplate :DataTableColTemplatesComponent;
+  columnTemplates = {};
+  @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
+
   public pageName = "ControllerReleaseListing";
   errorMessage = "";
 
-  @ViewChild('hdrTmpl') hdrTmpl: TemplateRef<any>;
-  @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
-
   // Listing of Controller Release information to display 
   rows: any[] = [];
-  columns: any = [];
+  columns: any[] = [];
   page = new Page();
 
   controllerProcessed = false;
@@ -33,66 +33,72 @@ export class ControllerReleaseComponent implements OnInit {
     this.page.number = 1;
     this.page.pageNumber = 1;
     this.page.size = 3;
-
-
-
   }
 
   ngOnInit() {
+ 
+  }
+
+  ngAfterViewInit() {
+    this.columnTemplates = this.dataTableColsTemplate.getTemplates();
+    this.columnTemplates["actionTmpl"] =this.actionTmpl;
+
     this.setPage({ offset: 0 });
     this.applyPreferences();
   }
 
 
-  /**
- * Populate the table with new data based on the page number
- * @param page The page to select
- */
+
   setPage(pageInfo) {
     console.log("Loading page...");
     this.page.number = pageInfo.offset;
     this.page.pageNumber = pageInfo.offset;
 
+    
     // This method is to get all the values from user_native table
     this.contrllerReleaseService.getControllerReleasesByProcessed(this.page, this.controllerProcessed).subscribe(
       data => {
-        console.log(data);
-        this.page = data.page;
-        this.page.pageNumber = this.page.number;
-        this.rows = data._embedded.controllerReleases;
-        // this.rows = this.adsHelper.ungroupJson(usersNativeResponse._embedded.userNatives, "userRole", ["createTime", "updateTime"]);
-        console.log("******************");
-        console.log(this.rows);
-        console.log(this.page);
-        console.log("****");
-        if (this.page.number > 0 && this.rows.length == 0) {
-          pageInfo.offset = pageInfo.offset - 1;
-          this.setPage(pageInfo);
-        }
+        this.setupPaging(data, pageInfo);
       }, err => {
         // Get the ADS configured error message to display.
         this.errorMessage = this.errorService.processError(err, "getControllerReleaseList", "GET");
       });
+ 
+  }
+
+  setupPaging(data, pageInfo) {
+    console.log(data);
+    this.page = data.page;
+    this.page.pageNumber = this.page.number;
+    
+    // Don't set rows to undefined, it'll break the listing!    
+    if (data.page.totalElements > 0) {
+      this.rows = data._embedded.controllerReleases;
+    }
+    // this.rows = this.adsHelper.ungroupJson(usersNativeResponse._embedded.userNatives, "userRole", ["createTime", "updateTime"]);
+    console.log("******************");
+    console.log(this.rows);
+    console.log(this.page);
+    console.log("****");
+    if (this.page.number > 0 && this.rows.length == 0) {
+      pageInfo.offset = pageInfo.offset - 1;
+      this.setPage(pageInfo);
+    }
   }
 
   applyPreferences(): void {
     // console.log("applyPreferences Start");
 
-    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.hdrTmpl, this.actionTmpl)
+    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.columnTemplates)
       .subscribe(columnPreferences => {
         this.columns = columnPreferences;
       });
   }
 
   pagingUpdated() {
+    // Need to get the filter value!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     this.setPage(this.page);
   }
-
-
-
-
-
-
 
 
 }

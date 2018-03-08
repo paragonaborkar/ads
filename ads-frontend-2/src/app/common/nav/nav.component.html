@@ -35,8 +35,6 @@
               <a class="dropdown-item" routerLink="discover/controller-target">Controller Targets</a>
               <a class="dropdown-item" routerLink="discover/controller-target-create">controller-target-create (temp)</a>
 
-              
-
               <a class="dropdown-item" routerLink="discover/report-listing">Reports</a>
               <a class="dropdown-item" routerLink="discover/manual-functions">Manual Functions</a>
             </div>
@@ -49,14 +47,15 @@
                 <a class="dropdown-item" routerLink="admin/native-user-mgmt">Native User Management</a>
                 <a class="dropdown-item" routerLink="admin/property-preferences">Property Preferences</a>
                 <a class="dropdown-item" routerLink="admin/application-properties">Application Properties</a>
-                <a class="dropdown-item" routerLink="admin/manual-functions">Manual Functions</a>
+                <a class="dropdown-item" routerLink="admin/manual-functions">Manual Functions </a>
               </div>
             </li>
 
     </ul>
     <form class="form-inline my-2 my-lg-0" >
-      <div class="mr-2 text-white">{{firstName}} {{lastName }} ({{email}})</div>
-      <button class="btn btn-outline-light my-2 my-sm-0" type="button" (click)="logout()">Logout</button>
+      <div class="mr-3 text-white">{{firstName}} {{lastName }} ({{email}})</div>
+      <a href="#" class="text-white lead"  (click)="logout()"> <i class="fa fa-sign-out"></i></a>
+
     </form>
   </div>
 </nav>

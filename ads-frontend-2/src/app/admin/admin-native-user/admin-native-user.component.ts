@@ -19,6 +19,8 @@ import { SessionHelper } from '../../auth/session.helper';
 
 import { Page } from "../../common/page";
 
+import { DataTableColTemplatesComponent } from '../../common/data-table-col-templates/data-table-col-templates.component'
+
 
 @Component({
   selector: 'admin-native-user',
@@ -27,7 +29,8 @@ import { Page } from "../../common/page";
 
 })
 export class AdminNativeUserComponent implements OnInit {
-  @ViewChild('hdrTmpl') hdrTmpl: TemplateRef<any>;
+  @ViewChild(DataTableColTemplatesComponent) dataTableColsTemplate: DataTableColTemplatesComponent;
+  columnTemplates = {};
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
 
   @ViewChild('updateModal') public updateModal: ModalDirective;
@@ -55,9 +58,16 @@ export class AdminNativeUserComponent implements OnInit {
 
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.columnTemplates = this.dataTableColsTemplate.getTemplates();
+    this.columnTemplates["actionTmpl"] = this.actionTmpl;
+
     this.setPage({ offset: 0 });
     this.applyPreferences();
   }
+
 
 
   /**
@@ -75,7 +85,9 @@ export class AdminNativeUserComponent implements OnInit {
         console.log(usersNativeResponse);
         this.page = usersNativeResponse.page;
         this.page.pageNumber = this.page.number;
-        this.rows = this.adsHelper.ungroupJson(usersNativeResponse._embedded.userNatives, "userRole", ["createTime", "updateTime"]);
+        if (usersNativeResponse.page.totalElements > 0) {
+          this.rows = this.adsHelper.ungroupJson(usersNativeResponse._embedded.userNatives, "userRole", ["createTime", "updateTime"]);
+        }
         console.log("******************");
         console.log(this.rows);
         console.log(this.page);
@@ -144,13 +156,12 @@ export class AdminNativeUserComponent implements OnInit {
   applyPreferences(): void {
     console.log("applyPreferences Start");
 
-    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.hdrTmpl, this.actionTmpl)
+    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.columnTemplates)
       .subscribe(columnPreferences => {
         console.log("columnPreferences");
         console.log(columnPreferences);
         this.columns = columnPreferences;
-      }
-      );
+      });
 
   }
 
