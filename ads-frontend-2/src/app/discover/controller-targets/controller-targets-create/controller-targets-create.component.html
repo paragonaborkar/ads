@@ -2,6 +2,14 @@
   <div class="col-md-9">
     <h2 class="h4">Create New Controller Target</h2>
   </div>
+  <div class="col-md-3">
+    <div class="pull-right">
+      <app-save-message-timer [showSuccessMsg]="showSuccessMsg"></app-save-message-timer> 
+    </div>
+  </div>
+
+
+
 </div>
 
 
@@ -24,7 +32,7 @@
 
     <!-- <div class="form-group col-md-4"> -->
     <div class="col-md-4">
-      <label for="controllerName">Controller Name {{selectedControllerInvalid}}</label>
+      <label for="controllerName">Controller Name</label>
 
       <app-controller-typeahead (selectedController)="filterByController($event)" #selectedControllerControl [valueRequired]="true"></app-controller-typeahead>
 
@@ -82,7 +90,7 @@
   <!-- End Form Row -->
 
   <button type="submit" class="btn btn-primary" [disabled]="!createControllerTargetsForm.form.valid">Create</button>
-  <small id="createFormHelp" class="form-text text-muted" *ngIf="!createControllerTargetsForm.form.valid">Enter all required fields in order to Create a new Controller Target.</small>
+  <small id="createFormHelp" class="form-text text-muted" *ngIf="!createControllerTargetsForm.form.valid">Enter all required fields to create a new Controller Target.</small>
 </form>
 
 <!-- <pre class="card card-block card-header">Model: {{newTarget | json}}</pre> -->

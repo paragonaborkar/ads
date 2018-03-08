@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { EventEmitter, Output, Input } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+// import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 
-import { ControllerReleaseService } from '../controller-release.service';
+import { ControllerReleaseService } from '../controller-release/controller-release.service';
 
 @Component({
   selector: 'app-controller-typeahead',
@@ -20,8 +20,6 @@ export class ControllerTypeaheadComponent implements OnInit {
 
   @Input() valueRequired: string;
   
-  public formGroup: FormGroup; // our model driven form
-
   asyncSelected: any;
   typeaheadLoading: boolean;
   typeaheadNoResults: boolean;
@@ -36,24 +34,13 @@ export class ControllerTypeaheadComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-    console.log("this.valueRequired:", this.valueRequired);
-    if (this.valueRequired) {
-      this.formGroup = new FormGroup({
-        controllerName: new FormControl("asdasd", Validators.required)
-      });
-
-      console.log("this.valueRequired :", this.valueRequired);
-    }
-  }
-
+  ngOnInit() {  }
 
 
   getStatesAsObservable(token: string) {
     console.log(token);
     return this.controllerReleaseService.searchForController(token);
   }
-
 
   changeTypeaheadLoading(e: boolean): void {
     this.typeaheadLoading = e;

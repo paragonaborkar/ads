@@ -84,9 +84,10 @@ import { ReportListingConnComponent } from './connections/report-listing-conn/re
 import { AppPropsComponent } from './admin/app-props/app-props.component';
 import { Error404Component } from './error-404/error-404.component';
 import { ControllerReleaseComponent } from './discover/controller-release/controller-release.component';
-import { ControllerTypeaheadComponent } from './discover/controller-release/controller-typeahead/controller-typeahead.component';
+import { ControllerTypeaheadComponent } from './discover/controller-typeahead/controller-typeahead.component';
 import { ControllerTargetsComponent } from './discover/controller-targets/controller-targets.component';
 import { ControllerTargetsCreateComponent } from './discover/controller-targets/controller-targets-create/controller-targets-create.component';
+import { SaveMessageTimerComponent } from './common/save-message-timer/save-message-timer.component';
 
 /*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
@@ -124,7 +125,8 @@ import { ControllerTargetsCreateComponent } from './discover/controller-targets/
     ControllerReleaseComponent,
     ControllerTypeaheadComponent,
     ControllerTargetsComponent,
-    ControllerTargetsCreateComponent
+    ControllerTargetsCreateComponent,
+    SaveMessageTimerComponent
 
     
 

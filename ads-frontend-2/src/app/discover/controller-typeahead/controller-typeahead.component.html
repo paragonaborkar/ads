@@ -8,10 +8,10 @@
   [typeaheadOptionsLimit]="7" typeaheadOptionField="controllerName" >
 
   <!-- Add d-block due message not displaed issue. See: https://stackoverflow.com/questions/48401656/bootstrap-4-0-non-beta-invalid-feedback-doesnt-show -->
-  <div *ngIf="typeaheadNoResults===true" class="invalid-feedback  d-block">  Controller Name does not exist</div>
+  <div *ngIf="typeaheadNoResults===true" class="invalid-feedback  d-block">Controller Name does not exist</div>
 
   <div *ngIf="controllerName.errors?.required && controllerName.touched"  class="invalid-feedback  d-block" >
       Controller Name is required
-    </div>
+  </div>
   
 </div>

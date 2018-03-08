@@ -3,7 +3,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+// import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/timer';
@@ -13,6 +13,7 @@ import { Page } from "../../common/page";
 import { AppPropsService } from './app-props.service'
 import { ApplicationConfigService } from '../../common/application-config.service';
 import { AdsErrorService } from '../../common/ads-error.service';
+import { SaveMessageTimerComponent } from '../../common/save-message-timer/save-message-timer.component';
 
 
 @Component({
@@ -24,10 +25,13 @@ export class AppPropsComponent implements OnInit {
   @ViewChild('hdrTmpl') hdrTmpl: TemplateRef<any>;
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
   @ViewChild('stringEditTmpl') stringEditTmpl: TemplateRef<any>;
+  @ViewChild(SaveMessageTimerComponent) saveTimerChild:SaveMessageTimerComponent;
 
   public pageName = "SysPropListing";
   configGroups:any[] = [];
   page = new Page();
+
+  showSuccessMsg = '';
 
   
   // Listing of native users to display 
@@ -36,11 +40,11 @@ export class AppPropsComponent implements OnInit {
   editing = {};
   grouping = '';
   
-  public showSuccess: boolean = false; 
+  // public showSuccess: boolean = false; 
   public errorMessage: string = '';
 
-  private subscription: Subscription;
-  private timer: Observable<any>;
+  // private subscription: Subscription;
+  // private timer: Observable<any>;
 
   constructor(private appPropService: AppPropsService, private applicationConfigService: ApplicationConfigService,  private errorService: AdsErrorService) {
     this.page.number = 1;
@@ -61,11 +65,11 @@ export class AppPropsComponent implements OnInit {
       });
   }
 
-  public ngOnDestroy() {
-    if ( this.subscription && this.subscription instanceof Subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
+  // public ngOnDestroy() {
+  //   if ( this.subscription && this.subscription instanceof Subscription) {
+  //     this.subscription.unsubscribe();
+  //   }
+  // }
 
   /**
  * Populate the table with new data based on the page number
@@ -114,25 +118,25 @@ export class AppPropsComponent implements OnInit {
         console.log(response);
         console.log("Saved row");
 
-        // call this setTimer method to start 
-        this.setSuccessTimer();
+        this.showSuccessMsg = "Saved...";
+        this.saveTimerChild.setSuccessTimer();
       }, err => {
         // Get the ADS configured error message to display.
         this.errorMessage = this.errorService.processError(err, "updateApplicationProperty", "PATCH");
       });
   }
 
-  public setSuccessTimer(){
-    this.errorMessage = '';
-    // set to true to show loading div
-    this.showSuccess = true;
+  // public setSuccessTimer(){
+  //   this.errorMessage = '';
+  //   // set to true to show loading div
+  //   this.showSuccess = true;
 
-    this.timer        = Observable.timer(5000); // 5000 millisecond means 5 seconds
-    this.subscription = this.timer.subscribe(() => {
-        // set to false to hide loading div from view after 5 seconds
-        this.showSuccess = false;
-    });
-  }
+  //   this.timer        = Observable.timer(5000); // 5000 millisecond means 5 seconds
+  //   this.subscription = this.timer.subscribe(() => {
+  //       // set to false to hide loading div from view after 5 seconds
+  //       this.showSuccess = false;
+  //   });
+  // }
 
   applyPreferences(): void {
     console.log("applyPreferences Start");
