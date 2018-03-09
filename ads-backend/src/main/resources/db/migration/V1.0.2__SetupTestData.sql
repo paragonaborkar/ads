@@ -16,7 +16,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `aggregate_purpose` WRITE;
 /*!40000 ALTER TABLE `aggregate_purpose` DISABLE KEYS */;
-INSERT INTO `aggregate_purpose` VALUES (1,23,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(2,24,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(602,25,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(603,26,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(604,27,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(605,28,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(606,29,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(607,30,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(608,31,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(609,32,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(610,33,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(611,34,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(612,413,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL);
+INSERT INTO `aggregate_purpose` VALUES (1,23,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(2,24,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(602,25,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(603,26,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(604,27,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(605,28,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(606,29,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(607,30,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(608,31,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(609,32,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(610,33,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(611,34,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(612,413,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(613,613,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(614,614,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(615,615,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(616,616,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(617,414,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(618,415,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(619,416,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(620,501,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(621,621,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(622,622,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL);
 /*!40000 ALTER TABLE `aggregate_purpose` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -703,6 +703,7 @@ UNLOCK TABLES;
 LOCK TABLES `user_corporate` WRITE;
 /*!40000 ALTER TABLE `user_corporate` DISABLE KEYS */;
 INSERT INTO `user_corporate` VALUES (1,'Z999998','Unknown','Orphan',NULL,'UNKNOWN','unknown@example.com','0',NULL,NULL,NULL,NULL,NULL,2,'2017-09-27 16:52:27',NULL),(2,'A011234','Scooter','Wipperman','','Supreme Ruler','Scooter.Wipperman@jpmchase.com','9193457892','9192224567',NULL,'123456',NULL,NULL,2,'2017-09-27 16:52:27',NULL),(6,'F591154','Lew','Newby','','King of Prussia','lew.newby@jpmchase.com','9192341782','9191111234',NULL,'123456',NULL,NULL,2,'2017-09-27 16:52:27',NULL),(7,'Z000000','TestLiqibase','TestLiqibase','','','TestLiqibase\n@jpmc.com','888-888-8888','888-888-8889','','999999','','',2,'2017-09-27 16:52:27',NULL);
+INSERT INTO `user_corporate` (`user_name`, `first_name`, `last_name`, `email`, `manager_user_corporate_id`) VALUES ('aborkar@consultparagon.com', 'adscorpuser', 'TEST', 'aborkar@consultparagon.com', '2');
 /*!40000 ALTER TABLE `user_corporate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -711,8 +712,8 @@ UNLOCK TABLES;
 --
 LOCK TABLES `user_native` WRITE;
 /*!40000 ALTER TABLE `user_native` DISABLE KEYS */;
-INSERT INTO `user_native`  (`email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`) VALUES ('jdoe@corp.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'Joe', 'Doe','sparky', 1);
-INSERT INTO `user_native`  (`email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`) VALUES ('jdoe2@corp.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','dog', 1);
+INSERT INTO `user_native`  (`email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('jdoe@corp.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'Joe', 'Doe','sparky', 1, 2);
+INSERT INTO `user_native`  (`email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('jdoe2@corp.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','dog', 1, 2);
 INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('1@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','1-name', 1, 2);
 INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('2@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','2-name', 1, 2);
 INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('3@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','3-name', 1, 2);
@@ -760,7 +761,7 @@ INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, 
 
 
 
--- -- Dumping data for table `preference_detail`
+-- -- Dumping data for table `preference`
 
 -- LOCK TABLES `preference_detail` WRITE;
 -- /*!40000 ALTER TABLE `preference_detail` DISABLE KEYS */;
@@ -779,10 +780,25 @@ INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, 
 -- /*!40000 ALTER TABLE `preference_detail` ENABLE KEYS */;
 -- UNLOCK TABLES;
 
--- -- Dumping data for table `controller_release`
 INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (1, 1, NULL, 0);
 INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (2, 2, NULL, 0);
 INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (3, 3, NULL, 0);
 
+
+INSERT INTO `preference` (`page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES ('ControllerReleaseListing', 'SYSTEM', 0, 0);
+
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'Source Controller', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'tgtControllerId', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'processed', '1');
+
+
+ALTER TABLE `preference_detail`	ADD COLUMN `field_prop` VARCHAR(50) NULL DEFAULT NULL AFTER `field_name`;
+
+INSERT INTO `preference` (`page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES ('SysPropListing', 'SYSTEM', '0', '0');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'propertyName', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'propertyValue', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'grouping', '1');
+
+UPDATE `ads_dev`.`preference_detail` SET `field_prop`='srcController.controllerName' WHERE  `id`=13;
 
 SET FOREIGN_KEY_CHECKS=1;
