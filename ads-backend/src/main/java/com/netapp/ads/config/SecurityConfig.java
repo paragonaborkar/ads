@@ -182,6 +182,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
 		web.ignoring().antMatchers("/saml/**");
 		web.ignoring().antMatchers("/sso");
+		web.ignoring().antMatchers("/remoteLog");
 	}
 
 	@Override
