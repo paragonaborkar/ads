@@ -14,7 +14,9 @@
             <button class="btn btn-primary previousPage" [ngClass]="{disabled: pageCount <= 1}" (click)="goToPrevious()">Previous</button>
             <input class="gotoPage" type="number" [(ngModel)]="pageNum" min="1" max={{totalPages}} />
             <button class="btn btn-primary" (click)="openJasperReport(pageNum)">Go To Page</button>
-            <button class="btn btn-primary nextPage" [ngClass]="{disabled: pageCount === totalPages}"><a (click)="goToNext()">Next</a></button>
+            <button class="btn btn-primary nextPage" [ngClass]="{disabled: pageCount === totalPages}">
+                <a (click)="goToNext()">Next</a>
+            </button>
             <button class="btn btn-primary pull-right" (click)="downloadJasperReport()">Export to Excel</button>
         </div>
     </div>
@@ -23,4 +25,3 @@
 
 
 <div class="border-left-10 dwnldReport" name="viewport" content="width=device-width, initial-scale=1" id="reportsCustom"></div>
-

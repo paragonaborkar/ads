@@ -26,10 +26,9 @@ export class ReportService {
 
 
 
-    openJasperReport(e): Observable<any> {
-        console.log(this.reportServiceUrl + '/htmlReport/1');
+    openJasperReport(pageNo, reportName): Observable<any> {
 
-        return this.http.get(this.reportServiceUrl + '/htmlReport/1')
+        return this.http.get(this.reportServiceUrl + '/generateReport?pageNo=' + pageNo + '&reportName=' + reportName)
             .map((res: Response) => res)
             .catch(this.handleError);
     }
@@ -61,16 +60,17 @@ export class ReportService {
     /**
     * Downloads Jasper Report
     */
-    downloadJasperReport() {
+    downloadJasperReport(reportName) {
 
         const type = 'application/vnd.ms-excel';
-        const fileName = 'UserReport.xls';
+        const fileName = 'Report.xls';
 
         const headers = new HttpHeaders({ 'Accept': type });
 
         //Add download process feature: https://blog.angularindepth.com/the-new-angular-httpclient-api-9e5c85fe3361
 
-        this.http.get(this.reportServiceUrl + '/downloadReport', { headers: headers, responseType: 'blob', reportProgress: true })
+        this.http.get(this.reportServiceUrl + '/downloadReport?reportName=' + reportName,
+            { headers: headers, responseType: 'blob', reportProgress: true })
             .catch(errorResponse => Observable.throw(errorResponse))
             .map((response) => {
                 if (response instanceof Response) {
