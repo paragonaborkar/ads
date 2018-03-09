@@ -1,3 +1,18 @@
+
+
+
+
+
+
+DROP DATABASE `ads_dev`;
+
+
+CREATE DATABASE `ads_dev`;
+
+
+
+
+
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: vitae_data_refactor
