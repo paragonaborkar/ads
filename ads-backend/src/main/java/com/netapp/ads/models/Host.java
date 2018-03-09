@@ -34,8 +34,8 @@ public class Host implements Serializable {
 	@Column(length=255)
 	private String note;
 	
-	@Column(name="resolver", length=60)
-	private String resolver;
+	//@Column(name="resolver", length=60)
+	//private String resolver;
 
 	@Column(name="system_admin_id")
 	private Integer systemAdminId;
@@ -128,13 +128,13 @@ public class Host implements Serializable {
 		this.note = note;
 	}
 		
-	public String getResolver() {
+/*	public String getResolver() {
 		return this.resolver;
 	}
 
 	public void setResolver(String resolver) {
 		this.resolver = resolver;
-	}
+	}*/
 
 	public Integer getSystemAdminId() {
 		return this.systemAdminId;

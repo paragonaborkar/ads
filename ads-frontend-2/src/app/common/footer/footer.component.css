@@ -1,11 +1,12 @@
 .footer {
-    background-color: rgba(224, 224, 224, 100);
     position: absolute;
-    left: 0px;
-    right: 0;
     bottom: 0;
-    height: 50px;
-    line-height: 50px; 
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #f5f5f5;
+
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;

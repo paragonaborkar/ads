@@ -8,5 +8,4 @@ public interface SystemPropertiesService {
 
 	List<String> findDistinctGroupNames();
 
-	List<SysConfig> findByGroupName(String grouping);
 }

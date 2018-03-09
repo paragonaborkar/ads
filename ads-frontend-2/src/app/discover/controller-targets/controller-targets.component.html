@@ -1,0 +1,74 @@
+<div class="row d-flex justify-content-center">
+
+  <div class="col-md-8 mb-2">
+
+    <div class="row mb-1">
+      <div class="col-md-11">
+        <h2 class="h3">Controller Targets Available</h2>
+      </div>
+      <div class="col-md-1">
+        <div class="pull-right">
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#createNewControllerTarget" aria-expanded="false"
+            aria-controls="createNewControllerTarget">
+            Create New Target
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse" id="createNewControllerTarget">
+      <div class="card card-body mb-2 ngx-datatable material">
+        <app-controller-targets-create (savedControllerTarget)="pagingUpdated()"></app-controller-targets-create>
+      </div>
+    </div>
+
+
+    <div class="row mb-1">
+      <div class="col-md-11">
+        <form class="form-inline">
+          <div class="form-group">
+            <label for="pagesPerPage">Rows:&nbsp;</label>
+            <select class="form-control form-control-sm" name="pagesPerPage" [(ngModel)]="page.size" (change)="pagingUpdated()">
+              <option value=1>1</option>
+              <option value=3>3</option>
+              <option value=10>10</option>
+              <option value=25>25</option>
+              <option value=50>50</option>
+            </select>
+          </div>
+
+
+        </form>
+      </div>
+      <div class="col-md-1">
+        <div class="pull-right">
+          <button type="button" class="btn btn-link" (click)="showPropertyModal()">
+            <i class="fa fa-cog fa-2x" title="Column Settings"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-1">
+      <div class="col-md-12" *ngIf="rows.length > 0 && columns.length > 0">
+        <ngx-datatable class="material " [rows]="rows" [columns]="columns" [columnMode]="'flex'" [rowHeight]="auto" [externalPaging]="true"
+          [count]="page.totalElements" [offset]="page.number" [limit]="page.size" [headerHeight]="50" [footerHeight]="50" (page)='setPage($event)'>
+        </ngx-datatable>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-data-table-col-templates></app-data-table-col-templates>
+
+<ng-template #actionTmpl let-column="column" let-row="row">
+    <button class="btn btn-sm btn-warning" (click)="delete(row)">
+      <i class="fa fa-trash"></i> Delete
+    </button>
+  </ng-template>
+
+
+
+<prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal" [config]="{ show: true }" bsModal #propPreferenceModal="bs-modal"
+  (done)="onHide('propPreferenceModal')" [pageName]="pageName"></prop-preferences-modal>

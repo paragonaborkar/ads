@@ -1,0 +1,98 @@
+<div class="row">
+  <div class="col-md-9">
+    <h2 class="h4">Create Controller Target</h2>
+  </div>
+  <div class="col-md-3">
+    <div class="pull-right">
+      <app-save-message-timer [showSuccessMsg]="showSuccessMsg"></app-save-message-timer> 
+    </div>
+  </div>
+
+
+
+</div>
+
+
+<div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+  <span>{{errorMessage}}</span>
+</div>
+
+<form (ngSubmit)="save()" #createControllerTargetsForm="ngForm" autocomplete="off">
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="targetGroupName">Target Group Name</label>
+
+      <input type="text" class="form-control" [ngClass]="{'is-invalid':targetGroupName.errors?.required && targetGroupName.touched || targetGroupName.errors?.minlength && targetGroupName.touched}"
+        [(ngModel)]="newTarget.targetGroupName" name="targetGroupName" #targetGroupName="ngModel" required placeholder="Target Group Name">
+      <div *ngIf="targetGroupName.errors?.required && targetGroupName.touched" class="invalid-feedback">
+        Target Group Name is required
+      </div>
+
+    </div>
+
+    <!-- <div class="form-group col-md-4"> -->
+    <div class="col-md-4">
+      <label for="controllerName">Controller Name</label>
+
+      <app-controller-typeahead (selectedController)="filterByController($event)" #selectedControllerControl  
+      [selectOptionsDataSource]="'findByControllerNameContaining'" [controllerName]= "'controller'"  [controllerTypeName]= "" [valueRequired]="true">
+      </app-controller-typeahead>
+
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="assetNumber">Asset Tag</label>
+
+      <input type="text" class="form-control" [ngClass]="{'is-invalid':assetNumber.errors?.required && assetNumber.touched || assetNumber.errors?.minlength && assetNumber.touched}"
+        [(ngModel)]="newTarget.assetNumber" name="assetNumber" #assetNumber="ngModel" required placeholder="Asset Tag">
+      <div *ngIf="assetNumber.errors?.required && assetNumber.touched" class="invalid-feedback">
+        Asset Tag is required
+      </div>
+
+    </div>
+  </div>
+  <!-- End Form Row -->
+
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="controllerInstalledDate">Install Date</label>
+
+      <input type="text" class="form-control" [ngClass]="{'is-invalid':controllerInstalledDate.errors?.required && controllerInstalledDate.touched}"
+        [(ngModel)]="newTarget.controllerInstalledDate" name="controllerInstalledDate" #controllerInstalledDate="ngModel" required
+        [minDate]="minDate" [maxDate]="maxDate" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue">
+      <div *ngIf="controllerInstalledDate.errors?.required && controllerInstalledDate.touched" class="invalid-feedback">
+        Install Date is required
+      </div>
+    </div>
+
+
+    <div class="form-group col-md-4">
+      <label for="priority">Priority</label>
+      <select class="form-control" [(ngModel)]="newTarget.priority" name="priority" required #priority="ngModel">
+        <option value=3>High</option>
+        <option value=2>Medium</option>
+        <option value=1>Low</option>
+      </select>
+      <div *ngIf="priority.errors?.required && priority.touched" class="invalid-feedback">
+        Priority is required
+      </div>
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="targetCluster">Target Cluster</label>
+      <input type="text" class="form-control" [ngClass]="{'is-invalid':targetCluster.errors?.required && targetCluster.touched || targetCluster.errors?.minlength && targetCluster.touched}"
+        [(ngModel)]="newTarget.targetCluster" name="targetCluster" #targetCluster="ngModel" required placeholder="Target Cluster">
+      <div *ngIf="targetCluster.errors?.required && targetCluster.touched" class="invalid-feedback">
+        Target Cluster is required
+      </div>
+
+    </div>
+
+  </div>
+  <!-- End Form Row -->
+
+  <button type="submit" class="btn btn-primary" [disabled]="!createControllerTargetsForm.form.valid">Create</button>
+  <small id="createFormHelp" class="form-text text-muted" *ngIf="!createControllerTargetsForm.form.valid">Enter all required fields to create a new Controller Target.</small>
+</form>
+
+<!-- <pre class="card card-block card-header">Model: {{newTarget | json}}</pre> -->

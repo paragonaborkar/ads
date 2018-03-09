@@ -67,6 +67,10 @@ public class Controller implements Serializable {
 	@OneToMany(mappedBy="controller")
 	private List<WfaOcumControllerData> wfaOcumControllerData;
 
+	//bi-directional many-to-one association to WfaOcumControllerData
+	@OneToOne(mappedBy="srcController")
+	private ControllerRelease controllerRelease;
+	
 	public Controller() {
 	}
 

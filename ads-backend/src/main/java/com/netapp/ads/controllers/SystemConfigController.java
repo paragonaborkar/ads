@@ -23,9 +23,5 @@ public class SystemConfigController {
 	public List<String> getGroupName(){
 		return systemPropertiesService.findDistinctGroupNames();
 	}
-	@RequestMapping(value = "/getSysConfigGroups/{grouping}" , method = RequestMethod.GET)
-	public List<SystemProperty> getSysConfigByGroup(@PathVariable String grouping){
-		List<SysConfig> lstConfigProperties=systemPropertiesService.findByGroupName(grouping);
-		return ConverterUtil.convertModelToBean(lstConfigProperties);
-	}
+	
 }
