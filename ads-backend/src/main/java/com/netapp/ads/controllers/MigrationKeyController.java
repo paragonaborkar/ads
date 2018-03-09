@@ -21,6 +21,7 @@ import com.netapp.ads.repos.MigrationKeyRepository;
 import com.netapp.ads.repos.ScheduleRepository;
 import com.netapp.ads.rules.engine.ExceptionRuleService;
 import com.netapp.ads.rules.engine.QtreeDispositionService;
+import com.netapp.ads.services.OwnerIdentificationService;
 
 @RestController
 public class MigrationKeyController {
@@ -52,6 +53,9 @@ public class MigrationKeyController {
 	
 	@Autowired
 	ControllerReleaseRepository controllerReleaseRepository;
+	
+	@Autowired
+	OwnerIdentificationService ownerIdentificationService;
 //
 //	@Autowired
 //	ExceptionRuleService exceptionRuleService;
@@ -228,4 +232,12 @@ public class MigrationKeyController {
 		log.debug("populateActivities: COMPLETED");
 		return 0;
 	}
+	
+	@RequestMapping(value = "/identifyOwners", method = RequestMethod.GET)
+	public Integer identifyOwners() {
+		log.debug("identifyOwners: [ENTER]");
+		ownerIdentificationService.identifyOwner();
+		log.debug("identifyOwners: [EXIT]");
+		return 0;
+	}	
 }
