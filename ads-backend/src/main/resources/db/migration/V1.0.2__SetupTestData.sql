@@ -787,13 +787,13 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`) VALUES (6, 'Source Controller', '1', 'srcController.controllerName');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`) VALUES (6, 'Target Controller', '1', 'tgtController.controllerName');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (6, 'tgtControllerId', '1');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (6, 'processed', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_template`) VALUES (6, 'processed', '1', 'yesNo');
 
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`) VALUES (7, 'Controller', '1', 'controller.controllerName');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (7, 'targetGroupName', '1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`, `field_template`) VALUES (7, 'Installed Date', '1', 'controllerInstalledDate', 'date');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (7, 'priority', '1');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (7, 'processed', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_template`) VALUES (7, 'processed', '1', 'yesNo');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (7, 'assetNumber', '1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_template`) VALUES (7, 'createTime', '1', 'dateTime');
 

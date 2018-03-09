@@ -30,7 +30,7 @@
       <label for="srcControllerName">Target Controller</label>
 
       <app-controller-typeahead (selectedController)="filterByController($event)" #selectedTgtControllerControl 
-      [selectOptionsDataSource]="'findByControllerNameContaining'" [controllerName]= "'tgtController'" [controllerTypeName]= "'Target '"  [valueRequired]="true"></app-controller-typeahead>
+      [selectOptionsDataSource]="'findByControllerTargetsAvailableWithControllerNameContaining'" [controllerName]= "'tgtController'" [controllerTypeName]= "'Target '"  [valueRequired]="true"></app-controller-typeahead>
 
     </div>
 

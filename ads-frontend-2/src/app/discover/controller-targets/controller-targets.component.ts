@@ -19,7 +19,8 @@ export class ControllerTargetsComponent implements OnInit {
   errorMessage = "";
 
   controllerProcessed = false;
- 
+  controllerTargetAvailable = {}; 
+
   public isDeleteModal = false;
   public isPropPreferenceModal = false;
 
@@ -101,11 +102,18 @@ export class ControllerTargetsComponent implements OnInit {
     this.isPropPreferenceModal = true;
   }
 
+  showDeleteModal(row) {
+    console.log(row._links.self.href);
+    this.controllerTargetAvailable = row;
+    this.isDeleteModal = true;
+  }
+
+
   // This method is to hide the modals  
   onHide(modalToHide): void {
     if (modalToHide === 'delete') {
-      // this.isDeleteModal = false;
-      // this.setPage({ offset: this.page.pageNumber });
+      this.isDeleteModal = false;
+      this.setPage({ offset: this.page.pageNumber }, '');
     } else if (modalToHide === 'propPreferenceModal') {
       this.isPropPreferenceModal = false;
       this.columns = [];    // This makes the columns display refresh after the user updates it.

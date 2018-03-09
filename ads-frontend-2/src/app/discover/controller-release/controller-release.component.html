@@ -19,7 +19,7 @@
       <div class="col-md-12">
         <div class="collapse" id="createNewControllerRelease">
           <div class="card card-body mb-2  material ngx-datatable">
-            <app-controller-release-create  (savedControllerTarget)="pagingUpdated()"></app-controller-release-create>
+            <app-controller-release-create (savedControllerTarget)="pagingUpdated()"></app-controller-release-create>
           </div>
         </div>
       </div>
@@ -53,9 +53,14 @@
 
     <div class="row mb-1">
       <div class="col-md-12" *ngIf="rows.length > 0 && columns.length > 0">
-        <ngx-datatable class="material" [rows]="rows" [columns]="columns" [columnMode]="'flex'" [rowHeight]="auto" [externalPaging]="true"
+        <ngx-datatable class="material card " [rows]="rows" [columns]="columns" [columnMode]="'flex'" [rowHeight]="auto" [externalPaging]="true"
           [count]="page.totalElements" [offset]="page.number" [limit]="page.size" [headerHeight]="50" [footerHeight]="50" (page)='setPage($event)'>
         </ngx-datatable>
+      </div>
+      <div class="col-md-12" *ngIf="rows.length == 0  && columns.length > 0">
+        <div class="alert alert-secondary" role="alert">
+            No Controllers in Batch Release to display.
+          </div>
       </div>
     </div>
   </div>
