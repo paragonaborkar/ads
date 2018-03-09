@@ -4,10 +4,10 @@
 
 
 
-DROP DATABASE `ads_dev`;
+--DROP DATABASE `ads_dev`;
 
 
-CREATE DATABASE `ads_dev`;
+--CREATE DATABASE `ads_dev`;
 
 
 
@@ -1406,13 +1406,10 @@ CREATE TABLE `storage` (
   `manufacturer` varchar(255) DEFAULT NULL,
   `microcode_version` varchar(255) DEFAULT NULL,
   `raw_capacity_mb` bigint(20) DEFAULT NULL,
-  `work_package_id` int(11) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `storage_name_idx` (`storage_name`),
-  KEY `fk_storage_work_package1_idx` (`work_package_id`),
-  CONSTRAINT `fk_storage_work_package1` FOREIGN KEY (`work_package_id`) REFERENCES `work_package` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `storage_name_idx` (`storage_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1717,26 +1714,6 @@ LOCK TABLES `wfa_ocum_controller_data` WRITE;
 /*!40000 ALTER TABLE `wfa_ocum_controller_data` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `work_package`
---
-
-DROP TABLE IF EXISTS `work_package`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `work_package` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Work Package',
-  `work_package_name` varchar(255) NOT NULL,
-  `asset_number` varchar(60) DEFAULT NULL,
-  `controller_installed_date` date NOT NULL,
-  `priority` int(11) DEFAULT NULL,
-  `processed` tinyint(1) DEFAULT '0',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
 
 --
 -- Table structure for table `workflow`
@@ -1821,19 +1798,8 @@ CREATE TABLE IF NOT EXISTS `controller_release` (
 );
 
 
-
-
-
-
 -- REFACTOR work_package to controller_targets_available
-ALTER TABLE `storage` 
-DROP FOREIGN KEY `fk_storage_work_package1`;
 
-ALTER TABLE `storage` 
-DROP COLUMN `work_package_id`,
-DROP INDEX `fk_storage_work_package1_idx` ;
-
-DROP TABLE `work_package` ;
 
 CREATE TABLE IF NOT EXISTS `controller_targets_available` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Work Package',
@@ -1850,6 +1816,155 @@ CREATE TABLE IF NOT EXISTS `controller_targets_available` (
 	INDEX `fk_controller_targets_available_controller1_idx` (`controller_id`),
 	CONSTRAINT `fk_controller_targets_available_controller1` FOREIGN KEY (`controller_id`) REFERENCES `controller` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 );
+
+
+DROP TABLE IF EXISTS `ads_report`;
+CREATE TABLE `ads_report` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `report_name` varchar(45) NOT NULL,
+  `report_title` varchar(45) NOT NULL,
+  `ads_module` varchar(45) NOT NULL,
+  `view_or_table_name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `ads_report_detail`;
+CREATE TABLE `ads_report_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ads_report_id` int(11) NOT NULL,
+  `column_name` varchar(45) NOT NULL,
+  `column_type` varchar(45) NOT NULL,
+  `column_label` varchar(45) NOT NULL,
+  `column_sequence` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ads_report_fk_idx` (`ads_report_id`),
+  CONSTRAINT `ads_report_fk` FOREIGN KEY (`ads_report_id`) REFERENCES `ads_report` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+
+
+CREATE 
+    ALGORITHM = UNDEFINED 
+    SQL SECURITY DEFINER
+VIEW `call_me_report` AS
+    SELECT 
+        `ar`.`id` AS `id`,
+        `ar`.`activity_id` AS `activity_id`,
+        (SELECT 
+                `uc`.`user_name`
+            FROM
+                `user_corporate` `uc`
+            WHERE
+                (`ar`.`owner_user_corporate_id` = `uc`.`id`)) AS `user_name`,
+        `ar`.`is_owner` AS `is_owner`,
+        `ar`.`is_presumed` AS `is_presumed`,
+        (SELECT 
+                `uc`.`user_name`
+            FROM
+                `user_corporate` `uc`
+            WHERE
+                (`ar`.`suggested_owner_user_corporate_id` = `uc`.`id`)) AS `suggested_user_name`
+    FROM
+        (`activity_response` `ar`
+        JOIN `activity` `a`)
+    WHERE
+        (`a`.`id` = `ar`.`activity_id`);
+			
+			
+			
+CREATE 
+    ALGORITHM = UNDEFINED  
+    SQL SECURITY DEFINER
+VIEW `unknown_owner_report` AS
+    SELECT 
+        `qt`.`qtree_name` AS `qtree_name`,
+        `nv`.`volume_name` AS `volume_name`,
+        `a`.`vserver` AS `vserver`,
+        `a`.`disposition` AS `disposition`,
+        `a`.`mailing_date` AS `mailing_date`,
+        `a`.`will_delete` AS `will_delete`,
+        `a`.`delete_date` AS `delete_date`,
+        `a`.`will_migrate` AS `will_migrate`,
+        `a`.`migrate_week` AS `migrate_week`,
+        `a`.`migrate_day` AS `migrate_day`,
+        `a`.`call_me` AS `call_me`,
+        `a`.`best_number` AS `best_number`,
+        `a`.`call_reason` AS `call_reason`,
+        `a`.`archive_candidate` AS `archive_candidate`,
+        `a`.`is_latest` AS `is_latest`,
+        `a`.`admin_override` AS `admin_override`,
+        `a`.`note` AS `note`,
+        `a`.`app_name_list` AS `app_name_list`,
+        `a`.`mail_count` AS `mail_count`,
+        `a`.`migration_time_id` AS `migration_time_id`,
+        `a`.`create_time` AS `create_time`,
+        `a`.`update_time` AS `update_time`
+    FROM
+        ((`activity` `a`
+        JOIN `qtree` `qt`)
+        JOIN `nas_volume` `nv`)
+    WHERE
+        ((`a`.`qtree_id` = `qt`.`id`)
+            AND (`qt`.`nas_volume_id` = `nv`.`id`)
+            AND (`a`.`disposition` IN ('NFS-Orphan' , 'NFS-Orphan w/CIFS')));
+			
+			
+			
+CREATE 
+    ALGORITHM = UNDEFINED 
+    SQL SECURITY DEFINER
+VIEW `user_native_report` AS
+    SELECT 
+        `un`.`id` AS `id`,
+        `un`.`first_name` AS `first_name`,
+        `un`.`last_name` AS `last_name`,
+        `un`.`email` AS `email`,
+        `un`.`user_name` AS `user_name`,
+        `un`.`enabled` AS `enabled`,
+        `ur`.`user_role` AS `user_role`
+    FROM
+        (`user_native` `un`
+        JOIN `user_roles` `ur`)
+    WHERE
+        (`un`.`user_role_id` = `ur`.`id`);
+		
+		
+		
+CREATE 
+    ALGORITHM = UNDEFINED  
+    SQL SECURITY DEFINER
+VIEW `volume_decommission_report` AS
+    SELECT 
+        `qt`.`qtree_name` AS `qtree_name`,
+        `nv`.`volume_name` AS `volume_name`,
+        `a`.`vserver` AS `vserver`,
+        `a`.`disposition` AS `disposition`,
+        `a`.`mailing_date` AS `mailing_date`,
+        `a`.`will_delete` AS `will_delete`,
+        `a`.`delete_date` AS `delete_date`,
+        `a`.`will_migrate` AS `will_migrate`,
+        `a`.`migrate_week` AS `migrate_week`,
+        `a`.`migrate_day` AS `migrate_day`,
+        `a`.`call_me` AS `call_me`,
+        `a`.`best_number` AS `best_number`,
+        `a`.`call_reason` AS `call_reason`,
+        `a`.`archive_candidate` AS `archive_candidate`,
+        `a`.`is_latest` AS `is_latest`,
+        `a`.`admin_override` AS `admin_override`,
+        `a`.`note` AS `note`,
+        `a`.`app_name_list` AS `app_name_list`,
+        `a`.`mail_count` AS `mail_count`,
+        `a`.`migration_time_id` AS `migration_time_id`,
+        `a`.`create_time` AS `create_time`,
+        `a`.`update_time` AS `update_time`
+    FROM
+        ((`activity` `a`
+        JOIN `qtree` `qt`)
+        JOIN `nas_volume` `nv`)
+    WHERE
+        ((`a`.`qtree_id` = `qt`.`id`)
+            AND (`qt`.`nas_volume_id` = `nv`.`id`)
+            AND (`a`.`archive_candidate` = 1));
 
 
 --
