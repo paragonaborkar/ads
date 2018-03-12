@@ -68,6 +68,7 @@ import { PropPreferencesComponent } from './common/prop-preferences/prop-prefere
 import { PropPreferencesModalComponent } from './common/prop-preferences-modal/prop-preferences-modal.component';
 
 import { ArrayFilterPipePipe } from './pipes/array-filter-pipe.pipe';
+import { YesNoPipe } from './pipes/yes-no-pipe.pipe';
 
 import { ConnectionsManualFunctionsComponent } from './connections/connections-manual-functions/connections-manual-functions.component';
 import { DiscoverManualFunctionsComponent } from './discover/discover-manual-functions/discover-manual-functions.component';
@@ -93,27 +94,42 @@ import { ControllerTargetsCreateComponent } from './discover/controller-targets/
 import { SaveMessageTimerComponent } from './common/save-message-timer/save-message-timer.component';
 import { DataTableColTemplatesComponent } from './common/data-table-col-templates/data-table-col-templates.component';
 
+import { ControllerTargetsDeleteComponent } from './discover/controller-targets/controller-targets-delete/controller-targets-delete.component';
+
 /*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
 
 @NgModule({
   declarations: [
+    // ADS Foundational
     AppComponent,
     HomeComponent,
     LoginComponent,
     NavComponent,
+    FooterComponent,
+
+    SaveMessageTimerComponent,
+    DataTableColTemplatesComponent,
+
+    // ADS Adminstration & Settings
     ReportListingComponent,
-    // UserAdminComponent,
     NativeUserCreateComponent,
     NativeUserUpdateComponent,
     NativeUserDeleteComponent,
     AdminManualFunctionsComponent,
-    FooterComponent,
     PropPreferencesComponent,
     PropPreferencesModalComponent,
+    
+    // Pipes
     ArrayFilterPipePipe,
     FriendlyLabelPipePipe,
+    YesNoPipe,
+
+    // Host Connections
     ConnectionsManualFunctionsComponent,
+
+
+    // Discovery
     DiscoverManualFunctionsComponent,
     AdminNativeUserComponent,
 
@@ -128,11 +144,12 @@ import { DataTableColTemplatesComponent } from './common/data-table-col-template
     Error404Component,
     ControllerReleaseComponent,
     ControllerReleaseCreateComponent,
+    
     ControllerTypeaheadComponent,
+
     ControllerTargetsComponent,
     ControllerTargetsCreateComponent,
-    SaveMessageTimerComponent,
-    DataTableColTemplatesComponent
+    ControllerTargetsDeleteComponent
 
     
 

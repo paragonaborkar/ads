@@ -103,6 +103,7 @@ export class ApplicationConfigService {
           if (obj == undefined) {
             if (preferenceDetail.fieldVisible === 1) {
               
+              console.log(preferenceDetail.fieldTemplate);
               let template = columnTemplates.asIsTmpl;
               switch (preferenceDetail.fieldTemplate) {
                 case "dateTime": {
@@ -117,6 +118,12 @@ export class ApplicationConfigService {
                   template = columnTemplates.stringEditTmpl;
                   break;
                 }
+                case "yesNo": {
+                  template = columnTemplates.yesNoTmpl;
+                  break;
+                }
+
+                
               }
 
               columns.push({

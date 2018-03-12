@@ -51,11 +51,17 @@
 
     <div class="row mb-1">
       <div class="col-md-12" *ngIf="rows.length > 0 && columns.length > 0">
-        <ngx-datatable class="material " [rows]="rows" [columns]="columns" [columnMode]="'flex'" [rowHeight]="auto" [externalPaging]="true"
+        <ngx-datatable class="material card  " [rows]="rows" [columns]="columns" [columnMode]="'flex'" [rowHeight]="auto" [externalPaging]="true"
           [count]="page.totalElements" [offset]="page.number" [limit]="page.size" [headerHeight]="50" [footerHeight]="50" (page)='setPage($event)'>
         </ngx-datatable>
       </div>
+      <div class="col-md-12" *ngIf="rows.length == 0  && columns.length > 0">
+          <div class="alert alert-secondary" role="alert">
+              No Controllers in Batch Release to display.
+            </div>
+        </div>
     </div>
+    
   </div>
 </div>
 
@@ -63,7 +69,7 @@
 <app-data-table-col-templates></app-data-table-col-templates>
 
 <ng-template #actionTmpl let-column="column" let-row="row">
-    <button class="btn btn-sm btn-warning" (click)="delete(row)">
+    <button class="btn btn-sm btn-warning" (click)="showDeleteModal(row)">
       <i class="fa fa-trash"></i> Delete
     </button>
   </ng-template>
@@ -72,3 +78,7 @@
 
 <prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal" [config]="{ show: true }" bsModal #propPreferenceModal="bs-modal"
   (done)="onHide('propPreferenceModal')" [pageName]="pageName"></prop-preferences-modal>
+
+
+  <controller-targets-delete class="modal fade" bsModal #deleteModal="bs-modal" *ngIf="isDeleteModal" [config]="{ show: true }" [controllerTargetAvailable]="controllerTargetAvailable"
+  (delete)="onHide('delete')" (cancel)="onHide('delete')"></controller-targets-delete>

@@ -46,6 +46,20 @@ export class ControllerTargetService {
     //   );
   }
 
+  
+  delete(obj: Object): Observable<any> {
+    console.log(obj);
+
+    const url = obj['_links']['self']['href'];
+    console.log('Calling delete for URL:' + url);
+    return this.http
+      .delete(url)
+      .map(() => null)
+    // .catch(
+    // Handle error in Subscribe() using the AdsErrorService      
+    // You can optionally handle it here, if needed
+    //   );
+  }
 
 
 

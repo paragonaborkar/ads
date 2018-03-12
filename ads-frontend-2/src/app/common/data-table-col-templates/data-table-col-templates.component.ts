@@ -1,5 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 
+
 @Component({
   selector: 'app-data-table-col-templates',
   templateUrl: './data-table-col-templates.component.html',
@@ -11,6 +12,7 @@ export class DataTableColTemplatesComponent implements OnInit {
   @ViewChild('dateTimeTmpl') dateTimeTmpl: TemplateRef<any>;
   @ViewChild('asIsTmpl') asIsTmpl: TemplateRef<any>;
   @ViewChild('dateTmpl') dateTmpl: TemplateRef<any>;
+  @ViewChild('yesNoTmpl') yesNoTmpl: TemplateRef<any>;
 
 
   constructor() { }
@@ -23,8 +25,10 @@ export class DataTableColTemplatesComponent implements OnInit {
       actionHeaderTmpl: this.actionHeaderTmpl,
       dateTimeTmpl: this.dateTimeTmpl,
       asIsTmpl: this.asIsTmpl,
-      dateTmpl: this.dateTmpl
+      dateTmpl: this.dateTmpl,
+      yesNoTmpl: this.yesNoTmpl
     };
+    
   }
 
 }
