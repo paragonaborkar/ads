@@ -19,7 +19,6 @@ import { ConnectionsManualFunctionsComponent } from './connections/connections-m
 import { ReportListingConnComponent } from './connections/report-listing-conn/report-listing-conn.component';
 
 
-import { QtreesOwnershipComponent } from './discover/qtrees-ownership/qtrees-ownership.component';
 import { DiscoverManualFunctionsComponent } from './discover/discover-manual-functions/discover-manual-functions.component';
 import { OwnerComponent } from './discover/owner/owner.component';
 import { OwnerNotFoundComponent } from './discover/owner-not-found/owner-not-found.component';
@@ -56,7 +55,7 @@ const routes: Routes = [
   
   { path: 'discover/manual-functions',  component: DiscoverManualFunctionsComponent, canActivate: [AuthGuard] },
 
-  { path: 'discover/qtrees-ownership',  component: QtreesOwnershipComponent },
+
   { path: 'discover/owner',  component: OwnerNotFoundComponent, canActivate: [AuthGuard] },
   { path: 'discover/owner/:migKey',  component: OwnerComponent, canActivate: [AuthGuard] },
   { path: 'discover/controller-release',  component: ControllerReleaseComponent, canActivate: [AuthGuard] },

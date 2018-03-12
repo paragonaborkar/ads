@@ -75,8 +75,7 @@ import { DiscoverManualFunctionsComponent } from './discover/discover-manual-fun
 import { FriendlyLabelPipePipe } from './pipes/friendly-label-pipe.pipe';
 import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native-user.component';
 
-import { QtreesOwnershipComponent } from './discover/qtrees-ownership/qtrees-ownership.component';
-import { QtreesService } from './discover/qtrees-ownership/qtrees-ownership.service';
+
 
 import { OwnerComponent } from './discover/owner/owner.component';
 import { OwnerNotFoundComponent } from './discover/owner-not-found/owner-not-found.component';
@@ -133,7 +132,6 @@ import { ControllerTargetsDeleteComponent } from './discover/controller-targets/
     DiscoverManualFunctionsComponent,
     AdminNativeUserComponent,
 
-    QtreesOwnershipComponent,
 
     OwnerComponent,
     OwnerNotFoundComponent,
@@ -178,7 +176,7 @@ import { ControllerTargetsDeleteComponent } from './discover/controller-targets/
     ApplicationConfigService,
     AppPropsService,
 
-    QtreesService,
+
     OwnerService,
     ControllerReleaseService,
     ControllerTargetService,
