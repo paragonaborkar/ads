@@ -48,7 +48,7 @@ export class ControllerWorkPackageCreateComponent implements OnInit {
         this.savedControllerTarget.emit();
       }, err => {
         // Get the ADS configured error message to display.
-        this.errorMessage = this.errorService.processError(err, "createControllerTarget", "POST");
+        this.errorMessage = this.errorService.processError(err, "createControllerWorkPackage", "POST");
       });
   }
 

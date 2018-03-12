@@ -27,7 +27,7 @@ export class ControllerWorkPackageDeleteComponent implements OnInit {
       },
       err => {
         // Get the ADS configured error message to display.
-        this.errorMessage = this.errorService.processError(err, "deleteControllerTargetAvailable", "DELETE");
+        this.errorMessage = this.errorService.processError(err, "deleteControllerWorkPackage", "DELETE");
       }
     );
   }

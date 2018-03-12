@@ -22,7 +22,9 @@ export class ControllerReleaseCreateComponent implements OnInit {
   selectedControllerInvalid = false;
   showSuccessMsg = '';
 
-  newTarget = {};
+  newTarget = {
+    srcController: ''
+  };
 
   @Output() saved = new EventEmitter();
 
@@ -62,9 +64,10 @@ export class ControllerReleaseCreateComponent implements OnInit {
       this.selectedControllerInvalid = false;
       this.newTarget[filterObject["controllerName"]] = filterObject["selectedItem"]["_links"]["self"]["href"];
 
-      if (this.newTarget["srcController"] == this.newTarget["tgtController"]) {
-        this.errorMessage = "Source and Target Controller cannot be the same.";
-      }
+      // Target Controller are set during "targeting" which is in the ADS Plan module.
+      // if (this.newTarget["srcController"] == this.newTarget["tgtController"]) {
+      //   this.errorMessage = "Source and Target Controller cannot be the same.";
+      // }
     }
 
   }

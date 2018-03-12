@@ -60,7 +60,7 @@ export class ControllerWorkPackageComponent implements OnInit {
         this.setupPaging(data, pageInfo, filter);
       }, err => {
         // Get the ADS configured error message to display.
-        this.errorMessage = this.errorService.processError(err, "getControllerTargetList", "GET");
+        this.errorMessage = this.errorService.processError(err, "getControllerWorkPackageList", "GET");
       });
    
   }
