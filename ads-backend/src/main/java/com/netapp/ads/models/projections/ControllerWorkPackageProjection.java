@@ -6,10 +6,10 @@ import java.util.Date;
 import org.springframework.data.rest.core.config.Projection;
 
 import com.netapp.ads.models.Controller;
-import com.netapp.ads.models.ControllerTargetsAvailable;
+import com.netapp.ads.models.ControllerWorkPackage;
 
-@Projection(name="ControllerTargetListing", types = { ControllerTargetsAvailable.class})
-public interface ControllerTargetListingProjection {
+@Projection(name="ControllerWorkPackageListing", types = { ControllerWorkPackage.class})
+public interface ControllerWorkPackageProjection {
 
 	public String getAssetNumber();
 
@@ -17,7 +17,7 @@ public interface ControllerTargetListingProjection {
 
 	public Integer getPriority();
 
-	public String getTargetGroupName();
+	public String getWorkPackageName();
 
 	public boolean getProcessed();
 

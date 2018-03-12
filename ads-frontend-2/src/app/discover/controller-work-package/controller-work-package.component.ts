@@ -1,16 +1,16 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Page } from "../../common/page";
 import { ApplicationConfigService } from '../../common/application-config.service';
-import { ControllerTargetService } from './controller-target.service';
+import { ControllerWorkPackageService } from './controller-work-package.service';
 import { AdsErrorService } from '../../common/ads-error.service';
 import { DataTableColTemplatesComponent} from '../../common/data-table-col-templates/data-table-col-templates.component'
 
 @Component({
-  selector: 'app-controller-targets',
-  templateUrl: './controller-targets.component.html',
-  styleUrls: ['./controller-targets.component.scss']
+  selector: 'app-controller-work-package',
+  templateUrl: './controller-work-package.component.html',
+  styleUrls: ['./controller-work-package.component.scss']
 })
-export class ControllerTargetsComponent implements OnInit {
+export class ControllerWorkPackageComponent implements OnInit {
   @ViewChild(DataTableColTemplatesComponent) dataTableColsTemplate :DataTableColTemplatesComponent;
   columnTemplates = {};
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
@@ -30,7 +30,7 @@ export class ControllerTargetsComponent implements OnInit {
     page = new Page();
 
 
-  constructor(private contrllerTargetService: ControllerTargetService, private applicationConfigService: ApplicationConfigService,  private errorService: AdsErrorService) {
+  constructor(private contrllerWorkPacakageService: ControllerWorkPackageService, private applicationConfigService: ApplicationConfigService,  private errorService: AdsErrorService) {
     this.page.number = 1;
     this.page.pageNumber = 1;
     this.page.size = 3;
@@ -55,7 +55,7 @@ export class ControllerTargetsComponent implements OnInit {
     this.page.pageNumber = pageInfo.offset;
    
     // This method is to get all the values from user_native table
-    this.contrllerTargetService.getControllerTargetByProcessed(this.page, this.controllerProcessed).subscribe(
+    this.contrllerWorkPacakageService.getControllerTargetByProcessed(this.page, this.controllerProcessed).subscribe(
       data => {
         this.setupPaging(data, pageInfo, filter);
       }, err => {
@@ -72,7 +72,7 @@ export class ControllerTargetsComponent implements OnInit {
     
     // Don't set rows to undefined, it'll break the listing!    
     if (data.page.totalElements > 0) {
-      this.rows = data._embedded.controllerTargetsAvailables;
+      this.rows = data._embedded.controllerWorkPackages;
     }
     // this.rows = this.adsHelper.ungroupJson(usersNativeResponse._embedded.userNatives, "userRole", ["createTime", "updateTime"]);
     console.log("******************");

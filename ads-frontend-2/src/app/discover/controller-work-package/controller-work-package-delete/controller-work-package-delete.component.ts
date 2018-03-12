@@ -1,26 +1,26 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { ControllerTargetService} from '../controller-target.service';
+import { ControllerWorkPackageService} from '../controller-work-package.service';
 import { AdsErrorService } from '../../../common/ads-error.service';
 
 @Component({
-  selector: 'controller-targets-delete',
-  templateUrl: './controller-targets-delete.component.html',
-  styleUrls: ['./controller-targets-delete.component.css']
+  selector: 'controller-work-package-delete',
+  templateUrl: './controller-work-package-delete.component.html',
+  styleUrls: ['./controller-work-package-delete.component.css']
 })
-export class ControllerTargetsDeleteComponent implements OnInit {
+export class ControllerWorkPackageDeleteComponent implements OnInit {
   public errorMessage = "";
 
   @Output() delete = new EventEmitter();
   @Output() cancel = new EventEmitter();
   @Input() controllerTargetAvailable: any;
   
-  constructor(private controllerTargetService: ControllerTargetService, private errorService: AdsErrorService) { }
+  constructor(private controllerWorkPackageService: ControllerWorkPackageService, private errorService: AdsErrorService) { }
 
   ngOnInit(): void { }
 
   deleteConfirmed() {
-    this.controllerTargetService.delete(this.controllerTargetAvailable).subscribe(
+    this.controllerWorkPackageService.delete(this.controllerTargetAvailable).subscribe(
       response => {
         console.log(response);
         this.delete.emit(this.controllerTargetAvailable);

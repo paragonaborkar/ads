@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ControllerTargetDeleteComponent } from './controller-targets-delete.component';
+import { ControllerWorkPackageDeleteComponent } from './controller-work-package-delete.component';
 
 describe('ControllerTargetDeleteComponent', () => {
-  let component: ControllerTargetDeleteComponent;
-  let fixture: ComponentFixture<ControllerTargetDeleteComponent>;
+  let component: ControllerWorkPackageDeleteComponent;
+  let fixture: ComponentFixture<ControllerWorkPackageDeleteComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ControllerTargetDeleteComponent ]
+      declarations: [ ControllerWorkPackageDeleteComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ControllerTargetDeleteComponent);
+    fixture = TestBed.createComponent(ControllerWorkPackageDeleteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

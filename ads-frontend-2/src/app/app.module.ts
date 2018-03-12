@@ -46,7 +46,7 @@ import { ApplicationConfigService } from './common/application-config.service';
 
 import { OwnerService } from './discover/owner.service';
 import { ControllerReleaseService } from './discover/controller-release/controller-release.service';
-import { ControllerTargetService } from './discover/controller-targets/controller-target.service';
+import { ControllerWorkPackageService } from './discover/controller-work-package/controller-work-package.service';
 import { ControllerTypeaheadService } from './discover/controller-typeahead/controller-typeahead.service';
 
 
@@ -88,12 +88,15 @@ import { Error404Component } from './error-404/error-404.component';
 import { ControllerReleaseComponent } from './discover/controller-release/controller-release.component';
 import { ControllerReleaseCreateComponent } from './discover/controller-release/controller-release-create/controller-release-create.component';
 import { ControllerTypeaheadComponent } from './discover/controller-typeahead/controller-typeahead.component';
-import { ControllerTargetsComponent } from './discover/controller-targets/controller-targets.component';
-import { ControllerTargetsCreateComponent } from './discover/controller-targets/controller-targets-create/controller-targets-create.component';
+
+import { ControllerWorkPackageComponent } from './discover/controller-work-package/controller-work-package.component';
+import { ControllerWorkPackageCreateComponent } from './discover/controller-work-package/controller-work-package-create/controller-work-package-create.component';
+import { ControllerWorkPackageDeleteComponent } from './discover/controller-work-package/controller-work-package-delete/controller-work-package-delete.component';
+
 import { SaveMessageTimerComponent } from './common/save-message-timer/save-message-timer.component';
 import { DataTableColTemplatesComponent } from './common/data-table-col-templates/data-table-col-templates.component';
 
-import { ControllerTargetsDeleteComponent } from './discover/controller-targets/controller-targets-delete/controller-targets-delete.component';
+
 
 /*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
@@ -145,9 +148,9 @@ import { ControllerTargetsDeleteComponent } from './discover/controller-targets/
     
     ControllerTypeaheadComponent,
 
-    ControllerTargetsComponent,
-    ControllerTargetsCreateComponent,
-    ControllerTargetsDeleteComponent
+    ControllerWorkPackageComponent,
+    ControllerWorkPackageCreateComponent,
+    ControllerWorkPackageDeleteComponent
 
     
 
@@ -179,7 +182,7 @@ import { ControllerTargetsDeleteComponent } from './discover/controller-targets/
 
     OwnerService,
     ControllerReleaseService,
-    ControllerTargetService,
+    ControllerWorkPackageService,
     ControllerTypeaheadService
 
     ],
