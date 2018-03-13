@@ -28,8 +28,8 @@ export class ReportCommonService {
     //   );
   }
 
-  // FIXME: add module as a parameter
-  openJasperReport(pageNo, reportName): Observable<any> {
+  // FIXME: add module as a parameter to the URL
+  openJasperReport(pageNo, reportName, moduleName): Observable<any> {
     return this.http.get(this.global.apiUrl + '/generateReport?pageNo=' + pageNo + '&reportName=' + reportName)
       .map((res: Response) => res)
     // .catch(

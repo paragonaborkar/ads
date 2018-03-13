@@ -13,7 +13,9 @@ export class ReportListingCommonComponent implements OnInit {
   errorMessage = '';
   reportListing = [];
 
-   @Input() moduleName: string;
+  @Input() moduleName: string;
+  @Input() moduleDisplayName: string;
+
 
   customReport = '';
   totalPages = 0;
@@ -26,6 +28,8 @@ export class ReportListingCommonComponent implements OnInit {
   constructor(private reportCommonService: ReportCommonService, private errorService: AdsErrorService) { }
 
   ngOnInit() {
+
+    console.log(this.moduleName);
 
     this.pageCount = 1;
 
@@ -91,7 +95,7 @@ export class ReportListingCommonComponent implements OnInit {
           ele = document.getElementById("customReport");
           ele.innerHTML = "<table class=\"table table-striped\">" + x.item(0).innerHTML + "</table>";
 
-         
+
         });
   }
 
