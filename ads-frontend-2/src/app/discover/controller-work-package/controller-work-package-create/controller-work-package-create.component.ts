@@ -3,16 +3,16 @@ import { EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { AdsErrorService } from '../../../common/ads-error.service';
-import { ControllerTargetService } from '../controller-target.service';
+import { ControllerWorkPackageService } from '../controller-work-package.service';
 import { SaveMessageTimerComponent } from '../../../common/save-message-timer/save-message-timer.component';
 
 @Component({
-  selector: 'app-controller-targets-create',
-  templateUrl: './controller-targets-create.component.html',
-  styleUrls: ['./controller-targets-create.component.scss']
+  selector: 'app-controller-work-package-create',
+  templateUrl: './controller-work-package-create.component.html',
+  styleUrls: ['./controller-work-package-create.component.scss']
 })
 
-export class ControllerTargetsCreateComponent implements OnInit {
+export class ControllerWorkPackageCreateComponent implements OnInit {
   @ViewChild(SaveMessageTimerComponent) saveTimerChild:SaveMessageTimerComponent;
 
   public errorMessage = "";
@@ -24,23 +24,23 @@ export class ControllerTargetsCreateComponent implements OnInit {
     controller: ''
   };
 
-  minDate = new Date(2010, 1, 1);
+  minDate = new Date(1990, 1, 1);
   todaysDate = new Date();
-  maxDate = new Date(this.todaysDate.getFullYear() + 5, this.todaysDate.getMonth(), this.todaysDate.getDate())
+  maxDate = new Date(this.todaysDate.getFullYear() + 1, this.todaysDate.getMonth(), this.todaysDate.getDate())
 
   bsValue: Date = new Date();
 
   @Output() savedControllerTarget = new EventEmitter();
   @Output() cancel = new EventEmitter();
 
-  constructor(private controllerTargetService: ControllerTargetService, private errorService: AdsErrorService) {  }
+  constructor(private controllerWorkPackageService: ControllerWorkPackageService, private errorService: AdsErrorService) {  }
 
   ngOnInit() {  }
 
   save() {
     this.errorMessage = '';
 
-    this.controllerTargetService.create(this.newTarget).subscribe(
+    this.controllerWorkPackageService.create(this.newTarget).subscribe(
       response => {
         console.log(response);
         this.showSuccessMsg = "Saved...";
@@ -48,7 +48,7 @@ export class ControllerTargetsCreateComponent implements OnInit {
         this.savedControllerTarget.emit();
       }, err => {
         // Get the ADS configured error message to display.
-        this.errorMessage = this.errorService.processError(err, "createControllerTarget", "POST");
+        this.errorMessage = this.errorService.processError(err, "createControllerWorkPackage", "POST");
       });
   }
 

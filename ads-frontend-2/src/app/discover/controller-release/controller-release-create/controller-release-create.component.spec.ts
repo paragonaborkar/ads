@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ControllerReleaseCreateComponent } from './controller-release-create.component';
 
-describe('ControllerTargetsCreateComponent', () => {
+describe('ControllerWorkPackageCreateComponent', () => {
   let component: ControllerReleaseCreateComponent;
   let fixture: ComponentFixture<ControllerReleaseCreateComponent>;
 

@@ -12,20 +12,24 @@ import { Page } from "../../common/page";
 
 
 @Injectable()
-export class ControllerTargetService {
+export class ControllerWorkPackageService {
 
   constructor(private http: HttpClient, private global: Globals) { }
 
-  private servicePath = '/controllerTargetsAvailables/';
+  private servicePath = '/controllerWorkPackages/';
 
 
   getControllerTargetByProcessed(page: Page, processed: boolean): Observable<any> {
 
     let pageParam = "&page=" + page.number  + "&size=" + page.size;;
-    let projectionParam = "&projection=ControllerTargetListing";
+    let projectionParam = "&projection=ControllerWorkPackageListing";
     let sortParm = "&sort=createTime,desc";
 
-    return this.http.get(this.global.apiUrl + this.servicePath + "search/findByProcessed?processed=" + processed + pageParam + sortParm + projectionParam)
+    let url = this.global.apiUrl + this.servicePath + "search/findByProcessed?processed=" + processed + pageParam + sortParm + projectionParam;
+
+    console.log(url);
+    
+    return this.http.get(url)
       .map((res: Response) => res)
       .catch(e => {
         return Observable.throw(Observable.of({error: e}));

@@ -17,6 +17,6 @@ public interface ControllerRepository extends JpaRepository<Controller, Integer>
 	
 //	List<Controller> findByControllerTargetsAvailable_ControllerNameContaining(@Param("controllerNameContains") String controllerNameContains);
 	
-	@Query("SELECT c  FROM Controller c, ControllerTargetsAvailable t WHERE c.id = t.controller AND c.controllerName LIKE %:controllerNameContains%")
+	@Query("SELECT c  FROM Controller c, ControllerWorkPackage t WHERE c.id = t.controller AND c.controllerName LIKE %:controllerNameContains%")
 	List<Controller> findByControllerTargetsAvailableWithControllerNameContaining(@Param("controllerNameContains") String controllerNameContains);
 }

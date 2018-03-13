@@ -5,7 +5,7 @@
         "5xx": "default default 5xx error message",
         "DEFAULT": "Sorry, an application error has occurred."
     },
-    "createControllerTarget": {
+    "createControllerWorkPackage": {
         "POST": {
             "409": "Cannot create Controller Target. This Controller may already exist as a target.",
             "4xx": "Cannot create Controller Target.",
@@ -14,7 +14,7 @@
     },
     "createControllerRelease": {
         "POST": {
-            "409": "Cannot create Controller Release. This Source and Target Controller pairing may already exist.",
+            "409": "Cannot create Controller Release. This Source Controller may already exist.",
             "4xx": "Cannot create Controller Release.",
             "5xx": "Server Error: Cannot create Controller Release."
         }

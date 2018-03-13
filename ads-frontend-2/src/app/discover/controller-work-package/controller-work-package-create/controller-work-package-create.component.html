@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-9">
-    <h2 class="h4">Create Controller Target</h2>
+    <h2 class="h4">Create Controller Work Package</h2>
   </div>
   <div class="col-md-3">
     <div class="pull-right">
@@ -17,22 +17,22 @@
   <span>{{errorMessage}}</span>
 </div>
 
-<form (ngSubmit)="save()" #createControllerTargetsForm="ngForm" autocomplete="off">
+<form (ngSubmit)="save()" #createControllerWorkPackageForm="ngForm" autocomplete="off">
   <div class="form-row">
     <div class="form-group col-md-4">
-      <label for="targetGroupName">Target Group Name</label>
+      <label for="workPackageName">Work Package Name</label>
 
-      <input type="text" class="form-control" [ngClass]="{'is-invalid':targetGroupName.errors?.required && targetGroupName.touched || targetGroupName.errors?.minlength && targetGroupName.touched}"
-        [(ngModel)]="newTarget.targetGroupName" name="targetGroupName" #targetGroupName="ngModel" required placeholder="Target Group Name">
-      <div *ngIf="targetGroupName.errors?.required && targetGroupName.touched" class="invalid-feedback">
-        Target Group Name is required
+      <input type="text" class="form-control" [ngClass]="{'is-invalid':workPackageName.errors?.required && workPackageName.touched || workPackageName.errors?.minlength && workPackageName.touched}"
+        [(ngModel)]="newTarget.workPackageName" name="workPackageName" #workPackageName="ngModel" required placeholder="Work Package Name">
+      <div *ngIf="workPackageName.errors?.required && workPackageName.touched" class="invalid-feedback">
+        Work Package Name is required
       </div>
 
     </div>
 
     <!-- <div class="form-group col-md-4"> -->
     <div class="col-md-4">
-      <label for="controllerName">Controller Name</label>
+      <label for="controllerName">Source Controller (7-mode)</label>
 
       <app-controller-typeahead (selectedController)="filterByController($event)" #selectedControllerControl  
       [selectOptionsDataSource]="'findByControllerNameContaining'" [controllerName]= "'controller'"  [controllerTypeName]= "" [valueRequired]="true">
@@ -78,21 +78,21 @@
       </div>
     </div>
 
-    <div class="form-group col-md-4">
-      <label for="targetCluster">Target Cluster</label>
+
+    <!-- <div class="form-group col-md-4">
+      <label for="targetCluster">Target Cluster - This will be set in targeting - not in Discover!</label>
       <input type="text" class="form-control" [ngClass]="{'is-invalid':targetCluster.errors?.required && targetCluster.touched || targetCluster.errors?.minlength && targetCluster.touched}"
         [(ngModel)]="newTarget.targetCluster" name="targetCluster" #targetCluster="ngModel" required placeholder="Target Cluster">
       <div *ngIf="targetCluster.errors?.required && targetCluster.touched" class="invalid-feedback">
         Target Cluster is required
       </div>
-
-    </div>
+    </div> -->
 
   </div>
   <!-- End Form Row -->
 
-  <button type="submit" class="btn btn-primary" [disabled]="!createControllerTargetsForm.form.valid">Create</button>
-  <small id="createFormHelp" class="form-text text-muted" *ngIf="!createControllerTargetsForm.form.valid">Enter all required fields to create a new Controller Target.</small>
+  <button type="submit" class="btn btn-primary" [disabled]="!createControllerWorkPackageForm.form.valid">Create</button>
+  <small id="createFormHelp" class="form-text text-muted" *ngIf="!createControllerWorkPackageForm.form.valid">Enter all required fields to create a new Controller Work Package.</small>
 </form>
 
 <!-- <pre class="card card-block card-header">Model: {{newTarget | json}}</pre> -->

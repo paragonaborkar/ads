@@ -1769,7 +1769,7 @@ CREATE TABLE IF NOT EXISTS `preference_detail` (
 );
 
 DROP TABLE IF EXISTS `controller_release`;
-CREATE TABLE IF NOT EXISTS `controller_release` (
+CREATE TABLE `controller_release` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`src_controller_id` INT(11) NOT NULL,
 	`tgt_controller_id` INT(11) NULL DEFAULT NULL,
@@ -1777,7 +1777,7 @@ CREATE TABLE IF NOT EXISTS `controller_release` (
 	`create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
 	`update_time` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`, `src_controller_id`),
-	UNIQUE INDEX `src_and_tgt_controller_unique_combo` (`src_controller_id`, `tgt_controller_id`),
+	UNIQUE INDEX `fk_controller_id_src` (`src_controller_id`),
 	INDEX `fk_controller_release_controller2_idx` (`tgt_controller_id`),
 	CONSTRAINT `fk_controller_id_src` FOREIGN KEY (`src_controller_id`) REFERENCES `controller` (`id`)
 );
@@ -1786,10 +1786,10 @@ CREATE TABLE IF NOT EXISTS `controller_release` (
 -- REFACTOR work_package to controller_targets_available
 
 
-CREATE TABLE IF NOT EXISTS `controller_targets_available` (
+CREATE TABLE IF NOT EXISTS `controller_work_package` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Work Package',
 	`controller_id` INT(11) NOT NULL,
-	`target_group_name` VARCHAR(255) NOT NULL,
+	`work_package_name` VARCHAR(255) NOT NULL,
 	`asset_number` VARCHAR(60) NULL DEFAULT NULL,
 	`controller_installed_date` DATE NULL DEFAULT NULL,
 	`priority` INT(11) NULL DEFAULT NULL,

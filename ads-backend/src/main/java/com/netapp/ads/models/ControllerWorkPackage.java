@@ -11,8 +11,8 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="controller_targets_available")
-public class ControllerTargetsAvailable implements Serializable {
+@Table(name="controller_work_package")
+public class ControllerWorkPackage implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -42,11 +42,11 @@ public class ControllerTargetsAvailable implements Serializable {
 	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
-	@Column(name="target_group_name", nullable=false, length=255)
-	private String targetGroupName;
+	@Column(name="work_package_name", nullable=false, length=255)
+	private String workPackageName;
 
 
-	public ControllerTargetsAvailable() {
+	public ControllerWorkPackage() {
 	}
 
 	public Integer getId() {
@@ -105,12 +105,12 @@ public class ControllerTargetsAvailable implements Serializable {
 		this.updateTime = updateTime;
 	}
 
-	public String getTargetGroupName() {
-		return this.targetGroupName;
+	public String getWorkPackageName() {
+		return this.workPackageName;
 	}
 
-	public void setTargetGroupName(String targetGroupName) {
-		this.targetGroupName = targetGroupName;
+	public void setWorkPackageName(String workPackageName) {
+		this.workPackageName = workPackageName;
 	}
 
 

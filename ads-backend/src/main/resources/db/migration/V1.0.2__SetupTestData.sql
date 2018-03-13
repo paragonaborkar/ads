@@ -801,7 +801,7 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) V
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_template`) VALUES (6, 'processed', '1', 'yesNo');
 
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`) VALUES (7, 'Controller', '1', 'controller.controllerName');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (7, 'targetGroupName', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (7, 'workPackageName', '1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`, `field_template`) VALUES (7, 'Installed Date', '1', 'controllerInstalledDate', 'date');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (7, 'priority', '1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_template`) VALUES (7, 'processed', '1', 'yesNo');

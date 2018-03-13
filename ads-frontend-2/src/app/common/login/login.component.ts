@@ -14,8 +14,8 @@ import { UserService } from './user.service';
 export class LoginComponent implements OnInit {
 	result;
 	model: any = {
-		username: "jdoe@corp.com",
-		password: "123"
+		// username: "jdoe@corp.com",
+		// password: "123"
 	};
 	
 	loading = false;
@@ -51,6 +51,13 @@ export class LoginComponent implements OnInit {
 		if(err_msg!==null && err_msg!==undefined){
 			alert(err_msg);
 		}
+	}
+
+	loadDevLogin() {
+		this.model = {
+			username: "jdoe@corp.com",
+			password: "123"
+		};
 	}
 
 	login(isValid) {

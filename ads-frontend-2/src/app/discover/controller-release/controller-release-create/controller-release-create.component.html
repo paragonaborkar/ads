@@ -26,19 +26,19 @@
 
     </div>
 
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
       <label for="srcControllerName">Target Controller</label>
 
       <app-controller-typeahead (selectedController)="filterByController($event)" #selectedTgtControllerControl 
-      [selectOptionsDataSource]="'findByControllerTargetsAvailableWithControllerNameContaining'" [controllerName]= "'tgtController'" [controllerTypeName]= "'Target '"  [valueRequired]="true"></app-controller-typeahead>
+      [selectOptionsDataSource]="'findByControllerTargetsAvailableWithControllerNameContaining'" [controllerName]= "'tgtController'" [controllerTypeName]= "'Target '"  [valueRequired]="false"></app-controller-typeahead>
 
-    </div>
+    </div> -->
 
   </div>
   <!-- End Form Row -->
 
-  <button type="submit" class="btn btn-primary" [disabled]="!createControllerReleaseForm.form.valid || newTarget.srcController == newTarget.tgtController">Create</button>
-  <small id="createFormHelp" class="form-text text-muted" *ngIf="!createControllerReleaseForm.form.valid">Enter all required fields to create a new Controller Release.</small>
+  <button type="submit" class="btn btn-primary" [disabled]="! newTarget.srcController.length">Create</button>
+  <small id="createFormHelp" class="form-text text-muted" *ngIf="! newTarget.srcController.length">Enter all required fields to create a new Controller Release.</small>
 </form>
 
 <!-- <pre class="card card-block card-header">Model: {{newTarget | json}}</pre> -->

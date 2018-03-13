@@ -4,21 +4,21 @@
 
     <div class="row mb-1">
       <div class="col-md-11">
-        <h2 class="h3">Controller Targets Available</h2>
+        <h2 class="h3">Controller Work Packages</h2>
       </div>
       <div class="col-md-1">
         <div class="pull-right">
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#createNewControllerTarget" aria-expanded="false"
-            aria-controls="createNewControllerTarget">
-            Create New Target
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#createNewControllerWP" aria-expanded="false"
+            aria-controls="createNewControllerWP">
+            Create New Work Package
           </button>
         </div>
       </div>
     </div>
 
-    <div class="collapse" id="createNewControllerTarget">
+    <div class="collapse" id="createNewControllerWP">
       <div class="card card-body mb-2 ngx-datatable material">
-        <app-controller-targets-create (savedControllerTarget)="pagingUpdated()"></app-controller-targets-create>
+        <app-controller-work-package-create (savedControllerTarget)="pagingUpdated()"></app-controller-work-package-create>
       </div>
     </div>
 
@@ -57,7 +57,7 @@
       </div>
       <div class="col-md-12" *ngIf="rows.length == 0  && columns.length > 0">
           <div class="alert alert-secondary" role="alert">
-              No Controllers in Batch Release to display.
+              No Controller Work Pacakages to display.
             </div>
         </div>
     </div>
@@ -80,5 +80,5 @@
   (done)="onHide('propPreferenceModal')" [pageName]="pageName"></prop-preferences-modal>
 
 
-  <controller-targets-delete class="modal fade" bsModal #deleteModal="bs-modal" *ngIf="isDeleteModal" [config]="{ show: true }" [controllerTargetAvailable]="controllerTargetAvailable"
-  (delete)="onHide('delete')" (cancel)="onHide('delete')"></controller-targets-delete>
+  <controller-work-package-delete class="modal fade" bsModal #deleteModal="bs-modal" *ngIf="isDeleteModal" [config]="{ show: true }" [controllerTargetAvailable]="controllerTargetAvailable"
+  (delete)="onHide('delete')" (cancel)="onHide('delete')"></controller-work-package-delete>
