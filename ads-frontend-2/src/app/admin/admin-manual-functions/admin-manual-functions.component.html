@@ -1,38 +1,17 @@
 <div class="row d-flex justify-content-center">
 
   <div class="col-md-8 mb-2">
-    <h2 class="h3">Admin - Manual Actions</h2>
-
-    <div class="row">
-      <div class="col-md-4 col-form-label">
-        <strong>Load All - ADS Setup </strong>
-      </div>
-      <div class="col col-md-auto">
-        <button class="btn btn-sm btn-success">Run</button>
-      </div>
-      <div class="col col-md-auto col-form-label">
-        <div class="text-success">Completed successfully!</div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4 col-form-label">
-        <strong>Load User Roles</strong>
-      </div>
-      <div class="col col-md-auto">
-        <button class="btn btn-sm btn-success">Run</button>
-      </div>
-      <div class="col col-md-auto col-form-label">
-        <div class="text-success">Completed successfully!</div>
-      </div>
-    </div>
-
-
-    <div class="row">
-      <div class="col-md-12 col-form-label">
-        Need to add all the other Talend Jobs...
-      </div>
-    </div>
-
+    <h2 class="h3">Administration - ADS Setup</h2>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'1. Load User Roles'"              [jobName]="'userRoles'"></app-manual-function>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'2. Load Native Users'"            [jobName]="'userNatives'"></app-manual-function>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'3. Load Audit Events'"            [jobName]="'auditEvents'"></app-manual-function>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'4. Load Audit Reason Codes'"      [jobName]="'auditReasonCodes'"></app-manual-function>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'5. Load Applications (needed?)'"  [jobName]="'applications'"></app-manual-function>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'6. Load System Properties'"       [jobName]="'sysConfigPropertyTypes'"></app-manual-function>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'7. Load Migration Times'"         [jobName]="'migrationTimes'"></app-manual-function>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'8. Load MST Email Types'"         [jobName]="'mstEmailTypes'"></app-manual-function>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'9. Load Shedules (needed?)'"      [jobName]="'schedules'"></app-manual-function>
   </div>
+
 </div>
+

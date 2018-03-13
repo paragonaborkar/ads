@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-manual-functions.component.scss']
 })
 export class AdminManualFunctionsComponent implements OnInit {
-
   constructor() { }
 
   ngOnInit() {

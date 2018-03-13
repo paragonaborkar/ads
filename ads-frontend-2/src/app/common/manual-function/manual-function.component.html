@@ -1,0 +1,23 @@
+<form (ngSubmit)="onSubmit()" #createControllerWorkPackageForm="ngForm" autocomplete="off">
+  <div class="row mb-2">
+    <div class="col-md-3 col-form-label">
+      <strong>{{displayJobName}}</strong>
+    </div>
+    <div class="col col-md-auto" *ngIf="fileUpload">
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" #fileupload [(ngModel)]="myFile" name="myFile" (change)="fileChange(fileupload.files)"
+          required/>
+        <label class="custom-file-label" for="myFile">{{fileName || "Choose file..."}}</label>
+      </div>
+    </div>
+
+    <div class="col col-md-auto">
+      <button class="btn btn-success" type="submit" class="btn btn-primary" [disabled]="(!fileName && fileUpload)">Run</button>
+    </div>
+    <div class="col col-md-auto col-form-label">
+      <div class="text-success" *ngIf="successMsg">Completed successfully!</div>
+      <div class="text-warning" *ngIf="runningMsg">Completed successfully!</div>
+      <div class="text-danger" *ngIf="errorMsg">Completed successfully!</div>
+    </div>
+  </div>
+</form>

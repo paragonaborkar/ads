@@ -98,6 +98,7 @@ import { ControllerWorkPackageDeleteComponent } from './discover/controller-work
 
 import { SaveMessageTimerComponent } from './common/save-message-timer/save-message-timer.component';
 import { DataTableColTemplatesComponent } from './common/data-table-col-templates/data-table-col-templates.component';
+import { ManualFunctionComponent } from './common/manual-function/manual-function.component';
 
 
 
@@ -155,7 +156,8 @@ import { DataTableColTemplatesComponent } from './common/data-table-col-template
 
     ControllerWorkPackageComponent,
     ControllerWorkPackageCreateComponent,
-    ControllerWorkPackageDeleteComponent
+    ControllerWorkPackageDeleteComponent,
+    ManualFunctionComponent
 
     
 

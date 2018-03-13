@@ -14,14 +14,37 @@ export class TokenInterceptor implements HttpInterceptor {
 
     // console.log("INTERCEPTED !!!!!!!!!!!!!!!!!!!!!!!!!");
     // console.log(this._sessionHelper.getToken().access_token);
-    
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      // This next line needs to use ` for Bearer, not '
-      .set('Authorization', `Bearer ${this._sessionHelper.getToken().access_token}`);
+console.log("request.headers orig", request.headers);
 
-    request = request.clone({ headers: headers });
+    if (!request.headers.has("content-type")) {
+      const headers = new HttpHeaders()
+        .set('content-type', 'application/json')
+        .set('authorization', `Bearer ${this._sessionHelper.getToken().access_token}`);   // use ` for Bearer, not '
 
-    return next.handle(request);
+      request = request.clone({ headers: headers });
+      
+      console.log("headers", headers);
+
+      return next.handle(request);
+    } else {
+      const headers = new HttpHeaders()
+        // This next line needs to use ` for Bearer, not '
+        .set('authorization', `Bearer ${this._sessionHelper.getToken().access_token}`);
+        // .set('Content-Type', request.headers.get("Content-Type"));
+
+      request = request.clone({ headers: headers });
+      
+      console.log("headers", headers);
+
+      return next.handle(request);
+    }
+
+
+    // console.log("headers", headers);
+    // request = request.clone({ headers: headers });
+
+
+
+
   }
 }
