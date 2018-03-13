@@ -92,7 +92,7 @@ export class ReportListingCommonComponent implements OnInit {
           }
 
 
-          let jasperFormatting = true;
+          let jasperFormatting = false;
           if (!jasperFormatting) {
             var div = document.createElement('div');
             div.innerHTML = this.report.report;
