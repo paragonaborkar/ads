@@ -28,9 +28,8 @@ export class ReportCommonService {
     //   );
   }
 
-  // FIXME: add module as a parameter to the URL
   openJasperReport(pageNo, reportName, moduleName): Observable<any> {
-    return this.http.get(this.global.apiUrl + '/generateReport?pageNo=' + pageNo + '&reportName=' + reportName)
+    return this.http.get(this.global.apiUrl + '/generateReport?pageNo=' + pageNo + '&reportName=' + reportName + '&reportModule=' +moduleName)
       .map((res: Response) => res)
     // .catch(
     // Handle error in Subscribe() using the AdsErrorService  
@@ -40,7 +39,7 @@ export class ReportCommonService {
   }
 
 
-  downloadJasperReport(reportName) {
+  downloadJasperReport(reportName, moduleName) {
 
     let type = 'application/vnd.ms-excel';
     let fileName = 'Report.xls';
@@ -48,7 +47,7 @@ export class ReportCommonService {
 
     //Add download process feature: https://blog.angularindepth.com/the-new-angular-httpclient-api-9e5c85fe3361
 
-    this.http.get(this.global.apiUrl + '/downloadReport?reportName=' + reportName,
+    this.http.get(this.global.apiUrl + '/downloadReport?reportName=' + reportName + '&reportModule=' +moduleName,
       { headers: headers, responseType: 'blob', reportProgress: true })
       .catch(errorResponse => Observable.throw(errorResponse))
       .map((response) => {

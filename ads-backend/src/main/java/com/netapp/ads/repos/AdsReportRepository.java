@@ -14,8 +14,9 @@ import com.netapp.ads.models.AdsReport;
 @RepositoryRestResource
 public interface AdsReportRepository extends JpaRepository<AdsReport, Integer>, JpaSpecificationExecutor<AdsReport> {
 
-	AdsReport findByReportName(@Param("report_name") String reportName);
-	List<AdsReport> findByAdsModule(@Param("adsModule") String adsModule);
+	AdsReport findByReportNameAndAdsModule(@Param("report_name") String reportName,
+			@Param("ads_module") String adsModule);
 
+	List<AdsReport> findByAdsModule(@Param("adsModule") String adsModule);
 
 }

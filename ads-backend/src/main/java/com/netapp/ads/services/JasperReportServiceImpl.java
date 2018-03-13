@@ -52,11 +52,10 @@ public class JasperReportServiceImpl implements JasperReportService {
 	 * This method is called to generate Report
 	 */
 	@Override
-	public Report generateReport(Integer pageNo, String reportName) {
-
+	public Report generateReport(Integer pageNo, String reportName, String adsModule) {
 		DynamicJasper dj = new DynamicJasper();
 
-		AdsReport adsReport = adsReportRepository.findByReportName(reportName);
+		AdsReport adsReport = adsReportRepository.findByReportNameAndAdsModule(reportName, adsModule);
 
 		List<Map<String, Object>> list = jdbcTemplate.queryForList("select * from " + adsReport.getViewOrTableName());
 
@@ -98,15 +97,16 @@ public class JasperReportServiceImpl implements JasperReportService {
 	 * This method is called to download Report
 	 */
 	@Override
-	public void downloadExcelReport(String reportName, HttpServletResponse response) {
+	public void downloadExcelReport(String reportName, String adsModule, HttpServletResponse response) {
 		DynamicJasper dj = new DynamicJasper();
 
 		try {
 
-			AdsReport adsReport = adsReportRepository.findByReportName(reportName);
-			
-			List<Map<String, Object>> list = jdbcTemplate.queryForList("select * from " + adsReport.getViewOrTableName());
-			
+			AdsReport adsReport = adsReportRepository.findByReportNameAndAdsModule(reportName, adsModule);
+
+			List<Map<String, Object>> list = jdbcTemplate
+					.queryForList("select * from " + adsReport.getViewOrTableName());
+
 			DynamicReport dr = dj.downloadReport(adsReport.getAdsReportDetail());
 			JRDataSource ds = new JRBeanCollectionDataSource(list);
 
@@ -143,7 +143,7 @@ public class JasperReportServiceImpl implements JasperReportService {
 			response.getOutputStream().close();
 			response.flushBuffer();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new NetAppAdsException("Error in Downloading Report");
 		}
 
 	}
