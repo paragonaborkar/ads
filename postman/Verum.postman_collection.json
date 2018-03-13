@@ -1,0 +1,140 @@
+{
+	"info": {
+		"name": "Verum",
+		"_postman_id": "5f43ae2e-26f1-4a1c-ab6c-aa365749e705",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Application Owner OSI",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "abc123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "bill",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{verumUrl}}/Verum/4.0/api/OSI?primaryIP=10.216.49.131/Application/Contact?contactType=Application Owner/OSI,Applicaiton/Contact",
+					"host": [
+						"{{verumUrl}}"
+					],
+					"path": [
+						"Verum",
+						"4.0",
+						"api",
+						"OSI"
+					],
+					"query": [
+						{
+							"key": "primaryIP",
+							"value": "10.216.49.131/Application/Contact?contactType=Application Owner/OSI,Applicaiton/Contact",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Person",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "abc123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "bill",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{verumUrl}}/Verum/4.0/api/Person?SID=f591154/Person?format=json",
+					"host": [
+						"{{verumUrl}}"
+					],
+					"path": [
+						"Verum",
+						"4.0",
+						"api",
+						"Person"
+					],
+					"query": [
+						{
+							"key": "SID",
+							"value": "f591154/Person?format=json",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get eSource",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "abc123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "bill",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{verumUrl}}/peoplelkp/PDXMLService2?sid=f591154",
+					"host": [
+						"{{verumUrl}}"
+					],
+					"path": [
+						"peoplelkp",
+						"PDXMLService2"
+					],
+					"query": [
+						{
+							"key": "sid",
+							"value": "f591154",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

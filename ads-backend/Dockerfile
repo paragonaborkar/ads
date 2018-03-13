@@ -5,11 +5,12 @@ FROM openjdk:8-jdk-alpine
 #VOLUME /ads-backend
 
 #Adds a file or directory to the image,
-ADD target/ads-0.0.1-SNAPSHOT.jar ads-backend.jar
+ADD ads-0.0.1-SNAPSHOT.jar ads-backend.jar
 	
-ENTRYPOINT ["java", "-Dspring.datasource.url=jdbc:mysql://netapp-ads-database/ads_dev","-Djava.security.egd=file:/dev/./urandom","-jar","/ads-backend.jar"], "--spring.profiles.active=dev"]
+#ENTRYPOINT ["java", "-Dspring.datasource.url=jdbc:mysql://<container_name from --name>/ads_dev","-Djava.security.egd=file:/dev/./urandom","-jar","/ads-backend.jar"], "--spring.profiles.active=dev"]
+ENTRYPOINT ["java", "-Dspring.datasource.url=jdbc:mysql://10.216.15.30:3308/ads_dev","-Djava.security.egd=file:/dev/./urandom","-jar","/ads-backend.jar"]]
 
-#EXPOSE 8080
+EXPOSE 8080
 
 
 ####
@@ -21,10 +22,22 @@ ENTRYPOINT ["java", "-Dspring.datasource.url=jdbc:mysql://netapp-ads-database/ad
 #
 # Using Networking
 #-------------------
-# docker network create netapp-ads-net
-# docker build -t ads-backend:latest --network netapp-ads-net --rm=true <PATH of Build>
-# docker create --name ads-backend-container --network netapp-ads-net -t -v /c/Users/borkashi/dockerdata/backend:/ads-spring-boot-logs ads-backend:latest
+# docker network create adsappnet
+# docker build -t ads-backend:latest --network adsappnet --rm=true <PATH of Build (Dockerfile)>
+#
+# docker create --name ads-backend --network adsappnet -t -v /usr/local/ads/logs:/ads-spring-boot-logs ads-backend:latest
 # docker start <container_id>
 # OR
-# docker run -it -v /c/Users/borkashi/dockerdata/backend:/ads-spring-boot-logs --detach --name ads-backend-container ads-backend
+# docker run -it -v /usr/local/ads/logs:/ads-spring-boot-logs --detach --name ads-backend-container ads-backend
+#
+
+#
+# Using Link
+#-------------------
+# docker build -t ads-backend:latest --rm=true <PATH of Build (Dockerfile)>
+#
+# docker create --name ads-backend -t -v /usr/local/ads/logs:/ads-spring-boot-logs ads-backend:latest
+# docker start <container_id>
+# OR
+# docker run <-d> -it -v /usr/local/ads/logs:/ads-spring-boot-logs -p 8080:8080 --name ads-backend ads-backend
 #

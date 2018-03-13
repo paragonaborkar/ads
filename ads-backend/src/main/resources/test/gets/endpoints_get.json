@@ -178,8 +178,5 @@
     },
     "workflows": {
         "href": "workflows"
-    },
-    "workPackages": {
-        "href": "workPackages"
     }
 }
