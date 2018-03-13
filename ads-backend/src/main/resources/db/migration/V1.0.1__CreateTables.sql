@@ -1797,7 +1797,7 @@ CREATE TABLE `controller_release` (
 	`src_controller_id` INT(11) NOT NULL,
 	`tgt_controller_id` INT(11) NULL DEFAULT NULL,
 	`processed` TINYINT(1) NULL DEFAULT '0',
-	`create_time` TIMESTAMP NULL DEFAULT '',
+	`create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
 	`update_time` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`id`, `src_controller_id`),
 	UNIQUE INDEX `fk_controller_id_src` (`src_controller_id`),

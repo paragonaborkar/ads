@@ -1,4 +1,11 @@
 <div class="row justify-content-center">
+  <div class="col-xl-9 col-md-10 col-sm-12">
+    <app-report-listing-common [moduleName]="Discover"></app-report-listing-common>
+  </div>
+</div>
+
+OLD:
+<div class="row justify-content-center">
   <div class="col-xl-9 col-md-10 col-sm-12 text-center">
     <h1>Discover Reports</h1>
     <ul *ngIf="!myVar" class="nav nav-pills" routerLink="/discover/report-listing">
@@ -104,8 +111,7 @@
           </p>
         </div>
       </div>
-      <div *ngIf="myVar" class="card card-with-link" 
-      (click)="openJasperReport(1,volumeDecommission)">
+      <div *ngIf="myVar" class="card card-with-link" (click)="openJasperReport(1,volumeDecommission)">
         <div class="card-body">
           <h5 class="card-title">Volume Decommission</h5>
           <p class="card-text">

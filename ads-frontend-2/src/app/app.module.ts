@@ -49,6 +49,9 @@ import { ControllerReleaseService } from './discover/controller-release/controll
 import { ControllerWorkPackageService } from './discover/controller-work-package/controller-work-package.service';
 import { ControllerTypeaheadService } from './discover/controller-typeahead/controller-typeahead.service';
 
+import { ReportCommonService } from './common/report-listing-common/report-common.service';
+
+
 
 // Declarations
 import { AppComponent } from './app.component';
@@ -57,6 +60,8 @@ import { LoginComponent } from './common/login/login.component';
 import { NavComponent } from './common/nav/nav.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { ReportListingComponent } from './admin/report-listing/report-listing.component';
+
+import { ReportListingCommonComponent } from './common/report-listing-common/report-listing-common.component';
 
 // import { UserAdminComponent } from './admin/user-admin/user-admin.component';
 
@@ -127,6 +132,8 @@ import { DataTableColTemplatesComponent } from './common/data-table-col-template
     FriendlyLabelPipePipe,
     YesNoPipe,
 
+    ReportListingCommonComponent,
+
     // Host Connections
     ConnectionsManualFunctionsComponent,
 
@@ -183,7 +190,8 @@ import { DataTableColTemplatesComponent } from './common/data-table-col-template
     OwnerService,
     ControllerReleaseService,
     ControllerWorkPackageService,
-    ControllerTypeaheadService
+    ControllerTypeaheadService,
+    ReportCommonService
 
     ],
   bootstrap: [AppComponent]

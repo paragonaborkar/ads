@@ -10,6 +10,9 @@ import { PropPreferencesComponent } from './common/prop-preferences/prop-prefere
 import { ReportListingComponent } from './admin/report-listing/report-listing.component';
 // import { UserAdminComponent } from './admin/user-admin/user-admin.component';
 
+import { ReportListingCommonComponent } from './common/report-listing-common/report-listing-common.component';
+
+
 
 import { AdminManualFunctionsComponent } from './admin/admin-manual-functions/admin-manual-functions.component';
 import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native-user.component';
@@ -62,6 +65,10 @@ const routes: Routes = [
   { path: 'discover/report-listing',  component: ReportListingDisComponent, canActivate: [AuthGuard] },
   
   { path: 'discover/controller-target',  component: ControllerWorkPackageComponent, canActivate: [AuthGuard] },
+  
+
+  { path: 'discover/report-listing-common',  component: ReportListingCommonComponent, canActivate: [AuthGuard] },
+
   
   
   

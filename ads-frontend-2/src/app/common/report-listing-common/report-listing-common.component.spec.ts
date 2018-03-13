@@ -1,25 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReportListingComponent } from './report-listing.component';
+import { ReportListingCommonComponent } from './report-listing-common.component';
 
 describe('ReportListingCommonComponent', () => {
-  let component: ReportListingComponent;
-  let fixture: ComponentFixture<ReportListingComponent>;
+  let component: ReportListingCommonComponent;
+  let fixture: ComponentFixture<ReportListingCommonComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReportListingComponent ]
+      declarations: [ ReportListingCommonComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReportListingComponent);
+    fixture = TestBed.createComponent(ReportListingCommonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should be created', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

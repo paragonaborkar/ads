@@ -27,6 +27,7 @@ export class ReportService {
 
 
     openJasperReport(pageNo, reportName): Observable<any> {
+    
 
         return this.http.get(this.reportServiceUrl + '/generateReport?pageNo=' + pageNo + '&reportName=' + reportName)
             .map((res: Response) => res)
