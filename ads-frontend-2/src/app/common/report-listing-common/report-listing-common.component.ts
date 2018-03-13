@@ -16,6 +16,9 @@ export class ReportListingCommonComponent implements OnInit {
   @Input() moduleName: string;
   @Input() moduleDisplayName: string;
 
+  numbers = [];
+
+  reportHtml = '';
 
   customReport = '';
   totalPages = 0;
@@ -23,7 +26,8 @@ export class ReportListingCommonComponent implements OnInit {
   pageCount;
   report;
   myVar: boolean;
-  reportName: any;
+  reportName = '';
+  reportTitle = '';
 
   constructor(private reportCommonService: ReportCommonService, private errorService: AdsErrorService) { }
 
@@ -37,7 +41,7 @@ export class ReportListingCommonComponent implements OnInit {
 
 
     // This method is to get all the values from user_native table
-    this.reportCommonService.getReportsForModule('discover').subscribe(
+    this.reportCommonService.getReportsForModule(this.moduleName).subscribe(
       data => {
         console.log(data);
 
@@ -59,58 +63,89 @@ export class ReportListingCommonComponent implements OnInit {
       });
   }
 
-  numbers = [];
 
-  openJasperReport(requestedPageNumber, reportName): void {
+  openJasperReport(requestedPageNumber, reportName, reportTitle): void {
     console.log(reportName);
 
     this.myVar = false;
     this.reportName = reportName;
+    this.reportTitle = reportTitle;
     this.showJasperReport = true;
     if (!requestedPageNumber)
       requestedPageNumber = 1;
     this.pageCount = requestedPageNumber;
 
-    this.reportCommonService.openJasperReport(requestedPageNumber, reportName)
+    this.reportCommonService.openJasperReport(requestedPageNumber, reportName, this.moduleName)
       .subscribe(
         res => {
-          console.log(reportName + " back", this.report);
+
+          console.log("res:", res);
+
           this.report = res;
-          this.customReport = this.report.report;
+          this.customReport = res.report;
 
-          console.log(this.customReport);
-          this.totalPages = this.report.totalPages;
-
+          this.totalPages = res.totalPages;
           this.numbers = [];
           // An array of number for the paging.
           for (var i = 1; i <= this.totalPages; i++) {
             this.numbers.push(i);
           }
 
-          var ele: any = document.getElementById("customReport");
-          ele.innerHTML = this.customReport;
 
-          var x = document.getElementsByClassName("jrPage");
-          console.log(x);
-          ele = document.getElementById("customReport");
-          ele.innerHTML = "<table class=\"table table-striped\">" + x.item(0).innerHTML + "</table>";
+          let jasperFormatting = true;
+          if (!jasperFormatting) {
+            var div = document.createElement('div');
+            div.innerHTML = this.report.report;
+            var x = div.getElementsByClassName("jrPage");
+
+            console.log(" x.item(0).childNodes.item(1)", x.item(0).childNodes.item(1));
+
+            let len = x.item(0).childNodes.item(1).childNodes.length;
+            for (let i = 0; i <= len; i++) {
+              let e = x.item(0).childNodes.item(1).childNodes[i];
+              if (i <= 2) {
+                x.item(0).childNodes.item(1).removeChild(e);
+              }
+            }
+
+            // Remove junk at the end of the report.
+            x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
+            x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
+            x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
+            x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
+            x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
+            x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
 
 
+            var all = x.item(0).getElementsByTagName('*');
+
+            for (var i = -1, l = all.length; ++i < l;) {
+              all[i].removeAttribute('style');
+            }
+
+            this.reportHtml = "<table class=\"table table-striped mt-3\">" + x.item(0).innerHTML + "</table>";
+          } else {
+            var ele = document.getElementById("reportHtml");
+
+            ele.innerHTML = this.report.report;
+          }
+
+          // ele.innerHTML = "<table class=\"table table-striped mt-3\">" + x.item(0).innerHTML + "</table>";
         });
   }
 
 
   goToPrevious(): void {
     this.pageCount = --this.pageCount;
-    this.openJasperReport(this.pageCount, this.reportName);
+    this.openJasperReport(this.pageCount, this.reportName, this.moduleName);
   }
 
   goToNext(): void {
     this.pageCount = ++this.pageCount;
-    this.openJasperReport(this.pageCount, this.reportName);
+    this.openJasperReport(this.pageCount, this.reportName, this.moduleName);
   }
   goToPage(pageNum): void {
-    this.openJasperReport(pageNum, this.reportName);
+    this.openJasperReport(pageNum, this.reportName, this.moduleName);
   }
 
   downloadJasperReport(reportName, reportTitle, query, module) {

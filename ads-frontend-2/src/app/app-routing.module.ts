@@ -10,7 +10,7 @@ import { PropPreferencesComponent } from './common/prop-preferences/prop-prefere
 import { ReportListingComponent } from './admin/report-listing/report-listing.component';
 // import { UserAdminComponent } from './admin/user-admin/user-admin.component';
 
-import { ReportListingCommonComponent } from './common/report-listing-common/report-listing-common.component';
+
 
 
 
@@ -67,10 +67,7 @@ const routes: Routes = [
   { path: 'discover/controller-target',  component: ControllerWorkPackageComponent, canActivate: [AuthGuard] },
   
 
-  { path: 'discover/report-listing-common',  component: ReportListingCommonComponent, canActivate: [AuthGuard] },
 
-  
-  
   
 
   { path: '',   component: LoginComponent},

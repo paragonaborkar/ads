@@ -35,8 +35,6 @@ import { LoginService } from './common/login/login.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
 
-import { ReportService } from './admin/report-listing/report.service';   // RENAME TO "admin-."
-
 import { AppPropsService } from './admin/app-props/app-props.service';
 
 
@@ -180,7 +178,6 @@ import { DataTableColTemplatesComponent } from './common/data-table-col-template
   ],
   providers: [Globals, AuthGuard,  SessionHelper, UserService, LoginService, AdsHelperService, AdsErrorService, 
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-    ReportService,
     UserAdminService,
     PagerService,
     ApplicationConfigService,

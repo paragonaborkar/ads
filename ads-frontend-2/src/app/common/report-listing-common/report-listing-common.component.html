@@ -1,25 +1,25 @@
-<h1>{{moduleDisplayName}} Reports</h1>
-
 <div *ngIf="!showJasperReport">
+  <h1 class="text-center">{{moduleDisplayName}} Reports</h1>
   <div *ngFor="let reportRow of reportListing; let index = index">
-    <div class="card-deck mb-3 ">
-      <div class="card card-with-link w-25 col-md-3 " *ngFor="let report of reportRow; let index2 = index" (click)="openJasperReport(1,report.reportName)">
+    <div class="row card-deck mb-3 ">
+      <div class="card card-with-link w-25 col-md-3 " *ngFor="let report of reportRow; let index2 = index" (click)="openJasperReport(1,report.reportName, report.reportTitle)">
         <div class="card-body">
-          <h5 class="card-title">{{report.reportName}}</h5>
-          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a
-            little bit longer.</p>
+          <h5 class="card-title">{{report.reportTitle}}</h5>
+          <p class="card-text">TODO: We need to add report_description in the database.</p>
           <p class="card-text">
             <small class="text-muted">Last updated 3 mins ago</small>
           </p>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
+
+
 <div class=" text-center" *ngIf="totalPages && showJasperReport">
-  
+
+  <h1 class="text-center">{{moduleDisplayName}} Reports: {{reportTitle}}</h1>
 
   <div class="row">
     <div class="col-md-3 pull-left">
@@ -67,5 +67,7 @@
     </div>
   </div> -->
   </div>
+  <!-- *ngIf="showJasperReport" -->
 
-  <div [hidden]="!showJasperReport" class="border-left-10 dwnldReport" id="customReport"></div>
+
+  <div innerHtml="{{reportHtml}}" class="" id="reportHtml"></div>
