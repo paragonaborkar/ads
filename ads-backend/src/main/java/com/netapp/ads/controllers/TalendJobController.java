@@ -22,7 +22,7 @@ public class TalendJobController {
 
 	String batchScriptsLoc = TalendConstants.BATCH_SCRIPTS_LOC;
 
-	@RequestMapping(value = "userRoles", method = RequestMethod.POST, headers = ("content-type=multipart/*"))
+	@RequestMapping(value = "userRoles", method = RequestMethod.POST, headers = ("content-type=multipart/form-data"))
 	public String loadUserRoles(@RequestParam("file") MultipartFile inputFile) {
 
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_USER_ROLES);
