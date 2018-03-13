@@ -8,6 +8,8 @@ import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.PumpStreamHandler;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,10 +23,13 @@ import com.netapp.ads.converters.TalendConstants;
 public class TalendJobController {
 
 	String batchScriptsLoc = TalendConstants.BATCH_SCRIPTS_LOC;
-
-	@RequestMapping(value = "userRoles", method = RequestMethod.POST, headers = ("content-type=multipart/form-data"))
+//, headers = ("content-type=multipart/form-data")
+	@RequestMapping(value = "userRoles", method = RequestMethod.POST, headers = ("content-type=multipart/*"))
 	public String loadUserRoles(@RequestParam("file") MultipartFile inputFile) {
 
+		System.out.println(inputFile.toString());
+		System.out.println(inputFile.getOriginalFilename());
+		
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_USER_ROLES);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_USER_ROLES);
 
@@ -215,15 +220,17 @@ public class TalendJobController {
 	}	
 	
 	@RequestMapping(value = "shares", method = RequestMethod.POST)
-	public String loadShares() {
+	public ResponseEntity<String> loadShares() {
 		
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_SHARES);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_SHARES);
 
-		System.out.println("batchScript**" + batchScript);
+	
 		runTalendJob(jobName, null, batchScript, TalendConstants.JOB_TYPE_OCI_LOAD);
-
-		return "Job Submitted Successfully";
+		System.out.println("batchScript**" + batchScript);
+		return new ResponseEntity("Job Submitted Successfully", HttpStatus.OK);
+		
+		
 	}		
 	public String getJobInstanceName(String jobName) {
 		

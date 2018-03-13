@@ -1,30 +1,17 @@
 <div class="row d-flex justify-content-center">
 
   <div class="col-md-8 mb-2">
-    <h2 class="h3">Administration - Manual Actions</h2>
-
-
-    <form (ngSubmit)="onSubmit()" #createControllerWorkPackageForm="ngForm" autocomplete="off">
-      <div class="row">
-        <div class="col-md-2 col-form-label">
-          <strong>{{displayJobName}}</strong>
-        </div>
-        <div class="col col-md-auto">
-          <div class="custom-file">
-            <input type="file" class="custom-file-input" #fileupload [(ngModel)]="myFile" name="myFile" (change)="fileChange(fileupload.files)"
-              required/>
-            <label class="custom-file-label" for="myFile">{{fileName || "Choose file..."}}</label>
-          </div>
-        </div>
-
-        <div class="col col-md-auto">
-          <button class="btn btn-success" type="submit" class="btn btn-primary" [disabled]="!fileName">Run</button>
-        </div>
-        <div class="col col-md-auto col-form-label">
-          <div class="text-success">Completed successfully! {{myFile | json}}</div>
-        </div>
-      </div>
-    </form>
-
+    <h2 class="h3">Administration - ADS Setup</h2>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'1. Load User Roles'"              [jobName]="'userRoles'"></app-manual-function>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'2. Load Native Users'"            [jobName]="'userNatives'"></app-manual-function>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'3. Load Audit Events'"            [jobName]="'auditEvents'"></app-manual-function>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'4. Load Audit Reason Codes'"      [jobName]="'auditReasonCodes'"></app-manual-function>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'5. Load Applications (needed?)'"  [jobName]="'applications'"></app-manual-function>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'6. Load System Properties'"       [jobName]="'sysConfigPropertyTypes'"></app-manual-function>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'7. Load Migration Times'"         [jobName]="'migrationTimes'"></app-manual-function>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'8. Load MST Email Types'"         [jobName]="'mstEmailTypes'"></app-manual-function>
+    <app-manual-function [fileUpload]="true" [displayJobName] = "'9. Load Shedules (needed?)'"      [jobName]="'schedules'"></app-manual-function>
   </div>
+
 </div>
+
