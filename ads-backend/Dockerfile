@@ -25,10 +25,10 @@ EXPOSE 8080
 # docker network create adsappnet
 # docker build -t ads-backend:latest --network adsappnet --rm=true <PATH of Build (Dockerfile)>
 #
-# docker create --name ads-backend --network adsappnet -t -v /usr/local/ads/logs:/ads-spring-boot-logs ads-backend:latest
+# docker create --name ads-backend --network adsappnet -t -v /usr/local/ads/backend/logs:/ads-spring-boot-logs ads-backend:latest
 # docker start <container_id>
 # OR
-# docker run -it -v /usr/local/ads/logs:/ads-spring-boot-logs --detach --name ads-backend-container ads-backend
+# docker run -p 8080:8080 -it -v /usr/local/ads/backend/logs:/ads-spring-boot-logs --detach --name ads-backend-container ads-backend
 #
 
 #
