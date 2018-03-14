@@ -9,25 +9,26 @@
 
     <div class="modal-body">
 
-      <form novalidate #f="ngForm">
+
+      <form (ngSubmit)="save()" #createUserForm="ngForm" autocomplete="off">
 
         <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
           <span>{{errorMessage}}</span>
         </div>
 
         <div class="form-group row">
-            <label for="firstName" class="col-sm-3 col-form-label">User Name</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" [ngClass]="{'is-invalid':userUserName.errors?.required && userUserName.touched || userUserName.errors?.minlength && userUserName.touched}"
-                [(ngModel)]="user.userName" name="userName" #userUserName="ngModel" minlength="2" required placeholder="User Name">
-              <div *ngIf="userUserName.errors?.required && userUserName.touched" class="invalid-feedback">
-                User Name is required
-              </div>
-              <div *ngIf="userUserName.errors?.minlength && userUserName.touched" class="invalid-feedback">
-                Must be at least 2 characters
-              </div>
+          <label for="firstName" class="col-sm-3 col-form-label">User Name</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" [ngClass]="{'is-invalid':userUserName.errors?.required && userUserName.touched || userUserName.errors?.minlength && userUserName.touched}"
+              [(ngModel)]="user.userName" name="userName" #userUserName="ngModel" minlength="2" required placeholder="User Name">
+            <div *ngIf="userUserName.errors?.required && userUserName.touched" class="invalid-feedback">
+              User Name is required
+            </div>
+            <div *ngIf="userUserName.errors?.minlength && userUserName.touched" class="invalid-feedback">
+              Must be at least 2 characters
             </div>
           </div>
+        </div>
 
         <div class="form-group row">
           <label for="firstName" class="col-sm-3 col-form-label">First Name</label>
@@ -55,24 +56,40 @@
             </div>
           </div>
         </div>
+
         <div class="form-group row">
           <label for="password" class="col-sm-3 col-form-label">Password</label>
           <div class="col-sm-9">
             <input type="password" class="form-control" [ngClass]="{'is-invalid':userPassword.errors?.required && userPassword.touched || userPassword.errors?.minlength && userPassword.touched}"
-              [(ngModel)]="user.password" name="password" #userPassword="ngModel" minlength="3" required placeholder="Password">
-
+              [(ngModel)]="user.password" name="password" #userPassword="ngModel" minlength="5" required placeholder="Password">
+            <div *ngIf="userPassword.errors?.required && userPassword.touched" class="invalid-feedback">
+              Password is required
+            </div>
+            <div *ngIf="userPassword.errors?.minlength && userPassword.touched" class="invalid-feedback">
+              Must be at least 5 characters
+            </div>
           </div>
         </div>
+
         <div class="form-group row">
-          <label for="confirmPassword" class="col-sm-3 col-form-label">Confirm Password</label>
+          <label for="passwordConfirm" class="col-sm-3 col-form-label">Confirm Password Confirm</label>
           <div class="col-sm-9">
-            <!-- FIXME: when password is valid, make sure this field matches the password field.
-            // If field is not touched, don't validate it.
-            // If form is submitted, validate this field even if it's not touched. -->
-            <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="confirmPassword" required placeholder="Confirm Password">
+            <input type="passwordConfirm" class="form-control" pattern="{{user.password}}" [ngClass]="{'is-invalid':userPasswordConfirm.errors?.required && userPasswordConfirm.touched || userPasswordConfirm.errors?.minlength && userPasswordConfirm.touched}"
+              [(ngModel)]="user.passwordConfirm" name="passwordConfirm" #userPasswordConfirm="ngModel" minlength="5" required
+              placeholder="Password">
+            <div *ngIf="userPasswordConfirm.errors?.required && userPasswordConfirm.touched" class="invalid-feedback">
+              Confirm Password is required
+            </div>
+            <div *ngIf="userPasswordConfirm.errors?.minlength && userPasswordConfirm.touched" class="invalid-feedback">
+              Must be at least 5 characters
+            </div>
+            <div *ngIf="userPasswordConfirm.errors?.pattern && userPasswordConfirm.touched" class="invalid-feedback">
+              Passwords must match
+            </div>
           </div>
-
         </div>
+
+
 
         <div class="form-group row">
           <label for="email" class="col-sm-3 col-form-label">Email</label>
@@ -101,21 +118,23 @@
           <label class="col-sm-3 col-form-label">Active</label>
           <div class="col-sm-9">
             <select class="form-control" [(ngModel)]="user.enabled" name="user.enabled">
-              <option value=1 selected>Yes</option>
-              <option value=0>No</option>
+              <option value="true" selected>Yes</option>
+              <option value="false">No</option>
             </select>
 
           </div>
+        </div>
+
+        <div class="form-group row">
+          <button class="btn btn-default" (click)="close()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!createUserForm.form.valid">Create User</button>
         </div>
       </form>
     </div>
 
 
-    <div class="modal-footer">
-      <button class="btn btn-default" (click)="close()">Cancel</button>
-      <button class="btn btn-primary" (click)="save()">Add User</button>
-    </div>
-  <pre>
+
+    <pre>
          {{user | json}}
         </pre>
   </div>

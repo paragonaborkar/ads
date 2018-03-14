@@ -100,5 +100,9 @@ export class ControllerReleaseComponent implements OnInit {
     this.setPage(this.page);
   }
 
-
+  showDeleteModal(row) {
+    // console.log(row._links.self.href);
+    // this.controllerRelease = row;
+    // this.isDeleteModal = true;
+  }
 }

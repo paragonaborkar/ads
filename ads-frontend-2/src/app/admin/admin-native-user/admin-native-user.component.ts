@@ -85,6 +85,9 @@ export class AdminNativeUserComponent implements OnInit {
         console.log(usersNativeResponse);
         this.page = usersNativeResponse.page;
         this.page.pageNumber = this.page.number;
+
+        console.log("usersNativeResponse._embedded.userNatives", usersNativeResponse._embedded.userNatives);
+
         if (usersNativeResponse.page.totalElements > 0) {
           this.rows = this.adsHelper.ungroupJson(usersNativeResponse._embedded.userNatives, "userRole", ["createTime", "updateTime"]);
         }
@@ -105,6 +108,8 @@ export class AdminNativeUserComponent implements OnInit {
   }
 
   showUpdateModal(row) {
+
+    console.log("rowrowrowrow:", row);
     console.log(row._links.self.href);
     this.User = row;
     this.isUpdateModal = true;
