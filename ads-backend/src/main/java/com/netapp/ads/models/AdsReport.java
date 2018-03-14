@@ -28,6 +28,9 @@ public class AdsReport implements Serializable {
 
 	@Column(name = "report_title")
 	private String reportTitle;
+	
+	@Column(name = "report_description")
+	private String reportDescription;
 
 	@Column(name = "ads_module")
 	private String adsModule;
@@ -61,6 +64,14 @@ public class AdsReport implements Serializable {
 
 	public void setReportTitle(String reportTitle) {
 		this.reportTitle = reportTitle;
+	}
+	
+	public String getReportDescription() {
+		return reportDescription;
+	}
+
+	public void setReportDescription(String reportDescription) {
+		this.reportDescription = reportDescription;
 	}
 
 	public String getAdsModule() {

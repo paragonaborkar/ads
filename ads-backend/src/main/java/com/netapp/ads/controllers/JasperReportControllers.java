@@ -41,9 +41,10 @@ public class JasperReportControllers {
 	@RequestMapping(value = "/generateReport", method = RequestMethod.GET)
 	public Report generateReport(HttpServletRequest request, HttpServletResponse response, ModelMap map,
 			@RequestParam(name = "pageNo", required = true) Integer pageNo,
-			@RequestParam(name = "reportName", required = true) String reportName) throws Exception {
+			@RequestParam(name = "reportName", required = true) String reportName,
+			@RequestParam(name = "reportModule", required = true) String adsModule) throws Exception {
 
-		return jasperReportService.generateReport(pageNo, reportName);
+		return jasperReportService.generateReport(pageNo, reportName, adsModule);
 
 	}
 
@@ -58,9 +59,10 @@ public class JasperReportControllers {
 	@PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER') or hasAuthority('USER') or hasAuthority('USER_TYPE') or hasAuthority('CLIENT')")
 	@RequestMapping(value = "/downloadReport", method = RequestMethod.GET)
 	public void downloadReport(HttpServletRequest request, HttpServletResponse response, Map<String, Object> model,
-			@RequestParam(name = "reportName", required = true) String reportName) throws Exception {
+			@RequestParam(name = "reportName", required = true) String reportName,
+			@RequestParam(name = "reportModule", required = true) String adsModule) throws Exception {
 
-		jasperReportService.downloadExcelReport(reportName, response);
+		jasperReportService.downloadExcelReport(reportName, adsModule, response);
 	}
 
 }
