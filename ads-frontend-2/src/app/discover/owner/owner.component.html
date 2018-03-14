@@ -27,7 +27,7 @@
   </div>
 
   <div class="col-md-8" *ngIf="rows.length > 0 && columns.length > 0">
-    <ngx-datatable class="material" [rows]="rows" [columns]="columns" [columnMode]="'flex'" [rowHeight]="auto" [externalPaging]="true"
+    <ngx-datatable class="material card" [rows]="rows" [columns]="columns" [columnMode]="'flex'" [rowHeight]="auto" [externalPaging]="true"
       [count]="page.totalElements" [offset]="page.number" [limit]="page.size" [headerHeight]="50" [footerHeight]="50" (page)='setPage($event)'>
     </ngx-datatable>
   </div>
@@ -35,16 +35,14 @@
 
 
 
-<ng-template #hdrTmpl let-column="column">
-  Actions
-</ng-template>
+<app-data-table-col-templates></app-data-table-col-templates>
 
 <ng-template #actionTmpl let-column="column" let-row="row">
   <button class="btn btn-sm btn-primary" (click)="showScheduleModal(row, 'Schedule')">
-    <i class="fa fa-check"></i> Schedule
+    <i class="fa fa-check"></i> Respond
   </button>
   <button class="btn btn-sm btn-warning" md-icon-button (click)="showScheduleModal(row, 'Reschedule')">
-    <i class="fa fa-calendar"></i> Re-Schedule
+    <i class="fa fa-exclamation-circle"></i> Update Ownership
   </button>
 </ng-template>
 

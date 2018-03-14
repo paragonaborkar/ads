@@ -1391,13 +1391,10 @@ CREATE TABLE `storage` (
   `manufacturer` varchar(255) DEFAULT NULL,
   `microcode_version` varchar(255) DEFAULT NULL,
   `raw_capacity_mb` bigint(20) DEFAULT NULL,
-  `work_package_id` int(11) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `storage_name_idx` (`storage_name`),
-  KEY `fk_storage_work_package1_idx` (`work_package_id`),
-  CONSTRAINT `fk_storage_work_package1` FOREIGN KEY (`work_package_id`) REFERENCES `work_package` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `storage_name_idx` (`storage_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1702,26 +1699,6 @@ LOCK TABLES `wfa_ocum_controller_data` WRITE;
 /*!40000 ALTER TABLE `wfa_ocum_controller_data` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `work_package`
---
-
-DROP TABLE IF EXISTS `work_package`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `work_package` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Work Package',
-  `work_package_name` varchar(255) NOT NULL,
-  `asset_number` varchar(60) DEFAULT NULL,
-  `controller_installed_date` date NOT NULL,
-  `priority` int(11) DEFAULT NULL,
-  `processed` tinyint(1) DEFAULT '0',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
 
 --
 -- Table structure for table `workflow`
@@ -1773,31 +1750,206 @@ CREATE TABLE `preference` (
   PRIMARY KEY (`id`)
 );
 
+
+
 DROP TABLE IF EXISTS `preference_detail`;
-CREATE TABLE `preference_detail` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `preference_id` int(11) DEFAULT NULL,
-  `field_name` varchar(255) DEFAULT NULL,
-  `field_order` int(11) DEFAULT NULL,
-  `field_visible` TINYINT(1) NULL DEFAULT 1,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `fk_preference_detail_preference` (`preference_id`),
-  CONSTRAINT `fk_preference_detail_preference` FOREIGN KEY (`preference_id`) REFERENCES `preference` (`id`)
+CREATE TABLE IF NOT EXISTS `preference_detail` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`preference_id` INT(11) NULL DEFAULT NULL,
+	`field_name` VARCHAR(255) NULL DEFAULT NULL,
+	`field_prop` VARCHAR(50) NULL DEFAULT NULL,
+	`field_order` INT(11) NULL DEFAULT NULL,
+	`field_template` VARCHAR(50) NULL DEFAULT NULL,
+	`field_visible` TINYINT(1) NULL DEFAULT '1',
+	`create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+	`update_time` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`),
+	INDEX `fk_preference_detail_preference` (`preference_id`),
+	CONSTRAINT `fk_preference_detail_preference` FOREIGN KEY (`preference_id`) REFERENCES `preference` (`id`)
 );
 
 DROP TABLE IF EXISTS `controller_release`;
-CREATE TABLE IF NOT EXISTS `controller_release` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `src_controller_id` INT(11) NULL DEFAULT NULL,
-  `tgt_controller_id` INT(11) NULL DEFAULT NULL,
-  `processed` TINYINT(1) NULL DEFAULT 0,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_controller_id_src` FOREIGN KEY (`src_controller_id`) REFERENCES `controller` (`id`)
+CREATE TABLE `controller_release` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`src_controller_id` INT(11) NOT NULL,
+	`tgt_controller_id` INT(11) NULL DEFAULT NULL,
+	`processed` TINYINT(1) NULL DEFAULT '0',
+	`create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+	`update_time` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`, `src_controller_id`),
+	UNIQUE INDEX `fk_controller_id_src` (`src_controller_id`),
+	INDEX `fk_controller_release_controller2_idx` (`tgt_controller_id`),
+	CONSTRAINT `fk_controller_id_src` FOREIGN KEY (`src_controller_id`) REFERENCES `controller` (`id`)
 );
+
+
+-- REFACTOR work_package to controller_targets_available
+
+
+CREATE TABLE IF NOT EXISTS `controller_work_package` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Work Package',
+	`controller_id` INT(11) NOT NULL,
+	`work_package_name` VARCHAR(255) NOT NULL,
+	`asset_number` VARCHAR(60) NULL DEFAULT NULL,
+	`controller_installed_date` DATE NULL DEFAULT NULL,
+	`priority` INT(11) NULL DEFAULT NULL,
+	`processed` TINYINT(1) NULL DEFAULT '0',
+	`create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+	`update_time` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`, `controller_id`),
+	UNIQUE INDEX `controller_id_unique` (`controller_id`),
+	INDEX `fk_controller_targets_available_controller1_idx` (`controller_id`),
+	CONSTRAINT `fk_controller_targets_available_controller1` FOREIGN KEY (`controller_id`) REFERENCES `controller` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+
+DROP TABLE IF EXISTS `ads_report`;
+CREATE TABLE `ads_report` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `report_name` varchar(45) NOT NULL,
+  `report_title` varchar(45) NOT NULL,
+  `ads_module` varchar(45) NOT NULL,
+  `view_or_table_name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `ads_report_detail`;
+CREATE TABLE `ads_report_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ads_report_id` int(11) NOT NULL,
+  `column_name` varchar(45) NOT NULL,
+  `column_type` varchar(45) NOT NULL,
+  `column_label` varchar(45) NOT NULL,
+  `column_sequence` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ads_report_fk_idx` (`ads_report_id`),
+  CONSTRAINT `ads_report_fk` FOREIGN KEY (`ads_report_id`) REFERENCES `ads_report` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+
+
+CREATE 
+    ALGORITHM = UNDEFINED 
+    SQL SECURITY DEFINER
+VIEW `call_me_report` AS
+    SELECT 
+        `ar`.`id` AS `id`,
+        `ar`.`activity_id` AS `activity_id`,
+        (SELECT 
+                `uc`.`user_name`
+            FROM
+                `user_corporate` `uc`
+            WHERE
+                (`ar`.`owner_user_corporate_id` = `uc`.`id`)) AS `user_name`,
+        `ar`.`is_owner` AS `is_owner`,
+        `ar`.`is_presumed` AS `is_presumed`,
+        (SELECT 
+                `uc`.`user_name`
+            FROM
+                `user_corporate` `uc`
+            WHERE
+                (`ar`.`suggested_owner_user_corporate_id` = `uc`.`id`)) AS `suggested_user_name`
+    FROM
+        (`activity_response` `ar`
+        JOIN `activity` `a`)
+    WHERE
+        (`a`.`id` = `ar`.`activity_id`);
+			
+			
+			
+CREATE 
+    ALGORITHM = UNDEFINED  
+    SQL SECURITY DEFINER
+VIEW `unknown_owner_report` AS
+    SELECT 
+        `qt`.`qtree_name` AS `qtree_name`,
+        `nv`.`volume_name` AS `volume_name`,
+        `a`.`vserver` AS `vserver`,
+        `a`.`disposition` AS `disposition`,
+        `a`.`mailing_date` AS `mailing_date`,
+        `a`.`will_delete` AS `will_delete`,
+        `a`.`delete_date` AS `delete_date`,
+        `a`.`will_migrate` AS `will_migrate`,
+        `a`.`migrate_week` AS `migrate_week`,
+        `a`.`migrate_day` AS `migrate_day`,
+        `a`.`call_me` AS `call_me`,
+        `a`.`best_number` AS `best_number`,
+        `a`.`call_reason` AS `call_reason`,
+        `a`.`archive_candidate` AS `archive_candidate`,
+        `a`.`is_latest` AS `is_latest`,
+        `a`.`admin_override` AS `admin_override`,
+        `a`.`note` AS `note`,
+        `a`.`app_name_list` AS `app_name_list`,
+        `a`.`mail_count` AS `mail_count`,
+        `a`.`migration_time_id` AS `migration_time_id`,
+        `a`.`create_time` AS `create_time`,
+        `a`.`update_time` AS `update_time`
+    FROM
+        ((`activity` `a`
+        JOIN `qtree` `qt`)
+        JOIN `nas_volume` `nv`)
+    WHERE
+        ((`a`.`qtree_id` = `qt`.`id`)
+            AND (`qt`.`nas_volume_id` = `nv`.`id`)
+            AND (`a`.`disposition` IN ('NFS-Orphan' , 'NFS-Orphan w/CIFS')));
+			
+			
+			
+CREATE 
+    ALGORITHM = UNDEFINED 
+    SQL SECURITY DEFINER
+VIEW `user_native_report` AS
+    SELECT 
+        `un`.`id` AS `id`,
+        `un`.`first_name` AS `first_name`,
+        `un`.`last_name` AS `last_name`,
+        `un`.`email` AS `email`,
+        `un`.`user_name` AS `user_name`,
+        `un`.`enabled` AS `enabled`,
+        `ur`.`user_role` AS `user_role`
+    FROM
+        (`user_native` `un`
+        JOIN `user_roles` `ur`)
+    WHERE
+        (`un`.`user_role_id` = `ur`.`id`);
+		
+		
+		
+CREATE 
+    ALGORITHM = UNDEFINED  
+    SQL SECURITY DEFINER
+VIEW `volume_decommission_report` AS
+    SELECT 
+        `qt`.`qtree_name` AS `qtree_name`,
+        `nv`.`volume_name` AS `volume_name`,
+        `a`.`vserver` AS `vserver`,
+        `a`.`disposition` AS `disposition`,
+        `a`.`mailing_date` AS `mailing_date`,
+        `a`.`will_delete` AS `will_delete`,
+        `a`.`delete_date` AS `delete_date`,
+        `a`.`will_migrate` AS `will_migrate`,
+        `a`.`migrate_week` AS `migrate_week`,
+        `a`.`migrate_day` AS `migrate_day`,
+        `a`.`call_me` AS `call_me`,
+        `a`.`best_number` AS `best_number`,
+        `a`.`call_reason` AS `call_reason`,
+        `a`.`archive_candidate` AS `archive_candidate`,
+        `a`.`is_latest` AS `is_latest`,
+        `a`.`admin_override` AS `admin_override`,
+        `a`.`note` AS `note`,
+        `a`.`app_name_list` AS `app_name_list`,
+        `a`.`mail_count` AS `mail_count`,
+        `a`.`migration_time_id` AS `migration_time_id`,
+        `a`.`create_time` AS `create_time`,
+        `a`.`update_time` AS `update_time`
+    FROM
+        ((`activity` `a`
+        JOIN `qtree` `qt`)
+        JOIN `nas_volume` `nv`)
+    WHERE
+        ((`a`.`qtree_id` = `qt`.`id`)
+            AND (`qt`.`nas_volume_id` = `nv`.`id`)
+            AND (`a`.`archive_candidate` = 1));
 
 
 --
@@ -1875,334 +2027,6 @@ BEGIN
 				GROUP BY vitae_data.qtree.internalVolumeId
 				HAVING COUNT(vitae_data.qtree.internalVolumeId) > 1 AND vitae_data.qtree.name = '-')
 ;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `vitae_update` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ALLOW_INVALID_DATES,ERROR_FOR_DIVISION_BY_ZERO,TRADITIONAL,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `vitae_update`()
-BEGIN
-INSERT INTO vitae_data.datacenter
-	(name,region,create_date,creation_user)
-	SELECT DISTINCT 
-		dwh_inventory.storage.datacenter,
-		dwh_inventory.storage.Region,
-		NOW(),
-		'system'
-		
-	FROM dwh_inventory.storage
-	
-	ON DUPLICATE KEY UPDATE 
-        last_upd_dt=NOW(),
-        last_upd_user='system';
-
-INSERT INTO vitae_data.storage 
-	(id,name,model,family,manufacturer,serialNumber,microcodeVersion,rawCapacityMB,datacenter,region,create_date,creation_user)
-	
-    SELECT 
-		dwh_inventory.storage.id,
-		dwh_inventory.storage.name,
-		dwh_inventory.storage.model,
-		dwh_inventory.storage.family,
-		dwh_inventory.storage.manufacturer,
-		dwh_inventory.storage.serialNumber,
-		dwh_inventory.storage.microcodeVersion,
-		dwh_inventory.storage.rawCapacityMB,
-		dwh_inventory.storage.datacenter,
-		dwh_inventory.storage.region,
-		NOW(),
-		'system'
-    
-    FROM dwh_inventory.storage
-    
-    ON DUPLICATE KEY UPDATE 
-    	name=VALUES(name),
-    	model=VALUES(model),
-    	family=VALUES(family),
-    	manufacturer = VALUES(manufacturer),
-    	serialNumber= VALUES(serialNumber),
-    	microcodeVersion = VALUES(microcodeVersion),
-    	rawCapacityMB =VALUES(rawCapacityMB),
-    	datacenter = VALUES(datacenter),
-    	region = VALUES(region),
-        last_upd_dt=NOW(),
-        last_upd_user='system'
-;	
-	
-INSERT INTO `vitae_data`.`controller` 
-	(id, controllerName,serialNumber, storageId, storageName, model, datacenter, dateAvail, volumeCount,create_date,creation_user)
-    SELECT 
-		dwh_inventory.storage_node.id,
-        dwh_inventory.storage_node.name,
-        dwh_inventory.storage_node.serialNumber,
-        dwh_inventory.storage_node.storageId,
-        dwh_inventory.storage.name,        
-        dwh_inventory.storage_node.model,
-        dwh_inventory.storage.dataCenter,
-        DATE(NOW()),
-        COUNT(DISTINCT dwh_inventory.internal_volume.id),
-        NOW(),
-        'system'
-	FROM dwh_inventory.storage_node
-    
-    JOIN dwh_inventory.storage
-		ON dwh_inventory.storage.id = dwh_inventory.storage_node.storageId
-        
-	JOIN dwh_inventory.storage_node_to_internal_volume
-		ON dwh_inventory.storage_node.id = dwh_inventory.storage_node_to_internal_volume.storageNodeId
-	
-    JOIN dwh_inventory.internal_volume
-		ON dwh_inventory.storage_node_to_internal_volume.internalVolumeId = dwh_inventory.internal_volume.id
-	
-    
-    GROUP BY dwh_inventory.storage_node.id
-    
-    ON DUPLICATE KEY UPDATE 
-    	controllerName = VALUES(controllerName),
-        serialNumber = VALUES(serialNumber),
-        storageId = VALUES(storageId),
-        storageName = VALUES(storageName),
-        model = VALUES(model),
-        datacenter = VALUES(datacenter),
-        last_upd_dt=NOW(),
-        last_upd_user='system'
- ;
- 
- INSERT INTO vitae_data.aggregate
-	(id, name, storage_id, size, isHybrid, type, controller_id, poolAllocatedCapMB, poolUsedCapMB, poolIopsCapability, avgIOpS, peakIOpS, create_date,creation_user)
-    SELECT 
-		dwh_inventory.storage_pool.id,
-		IF (dwh_inventory.storage_pool.name LIKE '%:%',
-			SUBSTRING_INDEX(dwh_inventory.storage_pool.name,':',-1),
-			dwh_inventory.storage_pool.name),
-		dwh_inventory.storage_pool.storageId,
-		dwh_inventory.storage_pool.totalAllocatedCapacityMB,
-		dwh_inventory.storage_pool.usesFlashPools,
-		dwh_inventory.storage_pool.type,
-		dwh_inventory.storage_node_to_storage_pool.storageNodeId,
-        dwh_inventory.wcr_pool_combined_data.poolAllocatedCapMB,
-        dwh_inventory.wcr_pool_combined_data.poolUsedCapMB,
-        dwh_inventory.wcr_pool_combined_data.poolIopsCapability,
-        dwh_inventory.wcr_pool_combined_data.avgIOpS,
-        dwh_inventory.wcr_pool_combined_data.maxIOpS,
-        NOW(),
-        'system'
-    
-	FROM dwh_inventory.storage_pool
-
-	JOIN dwh_inventory.storage_node_to_storage_pool
-		ON dwh_inventory.storage_pool.id = dwh_inventory.storage_node_to_storage_pool.storagePoolId
-        
-	LEFT JOIN dwh_inventory.wcr_pool_combined_data
-		ON dwh_inventory.storage_pool.id = dwh_inventory.wcr_pool_combined_data.storagePoolId
-	
-	ON DUPLICATE KEY UPDATE 
-		name = VALUES(name),
-		storage_id = VALUES(storage_id),
-		size = VALUES(size),
-		poolAllocatedCapMB = VALUES(poolAllocatedCapMB), 
-        poolUsedCapMB = VALUES(poolUsedCapMB), 
-        poolIopsCapability = VALUES(poolIopsCapability), 
-        avgIOpS = VALUES(avgIOpS), 
-        peakIOpS = VALUES(peakIOpS),
-        last_upd_dt=NOW(),
-        last_upd_user='system'
-;
-
-INSERT INTO vitae_data.volume
-	(intVolId, contId, aggrId, vServer,volName, allocCap, usedCap, snapType, snapSrcVolId, snapTgtVolId, snap_count,
-		status, lastAccess, avgIOpS, peakIOpS, create_date,creation_user)
-    SELECT
-		volSel.intVolId, 
-		volSel.contId, 
-		volSel.aggrId, 
-		volSel.vServer,
-        volSel.volName, 
-        volSel.allocCap, 
-        volSel.usedCap, 
-        volSel.snapType, 
-        volSel.snapSrcVolId, 
-        volSel.snapTgtVolId, 
-        volSel.snap_count,
-		volSel.status, 
-        volSel.lastAccess, 
-        volSel.avgIOpS, 
-        volSel.peakIOpS, 
-        volSel.create_date,
-        volSel.creation_user
-    FROM 
-    (SELECT DISTINCT
-		dwh_inventory.internal_volume.id AS 'intVolId',
-        dwh_inventory.storage_node_to_storage_pool.storageNodeId AS 'contId',
-        dwh_inventory.internal_volume.storagePoolId AS 'aggrId',
-        IF (dwh_inventory.internal_volume.virtualStorage IS NULL, 'vFiler0',
-			dwh_inventory.internal_volume.virtualStorage) AS 'vServer',
-        IF (dwh_inventory.internal_volume.name LIKE '%:%',
-			SUBSTRING_INDEX(dwh_inventory.internal_volume.name,':',-1),
-			dwh_inventory.internal_volume.name) AS 'volName',
-		dwh_inventory.internal_volume.totalAllocatedCapacityMB/1024 AS 'allocCap',
-        dwh_inventory.internal_volume.totalUsedCapacityMB/1024 AS 'usedCap',
-        dwh_inventory.dr_internal_volume_replica.technology AS 'snapType',
-        dwh_inventory.dr_internal_volume_replica.sourceInternalVolumeId AS 'snapSrcVolId',
-        dwh_inventory.dr_internal_volume_replica.targetInternalVolumeId AS 'snapTgtVolId',
-        dwh_inventory.internal_volume.snapshotCount AS 'snap_count',
-        dwh_inventory.internal_volume.status AS 'status',
-        MAX(dwh_inventory.wcr_host_conn_view.lastSeen) AS 'lastAccess',
-        dwh_inventory.wcr_vol_combined_data.avgIOpS AS 'avgIOpS',
-        dwh_inventory.wcr_vol_combined_data.peakIOpS AS 'peakIOpS',
-        NOW() AS 'create_date',
-        'system' AS 'creation_user'
-        
-	FROM dwh_inventory.internal_volume
-    
-	JOIN dwh_inventory.storage_node_to_storage_pool
-		ON dwh_inventory.internal_volume.storagePoolId = dwh_inventory.storage_node_to_storage_pool.storagePoolId
-        
-	LEFT JOIN dwh_inventory.dr_internal_volume_replica
-		ON dwh_inventory.internal_volume.id = dwh_inventory.dr_internal_volume_replica.sourceInternalVolumeId
-	
-    LEFT JOIN dwh_inventory.wcr_host_conn_view
-		ON dwh_inventory.internal_volume.id = dwh_inventory.wcr_host_conn_view.intVolId
-        
-	LEFT JOIN dwh_inventory.wcr_volume_dimension
-		ON dwh_inventory.internal_volume.id = dwh_inventory.wcr_volume_dimension.internalVolumeId
-        
-	LEFT JOIN dwh_inventory.wcr_vol_combined_data
-		ON dwh_inventory.wcr_volume_dimension.id = dwh_inventory.wcr_vol_combined_data.volDimId
-	
-    WHERE dwh_inventory.internal_volume.id NOT IN (SELECT targetInternalVolumeId FROM dwh_inventory.dr_internal_volume_replica) 
-    
-	GROUP BY dwh_inventory.internal_volume.id  ) AS volSel
-	
-    ON DUPLICATE KEY UPDATE 
-		allocCap = VALUES(allocCap),
-        usedCap = VALUES(usedCap),
-        lastAccess = VALUES(lastAccess),
-        avgIOpS = VALUES(avgIOpS),
-        peakIOpS = VALUES(peakIOpS),
-        last_upd_dt=NOW(),
-        last_upd_user='system'
-;
-         
-
-INSERT INTO vitae_data.host
-	(hostname,ipAddress,create_date,creation_user)
-	SELECT
-        dwh_inventory.wcr_host_conn_view.hostname,
-        dwh_inventory.wcr_host_conn_view.ip,
-        NOW(),
-        'system'
-	FROM dwh_inventory.wcr_host_conn_view
-    
-    ON DUPLICATE KEY UPDATE 
-        last_upd_dt=NOW(),
-        last_upd_user='system'
-;
-
-
-INSERT INTO vitae_data.share
-	(shareId, name, volumeId, shareType, hostId,qtreeId,create_date,creation_user)
-    SELECT 
-		dwh_inventory.nas_share.id,
-		dwh_inventory.nas_share.name,
-		dwh_inventory.nas_file_share.internalVolumeId,
-		dwh_inventory.nas_share.protocol,
-		vitae_data.host.id,
-		dwh_inventory.nas_file_share.qtreeId,
-        NOW(),
-        'system'
-    
-	FROM dwh_inventory.nas_share
-    
-	JOIN dwh_inventory.nas_file_share
-		ON dwh_inventory.nas_share.fileShareId = dwh_inventory.nas_file_share.id
-        
-	LEFT JOIN dwh_inventory.wcr_host_conn_view whcv
-		ON dwh_inventory.nas_share.id = whcv.shareId 
-            
-	LEFT JOIN vitae_data.host
-		ON whcv.ip = vitae_data.host.ipAddress
-        
-	ON DUPLICATE KEY UPDATE 
-        last_upd_dt=NOW(),
-        last_upd_user='system'
-;
-
-INSERT INTO vitae_data.qtree
-	(id,internalVolumeId,name,quotaHardCapacityLimitMB,quotaSoftCapacityLimitMB,quotaUsedCapacityMB,type,securityStyle,status,create_date,creation_user) 
-	
-    SELECT dwh_inventory.qtree.id,
-		dwh_inventory.qtree.internalVolumeId,
-		dwh_inventory.qtree.name,
-		dwh_inventory.qtree.quotaHardCapacityLimitMB,
-		dwh_inventory.qtree.quotaSoftCapacityLimitMB,
-		dwh_inventory.qtree.quotaUsedCapacityMB,
-		dwh_inventory.qtree.type,
-		dwh_inventory.qtree.securityStyle,
-		dwh_inventory.qtree.status,
-        NOW(),
-        'system'
-	FROM dwh_inventory.qtree
-	
-	JOIN dwh_inventory.nas_file_share
-	ON dwh_inventory.nas_file_share.qtreeid = dwh_inventory.qtree.id
-    
-    JOIN dwh_inventory.nas_share
-	ON dwh_inventory.nas_share.fileshareid = dwh_inventory.nas_file_share.id
-    
-    ON DUPLICATE KEY UPDATE
-		quotaHardCapacityLimitMB = VALUES(quotaHardCapacityLimitMB),
-        quotaSoftCapacityLimitMB = VALUES(quotaSoftCapacityLimitMB),
-		quotaUsedCapacityMB = VALUES(quotaUsedCapacityMB),
-        last_upd_dt=NOW(),
-        last_upd_user='system'
-	;
-
-
-
-
-
--- REFACTOR work_package to controller_targets_available
-ALTER TABLE `storage` 
-DROP FOREIGN KEY `fk_storage_work_package1`;
-
-ALTER TABLE `storage` 
-DROP COLUMN `work_package_id`,
-DROP INDEX `fk_storage_work_package1_idx` ;
-
-DROP TABLE `work_package` ;
-
-CREATE TABLE IF NOT EXISTS `controller_targets_available` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Work Package',
-  `controller_id` INT(11) NULL DEFAULT NULL,
-  `target_group_name` VARCHAR(255) NOT NULL,
-  `asset_number` VARCHAR(60) NULL DEFAULT NULL,
-  `controller_installed_date` DATE NULL,
-  `priority` INT(11) NULL DEFAULT NULL,
-  `processed` TINYINT(1) NULL DEFAULT '0',
-  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  INDEX `fk_controller_targets_available_controller1_idx` (`controller_id` ASC),
-  CONSTRAINT `fk_controller_targets_available_controller1`
-    FOREIGN KEY (`controller_id`)
-    REFERENCES `controller` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
 
 END ;;
 DELIMITER ;

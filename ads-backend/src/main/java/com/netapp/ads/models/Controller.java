@@ -67,9 +67,13 @@ public class Controller implements Serializable {
 	@OneToMany(mappedBy="controller")
 	private List<WfaOcumControllerData> wfaOcumControllerData;
 
-	//bi-directional many-to-one association to WfaOcumControllerData
+	//bi-directional one-to-one association to ControllerRelease
 	@OneToOne(mappedBy="srcController")
 	private ControllerRelease controllerRelease;
+	
+	//bi-directional one-to-one association to ControllerTargetsAvailable
+	@OneToOne(mappedBy="controller")
+	private ControllerWorkPackage controllerTargetsAvailable;
 	
 	public Controller() {
 	}
@@ -221,5 +225,15 @@ public class Controller implements Serializable {
 
 		return wfaOcumControllerData;
 	}
+	
+	
+	public ControllerWorkPackage getControllerTargetsAvailable() {
+		return this.controllerTargetsAvailable;
+	}
+
+	public void setControllerTargetsAvailable(ControllerWorkPackage controllerTargetsAvailable) {
+		this.controllerTargetsAvailable = controllerTargetsAvailable;
+	}
+	
 
 }

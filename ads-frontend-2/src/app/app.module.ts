@@ -35,8 +35,8 @@ import { LoginService } from './common/login/login.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
 
-import { ReportService } from './admin/report-listing/report.service';   // RENAME TO "admin-."
-import { AppPropertiesService } from './admin/app-properties/app-properties.service'
+import { AppPropsService } from './admin/app-props/app-props.service';
+
 
 import { UserAdminService } from './admin/admin-native-user/user-admin.service';
 import { PagerService } from './common/pager.service';      // Currently used in user admin. Possibly many pages.
@@ -44,7 +44,12 @@ import { ApplicationConfigService } from './common/application-config.service';
 
 import { OwnerService } from './discover/owner.service';
 import { ControllerReleaseService } from './discover/controller-release/controller-release.service';
-import { ControllerTargetService } from './discover/controller-targets/controller-target.service';
+import { ControllerWorkPackageService } from './discover/controller-work-package/controller-work-package.service';
+import { ControllerTypeaheadService } from './discover/controller-typeahead/controller-typeahead.service';
+
+import { ReportCommonService } from './common/report-listing-common/report-common.service';
+
+
 
 // Declarations
 import { AppComponent } from './app.component';
@@ -53,6 +58,8 @@ import { LoginComponent } from './common/login/login.component';
 import { NavComponent } from './common/nav/nav.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { ReportListingComponent } from './admin/report-listing/report-listing.component';
+
+import { ReportListingCommonComponent } from './common/report-listing-common/report-listing-common.component';
 
 // import { UserAdminComponent } from './admin/user-admin/user-admin.component';
 
@@ -63,16 +70,15 @@ import { AdminManualFunctionsComponent } from './admin/admin-manual-functions/ad
 import { PropPreferencesComponent } from './common/prop-preferences/prop-preferences.component';
 import { PropPreferencesModalComponent } from './common/prop-preferences-modal/prop-preferences-modal.component';
 
-import { AppPropertiesComponent } from './admin/app-properties/app-properties.component';
 import { ArrayFilterPipePipe } from './pipes/array-filter-pipe.pipe';
+import { YesNoPipe } from './pipes/yes-no-pipe.pipe';
 
 import { ConnectionsManualFunctionsComponent } from './connections/connections-manual-functions/connections-manual-functions.component';
 import { DiscoverManualFunctionsComponent } from './discover/discover-manual-functions/discover-manual-functions.component';
 import { FriendlyLabelPipePipe } from './pipes/friendly-label-pipe.pipe';
 import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native-user.component';
 
-import { QtreesOwnershipComponent } from './discover/qtrees-ownership/qtrees-ownership.component';
-import { QtreesService } from './discover/qtrees-ownership/qtrees-ownership.service';
+
 
 import { OwnerComponent } from './discover/owner/owner.component';
 import { OwnerNotFoundComponent } from './discover/owner-not-found/owner-not-found.component';
@@ -80,47 +86,76 @@ import { ScheduleComponent } from './discover/owner/schedule/schedule.component'
 import { ReportListingDisComponent } from './discover/report-listing-dis/report-listing-dis.component';
 
 import { ReportListingConnComponent } from './connections/report-listing-conn/report-listing-conn.component';
+import { AppPropsComponent } from './admin/app-props/app-props.component';
+import { Error404Component } from './error-404/error-404.component';
 import { ControllerReleaseComponent } from './discover/controller-release/controller-release.component';
-import { ControllerTypeaheadComponent } from './discover/controller-release/controller-typeahead/controller-typeahead.component';
-import { ControllerTargetsComponent } from './discover/controller-targets/controller-targets.component';
-import { ControllerTargetsCreateComponent } from './discover/controller-targets/controller-targets-create/controller-targets-create.component';
+import { ControllerReleaseCreateComponent } from './discover/controller-release/controller-release-create/controller-release-create.component';
+import { ControllerTypeaheadComponent } from './discover/controller-typeahead/controller-typeahead.component';
+
+import { ControllerWorkPackageComponent } from './discover/controller-work-package/controller-work-package.component';
+import { ControllerWorkPackageCreateComponent } from './discover/controller-work-package/controller-work-package-create/controller-work-package-create.component';
+import { ControllerWorkPackageDeleteComponent } from './discover/controller-work-package/controller-work-package-delete/controller-work-package-delete.component';
+
+import { SaveMessageTimerComponent } from './common/save-message-timer/save-message-timer.component';
+import { DataTableColTemplatesComponent } from './common/data-table-col-templates/data-table-col-templates.component';
+
+
 
 /*import { TableSortComponent } from './common/table-sort/table-sort.component';*/
 
 
 @NgModule({
   declarations: [
+    // ADS Foundational
     AppComponent,
     HomeComponent,
     LoginComponent,
     NavComponent,
+    FooterComponent,
+
+    SaveMessageTimerComponent,
+    DataTableColTemplatesComponent,
+
+    // ADS Adminstration & Settings
     ReportListingComponent,
-    // UserAdminComponent,
     NativeUserCreateComponent,
     NativeUserUpdateComponent,
     NativeUserDeleteComponent,
     AdminManualFunctionsComponent,
-    FooterComponent,
     PropPreferencesComponent,
     PropPreferencesModalComponent,
-    AppPropertiesComponent,
+    
+    // Pipes
     ArrayFilterPipePipe,
     FriendlyLabelPipePipe,
+    YesNoPipe,
+
+    ReportListingCommonComponent,
+
+    // Host Connections
     ConnectionsManualFunctionsComponent,
+
+
+    // Discovery
     DiscoverManualFunctionsComponent,
     AdminNativeUserComponent,
 
-    QtreesOwnershipComponent,
 
     OwnerComponent,
     OwnerNotFoundComponent,
     ScheduleComponent,
     ReportListingDisComponent,
     ReportListingConnComponent,
+    AppPropsComponent,
+    Error404Component,
     ControllerReleaseComponent,
+    ControllerReleaseCreateComponent,
+    
     ControllerTypeaheadComponent,
-    ControllerTargetsComponent,
-    ControllerTargetsCreateComponent
+
+    ControllerWorkPackageComponent,
+    ControllerWorkPackageCreateComponent,
+    ControllerWorkPackageDeleteComponent
 
     
 
@@ -128,7 +163,6 @@ import { ControllerTargetsCreateComponent } from './discover/controller-targets/
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    // HttpModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
@@ -144,15 +178,17 @@ import { ControllerTargetsCreateComponent } from './discover/controller-targets/
   ],
   providers: [Globals, AuthGuard,  SessionHelper, UserService, LoginService, AdsHelperService, AdsErrorService, 
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-    ReportService,
     UserAdminService,
     PagerService,
     ApplicationConfigService,
-    AppPropertiesService,
-    QtreesService,
+    AppPropsService,
+
+
     OwnerService,
     ControllerReleaseService,
-    ControllerTargetService
+    ControllerWorkPackageService,
+    ControllerTypeaheadService,
+    ReportCommonService
 
     ],
   bootstrap: [AppComponent]

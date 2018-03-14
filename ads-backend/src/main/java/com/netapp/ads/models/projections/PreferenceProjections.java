@@ -23,8 +23,7 @@ public interface PreferenceProjections {
 
 	public Integer getNativeUserId();
 
-	public Timestamp getCreateTime();
-	
+	public Timestamp getCreateTime();	
 	public Timestamp getUpdateTime();
 
 	public List<PreferenceDetail> getPreferenceDetails();

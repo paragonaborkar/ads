@@ -13,7 +13,7 @@ public interface PreferenceDetailsProjection {
 	Integer getCorpUserId();
 
 	String getFieldName();
-	
+	String getFieldTemplate();
 	Integer getFieldOrder();
 	Integer getFieldVisible();
 	

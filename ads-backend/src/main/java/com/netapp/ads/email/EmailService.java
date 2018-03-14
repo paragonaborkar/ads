@@ -1,38 +1,47 @@
 package com.netapp.ads.email;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.InputStreamSource;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Component;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
+import java.io.UnsupportedEncodingException;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Locale;
 
-@Component
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+
+@Service
 public class EmailService {
+	
+	private Logger log = LoggerFactory.getLogger(EmailService.class);
 	
     @Value("${mail.from}")
     private String EMAIL_FROM;
+    
     @Value("${mail.from.alias}")
     private String EMAIL_FROM_ALIAS;
-    @Value("${mail.to}")
-    private String EMAIL_TO;
+    
     //@Autowired
     private TemplateEngine templateEngine;
-    //@Autowired
+    
+    @Autowired
     public JavaMailSender emailSender;
 
-    public void sendSimpleMessage(String to, String subject, String text) {
+    @Autowired
+    public EmailService(TemplateEngine templateEngine) {
+    	this.templateEngine = templateEngine;
+	}
+    
+    public void sendSimpleMail(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
         message.setSubject(subject);
@@ -40,21 +49,24 @@ public class EmailService {
         emailSender.send(message);
     }
 
-    public void sendMail(String subject, final String emailTemplateName, final Context context) throws MessagingException, UnsupportedEncodingException {
-
-
-        // Prepare message using a Spring helper
+    public void sendTemplatedMail(String to, String subject, String emailTemplateName, Context context, Map<String, Resource> inlineResources) throws MessagingException, UnsupportedEncodingException {
         final MimeMessage mimeMessage = this.emailSender.createMimeMessage();
-        final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, "UTF-8");
-        message.setSubject(subject);
-        message.setFrom(EMAIL_FROM, EMAIL_FROM_ALIAS);
-        String email_to[] = EMAIL_TO.split(",");
-        message.setTo(email_to);
+        final MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8"); //true for multipart
+        messageHelper.setSubject(subject);
+        messageHelper.setFrom(EMAIL_FROM, EMAIL_FROM_ALIAS);
+        messageHelper.setTo(to.split(","));
 
         // Create the HTML body using Thymeleaf
+        //final InputStreamSource imageSource = new ByteArrayResource(imageBytes);
         final String htmlContent = this.templateEngine.process(emailTemplateName, context);
-        message.setText(htmlContent, true /* isHtml */);
-
+        //setText has to come before addInline otherwise it wont work
+        messageHelper.setText(htmlContent, true); //true for isHtml
+        if(inlineResources != null && !inlineResources.isEmpty()) {
+        	for (Entry<String, Resource> pair : inlineResources.entrySet()){
+                messageHelper.addInline(pair.getKey(), pair.getValue());
+            }
+        }
+        
         // Send email
         this.emailSender.send(mimeMessage);
     }

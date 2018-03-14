@@ -9,4 +9,10 @@ export class Globals {
  	readonly  TOKEN_AUTH_PASSWORD = 'XY7kmzoNzl100'; // Used in Login Service - Why? 
  	// readonly  TOKEN_NAME = 'accessTokenInfo';
  	// readonly  ACCESS_TOKEN_NAME = 'access_token'; 
+       
+ 	readonly callMeReportName = 'call_me';
+ 	readonly userNativeReportName = 'user_native';
+ 	readonly volumeDecommissionReportName = 'volume_decommission';
+ 	readonly unknownOwnerReportName = 'unknown_owner';
+
 }
