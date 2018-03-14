@@ -18,4 +18,6 @@ public interface UserCorporateRepository extends JpaRepository<UserCorporate, In
 	
 	UserCorporate findFirstByEmail(@Param("email") String email);
 	
+	UserCorporate findFirstByUserName(@Param("userName") String userName);
+	
 }

@@ -2,6 +2,7 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -63,12 +64,12 @@ public class UserCorporate implements Serializable {
 	private String workPhone;
 
 	//bi-directional many-to-one association to UserCorporate
-	@ManyToOne
+	@ManyToOne (cascade=javax.persistence.CascadeType.ALL)
 	@JoinColumn(name="manager_user_corporate_id")
-	private UserCorporate userCorporate;
+	private UserCorporate userCorporateManager;
 
 	//bi-directional many-to-one association to UserCorporate
-	@OneToMany(mappedBy="userCorporate")
+	@OneToMany(mappedBy="userCorporateManager")
 	private List<UserCorporate> userCorporates;
 
 	public UserCorporate() {
@@ -194,12 +195,12 @@ public class UserCorporate implements Serializable {
 		this.workPhone = workPhone;
 	}
 
-	public UserCorporate getUserCorporate() {
-		return this.userCorporate;
+	public UserCorporate getUserCorporateManager() {
+		return this.userCorporateManager;
 	}
 
-	public void setUserCorporate(UserCorporate userCorporate) {
-		this.userCorporate = userCorporate;
+	public void setUserCorporateManager(UserCorporate userCorporate) {
+		this.userCorporateManager = userCorporate;
 	}
 
 	public List<UserCorporate> getUserCorporates() {
@@ -212,14 +213,14 @@ public class UserCorporate implements Serializable {
 
 	public UserCorporate addUserCorporate(UserCorporate userCorporate) {
 		getUserCorporates().add(userCorporate);
-		userCorporate.setUserCorporate(this);
+		userCorporate.setUserCorporateManager(this);
 
 		return userCorporate;
 	}
 
 	public UserCorporate removeUserCorporate(UserCorporate userCorporate) {
 		getUserCorporates().remove(userCorporate);
-		userCorporate.setUserCorporate(null);
+		userCorporate.setUserCorporateManager(null);
 
 		return userCorporate;
 	}
