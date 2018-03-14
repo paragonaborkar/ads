@@ -53,18 +53,19 @@ public class QtreeController {
 		for(Activity activity : activityList) {
 			// Activity to Qtree are 1:1
 			Qtree qt = activity.getQtree();
+			
 			System.out.println("qt:"+qt.getQtreeName());
 //			qto.setQtree(qt);
 			
-	/*		// 1 or more Shares for 1 Qtree
+			// 1 or more Shares for 1 Qtree
 			List<Share> shareList = qt.getShares();
 			shareCount = shareCount + shareList.size();
 			for(Share share : shareList) {
 				// Each share has 1 Host (Many shares can be on 1 host)
 				Host host = share.getHost();
-				qto.setHost(host);
+//				qto.setHost(host);
 				hostCount++;
-			}*/
+			}
 			
 		}
 		

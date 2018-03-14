@@ -77,9 +77,9 @@ public class QtreeOwner {
 		this.qtree = qtree;
 	}
 	
-	public Host getHost() {
-		return host;
-	}
+//	public Host getHost() {
+//		return host;
+//	}
 
 	public void setHost(Host host) {
 		this.host = host;
