@@ -13,6 +13,9 @@
 				{
 					"name": "Step 1: Request API Token",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -70,19 +73,121 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoidGFsZW5kIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTUxNjQyNDg0OCwiYXV0aG9yaXRpZXMiOlsiQ0xJRU5UIl0sImp0aSI6IjcyZTExODNmLTU3MzYtNDUzMy1hMDExLThiOTNhNThhOTgwMiIsImNsaWVudF9pZCI6InRlc3Rqd3RjbGllbnRpZCJ9.90hWrkIyUD-InSEfaZehCXr8uI1kHIBYqsI0oGCyWEI"
+								"value": "{{apiToken}}"
 							}
 						],
 						"body": {},
 						"url": {
-							"raw": "http://dv2-ls-cts-1:9080/userNatives",
-							"protocol": "http",
+							"raw": "{{url}}",
 							"host": [
-								"dv2-ls-cts-1"
+								"{{url}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "SAML Meta-data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/spring-security-saml2-sample/saml/metadata",
+							"host": [
+								"{{url}}"
 							],
-							"port": "9080",
 							"path": [
-								"userNatives"
+								"spring-security-saml2-sample",
+								"saml",
+								"metadata"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "REST End Point Profile",
+			"description": "",
+			"item": [
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"profile"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile of a Resource",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/profile/emailTemplates",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"profile",
+								"emailTemplates"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "JSON Schema",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/schema+json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/profile/nasVolumes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"profile",
+								"nasVolumes"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Base App URL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
 							]
 						},
 						"description": ""
@@ -135,7 +240,7 @@
 					"response": []
 				},
 				{
-					"name": "Pending - Create Activity",
+					"name": "Create Activity",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -160,6 +265,33 @@
 						"description": ""
 					},
 					"response": []
+				},
+				{
+					"name": "Populate Activity",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"willDelete\": 0,\n    \"willMigrate\": 1,\n    \"migrateWeek\": \"2018-01-19\",\n    \"migrateDay\": 2,\n    \"callMe\": 1,\n    \"bestNumber\": null,\n    \"archiveCandidate\": 0,\n    \"isLatest\": 0,\n    \"adminOverride\": 0,\n    \"mailCount\": 0,\n    \"migrationTimeId\": null\n}"
+						},
+						"url": {
+							"raw": "{{url}}/populateActivity",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"populateActivity"
+							]
+						},
+						"description": ""
+					},
+					"response": []
 				}
 			]
 		},
@@ -171,7 +303,12 @@
 					"name": "Get All",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/activityLobXRefs",
@@ -190,7 +327,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/activityLobXRefs/54-1",
@@ -238,7 +380,12 @@
 					"name": "Get All",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/activityMigrationKeyXRefs",
@@ -257,7 +404,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "http://localhost:8080/activityMigrationKeyXRefs/54-2",
@@ -269,6 +421,40 @@
 							"path": [
 								"activityMigrationKeyXRefs",
 								"54-2"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get withActivityQtreeActivityResponse",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/activityMigrationKeyXRefs/54-2?projection=withActivityQtreeActivityResponse",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"activityMigrationKeyXRefs",
+								"54-2"
+							],
+							"query": [
+								{
+									"key": "projection",
+									"value": "withActivityQtreeActivityResponse",
+									"equals": true
+								}
 							]
 						},
 						"description": ""
@@ -307,7 +493,12 @@
 					"name": "Get All",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/activityPresumedLobXRefs",
@@ -326,7 +517,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/activityPresumedLobXRefs/54-1",
@@ -352,7 +548,12 @@
 					"name": "Get All",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/activityResponses",
@@ -375,6 +576,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
 							}
 						],
 						"body": {
@@ -398,16 +603,21 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
-							"raw": "{{url}}/activityResponses/4",
+							"raw": "{{url}}/activityResponses/5",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"activityResponses",
-								"4"
+								"5"
 							]
 						},
 						"description": ""
@@ -424,7 +634,12 @@
 					"name": "Get All",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/aggregates",
@@ -447,11 +662,15 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\t\t\t\t\n\t\t\t\t\"aggregateName\": \"test_aggregate_1\",\n                \"aggregateSizeGb\": 503981,\n                \"isHybrid\": 0,\n                \"aggregateType\": \"AGGREGATE\",\n                \"controllerId\": 1,\n                \"poolAllocatedCapacityGb\": 503981,\n                \"poolUsedCapacityGb\": 480501,\n                \"poolIopsCapability\": 510,\n                \"avgIops\": 4,\n                \"peakIops\": 5,\n                \"assignedIops\": 0,\n                \"assignedCapacityGb\": 0\n}                "
+							"raw": "{\"id\":\"503\",\"aggregateName\":\"aggr_64_01\",\"aggregateSizeGb\":\"70020.98\",\"aggregateType\":\"AGGREGATE\",\"isHybrid\":\"false\",\"controller\":\"http://localhost:8080//controllers/1\",\"poolAllocatedCapacityGb\":\"70021.0\",\"poolUsedCapacityGb\":\"46348.926\",\"poolIopsCapability\":\"8100\",\"avgIOpS\":\"1\",\"peakIops\":\"2\"}"
 						},
 						"url": {
 							"raw": "{{url}}/aggregates",
@@ -470,7 +689,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/aggregates/414",
@@ -496,7 +720,12 @@
 					"name": "Get All",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/aggregatePurposes",
@@ -519,6 +748,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
 							}
 						],
 						"body": {
@@ -542,7 +775,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/aggregatePurposes/606",
@@ -568,7 +806,12 @@
 					"name": "Get All",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/applications",
@@ -587,7 +830,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/applications/1",
@@ -611,6 +859,10 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
 							}
 						],
 						"body": {
@@ -640,7 +892,12 @@
 					"name": "Get All",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/applicationLobXRefs",
@@ -659,7 +916,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/applicationLobXRefs/1-1",
@@ -707,7 +969,12 @@
 					"name": "Get All",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/auditEvents",
@@ -726,7 +993,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/auditEvents/1",
@@ -752,7 +1024,12 @@
 					"name": "Get All",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/auditReasonCodes",
@@ -771,7 +1048,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/auditReasonCodes/1",
@@ -788,18 +1070,22 @@
 					"response": []
 				},
 				{
-					"name": "Pending - Create",
+					"name": "Create",
 					"request": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\t\"reason\": \"Postman - Test Create\",\n    \"auditEventId\": 272\n}   "
+							"raw": "{\t\"reason\": \"Postman - Test Create\",\n    \"auditEventId\": 1\n}   "
 						},
 						"url": {
 							"raw": "{{url}}/auditReasonCodes",
@@ -846,7 +1132,12 @@
 					"name": "Get All",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/auditTrailApis",
@@ -865,7 +1156,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/auditTrailApis/1",
@@ -891,7 +1187,12 @@
 					"name": "Get All",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/auditTrailCorporateUsers",
@@ -910,7 +1211,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/auditTrailCorporateUsers/1",
@@ -936,7 +1242,12 @@
 					"name": "Get All",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/auditTrailNativeUsers",
@@ -955,7 +1266,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/auditTrailNativeUsers/1",
@@ -1756,7 +2072,7 @@
 					"response": []
 				},
 				{
-					"name": "Pending - Create",
+					"name": "Create",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1767,7 +2083,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\t\t\t\"id\": 6,\n                \"hostName\": null,\n                \"ipAddr\": \"p.o.s.t.t.e.s.t\",\n                \"hostOwnerUserCorporateId\": 0\n\n}"
+							"raw": "{\n\t\t\t\t\"id\": 6,\n                \"hostName\": \"p.o.s.t.e.s.t\",\n                \"ipAddr\": \"p.o.s.t.t.e.s.t\",\n                \"hostOwnerUserCorporateId\": 0\n\n}"
 						},
 						"url": {
 							"raw": "{{url}}/hosts",
@@ -2179,6 +2495,52 @@
 						"description": ""
 					},
 					"response": []
+				},
+				{
+					"name": "Get Activity Migration X Refs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/migrationKeys/6/activityMigrationKeyXRefs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"migrationKeys",
+								"6",
+								"activityMigrationKeyXRefs"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Activity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/activityMigrationKeyXRefs/1-6/activity",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"activityMigrationKeyXRefs",
+								"1-6",
+								"activity"
+							]
+						},
+						"description": ""
+					},
+					"response": []
 				}
 			]
 		},
@@ -2209,7 +2571,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/migrationTimes/1",
@@ -2406,7 +2773,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/mstEmailTypes/1",
@@ -2515,6 +2887,56 @@
 							],
 							"path": [
 								"nasVolumes"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Controller & Data Center W/O Projection",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/nasVolumes/search/findControllerAndDataCenter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"nasVolumes",
+								"search",
+								"findControllerAndDataCenter"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Controller & DC with Projection",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/nasVolumes/1752?projection=withControllerWithDataCenter",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"nasVolumes",
+								"1752"
+							],
+							"query": [
+								{
+									"key": "projection",
+									"value": "withControllerWithDataCenter",
+									"equals": true
+								}
 							]
 						},
 						"description": ""
@@ -2659,6 +3081,35 @@
 							"path": [
 								"preferenceDetails",
 								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get with Projection - lessAttributes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/preferenceDetails/1?projection=lessAttributes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"preferenceDetails",
+								"1"
+							],
+							"query": [
+								{
+									"key": "projection",
+									"value": "lessAttributes",
+									"equals": true
+								}
 							]
 						},
 						"description": ""
@@ -2819,7 +3270,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/schedules/54",
@@ -3291,7 +3747,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/sysConfigPropertyTypes/1",
@@ -3336,7 +3797,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/userApis/1",
@@ -3346,6 +3812,94 @@
 							"path": [
 								"userApis",
 								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientId\": \"testClient\",\n    \"clientSecret\": \"secret\",\n    \"enabled\": true,\n    \"purpose\": \"Testing\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/userApis",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userApis"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientId\": \"testClient4\",\n    \"clientSecret\": \"secret\",\n    \"enabled\": false,\n    \"purpose\": \"Testing Audit Update\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/userApis/7",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userApis",
+								"7"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/userApis/7",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userApis",
+								"7"
 							]
 						},
 						"description": ""
@@ -3426,7 +3980,12 @@
 					"name": "Get One",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
 						"body": {},
 						"url": {
 							"raw": "{{url}}/userNatives/1",
@@ -3436,6 +3995,61 @@
 							"path": [
 								"userNatives",
 								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n                \"userName\": \"a1-3\",\r\n                \"enabled\": true,\r\n                \"firstName\": \"a1-3\",\r\n                \"lastName\": \"a1-3\",\r\n                \"userRole\": \"http://localhost:8080/userRoles/1\",\r\n                \"password\": \"123\",\r\n                \"email\": \"a1-3@postman.com\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/userNatives",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userNatives"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Put",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test3@postman.com\",\n    \"_links\": {\n        \"self\": {\n            \"href\": \"http://localhost:8080/userNatives/43\"\n        },\n        \"userNative\": {\n            \"href\": \"http://localhost:8080/userNatives/43{?projection}\",\n            \"templated\": true\n        },\n        \"cutovers\": {\n            \"href\": \"http://localhost:8080/userNatives/43/cutovers\"\n        },\n        \"userRole\": {\n            \"href\": \"http://localhost:8080/userNatives/43/userRole\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{url}}/userNatives/43",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"userNatives",
+								"43"
 							]
 						},
 						"description": ""
@@ -3625,8 +4239,182 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Send Simple Email",
+			"description": "",
+			"item": [
+				{
+					"name": "Send Newsletter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/sendTemplateMail?emailTo=aborkar@consultparagon.com&subject=Test Mail&templateName=newsletter",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sendTemplateMail"
+							],
+							"query": [
+								{
+									"key": "emailTo",
+									"value": "aborkar@consultparagon.com",
+									"equals": true
+								},
+								{
+									"key": "subject",
+									"value": "Test Mail",
+									"equals": true
+								},
+								{
+									"key": "templateName",
+									"value": "newsletter",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Send Simple Mail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/sendSimpleMail?emailTo=aborkar@consultparagon.com&subject=Test Mail&body=Yohooo! You have a mail",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sendSimpleMail"
+							],
+							"query": [
+								{
+									"key": "emailTo",
+									"value": "aborkar@consultparagon.com",
+									"equals": true
+								},
+								{
+									"key": "subject",
+									"value": "Test Mail",
+									"equals": true
+								},
+								{
+									"key": "body",
+									"value": "Yohooo! You have a mail",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Controller Release",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/controllerReleases",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"controllerReleases"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Starts With",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/controllerReleases/search/controllerNameStartsWith?startsWith=f",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"controllerReleases",
+								"search",
+								"controllerNameStartsWith"
+							],
+							"query": [
+								{
+									"key": "startsWith",
+									"value": "f",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post To Remote Log",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"msg\": \"Sending some bull\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}//remoteLog",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"",
+						"remoteLog"
+					]
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "accessToken",
+				"value": "{{apiToken}}",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
