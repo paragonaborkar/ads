@@ -46,14 +46,14 @@ export class ManualFunctionComponent implements OnInit {
       // _formData.append("Name", this.fileName);
       _formData.append("file", this.myFile);
 
-      this.http.post("http://localhost:8080/talendJobs/" + this.jobName, _formData, { headers: headers, reportProgress: true })
+      this.http.post("http://localhost:8080/" + this.jobName, _formData, { headers: headers, reportProgress: true })
         .map((response) => response)
         .subscribe((data) => {
           // this.message = data;
           console.log(data);
         });
     } else {
-      this.http.post("http://localhost:8080/talendJobs/" + this.jobName, null)
+      this.http.post("http://localhost:8080/" + this.jobName, null)
         .map((response) => response)
         .subscribe((response) => {
           // this.message = data;
