@@ -15,9 +15,11 @@ import com.netapp.ads.models.Activity;
 import com.netapp.ads.models.Aggregate;
 import com.netapp.ads.models.Controller;
 import com.netapp.ads.models.DataCenter;
+import com.netapp.ads.models.Host;
 import com.netapp.ads.models.NasVolume;
 import com.netapp.ads.models.PreferenceDetail;
 import com.netapp.ads.models.Qtree;
+import com.netapp.ads.models.Share;
 
 @Projection(name="activityWithQtree", types = { Activity.class})
 public interface ActivityProjection {
@@ -65,5 +67,12 @@ public interface ActivityProjection {
 	//Projection specifically created for this method which gets Controller as well as Data Center for a NAS Volume
 //	@Value("#{target.getController().getDataCenter()}")
 //	DataCenter getDataCenter();
+	
+	@Value("#{target.getQtree().getShares()}")
+	List<Share> getShares();
+	
+	// This doesn't work:
+//	@Value("#{target.getQtree().getShares().getHost()}")
+//	Host getHost();
 	
 }
