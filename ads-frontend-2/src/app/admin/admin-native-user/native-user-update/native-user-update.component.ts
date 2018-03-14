@@ -51,7 +51,7 @@ export class NativeUserUpdateComponent implements OnInit {
         this.User.userRole =  this.userRole._links.self.href;
 
         delete this.User._links;
-        delete this.User.userRole;
+        // delete this.User.userRole;
         delete this.User.createTime;
         delete this.User.updateTime;
 

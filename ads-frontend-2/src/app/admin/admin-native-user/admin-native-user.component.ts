@@ -87,10 +87,10 @@ export class AdminNativeUserComponent implements OnInit {
         this.page.pageNumber = this.page.number;
 
         console.log("usersNativeResponse._embedded.userNatives", usersNativeResponse._embedded.userNatives);
-
-        if (usersNativeResponse.page.totalElements > 0) {
-          this.rows = this.adsHelper.ungroupJson(usersNativeResponse._embedded.userNatives, "userRole", ["createTime", "updateTime"]);
-        }
+        this.rows = usersNativeResponse._embedded.userNatives;
+        // if (usersNativeResponse.page.totalElements > 0) {
+        //   this.rows = this.adsHelper.ungroupJson(usersNativeResponse._embedded.userNatives, "userRole", ["createTime", "updateTime"]);
+        // }
         console.log("******************");
         console.log(this.rows);
         console.log(this.page);
@@ -109,7 +109,8 @@ export class AdminNativeUserComponent implements OnInit {
 
   showUpdateModal(row) {
 
-    console.log("rowrowrowrow:", row);
+    console.log("rowrowrowrow:");
+    console.log( row);
     console.log(row._links.self.href);
     this.User = row;
     this.isUpdateModal = true;
