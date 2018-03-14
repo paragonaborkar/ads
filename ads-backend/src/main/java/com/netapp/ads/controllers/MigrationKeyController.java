@@ -59,9 +59,36 @@ public class MigrationKeyController {
  	update controller_release set processed = 0;
 	update qtree set justification = NULL, disposition = NULL where justification is not null;
 	delete from activity where create_time > '2018-01-01';
-*/
 	
-	@RequestMapping(value = "/populateActivity", method = RequestMethod.GET)
+	AND/OR.....
+	SET FOREIGN_KEY_CHECKS=0;
+	update controller_release set processed = 0;
+	update qtree set justification = NULL, disposition = NULL where justification is not null;
+	delete from activity;
+	delete from activity_response;
+	delete from user_corporate;
+	SET FOREIGN_KEY_CHECKS=1;
+	
+	
+	INSERT INTO `ads_dev`.`share` (`id`, `qtree_id`, `share_name`, `host_id`) VALUES ('1', '3420', '/test/123', '1');
+	
+	UPDATE `ads_dev`.`host` SET `ip_addr`='10.216.49.26' WHERE  `id`=1;
+	
+	INSERT INTO `ads_dev`.`migration_key` (`migration_key`, `user_corporate_id`, `create_time`) VALUES ('ABC', '9', '2018-03-14 12:31:18');
+	
+	INSERT INTO `ads_dev`.`activity_migration_key_x_ref` (`activity_id`) VALUES ('222');
+	*/
+	
+	
+	/*************
+	 * 
+	 * This controller will populate the Activity table based on:
+	 * 1. The list of unprocessed controllers in the controller_release table
+	 * or 
+	 * 2. TODO The metered batch release process? IS THIS GOING TO BE A SEPERATE CONTROLLER? OR A MODE-STYLE FLAG?
+	 * @return 
+	 */
+	@RequestMapping(value = "/populateActivity", method = RequestMethod.POST)
 	public Integer populateActivities() {
 		log.debug("populateActivities: CALLED"); 
 		List<ControllerRelease> controllerReleases = controllerReleaseRepository.findByProcessedFalse();
@@ -80,7 +107,7 @@ public class MigrationKeyController {
 		return 0;
 	}
 	
-	@RequestMapping(value = "/identifyOwners", method = RequestMethod.GET)
+	@RequestMapping(value = "/identifyOwners", method = RequestMethod.POST)
 	public Integer identifyOwners() {
 		log.debug("identifyOwners: [ENTER]");
 		ownerIdentificationService.identifyOwner();
