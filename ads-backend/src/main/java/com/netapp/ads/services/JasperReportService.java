@@ -6,8 +6,8 @@ import com.netapp.ads.util.Report;
 
 public interface JasperReportService {
 
-	Report generateReport(Integer pageNo, String reportName);
+	Report generateReport(Integer pageNo, String reportName, String adsModule);
 
-	void downloadExcelReport(String reportName, HttpServletResponse response);
+	void downloadExcelReport(String reportName, String adsModule, HttpServletResponse response);
 
 }

@@ -1808,9 +1808,11 @@ CREATE TABLE `ads_report` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `report_name` varchar(45) NOT NULL,
   `report_title` varchar(45) NOT NULL,
+  `report_description` varchar(1000) NOT NULL,
   `ads_module` varchar(45) NOT NULL,
   `view_or_table_name` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `report_name_and_ads_module` (`report_name`,`ads_module`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 
@@ -1828,10 +1830,7 @@ CREATE TABLE `ads_report_detail` (
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 
-CREATE 
-    ALGORITHM = UNDEFINED 
-    SQL SECURITY DEFINER
-VIEW `call_me_report` AS
+CREATE VIEW `call_me_report` AS
     SELECT 
         `ar`.`id` AS `id`,
         `ar`.`activity_id` AS `activity_id`,
@@ -1857,11 +1856,9 @@ VIEW `call_me_report` AS
 			
 			
 			
-CREATE 
-    ALGORITHM = UNDEFINED  
-    SQL SECURITY DEFINER
-VIEW `unknown_owner_report` AS
+CREATE VIEW `unknown_owner_report` AS
     SELECT 
+        `a`.`id` AS `id`,
         `qt`.`qtree_name` AS `qtree_name`,
         `nv`.`volume_name` AS `volume_name`,
         `a`.`vserver` AS `vserver`,
@@ -1886,18 +1883,13 @@ VIEW `unknown_owner_report` AS
         `a`.`update_time` AS `update_time`
     FROM
         ((`activity` `a`
-        JOIN `qtree` `qt`)
-        JOIN `nas_volume` `nv`)
+        LEFT JOIN `qtree` `qt` ON ((`a`.`qtree_id` = `qt`.`id`)))
+        LEFT JOIN `nas_volume` `nv` ON ((`qt`.`nas_volume_id` = `nv`.`id`)))
     WHERE
-        ((`a`.`qtree_id` = `qt`.`id`)
-            AND (`qt`.`nas_volume_id` = `nv`.`id`)
-            AND (`a`.`disposition` IN ('NFS-Orphan' , 'NFS-Orphan w/CIFS')));
-			
-			
+        (`a`.`disposition` IN ('NFS-Orphan' , 'NFS-Orphan w/CIFS'));
+            
 			
 CREATE 
-    ALGORITHM = UNDEFINED 
-    SQL SECURITY DEFINER
 VIEW `user_native_report` AS
     SELECT 
         `un`.`id` AS `id`,
@@ -1915,11 +1907,9 @@ VIEW `user_native_report` AS
 		
 		
 		
-CREATE 
-    ALGORITHM = UNDEFINED  
-    SQL SECURITY DEFINER
-VIEW `volume_decommission_report` AS
+CREATE VIEW `volume_decommission_report` AS
     SELECT 
+        `a`.`id` AS `id`,
         `qt`.`qtree_name` AS `qtree_name`,
         `nv`.`volume_name` AS `volume_name`,
         `a`.`vserver` AS `vserver`,
@@ -1944,12 +1934,90 @@ VIEW `volume_decommission_report` AS
         `a`.`update_time` AS `update_time`
     FROM
         ((`activity` `a`
-        JOIN `qtree` `qt`)
-        JOIN `nas_volume` `nv`)
+        LEFT JOIN `qtree` `qt` ON ((`a`.`qtree_id` = `qt`.`id`)))
+        LEFT JOIN `nas_volume` `nv` ON ((`qt`.`nas_volume_id` = `nv`.`id`)))
     WHERE
-        ((`a`.`qtree_id` = `qt`.`id`)
-            AND (`qt`.`nas_volume_id` = `nv`.`id`)
-            AND (`a`.`archive_candidate` = 1));
+        (`a`.`archive_candidate` = 1);
+            
+            
+CREATE VIEW `multi_owner_report` AS
+    SELECT 
+        `a`.`id` AS `id`,
+        `qt`.`qtree_name` AS `qtree_name`,
+        `nv`.`volume_name` AS `volume_name`,
+        `a`.`vserver` AS `vserver`,
+        `a`.`disposition` AS `disposition`,
+        `a`.`mailing_date` AS `mailing_date`,
+        `a`.`will_delete` AS `will_delete`,
+        `a`.`delete_date` AS `delete_date`,
+        `a`.`will_migrate` AS `will_migrate`,
+        `a`.`migrate_week` AS `migrate_week`,
+        `a`.`migrate_day` AS `migrate_day`,
+        `a`.`call_me` AS `call_me`,
+        `a`.`best_number` AS `best_number`,
+        `a`.`call_reason` AS `call_reason`,
+        `a`.`archive_candidate` AS `archive_candidate`,
+        `a`.`is_latest` AS `is_latest`,
+        `a`.`admin_override` AS `admin_override`,
+        `a`.`note` AS `note`,
+        `a`.`app_name_list` AS `app_name_list`,
+        `a`.`mail_count` AS `mail_count`,
+        `a`.`migration_time_id` AS `migration_time_id`,
+        `a`.`create_time` AS `create_time`,
+        `a`.`update_time` AS `update_time`
+    FROM
+        (((`activity` `a`
+        JOIN `activity_response` `ar` ON ((`ar`.`activity_id` = `a`.`id`)))
+        LEFT JOIN `qtree` `qt` ON ((`a`.`qtree_id` = `qt`.`id`)))
+        LEFT JOIN `nas_volume` `nv` ON ((`qt`.`nas_volume_id` = `nv`.`id`)))
+    WHERE
+        ((SELECT SUM((`ar`.`is_presumed` + `ar`.`is_owner`))) > 1);
+        
+        
+CREATE VIEW `activity_report` AS
+    SELECT 
+        `a`.`id` AS `id`,
+        `qt`.`qtree_name` AS `qtree_name`,
+        `nv`.`volume_name` AS `volume_name`,
+        `a`.`vserver` AS `vserver`,
+        `a`.`disposition` AS `disposition`,
+        `a`.`mailing_date` AS `mailing_date`,
+        `a`.`will_delete` AS `will_delete`,
+        `a`.`delete_date` AS `delete_date`,
+        `a`.`will_migrate` AS `will_migrate`,
+        `a`.`migrate_week` AS `migrate_week`,
+        `a`.`migrate_day` AS `migrate_day`,
+        `a`.`call_me` AS `call_me`,
+        `a`.`best_number` AS `best_number`,
+        `a`.`call_reason` AS `call_reason`,
+        `a`.`archive_candidate` AS `archive_candidate`,
+        `a`.`is_latest` AS `is_latest`,
+        `a`.`admin_override` AS `admin_override`,
+        `a`.`note` AS `note`,
+        `a`.`app_name_list` AS `app_name_list`,
+        `a`.`mail_count` AS `mail_count`,
+        `a`.`migration_time_id` AS `migration_time_id`,
+        `a`.`create_time` AS `create_time`,
+        `a`.`update_time` AS `update_time`
+    FROM
+        ((`activity` `a`
+        LEFT JOIN `qtree` `qt` ON ((`a`.`qtree_id` = `qt`.`id`)))
+        LEFT JOIN `nas_volume` `nv` ON ((`qt`.`nas_volume_id` = `nv`.`id`)));
+        
+
+CREATE VIEW `application_detail_report` AS
+    SELECT 
+        `a`.`id` AS `id`,
+        `a`.`application_code` AS `application_code`,
+        `a`.`application_name` AS `application_name`,
+        `a`.`archtype` AS `archtype`,
+        `uc`.`user_name` AS `user_name`,
+        `a`.`information_owner` AS `information_owner`,
+        `a`.`create_time` AS `create_time`,
+        `a`.`update_time` AS `update_time`
+    FROM
+        (`application` `a`
+        LEFT JOIN `user_corporate` `uc` ON ((`a`.`owner_user_corporate_id` = `uc`.`id`)));
 
 
 --

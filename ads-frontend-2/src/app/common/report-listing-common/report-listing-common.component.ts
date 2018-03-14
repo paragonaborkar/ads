@@ -148,8 +148,8 @@ export class ReportListingCommonComponent implements OnInit {
     this.openJasperReport(pageNum, this.reportName, this.moduleName);
   }
 
-  downloadJasperReport(reportName, reportTitle, query, module) {
+  downloadJasperReport(reportName) {
     reportName = this.reportName;
-    this.reportCommonService.downloadJasperReport(reportName);
+    this.reportCommonService.downloadJasperReport(reportName,this.moduleName);
   }
 }

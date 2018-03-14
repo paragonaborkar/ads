@@ -5,7 +5,7 @@
       <div class="card card-with-link w-25 col-md-3 " *ngFor="let report of reportRow; let index2 = index" (click)="openJasperReport(1,report.reportName, report.reportTitle)">
         <div class="card-body">
           <h5 class="card-title">{{report.reportTitle}}</h5>
-          <p class="card-text">TODO: We need to add report_description in the database.</p>
+          <p class="card-text">{{report.reportDescription}}</p>
           <p class="card-text">
             <small class="text-muted">Last updated 3 mins ago</small>
           </p>
