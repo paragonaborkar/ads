@@ -17,11 +17,11 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
    
     //FIXME: Need to check for expired and redirect!
-    // if (this._sessionHelper.isAuthenticated() && this._sessionHelper.isTokenExpired()) {
+    if (this._sessionHelper.isAuthenticated() && this._sessionHelper.isTokenExpired()) {
     //   this._sessionHelper.removeAll();
-    //   console.log("Expired");
+      console.log("FIXME: token is always Expired");
     //   this.router.navigate(['login'], {queryParams: {redirectTo: state.url}});
-
+    }
     // } else 
     
     if (this._sessionHelper.isAuthenticated()) { 
