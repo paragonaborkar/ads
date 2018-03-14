@@ -70,11 +70,11 @@
 
 <app-data-table-col-templates></app-data-table-col-templates>
 
+
+
 <ng-template #actionTmpl let-column="column" let-row="row">
-  <button class="btn btn-sm btn-primary" (click)="showScheduleModal(row, 'Schedule')">
-    <i class="fa fa-check"></i> one
-  </button>
-  <button class="btn btn-sm btn-warning" md-icon-button (click)="showScheduleModal(row, 'Reschedule')">
-    <i class="fa fa-calendar"></i> two
+  <button class="btn btn-sm btn-warning" (click)="showDeleteModal(row)">
+    <i class="fa fa-trash"></i> Delete
   </button>
 </ng-template>
+

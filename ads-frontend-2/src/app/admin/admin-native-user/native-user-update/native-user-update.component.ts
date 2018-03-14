@@ -28,7 +28,7 @@ export class NativeUserUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.User = this.inputUser;
-    console.log(this.User);
+    console.log("this.User", this.User);
 
     this.userSelfLink = this.User._links.self.href;
     console.log(this.userSelfLink);
@@ -48,7 +48,7 @@ export class NativeUserUpdateComponent implements OnInit {
         console.log(userRole);
         this.userRole = userRole;
 
-        this.User.userRoleId =  this.userRole._links.self.href;
+        this.User.userRole =  this.userRole._links.self.href;
 
         delete this.User._links;
         delete this.User.userRole;
