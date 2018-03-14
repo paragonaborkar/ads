@@ -82,6 +82,7 @@ export class NativeUserCreateComponent implements OnInit {
       response => {
         console.log(response);
         console.log("Added in modal");
+        this.user = {};
         this.saved.emit(this.user);
       },  err => {
         // Get the ADS configured error message to display.
@@ -91,6 +92,7 @@ export class NativeUserCreateComponent implements OnInit {
   }
 
   close() {
+    this.user = {};
     console.log("Calling close");
     this.cancel.emit();
   }
