@@ -78,3 +78,6 @@
   </button>
 </ng-template>
 
+<app-controller-release-delete class="modal fade" bsModal #deleteModal="bs-modal" *ngIf="isDeleteModal" [config]="{ show: true }" [controllerRelease]="controllerRelease"
+  (delete)="onHide('delete')" (cancel)="onHide('delete')"></app-controller-release-delete>
+

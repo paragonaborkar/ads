@@ -28,6 +28,10 @@ export class ControllerReleaseComponent implements OnInit {
   page = new Page();
 
   controllerProcessed = false;
+  controllerRelease = {};
+
+  public isDeleteModal = false;
+  public isPropPreferenceModal = false;
 
   constructor(private contrllerReleaseService: ControllerReleaseService, private applicationConfigService: ApplicationConfigService,  private errorService: AdsErrorService) {
     this.page.number = 1;
@@ -43,13 +47,13 @@ export class ControllerReleaseComponent implements OnInit {
     this.columnTemplates = this.dataTableColsTemplate.getTemplates();
     this.columnTemplates["actionTmpl"] =this.actionTmpl;
 
-    this.setPage({ offset: 0 });
+    this.setPage({ offset: 0 }, '');
     this.applyPreferences();
   }
 
 
 
-  setPage(pageInfo) {
+  setPage(pageInfo, filter) {
     console.log("Loading page...");
     this.page.number = pageInfo.offset;
     this.page.pageNumber = pageInfo.offset;
@@ -58,7 +62,7 @@ export class ControllerReleaseComponent implements OnInit {
     // This method is to get all the values from user_native table
     this.contrllerReleaseService.getControllerReleasesByProcessed(this.page, this.controllerProcessed).subscribe(
       data => {
-        this.setupPaging(data, pageInfo);
+        this.setupPaging(data, pageInfo, filter);
       }, err => {
         // Get the ADS configured error message to display.
         this.errorMessage = this.errorService.processError(err, "getControllerReleaseList", "GET");
@@ -66,7 +70,7 @@ export class ControllerReleaseComponent implements OnInit {
  
   }
 
-  setupPaging(data, pageInfo) {
+  setupPaging(data, pageInfo, filter) {
     console.log(data);
     this.page = data.page;
     this.page.pageNumber = this.page.number;
@@ -82,7 +86,7 @@ export class ControllerReleaseComponent implements OnInit {
     console.log("****");
     if (this.page.number > 0 && this.rows.length == 0) {
       pageInfo.offset = pageInfo.offset - 1;
-      this.setPage(pageInfo);
+      this.setPage(pageInfo, filter);
     }
   }
 
@@ -97,12 +101,24 @@ export class ControllerReleaseComponent implements OnInit {
 
   pagingUpdated() {
     // Need to get the filter value!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    this.setPage(this.page);
+    this.setPage(this.page, '');
   }
 
   showDeleteModal(row) {
     // console.log(row._links.self.href);
-    // this.controllerRelease = row;
-    // this.isDeleteModal = true;
+    this.controllerRelease = row;
+    this.isDeleteModal = true;
+  }
+
+  // This method is to hide the modals  
+  onHide(modalToHide): void {
+    if (modalToHide === 'delete') {
+      this.isDeleteModal = false;
+      this.setPage({ offset: this.page.pageNumber }, '');
+    } else if (modalToHide === 'propPreferenceModal') {
+      this.isPropPreferenceModal = false;
+      this.columns = [];    // This makes the columns display refresh after the user updates it.
+      this.applyPreferences();
+    }
   }
 }
