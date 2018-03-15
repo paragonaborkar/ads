@@ -12,6 +12,13 @@
     <contextParameter comment="" name="JOB_STATUS" prompt="JOB_STATUS?" promptNeeded="false" type="id_String" value=""/>
     <contextParameter comment="" name="JOB_ID" prompt="JOB_ID?" promptNeeded="false" type="id_String" value=""/>
     <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" type="id_String" value=""/>
+    <contextParameter comment="" name="ADS_EMAIL_TO" prompt="ADS_EMAIL_TO?" promptNeeded="false" type="id_String" value=""/>
+    <contextParameter comment="" name="ADS_EMAIL_FROM" prompt="ADS_EMAIL_FROM?" promptNeeded="false" type="id_String" value=""/>
+    <contextParameter comment="" name="ADS_EMAIL_SMTP_NAME" prompt="ADS_EMAIL_SMTP_NAME?" promptNeeded="false" type="id_String" value=""/>
+    <contextParameter comment="" name="ADS_EMAIL_SMTP_PORT" prompt="ADS_EMAIL_SMTP_PORT?" promptNeeded="false" type="id_String" value=""/>
+    <contextParameter comment="" name="ADS_EMAIL_AUTHENTICATION_USER" prompt="ADS_EMAIL_AUTHENTICATION_USER?" promptNeeded="false" type="id_String" value=""/>
+    <contextParameter comment="" name="ADS_EMAIL_AUTHENTICATION_PASSWORD" prompt="ADS_EMAIL_AUTHENTICATION_PASSWORD?" promptNeeded="false" type="id_String" value=""/>
+    <contextParameter comment="" name="REST_URL_BASE" prompt="REST_URL_BASE?" promptNeeded="false" type="id_String" value=""/>
   </context>
   <parameters>
     <elementParameter field="TEXT" name="SCREEN_OFFSET_X" value="0" show="false"/>
@@ -142,6 +149,18 @@
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.JOB_NAME"/>
       <elementValue elementRef="PARAM_NAME_COLUMN" value="SRC_LOAD_SHEET"/>
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.SRC_LOAD_SHEET"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_TO"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_TO"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_FROM"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_FROM"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_SMTP_NAME"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_SMTP_NAME"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_SMTP_PORT"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_SMTP_PORT"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_AUTHENTICATION_USER"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_AUTHENTICATION_USER"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_AUTHENTICATION_PASSWORD"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_AUTHENTICATION_PASSWORD"/>
     </elementParameter>
     <elementParameter field="CHECK" name="PROPAGATE_CHILD_RESULT" value="false"/>
     <elementParameter field="CHECK" name="PRINT_PARAMETER" value="false"/>
@@ -196,6 +215,8 @@
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.JOB_ID"/>
       <elementValue elementRef="PARAM_NAME_COLUMN" value="OAUTH_BEARER_TOKEN"/>
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.OAUTH_BEARER_TOKEN"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="REST_URL_BASE"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.REST_URL_BASE"/>
     </elementParameter>
     <elementParameter field="CHECK" name="PROPAGATE_CHILD_RESULT" value="false"/>
     <elementParameter field="CHECK" name="PRINT_PARAMETER" value="false"/>
