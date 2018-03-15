@@ -82,7 +82,7 @@ import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native
 
 import { OwnerComponent } from './discover/owner/owner.component';
 import { OwnerNotFoundComponent } from './discover/owner-not-found/owner-not-found.component';
-import { ScheduleComponent } from './discover/owner/schedule/schedule.component';
+import { OwnerResponseComponent } from './discover/owner/owner-response/owner-response.component';
 import { ReportListingDisComponent } from './discover/report-listing-dis/report-listing-dis.component';
 
 import { ReportListingConnComponent } from './connections/report-listing-conn/report-listing-conn.component';
@@ -144,7 +144,7 @@ import { ManualFunctionComponent } from './common/manual-function/manual-functio
 
     OwnerComponent,
     OwnerNotFoundComponent,
-    ScheduleComponent,
+    OwnerResponseComponent,
     ReportListingDisComponent,
     ReportListingConnComponent,
     AppPropsComponent,

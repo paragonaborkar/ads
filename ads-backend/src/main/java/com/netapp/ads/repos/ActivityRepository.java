@@ -1,6 +1,7 @@
 package com.netapp.ads.repos;
 
 import com.netapp.ads.models.Activity;
+import com.netapp.ads.models.projections.ActivityWithQtree;
 
 import java.util.List;
 
@@ -24,6 +25,8 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>, Jp
 	//Select a From ActivityEntity a where a.disposition=:disposition AND a.unidentifiedReason IS NULL
 	List<Activity> findByDisposition(@Param("disposition") String disposition);
 	
+	Activity findById(@Param("id") Integer id);
+	
 
 	/*	SIMLIAR TO: 
  	select * from activity
@@ -35,6 +38,16 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>, Jp
 	AND migration_key.user_corporate_id = 9 
 	AND activity.disposition = 'DiscoverOwner'*/
     @Query("Select a From Activity a LEFT JOIN a.activityMigrationKeyXRefs x LEFT JOIN x.migrationKey m WHERE m.migrationKey=:migKey AND m.userCorporateId=:corpUserId AND a.disposition=:disposition")
-    List<Activity> getActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId, @Param("disposition") String disposition);
+//    List<Activity> getActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId, @Param("disposition") String disposition);
+    Page getActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId, @Param("disposition") String disposition, Pageable p);
+    // a.adminOverride as getAdminOverride, a.qtree as qtree
+
+	
+	//    @Query("Select a.adminOverride as getAdminOverride From Activity a LEFT JOIN a.activityMigrationKeyXRefs x LEFT JOIN x.migrationKey m WHERE m.migrationKey=:migKey AND m.userCorporateId=:corpUserId AND a.disposition=:disposition")
+//    List<ActivityProjection> getActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId, @Param("disposition") String disposition);
+    
+    
+//    @Query(value = "Select a.id From Activity a LEFT JOIN a.activityMigrationKeyXRefs x LEFT JOIN x.migrationKey m WHERE m.migrationKey=:migKey AND m.userCorporateId=:corpUserId AND a.disposition=:disposition")
+//    public String[] getIdOfActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId, @Param("disposition") String disposition);
 
 }

@@ -4,6 +4,9 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 @Component({
   selector: 'app-manual-function',
   templateUrl: './manual-function.component.html',
@@ -13,6 +16,7 @@ export class ManualFunctionComponent implements OnInit {
 
   fileName = "";
   myFile: File;
+  fileForUpload: File;
   @Input() displayJobName = "";
   @Input() jobName = "";
   @Input() fileUpload: boolean = false;
@@ -37,22 +41,42 @@ export class ManualFunctionComponent implements OnInit {
     console.log(files);
     this.fileName = files[0].name;
     this.myFile = files[0].nativeElement;
+    this.fileForUpload = files[0];
   }
 
-  onSubmit(): void {
-    if (this.fileUpload) {
-      let headers = new HttpHeaders({ 'Content-Type': "multipart/*" });
-      let _formData = new FormData();
-      // _formData.append("Name", this.fileName);
-      _formData.append("file", this.myFile);
+  onSubmit(manualFunctionForm): void {
 
-      this.http.post("http://localhost:8080/" + this.jobName, _formData, { headers: headers, reportProgress: true })
-        .map((response) => response)
-        .subscribe((data) => {
-          // this.message = data;
-          console.log(data);
+    console.log(this.fileForUpload);
+    if (this.fileUpload) {
+      // let headers = new HttpHeaders({ 'content-type': "application/x-www-form-urlencoded" });
+      // let headers = new HttpHeaders({ 'content-type': "multipart/*" });
+      let headers = new HttpHeaders({ 'AdsFile': "AdsFile-TOBEREMOVED" });
+      // let headers = new HttpHeaders();
+
+
+      this.postFile(this.fileForUpload).subscribe(data => {
+        // do something, if upload success
+        console.log("File upload success");
+        console.log(data);
+        }, error => {
+          console.log(error);
         });
+
+      // let _formData = new FormData();
+      // // _formData.append("Name", this.fileName);
+      // _formData.append("file", this.myFile);
+    
+      // console.log("_formData", _formData);
+
+
+      // this.http.post("http://localhost:8080/" + this.jobName, _formData, { headers: headers, reportProgress: true })
+      //   .map((response) => response)
+      //   .subscribe((data) => {
+      //     // this.message = data;
+      //     console.log(data);
+      //   });
     } else {
+      
       this.http.post("http://localhost:8080/" + this.jobName, null)
         .map((response) => response)
         .subscribe((response) => {
@@ -62,5 +86,17 @@ export class ManualFunctionComponent implements OnInit {
         });
     }
   }
+
+
+  postFile(fileToUpload: File): Observable<boolean> {
+    let headers = new HttpHeaders({ 'AdsFile': "AdsFile-TOBEREMOVED" });
+    const formData: FormData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+    
+    return this.http
+      .post("http://localhost:8080/" + this.jobName, formData, { headers: headers, reportProgress: true })
+      .map(() => { return true; });
+     
+}
 
 }

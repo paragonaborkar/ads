@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,9 +24,9 @@ import com.netapp.ads.converters.TalendConstants;
 public class TalendJobController {
 
 	String batchScriptsLoc = TalendConstants.BATCH_SCRIPTS_LOC;
-//, headers = ("content-type=multipart/form-data")
+	
 	@RequestMapping(value = "userRoles", method = RequestMethod.POST, headers = ("content-type=multipart/*"))
-	public String loadUserRoles(@RequestParam("file") MultipartFile inputFile) {
+	public @ResponseBody ResponseEntity<?>  loadUserRoles(@RequestParam("file") MultipartFile inputFile) {
 
 		System.out.println(inputFile.toString());
 		System.out.println(inputFile.getOriginalFilename());
@@ -36,11 +37,11 @@ public class TalendJobController {
 		System.out.println("batchScript**" + batchScript);
 
 		runADSJob(jobName, inputFile, batchScript);
-		return "Job Submitted Successfully";
+		return new ResponseEntity("Running Job.", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "userNatives", method = RequestMethod.POST, headers = ("content-type=multipart/*"))
-	public String loadUserNatives(@RequestParam("file") MultipartFile inputFile) {
+	public ResponseEntity<?> loadUserNatives(@RequestParam("file") MultipartFile inputFile) {
 
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_USER_NATIVES);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_USER_NATIVES);
@@ -48,11 +49,11 @@ public class TalendJobController {
 		System.out.println("batchScript**" + batchScript);
 
 		runADSJob(jobName, inputFile, batchScript);
-		return "Job Submitted Successfully";
+		return  new ResponseEntity("Running Job.", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "auditEvents", method = RequestMethod.POST, headers = ("content-type=multipart/*"))
-	public String loadAuditEvents(@RequestParam("file") MultipartFile inputFile) {
+	public ResponseEntity<?> loadAuditEvents(@RequestParam("file") MultipartFile inputFile) {
 
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_AUDIT_EVENTS);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_AUDIT_EVENTS);
@@ -60,11 +61,11 @@ public class TalendJobController {
 		System.out.println("batchScript**" + batchScript);
 
 		runADSJob(jobName, inputFile, batchScript);
-		return "Job Submitted Successfully";
+		return  new ResponseEntity("Running Job.", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "auditReasonCodes", method = RequestMethod.POST, headers = ("content-type=multipart/*"))
-	public String loadAuditReasonCodes(@RequestParam("file") MultipartFile inputFile) {
+	public ResponseEntity<?> loadAuditReasonCodes(@RequestParam("file") MultipartFile inputFile) {
 
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_AUDIT_REASON_CODES);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_AUDIT_REASON_CODES);
@@ -72,11 +73,11 @@ public class TalendJobController {
 		System.out.println("batchScript**" + batchScript);
 
 		runADSJob(jobName, inputFile, batchScript);
-		return "Job Submitted Successfully";
+		return  new ResponseEntity("Running Job.", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "applications", method = RequestMethod.POST, headers = ("content-type=multipart/*"))
-	public String loadApplications(@RequestParam("file") MultipartFile inputFile) {
+	public ResponseEntity<?> loadApplications(@RequestParam("file") MultipartFile inputFile) {
 
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_APPLICATIONS);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_APPLICATIONS);
@@ -84,11 +85,11 @@ public class TalendJobController {
 		System.out.println("batchScript**" + batchScript);
 
 		runADSJob(jobName, inputFile, batchScript);
-		return "Job Submitted Successfully";
+		return  new ResponseEntity("Running Job.", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "sysConfigPropertyTypes", method = RequestMethod.POST, headers = ("content-type=multipart/*"))
-	public String loadSysConfigPropertyTypes(@RequestParam("file") MultipartFile inputFile) {
+	public ResponseEntity<?> loadSysConfigPropertyTypes(@RequestParam("file") MultipartFile inputFile) {
 
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_SYSCONFIG_PROPERTY_TYPES);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_SYSCONFIG_PROPERTY_TYPES);
@@ -96,11 +97,11 @@ public class TalendJobController {
 		System.out.println("batchScript**" + batchScript);
 
 		runADSJob(jobName, inputFile, batchScript);
-		return "Job Submitted Successfully";
+		return  new ResponseEntity("Running Job.", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "migrationTimes", method = RequestMethod.POST, headers = ("content-type=multipart/*"))
-	public String loadMigrationTimes(@RequestParam("file") MultipartFile inputFile) {
+	public ResponseEntity<?> loadMigrationTimes(@RequestParam("file") MultipartFile inputFile) {
 
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_MIGRATION_TIMES);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_MIGRATION_TIMES);
@@ -108,11 +109,11 @@ public class TalendJobController {
 		System.out.println("batchScript**" + batchScript);
 
 		runADSJob(jobName, inputFile, batchScript);
-		return "Job Submitted Successfully";
+		return new ResponseEntity("Running Job.", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "mstEmailTypes", method = RequestMethod.POST, headers = ("content-type=multipart/*"))
-	public String loadMstEmailTypes(@RequestParam("file") MultipartFile inputFile) {
+	public ResponseEntity<?> loadMstEmailTypes(@RequestParam("file") MultipartFile inputFile) {
 
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_MST_EMAIL_TYPES);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_MST_EMAIL_TYPES);
@@ -120,11 +121,11 @@ public class TalendJobController {
 		System.out.println("batchScript**" + batchScript);
 
 		runADSJob(jobName, inputFile, batchScript);
-		return "Job Submitted Successfully";
+		return  new ResponseEntity("Running Job.", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "schedules", method = RequestMethod.POST, headers = ("content-type=multipart/*"))
-	public String loadSchedules(@RequestParam("file") MultipartFile inputFile) {
+	public ResponseEntity<?> loadSchedules(@RequestParam("file") MultipartFile inputFile) {
 
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_SCHEDULES);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_SCHEDULES);
@@ -132,11 +133,11 @@ public class TalendJobController {
 		System.out.println("batchScript**" + batchScript);
 
 		runADSJob(jobName, inputFile, batchScript);
-		return "Job Submitted Successfully";
+		return  new ResponseEntity("Running Job.", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "hosts", method = RequestMethod.POST)
-	public String loadHosts() {
+	public ResponseEntity<?> loadHosts() {
 		
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_HOSTS);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_HOSTS);
@@ -144,11 +145,11 @@ public class TalendJobController {
 		System.out.println("batchScript**" + batchScript);
 		runTalendJob(jobName, null, batchScript, TalendConstants.JOB_TYPE_OCI_LOAD);
 
-		return "Job Submitted Successfully";
+		return  new ResponseEntity("Running Job.", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "storage", method = RequestMethod.POST)
-	public String loadStorage() {
+	public ResponseEntity<?> loadStorage() {
 		
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_STORAGE);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_STORAGE);
@@ -156,11 +157,11 @@ public class TalendJobController {
 		System.out.println("batchScript**" + batchScript);
 		runTalendJob(jobName, null, batchScript, TalendConstants.JOB_TYPE_OCI_LOAD);
 
-		return "Job Submitted Successfully";
+		return  new ResponseEntity("Running Job.", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "dataCenters", method = RequestMethod.POST)
-	public String loadDataCenters() {
+	public ResponseEntity<?> loadDataCenters() {
 		
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_DATACENTERS);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_DATACENTERS);
@@ -168,11 +169,11 @@ public class TalendJobController {
 		System.out.println("batchScript**" + batchScript);
 		runTalendJob(jobName, null, batchScript, TalendConstants.JOB_TYPE_OCI_LOAD);
 
-		return "Job Submitted Successfully";
+		return  new ResponseEntity("Running Job.", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "controllers", method = RequestMethod.POST)
-	public String loadControllers() {
+	public ResponseEntity<?> loadControllers() {
 		
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_CONTROLLERS);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_CONTROLLERS);
@@ -180,11 +181,11 @@ public class TalendJobController {
 		System.out.println("batchScript**" + batchScript);
 		runTalendJob(jobName, null, batchScript, TalendConstants.JOB_TYPE_OCI_LOAD);
 
-		return "Job Submitted Successfully";
+		return  new ResponseEntity("Running Job.", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "aggregates", method = RequestMethod.POST)
-	public String loadAggregates() {
+	public ResponseEntity<?> loadAggregates() {
 		
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_AGGREGATES);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_AGGREGATES);
@@ -192,11 +193,11 @@ public class TalendJobController {
 		System.out.println("batchScript**" + batchScript);
 		runTalendJob(jobName, null, batchScript, TalendConstants.JOB_TYPE_OCI_LOAD);
 
-		return "Job Submitted Successfully";
+		return  new ResponseEntity("Running Job.", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "nasVolumes", method = RequestMethod.POST)
-	public String loadNasVolumes() {
+	public ResponseEntity<?> loadNasVolumes() {
 		
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_NAS_VOLUMES);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_NAS_VOLUMES);
@@ -204,11 +205,11 @@ public class TalendJobController {
 		System.out.println("batchScript**" + batchScript);
 		runTalendJob(jobName, null, batchScript, TalendConstants.JOB_TYPE_OCI_LOAD);
 
-		return "Job Submitted Successfully";
+		return  new ResponseEntity("Running Job.", HttpStatus.OK);
 	}
 		
 	@RequestMapping(value = "qtrees", method = RequestMethod.POST)
-	public String loadQTrees() {
+	public ResponseEntity<?> loadQTrees() {
 		
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_QTREES);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_QTREES);
@@ -216,11 +217,11 @@ public class TalendJobController {
 		System.out.println("batchScript**" + batchScript);
 		runTalendJob(jobName, null, batchScript, TalendConstants.JOB_TYPE_OCI_LOAD);
 
-		return "Job Submitted Successfully";
+		return  new ResponseEntity("Running Job.", HttpStatus.OK);
 	}	
 	
 	@RequestMapping(value = "shares", method = RequestMethod.POST)
-	public ResponseEntity<String> loadShares() {
+	public ResponseEntity<?> loadShares() {
 		
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_SHARES);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_SHARES);
@@ -228,7 +229,7 @@ public class TalendJobController {
 	
 		runTalendJob(jobName, null, batchScript, TalendConstants.JOB_TYPE_OCI_LOAD);
 		System.out.println("batchScript**" + batchScript);
-		return new ResponseEntity("Job Submitted Successfully", HttpStatus.OK);
+		return  new ResponseEntity("Running Job.", HttpStatus.OK);
 		
 		
 	}		

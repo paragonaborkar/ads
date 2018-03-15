@@ -6,15 +6,16 @@ import { FormsModule, FormBuilder, FormControl, FormGroup, Validators } from '@a
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
-  selector: 'app-schedule',
-  templateUrl: './schedule.component.html',
-  styleUrls: ['./schedule.component.scss']
+  selector: 'app-owner-response',
+  templateUrl: './owner-response.component.html',
+  styleUrls: ['./owner-response.component.scss']
 })
-export class ScheduleComponent implements OnInit {
-  @ViewChild('scheduleModal') public scheduleModal: ModalDirective;
+export class OwnerResponseComponent implements OnInit {
+  @ViewChild('ownerResponseModal') public ownerResponseModal: ModalDirective;
   @Output() saved = new EventEmitter();
   @Output() cancel = new EventEmitter();
-  @Input() activityToSchedule: any;
+  
+  @Input() activityInfo: any;
   @Input() scheduleAction: any;
 
   public formGroup: FormGroup; // our model driven form
@@ -26,7 +27,7 @@ export class ScheduleComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.activityToSchedule);
+    console.log(this.activityInfo);
 
     this.formGroup = new FormGroup({
       isOwnerFormGroup: new FormGroup({
@@ -50,6 +51,9 @@ export class ScheduleComponent implements OnInit {
   }
 
   save() {
+
+    this.formGroup
+    
     // TODO: Handle an error and display a message in the modal.
     // this.usersService.update(this.User, this.userSelfLink).subscribe(
     //   response => {

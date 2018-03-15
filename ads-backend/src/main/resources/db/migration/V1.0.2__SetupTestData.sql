@@ -792,9 +792,11 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`, `field_template`) VALUES (4, 'propertyValue', '1', 1, 'stringEdit');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (4, 'grouping', '1', 1);
 
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (5, 'disposition', '1', 1);
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (5, 'willDelete', '1', 1);
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (5, 'willMigrate', '1', 1);
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES ('5', 'Last Accessed', 'qtree.lastAccessed', 'dateTime', '2');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES ('5', 'Qtree Name', 'qtree.name','','1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES ('5', 'Share Count', 'shares.length','','3');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (5, 'disposition', '4', 1);
+
 
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`) VALUES (6, 'Source Controller', '1', 'srcController.controllerName');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`) VALUES (6, 'Target Controller', '1', 'tgtController.controllerName');

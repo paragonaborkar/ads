@@ -91,8 +91,9 @@ public class Activity implements Serializable {
     private List<ActivityMigrationKeyXRef> activityMigrationKeyXRefs;
 
 
-	//bi-directional many-to-one association to Qtree
-	@ManyToOne
+	//bi-directional one-to-one association to Qtree
+//	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="qtree_id")
 	private Qtree qtree;
 

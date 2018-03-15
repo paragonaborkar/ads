@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { OwnerService } from '../owner.service';
 import { Globals } from '../../globals';
+
+
+import { ReportCommonService } from '../../common/report-listing-common/report-common.service';
+
 @Component({
   selector: 'app-report-listing-dis',
   templateUrl: './report-listing-dis.component.html',
@@ -19,7 +23,7 @@ export class ReportListingDisComponent implements OnInit {
   volumeDecommission:any;
   unknownOwner:any;
 
-  constructor(private reportService: OwnerService, private globals: Globals) {
+  constructor(private reportService: ReportCommonService, private globals: Globals) {
   }
   ngOnInit() {
     this.myVar = true;
@@ -42,7 +46,7 @@ export class ReportListingDisComponent implements OnInit {
     if (!requestedPageNumber)
       requestedPageNumber = 1;
     this.pageCount = requestedPageNumber;
-    this.reportService.openJasperReport(requestedPageNumber, reportName)
+    this.reportService.openJasperReport(requestedPageNumber, reportName, 'discover')
       .subscribe(
       res => {
         this.report = res;
@@ -68,6 +72,6 @@ export class ReportListingDisComponent implements OnInit {
 
   downloadJasperReport(reportName, reportTitle, query, module) {
     reportName = this.reportName;
-    this.reportService.downloadJasperReport(reportName);
+    this.reportService.downloadJasperReport(reportName, "discover");
   }
 }
