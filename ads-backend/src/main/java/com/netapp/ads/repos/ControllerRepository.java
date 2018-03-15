@@ -12,8 +12,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ControllerRepository extends JpaRepository<Controller, Integer>, JpaSpecificationExecutor<Controller> {
-
+	
+	@Query("SELECT c  FROM Controller c, ControllerWorkPackage t WHERE c.id = t.controller AND t.processed=false AND c.controllerName LIKE %:controllerNameContains%")
 	List<Controller> findByControllerNameContaining(@Param("controllerNameContains") String controllerNameContains);
+
+//	List<Controller> findByControllerNameContaining(@Param("controllerNameContains") String controllerNameContains);
 	
 //	List<Controller> findByControllerTargetsAvailable_ControllerNameContaining(@Param("controllerNameContains") String controllerNameContains);
 	
