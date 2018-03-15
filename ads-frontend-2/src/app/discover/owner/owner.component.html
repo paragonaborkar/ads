@@ -1,22 +1,11 @@
 <div class="row d-flex justify-content-center">
 
   <div class="col-md-8 mb-2">
-    <h2 class="h3">QTree Owners</h2>
+    <h2 class="h3">QTree Ownership</h2>
   </div>
 
   <div class="col-md-7">
-    <form class="form-inline">
-      <div class="form-group">
-        <label for="pagesPerPage">Rows:&nbsp;</label>
-        <select class="form-control form-control-sm" name="pagesPerPage" [(ngModel)]="page.size" (change)="pagingUpdated()">
-          <option value=1>1</option>
-          <option value=3>3</option>
-          <option value=10>10</option>
-          <option value=25>25</option>
-          <option value=50>50</option>
-        </select>
-      </div>
-    </form>
+
   </div>
   <div class="col-md-1">
     <div class="pull-right">
@@ -27,7 +16,7 @@
   </div>
 
   <div class="col-md-8" *ngIf="rows.length > 0 && columns.length > 0">
-    <ngx-datatable class="material card" [rows]="rows" [columns]="columns" [columnMode]="'flex'" [rowHeight]="auto" [externalPaging]="true"
+    <ngx-datatable class="material card" [rows]="rows" [columns]="columns" [columnMode]="'flex'" [rowHeight]="auto" [externalPaging]="false"
       [count]="page.totalElements" [offset]="page.number" [limit]="page.size" [headerHeight]="50" [footerHeight]="50" (page)='setPage($event)'>
     </ngx-datatable>
   </div>
@@ -38,13 +27,13 @@
 <app-data-table-col-templates></app-data-table-col-templates>
 
 <ng-template #actionTmpl let-column="column" let-row="row">
-  <button class="btn btn-sm btn-primary" (click)="showScheduleModal(row, 'Schedule')">
+  <button class="btn btn-sm btn-primary" (click)="showScheduleModal(row, 'Schedule')" *ngIf="row.activityResponses[0].isPresumed">
     <i class="fa fa-check"></i> Respond
   </button>
-  <button class="btn btn-sm btn-warning" md-icon-button (click)="showScheduleModal(row, 'Reschedule')">
-    <i class="fa fa-exclamation-circle"></i> Update Ownership
+  <button class="btn btn-sm btn-warning" md-icon-button (click)="showScheduleModal(row, 'Reschedule')" *ngIf="!row.activityResponses[0].isPresumed">
+    <i class="fa fa-exclamation-circle"></i> Update Response
   </button>
 </ng-template>
 
-<app-schedule class="modal fade" *ngIf="isScheduleModal" [config]="{ show: true }" bsModal #scheduleModal="bs-modal" (cancel)="hideScheduleModal()"
-  [activityToSchedule]="activityToSchedule" [scheduleAction]="scheduleAction"></app-schedule>
+<app-owner-response class="modal fade" *ngIf="isScheduleModal" [config]="{ show: true }" bsModal #ownerResponseModal="bs-modal" (cancel)="hideScheduleModal()"
+  [activityInfo]="activityInfo" [scheduleAction]="scheduleAction"></app-owner-response>

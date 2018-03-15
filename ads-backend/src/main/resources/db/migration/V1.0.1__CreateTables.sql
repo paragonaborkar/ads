@@ -18,6 +18,19 @@
 --
 -- Table structure for table `activity`
 --
+DROP TABLE IF EXISTS `job_data`;
+CREATE TABLE `job_data` (
+	`job_id` INT NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255) NULL,
+	`input_file` LONGBLOB NULL,
+	`submitted_by` VARCHAR(255) NULL,
+	`submission_time` DATETIME NULL,
+	`start_time` DATETIME NULL,
+	`end_time` DATETIME NULL,
+	`status` VARCHAR(50) NULL,
+	`additional_details` VARCHAR(255) NULL,
+	PRIMARY KEY (`job_id`)
+);
 
 DROP TABLE IF EXISTS `activity`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

@@ -22,12 +22,10 @@ export class OwnerService {
     private reportServiceUrl = '';
 
 
-    constructor(private http: HttpClient, private errorService: AdsErrorService, private global: Globals) {
-
-    }
+    constructor(private http: HttpClient, private errorService: AdsErrorService, private global: Globals) { }
 
     private activitiesePath = '/activities/search/findByDisposition?disposition=DiscoverOwner&projection=activityWithQtree';
-    // private activitiesePath = '/activities/27';
+    
     private servicePath = '/userNatives/';
     private validateMigKey = '/validate-migration-key/';
 
@@ -44,49 +42,22 @@ export class OwnerService {
         //   );
     }
 
-    openJasperReport(pageNo, reportName): Observable<any> {
-        return this.http.get(this.global.apiUrl + '/generateReport?pageNo=' + pageNo + '&reportName=' + reportName)
+    
+
+    getAllActivitiesForUser(migKey, corpUserId, page: Page): Observable<any> {
+
+        let urlParms = "migKey=" + migKey + "&corpUserId=" + corpUserId + "&disposition=DiscoverOwner" + "&projection=activityWithQtree";
+
+        let pagingParms = "&page=" + page.number + "&size=" + page.size;
+
+        return this.http.get(this.global.apiUrl + "/activities/search/getActivitiesFromMigrationKeyAndCorpUserId?" + urlParms +pagingParms)
             .map((res: Response) => res)
-            .catch(this.handleError);
+        // .catch(
+        // Handle error in Subscribe() using the AdsErrorService  
+        // You can optionally handle it here, if needed    
+        //   );
     }
 
-    /**
-      * Downloads Jasper Report
-      */
-    downloadJasperReport(reportName) {
-
-        const type = 'application/vnd.ms-excel';
-        const fileName = 'Report.xls';
-        const headers = new HttpHeaders({ 'Accept': type });
-
-        //Add download process feature: https://blog.angularindepth.com/the-new-angular-httpclient-api-9e5c85fe3361
-
-        this.http.get(this.global.apiUrl + '/downloadReport?reportName=' + reportName,
-            { headers: headers, responseType: 'blob', reportProgress: true })
-            .catch(errorResponse => Observable.throw(errorResponse))
-            .map((response) => {
-                if (response instanceof Response) {
-                    return response.blob();
-                }
-                return response;
-            })
-            .subscribe(data => importedSaveAs(data, fileName),
-            error => console.error(error));
-    }
-
-    private handleError(error: Response | any) {
-        let errMsg: string;
-        if (error instanceof Response) {
-            const body = error.json() || '';
-            const err = JSON.stringify(body);
-            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-        } else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-
-        console.error(errMsg);
-        return Observable.throw(errMsg);
-    }
 
     getQTreesForOwner(migKey): Observable<any> {
         console.log("getQTreesForOwner:", migKey);
