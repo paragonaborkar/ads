@@ -65,6 +65,9 @@ public interface ActivityWithQtree {
 	
 	public Qtree getQtree();
 	
+	@Value("#{target.getQtree().getNasVolume()}")
+	public NasVolume getNasVolume();
+	
 	@Value("#{target.getActivityResponses()}")
 	List<ActivityResponse> getActivityResponses();
 	

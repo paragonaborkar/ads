@@ -32,7 +32,7 @@ export class OwnerResponseComponent implements OnInit {
     this.formGroup = new FormGroup({
       isOwnerFormGroup: new FormGroup({
         confirmOwner: new FormControl(null, Validators.required),
-        migrationTeamContactMe: new FormControl(false, Validators.required)
+        migrationTeamContactMe: new FormControl(false)
       }),
       ownerFormGroup: new FormGroup({
         decommissionVolume: new FormControl(),

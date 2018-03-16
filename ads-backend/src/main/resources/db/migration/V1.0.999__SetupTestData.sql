@@ -43,15 +43,6 @@ INSERT INTO `application` VALUES (1,'78912','delgoods',NULL,1,NULL,'2017-09-27 1
 UNLOCK TABLES;
 
 
---
--- Dumping data for table `application_lob_x_ref`
---
-
-LOCK TABLES `application_lob_x_ref` WRITE;
-/*!40000 ALTER TABLE `application_lob_x_ref` DISABLE KEYS */;
-/*!40000 ALTER TABLE `application_lob_x_ref` ENABLE KEYS */;
-UNLOCK TABLES;
-
 
 
 --
@@ -112,7 +103,7 @@ UNLOCK TABLES;
 -- Dumping data for table vitae_data_refactor.host: ~2 rows (approximately)
 /*!40000 ALTER TABLE `host` DISABLE KEYS */;
 INSERT INTO `host` (`id`, `create_time`, `host_name`, `host_owner_user_corporate_id`, `ip_addr`, `note`, `system_admin_id`, `update_time`) VALUES
-	(1, NULL, 'dv2-ls-cts-001', NULL, '1111.222.333.222', 'Test', NULL, NULL),
+	(1, NULL, 'dv2-ls-cts-001', NULL, '10.216.49.26', 'Test', NULL, NULL),
 	(2, NULL, 'dv2-ls-cts-002', NULL, '198.222.333.222', 'Test', NULL, NULL);
 /*!40000 ALTER TABLE `host` ENABLE KEYS */;
 
@@ -642,16 +633,7 @@ INSERT INTO `user_api` (`id`, `client_id`, `client_secret`, `create_time`, `enab
 	(1, 'talend', '$2a$04$J/B4Okg/BkF35D0fcPpo1OdzFWd5sPuh39SaGKi5ByrK7L7m9QBVe', '2018-01-19 11:52:54', 1, 'For Talend integration', '2018-01-19 11:55:23');
 /*!40000 ALTER TABLE `user_api` ENABLE KEYS */;
 
--- Dumping data for table vitae_data_refactor.user_roles: ~5 rows (approximately)
-/*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
-truncate `user_roles`;
-INSERT INTO `user_roles` (`user_role`) VALUES
-	('ROLE_USER'),
-	('ROLE_ADMIN'),
-	('ROLE_RUSER'),
-	('ROLE_SUPERUSER'),
-	('ROLE_MSLEAD');
-/*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
+
 
 
 -- Dumping data for table vitae_data_refactor.aggregate: ~16 rows (approximately)
@@ -712,50 +694,6 @@ INSERT INTO `user_corporate` (`user_name`, `first_name`, `last_name`, `email`, `
 /*!40000 ALTER TABLE `user_corporate` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Dumping data for table `user_native`
---
-LOCK TABLES `user_native` WRITE;
-/*!40000 ALTER TABLE `user_native` DISABLE KEYS */;
-INSERT INTO `user_native`  (`email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('jdoe@corp.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'Joe', 'Doe','sparky', 1, 2);
-INSERT INTO `user_native`  (`email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('jdoe2@corp.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','dog', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('1@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','1-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('2@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','2-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('3@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','3-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('4@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','4-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('5@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','5-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('6@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','6-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('7@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','7-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('8@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','8-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('9@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','9-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('10@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','10-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('11@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','11-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('12@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','12-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('13@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','13-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('14@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','14-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('15@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','15-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('16@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','16-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('17@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','17-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('18@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','18-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('19@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','19-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('20@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','20-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('21@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','21-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('22@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','22-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('23@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','23-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('24@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','24-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('25@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','25-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('26@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','26-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('27@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','27-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('28@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','28-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('29@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','29-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('30@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','30-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('31@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','31-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('32@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','32-name', 1, 2);
-INSERT INTO `user_native`  ( `email`, `password`, `first_name`, `last_name`, `user_name`,`enabled`, `user_role_id`) VALUES ('33@1.com', '$2a$04$oSWA81OzAMQfHh9q5m3iJurx9L4HGHimPzEaHqcONA9VNBFj6joc6', 'James', 'Do','33-name', 1, 2);
-/*!40000 ALTER TABLE `user_native` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 -- Dumping data for table `preference`
 
 
@@ -801,7 +739,7 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) V
 #INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'grouping', '1');
 
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES ('5', 'Last Accessed', 'qtree.lastAccessed', 'dateTime', '2');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES ('5', 'Qtree Name', 'qtree.name','','1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES ('5', 'Qtree Name', 'qtree.qtreeName','','1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES ('5', 'Share Count', 'shares.length','','3');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (5, 'disposition', '4', 1);
 
@@ -821,11 +759,11 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `
 
 -- /*!40000 ALTER TABLE `preference_detail` ENABLE KEYS */;
 -- UNLOCK TABLES;
-
+/*
 INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (1, 1, NULL, 0);
 INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (2, 2, NULL, 0);
 INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (3, 3, NULL, 0);
-
+*/
 -- -- Dumping data for table `ads_report`
 
 
