@@ -19,33 +19,20 @@ export class TokenInterceptor implements HttpInterceptor {
     let headers = new HttpHeaders();
 
     if (!request.headers.has("AdsFile")) {
-      // const headers = new HttpHeaders()
-        // .set('content-type', 'application/json')
-        // .set('authorization', `Bearer ${this._sessionHelper.getToken().access_token}`);   // use ` for Bearer, not '
-
-        headers = headers.append('content-type', 'application/json');
-        headers = headers.append('authorization', `Bearer ${this._sessionHelper.getToken().access_token}`);   // use ` for Bearer, not '
-
-      request = request.clone({ headers: headers });
-
-      console.log("headers", headers);
-
-      return next.handle(request);
-    } else {
-      // const headers = new HttpHeaders()
-      //   .set('authorization', `Bearer ${this._sessionHelper.getToken().access_token}`); // use ` for Bearer, not '
-        // .set('content-type', request.headers.get("content-type"));
-
+      headers = headers.append('content-type', 'application/json');
       headers = headers.append('authorization', `Bearer ${this._sessionHelper.getToken().access_token}`);   // use ` for Bearer, not '
 
       request = request.clone({ headers: headers });
 
-      console.log("headers", headers);
+      return next.handle(request);
+      
+    } else {
+      headers = headers.append('authorization', `Bearer ${this._sessionHelper.getToken().access_token}`);   // use ` for Bearer, not '
+
+      request = request.clone({ headers: headers });
 
       return next.handle(request);
     }
 
-    // console.log("headers", headers);
-    // request = request.clone({ headers: headers });
   }
 }

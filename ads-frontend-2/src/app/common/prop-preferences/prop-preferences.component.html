@@ -13,15 +13,17 @@
     <div class="form-group row">
       <label for="selectedPreference" class="col-xs-12 col-md-4 col-lg-2 col-form-label">Select Page: </label>
       <div class="col-xs-12 col-md-4 col-lg-5">
-        <select class="form-control" [(ngModel)]="selectedPreferenceId" name="selectedPreferenceId">
+        <select class="form-control" [(ngModel)]="selectedPreferenceId" name="selectedPreferenceId" (change)="getPreferenceDetails(selectedPreferenceId)">
           <option [value]="NOT_VALID">Select Page</option>
-          <option *ngFor="let preference of preferences" [value]="preference._links.preferenceDetails.href">{{preference.pageName}} ({{preference.preferenceType}} 
-            Native ID:{{preference.nativeUserId}} Corp ID:{{preference.corpUserId}})</option>
+          <option *ngFor="let preference of preferences" [value]="preference._links.preferenceDetails.href">{{preference.pageName | friendlyLabel}} 
+            <!-- ({{preference.preferenceType}} 
+            Native ID:{{preference.nativeUserId}} Corp ID:{{preference.corpUserId}}) -->
+          </option>
         </select>
       </div>
-      <div class="col-auto">
+      <!-- <div class="col-auto">
         <button class="btn btn-primary" (click)="getPreferenceDetails(selectedPreferenceId)">View Settings</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
@@ -36,7 +38,7 @@
 </ng-template>
 
 
-<div class="row mt-5 d-flex justify-content-center" *ngIf="showSettingsPanel">
+<div class="row mt-5 d-flex justify-content-center  pb-5" *ngIf="showSettingsPanel">
   <div class="col-xs-6 col-md-6 col-xl-4">
     <div class="card no-select">
       <div class="card-header bg-primary text-white">

@@ -38,50 +38,29 @@ export class ManualFunctionComponent implements OnInit {
     
  
   fileChange(files: any) {
-    console.log(files);
     this.fileName = files[0].name;
     this.myFile = files[0].nativeElement;
     this.fileForUpload = files[0];
   }
 
-  onSubmit(manualFunctionForm): void {
-
-    console.log(this.fileForUpload);
+  onSubmit(manualFunctionForm): void {   
     if (this.fileUpload) {
-      // let headers = new HttpHeaders({ 'content-type': "application/x-www-form-urlencoded" });
-      // let headers = new HttpHeaders({ 'content-type': "multipart/*" });
-      let headers = new HttpHeaders({ 'AdsFile': "AdsFile-TOBEREMOVED" });
-      // let headers = new HttpHeaders();
-
-
+      let headers = new HttpHeaders({ 'AdsFile': "AdsFile-BROWSER WILL REPLACE" });
       this.postFile(this.fileForUpload).subscribe(data => {
-        // do something, if upload success
-        console.log("File upload success");
-        console.log(data);
+       
+        this.updateMessage("", "File Uploaded. Job Running.", "");
+        
         }, error => {
+          this.updateMessage("", "", "Error running job.");
           console.log(error);
         });
 
-      // let _formData = new FormData();
-      // // _formData.append("Name", this.fileName);
-      // _formData.append("file", this.myFile);
-    
-      // console.log("_formData", _formData);
-
-
-      // this.http.post("http://localhost:8080/" + this.jobName, _formData, { headers: headers, reportProgress: true })
-      //   .map((response) => response)
-      //   .subscribe((data) => {
-      //     // this.message = data;
-      //     console.log(data);
-      //   });
     } else {
       
       this.http.post("http://localhost:8080/" + this.jobName, null)
         .map((response) => response)
         .subscribe((response) => {
           // this.message = data;
-          console.log(response);
           this.updateMessage("Completed", "", "");
         });
     }

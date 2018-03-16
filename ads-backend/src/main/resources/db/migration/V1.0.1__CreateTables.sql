@@ -1063,7 +1063,7 @@ DROP TABLE IF EXISTS `migration_time`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `migration_time` (
-  `id` int(11) NOT NULL COMMENT 'Surrogate ID of the Migration Time',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Migration Time',
   `time_slot` varchar(45) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -1139,7 +1139,7 @@ DROP TABLE IF EXISTS `mst_email_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mst_email_type` (
-  `id` int(11) NOT NULL COMMENT 'Surrogate ID of the MST e-mail Type',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the MST e-mail Type',
   `email_type` varchar(45) NOT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,

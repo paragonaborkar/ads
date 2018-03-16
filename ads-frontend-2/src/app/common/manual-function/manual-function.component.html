@@ -3,7 +3,7 @@
     <div class="col-md-3 col-form-label">
       <strong>{{displayJobName}}</strong>
     </div>
-    <div class="col col-md-3" *ngIf="fileUpload">
+    <div class="col col-md-4" *ngIf="fileUpload">
       <div class="custom-file">
         <input type="file" class="custom-file-input" #fileupload [(ngModel)]="myFile" name="myFile" (change)="fileChange(fileupload.files)"
           required/>
@@ -15,9 +15,9 @@
       <button class="btn btn-success" type="submit" class="btn btn-primary" [disabled]="(!fileName && fileUpload)">Run</button>
     </div>
     <div class="col col-md-auto col-form-label">
-      <div class="text-success" *ngIf="successMsg">Completed successfully!</div>
-      <div class="text-warning" *ngIf="runningMsg">Running...</div>
-      <div class="text-danger" *ngIf="errorMsg">TODO: Display error message here!</div>
+      <div class="text-success" *ngIf="successMsg">{{successMsg}}</div>
+      <div class="text-warning" *ngIf="runningMsg">{{runningMsg}}</div>
+      <div class="text-danger" *ngIf="errorMsg">{{errorMsg}}</div>
     </div>
   </div>
 </form>
