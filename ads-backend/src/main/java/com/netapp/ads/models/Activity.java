@@ -86,11 +86,6 @@ public class Activity implements Serializable {
 	@JoinColumn(name="migration_time_id")
 	private MigrationTime migrationTime;
 	
-    //bi-directional many-to-one association to ActivityMigrationKeyXRef
-    @OneToMany(mappedBy="activity")
-    private List<ActivityMigrationKeyXRef> activityMigrationKeyXRefs;
-
-
 	//bi-directional one-to-one association to Qtree
 //	@ManyToOne
 	@OneToOne
