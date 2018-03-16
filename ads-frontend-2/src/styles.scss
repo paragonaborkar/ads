@@ -45,10 +45,15 @@ body {
 // @import '~@swimlane/ngx-datatable/release/assets/icons.css';
 
 
+
+
+
+
 .ng-valid[required], .ng-valid.required  {
   border-left: 5px solid #28a745; /* green */
 }
 
+.custom-select.is-invalid, .form-control.is-invalid, .was-validated .custom-select:invalid, .was-validated .form-control:invalid,
 .ng-invalid:not(form)  {
   border-left: 5px solid #dc3545; /* red */
 }

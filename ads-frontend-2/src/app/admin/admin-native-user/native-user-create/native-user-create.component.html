@@ -6,11 +6,11 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+    <form (ngSubmit)="save()" #createUserForm="ngForm" autocomplete="off">
+      <div class="modal-body">
 
-    <div class="modal-body">
 
 
-      <form (ngSubmit)="save()" #createUserForm="ngForm" autocomplete="off">
 
         <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
           <span>{{errorMessage}}</span>
@@ -72,23 +72,21 @@
         </div>
 
         <div class="form-group row">
-          <label for="passwordConfirm" class="col-sm-3 col-form-label">Confirm Password Confirm</label>
+          <label for="passwordConfirm" class="col-sm-3 col-form-label">Confirm Password</label>
           <div class="col-sm-9">
-            <input type="passwordConfirm" class="form-control" pattern="{{user.password}}" [ngClass]="{'is-invalid':userPasswordConfirm.errors?.required && userPasswordConfirm.touched || userPasswordConfirm.errors?.minlength && userPasswordConfirm.touched}"
-              [(ngModel)]="user.passwordConfirm" name="passwordConfirm" #userPasswordConfirm="ngModel" minlength="5" required
-              placeholder="Password">
+            <input type="password" class="form-control" (change)="comparePasswords()" [ngClass]="{'is-invalid': (userPasswordConfirm.errors?.required && userPasswordConfirm.touched) || (userPasswordConfirm.errors?.minlength && userPasswordConfirm.touched) ||  !doPasswordsMatch}"
+              [(ngModel)]="passwordConfirm" name="passwordConfirm" #userPasswordConfirm="ngModel" minlength="5" required placeholder="Password">
             <div *ngIf="userPasswordConfirm.errors?.required && userPasswordConfirm.touched" class="invalid-feedback">
               Confirm Password is required
             </div>
             <div *ngIf="userPasswordConfirm.errors?.minlength && userPasswordConfirm.touched" class="invalid-feedback">
               Must be at least 5 characters
             </div>
-            <div *ngIf="userPasswordConfirm.errors?.pattern && userPasswordConfirm.touched" class="invalid-feedback">
+            <div *ngIf="!doPasswordsMatch" class="invalid-feedback">
               Passwords must match
             </div>
           </div>
         </div>
-
 
 
         <div class="form-group row">
@@ -124,13 +122,16 @@
 
           </div>
         </div>
+      </div>
 
-        <div class="form-group row">
-          <button class="btn btn-default" (click)="close()">Cancel</button>
-          <button type="submit" class="btn btn-primary" [disabled]="!createUserForm.form.valid">Create User</button>
-        </div>
-      </form>
-    </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" (click)="close()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!createUserForm.form.valid">Create User</button>
+      </div>
+
+
+    </form>
+
 
 
 

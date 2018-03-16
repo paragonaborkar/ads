@@ -3,15 +3,25 @@
 
   <div class="col-md-8 mb-2">
     <h2 class="h3">Load OCI Data</h2>
-    <app-manual-function [fileUpload]="false" [displayJobName] = "'1. Load Hosts'"           [jobName]="'hosts'"></app-manual-function>
-    <app-manual-function [fileUpload]="false" [displayJobName] = "'2. Load Storage'"         [jobName]="'storage'"></app-manual-function>
-    <app-manual-function [fileUpload]="false" [displayJobName] = "'3. Load Data Centers'"    [jobName]="'dataCenters'"></app-manual-function>
-    <app-manual-function [fileUpload]="false" [displayJobName] = "'4. Load Controllers'"     [jobName]="'controllers'"></app-manual-function>
-    <app-manual-function [fileUpload]="false" [displayJobName] = "'5. Load Aggregates'"      [jobName]="'aggregates'"></app-manual-function>
-    <app-manual-function [fileUpload]="false" [displayJobName] = "'6. Load NAS Volumes'"     [jobName]="'nasVolumes'"></app-manual-function>
-    <app-manual-function [fileUpload]="false" [displayJobName] = "'7. Load QTrees'"          [jobName]="'qtrees'"></app-manual-function>
-    <app-manual-function [fileUpload]="false" [displayJobName] = "'8. Load Shares'"          [jobName]="'shares'"></app-manual-function>
+    <app-manual-function [fileUpload]="false" [displayJobName] = "'1. Load Hosts'"           [jobName]="'talendJobs/hosts'"></app-manual-function>
+    <app-manual-function [fileUpload]="false" [displayJobName] = "'2. Load Storage'"         [jobName]="'talendJobs/storage'"></app-manual-function>
+    <app-manual-function [fileUpload]="false" [displayJobName] = "'3. Load Data Centers'"    [jobName]="'talendJobs/dataCenters'"></app-manual-function>
+    <app-manual-function [fileUpload]="false" [displayJobName] = "'4. Load Controllers'"     [jobName]="'talendJobs/controllers'"></app-manual-function>
+    <app-manual-function [fileUpload]="false" [displayJobName] = "'5. Load Aggregates'"      [jobName]="'talendJobs/aggregates'"></app-manual-function>
+    <app-manual-function [fileUpload]="false" [displayJobName] = "'6. Load NAS Volumes'"     [jobName]="'talendJobs/nasVolumes'"></app-manual-function>
+    <app-manual-function [fileUpload]="false" [displayJobName] = "'7. Load QTrees'"          [jobName]="'talendJobs/qtrees'"></app-manual-function>
+    <app-manual-function [fileUpload]="false" [displayJobName] = "'8. Load Shares'"          [jobName]="'talendJobs/shares'"></app-manual-function>
     
+  </div>
+
+  <div class="col-md-8 mb-2">
+    <h2 class="h3">Populate Activities and Applications</h2>
+    <app-manual-function [fileUpload]="false" [displayJobName] = "'1. Populate Activities'"         [jobName]="'populateActivity'"></app-manual-function>    
+    <app-manual-function [fileUpload]="false" [displayJobName] = "'2. Populate Applications &amp; Owners'"       [jobName]="'identifyOwners'"></app-manual-function>    
+
+    <app-manual-function [fileUpload]="false" [displayJobName] = "'3. Generate Keys'"       [jobName]="'ADDDDDDDD'"></app-manual-function>    
+    <app-manual-function [fileUpload]="false" [displayJobName] = "'4. Email Potential Owners - First Email'"       [jobName]="'ADDDDDDDD'"></app-manual-function> 
+    <app-manual-function [fileUpload]="false" [displayJobName] = "'5. Email Potential Owners - Reminder Email'"       [jobName]="'ADDDDDDDD'"></app-manual-function> 
   </div>
 
 </div>

@@ -16,8 +16,8 @@ export class NativeUserCreateComponent implements OnInit {
   @Output() saved = new EventEmitter();
   @Output() cancel = new EventEmitter();
 
-  confirmPassword: String;
-  doesPasswordMatch = true;
+  passwordConfirm: String;
+  doPasswordsMatch = true;
 
   roleArray = [];
 
@@ -26,7 +26,7 @@ export class NativeUserCreateComponent implements OnInit {
   constructor(private usersService: UserAdminService, private errorService: AdsErrorService) { }
 
   ngOnInit() {
-    this.user.enabled = 1;
+    this.user.enabled = "true";
 
     this.user.userName="asd user";
     this.user.email="asd@asd.com";
@@ -34,6 +34,8 @@ export class NativeUserCreateComponent implements OnInit {
     this.user.lastName="asd";
     this.user.password="123";
     this.user.userRole="http://localhost:8080/userRoles/2";
+    
+    
 
     // This method is to get all the values from user_role table
     this.usersService.getUserRoles().subscribe(
@@ -65,13 +67,14 @@ export class NativeUserCreateComponent implements OnInit {
     }
     return false;
   }
+*/
 
   comparePasswords() {
-    console.log(this.user.password, this.confirmPassword);
-    this.doesPasswordMatch = this.user.password === this.confirmPassword;
-    console.log(this.doesPasswordMatch);
+    console.log(this.user.password, this.passwordConfirm);
+    this.doPasswordsMatch = this.user.password === this.passwordConfirm;
+    console.log(this.doPasswordsMatch);
   }
-*/
+
 
   save() {
     console.log("create modal save()");

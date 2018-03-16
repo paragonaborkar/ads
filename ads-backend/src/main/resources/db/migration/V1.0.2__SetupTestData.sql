@@ -826,8 +826,6 @@ INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`
 INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (2, 2, NULL, 0);
 INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (3, 3, NULL, 0);
 
-
-
 -- -- Dumping data for table `ads_report`
 
 

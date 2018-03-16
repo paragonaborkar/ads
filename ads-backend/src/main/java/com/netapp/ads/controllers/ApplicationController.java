@@ -20,7 +20,7 @@ public class ApplicationController {
 	@Autowired
 	ApplicationService applicationService;
 	
-    @RequestMapping(value="createAppAndUser", method = RequestMethod.GET)
+    @RequestMapping(value="createAppAndUser", method = RequestMethod.POST)
     public List<Application> createAppAndUser(@RequestParam(name="ip") String ipAddress) {
     	return applicationService.createApplicationAndUsers(ipAddress);
     }
