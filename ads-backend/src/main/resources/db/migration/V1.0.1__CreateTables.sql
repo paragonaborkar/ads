@@ -1034,11 +1034,11 @@ CREATE TABLE `migration_key` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Migration Key',
   `migration_key` varchar(100) NOT NULL,
   `user_corporate_id` int(11) NOT NULL,
+  `run_no` INT NULL DEFAULT '0',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `migration_key_UNIQUE` (`migration_key`),
-  UNIQUE KEY `user_corporate_id_UNIQUE` (`user_corporate_id`)
+  UNIQUE KEY `migration_key_UNIQUE` (`migration_key`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

@@ -102,6 +102,14 @@ public class Activity implements Serializable {
 	//bi-directional many-to-many association to LineOfBusiness
 	@ManyToMany(mappedBy="activitiesPresumedLobXRef")
 	private List<LineOfBusiness> lineOfBusinessesXRefPresumedActivities;
+	
+	//bi-directional many-to-one association to ActivityMigrationKeyXRef
+	@OneToMany(mappedBy="activity")
+	private List<ActivityMigrationKeyXRef> activityMigrationKeyXRefs;
+	
+	@ManyToMany(fetch = FetchType.LAZY,
+	        mappedBy = "activities")
+	private List<MigrationKey> migrationKeys;
 
 	public Activity() {
 	}
@@ -319,5 +327,27 @@ public class Activity implements Serializable {
 	public void setLineOfBusinessesXRefPresumedActivities(List<LineOfBusiness> lineOfBusinessesXRefPresumedActivities) {
 		this.lineOfBusinessesXRefPresumedActivities = lineOfBusinessesXRefPresumedActivities;
 	}
+	
+	public List<MigrationKey> getMigrationKeys() {
+		return this.migrationKeys;
+	}
+
+	public void setMigrationKeys(List<MigrationKey> migrationKeys) {
+		this.migrationKeys = migrationKeys;
+	}
+
+	public MigrationKey addMigrationKey(MigrationKey migrationKey) {
+		getMigrationKeys().add(migrationKey);
+		migrationKey.addActivity(this);
+		return migrationKey;
+	}
+
+	public MigrationKey removeMigrationKey(MigrationKey migrationKey) {
+		getMigrationKeys().remove(migrationKey);
+		migrationKey.removeActivity(this);
+		return migrationKey;
+	}
+
+
 
 }

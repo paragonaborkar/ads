@@ -11,11 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.netapp.ads.batch.MigrationKeyService;
+import com.netapp.ads.models.Activity;
 import com.netapp.ads.models.Controller;
 import com.netapp.ads.models.ControllerRelease;
 import com.netapp.ads.models.NasVolume;
+import com.netapp.ads.repos.ActivityRepository;
 import com.netapp.ads.repos.ControllerReleaseRepository;
 import com.netapp.ads.repos.MigrationKeyRepository;
+import com.netapp.ads.repos.QtreeRepository;
 import com.netapp.ads.rules.engine.ExceptionRuleService;
 import com.netapp.ads.rules.engine.QtreeDispositionService;
 import com.netapp.ads.services.OwnerIdentificationService;
@@ -54,13 +58,33 @@ public class MigrationKeyController {
 	@Autowired
 	OwnerIdentificationService ownerIdentificationService;
 	
+	@Autowired
+	MigrationKeyService migrationKeyService;
+	
+	@Autowired
+	ActivityRepository activityRepository;
+	
+	@Autowired
+	QtreeRepository qtreeRepository;
+	
 /*	
+ 	For testing populateActivites perform following database clean-up
  	Run following before testing to cleanup DB
  	update controller_release set processed = 0;
 	update qtree set justification = NULL, disposition = NULL where justification is not null;
-	delete from activity where create_time > '2018-01-01';
-*/
+	delete from activity where create_time > '2018-01-01'; //yyyy-mm-dd
 	
+	Sequence is 
+	populate ControllerRelease -> populate Activity -> populate Application/Corp Users/Activity Response -->
+	generate Migration Keys -> Send emails 
+*/
+	/**
+	 * Populates activities based on the controller release which have not been processed
+	 * For each controller release, fint the qtrees
+	 * For each qtree run disposition and exception rules 
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/populateActivity", method = RequestMethod.GET)
 	public Integer populateActivities() {
 		log.debug("populateActivities: CALLED"); 
@@ -80,6 +104,11 @@ public class MigrationKeyController {
 		return 0;
 	}
 	
+	/**
+	 * HOST IP Address should exist in Verum
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/identifyOwners", method = RequestMethod.GET)
 	public Integer identifyOwners() {
 		log.debug("identifyOwners: [ENTER]");
@@ -87,4 +116,13 @@ public class MigrationKeyController {
 		log.debug("identifyOwners: [EXIT]");
 		return 0;
 	}	
+	
+	@RequestMapping(value = "/generateMigrationKeys", method = RequestMethod.POST)
+	public Integer generateMigrationKeys() {
+		//Add DiscoverOwner clause
+		List<Activity> activities = activityRepository.findAll();
+		migrationKeyService.generateMigrationKeys(activities);
+		return 0;
+	}
+
 }

@@ -38,6 +38,16 @@ public class OwnerIdentificationService {
 	@Autowired
 	ApplicationService applicationService;
 	
+	/**
+	 * Finds activities where owner needs to be discovered
+	 * For each activity creates Applications and corresponding Corporate Users obtained from CMDB based on IP Address of
+	 * the host. Activity -> Qtree -> Share --> Host -> Applications and Corporate Users
+	 * For each application it also creates an initial Activity Response for a user - one activity response per activity per user
+	 * It also sets in activity.note whether the activity is single owner or multi however this is not needed since we can
+	 * easily generate a count of activity responses to determine that - if activity response count > 1, then it is a 
+	 * multi-owner situation
+	 * 
+	 */
 	public void identifyOwner() {
 		log.debug("identifyOwner(): [ENTER] ");
 		

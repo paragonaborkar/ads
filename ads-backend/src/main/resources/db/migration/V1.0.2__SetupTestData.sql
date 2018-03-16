@@ -27,7 +27,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `aggregate_purpose` WRITE;
 /*!40000 ALTER TABLE `aggregate_purpose` DISABLE KEYS */;
-INSERT INTO `aggregate_purpose` VALUES (1,23,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(2,24,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(602,25,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(603,26,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(604,27,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(605,28,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(606,29,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(607,30,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(608,31,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(609,32,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(610,33,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(611,34,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(612,413,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(613,613,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(614,614,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(615,615,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(616,616,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(617,414,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(618,415,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(619,416,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(620,501,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(621,621,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(622,622,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL);
+INSERT INTO `aggregate_purpose` VALUES (1,23,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(2,24,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(602,25,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(603,26,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(604,27,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(605,28,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(606,29,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(607,30,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(608,31,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(609,32,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(610,33,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(611,34,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(612,413,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL);
 /*!40000 ALTER TABLE `aggregate_purpose` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -791,6 +791,14 @@ INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, 
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`, `field_template`) VALUES (4, 'propertyName', '1', 1, 'stringEdit');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`, `field_template`) VALUES (4, 'propertyValue', '1', 1, 'stringEdit');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (4, 'grouping', '1', 1);
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'Source Controller', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'tgtControllerId', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'processed', '1');
+# ALTER TABLE `preference_detail`	ADD COLUMN `field_prop` VARCHAR(50) NULL DEFAULT NULL AFTER `field_name`;
+
+#INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'propertyName', '1');
+#INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'propertyValue', '1');
+#INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'grouping', '1');
 
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (5, 'disposition', '1', 1);
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (5, 'willDelete', '1', 1);
@@ -809,6 +817,7 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (7, 'assetNumber', '1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_template`) VALUES (7, 'createTime', '1', 'dateTime');
 
+UPDATE `ads_dev`.`preference_detail` SET `field_prop`='srcController.controllerName' WHERE  `id`=13;
 
 -- /*!40000 ALTER TABLE `preference_detail` ENABLE KEYS */;
 -- UNLOCK TABLES;
@@ -818,21 +827,6 @@ INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`
 INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (3, 3, NULL, 0);
 
 
-INSERT INTO `preference` (`page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES ('ControllerReleaseListing', 'SYSTEM', 0, 0);
-
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'Source Controller', '1');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'tgtControllerId', '1');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'processed', '1');
-
-
-ALTER TABLE `preference_detail`	ADD COLUMN `field_prop` VARCHAR(50) NULL DEFAULT NULL AFTER `field_name`;
-
-INSERT INTO `preference` (`page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES ('SysPropListing', 'SYSTEM', '0', '0');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'propertyName', '1');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'propertyValue', '1');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'grouping', '1');
-
-UPDATE `ads_dev`.`preference_detail` SET `field_prop`='srcController.controllerName' WHERE  `id`=13;
 
 -- -- Dumping data for table `ads_report`
 
