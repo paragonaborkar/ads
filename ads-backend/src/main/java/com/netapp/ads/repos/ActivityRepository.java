@@ -25,7 +25,7 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>, Jp
 	//Select a From ActivityEntity a where a.disposition=:disposition AND a.unidentifiedReason IS NULL
 	List<Activity> findByDisposition(@Param("disposition") String disposition);
 	
-	Activity findById(@Param("id") Integer id);
+//	Activity findById(@Param("id") Integer id);
 	
 
 	/*	SIMLIAR TO: 

@@ -22,7 +22,7 @@
       <label for="srcControllerName">Source Controller</label>
 
       <app-controller-typeahead (selectedController)="filterByController($event)" #selectedSrcControllerControl  
-      [selectOptionsDataSource]="'findByControllerNameContaining'" [controllerName]= "'srcController'"  [controllerTypeName]= "'Source '" [valueRequired]="true"></app-controller-typeahead>
+      [selectOptionsDataSource]="'findByControllerTargetsAvailableWithControllerNameContaining'" [controllerName]= "'srcController'"  [controllerTypeName]= "'Source '" [valueRequired]="true"></app-controller-typeahead>
 
     </div>
 

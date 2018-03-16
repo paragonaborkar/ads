@@ -17,6 +17,9 @@ export class ControllerTypeaheadService {
 
   getData(nameOfDataProvider: String, criteria: String): Observable<any> {
     switch (nameOfDataProvider) {
+      case "findByControllerByNameContainingWithoutExistingWorkPackage": {
+        return this.findByControllerByNameContainingWithoutExistingWorkPackage(criteria);
+      }
       case "findByControllerNameContaining": {
         return this.findByControllerNameContaining(criteria);
       }
@@ -45,13 +48,17 @@ export class ControllerTypeaheadService {
   }
 
   findByControllerNameContaining(criteria: String): Observable<any> {
-
     return this.http.get(this.global.apiUrl + "/controllers/search/findByControllerNameContaining?controllerNameContains=" + criteria + "&projection=ControllerId")
-      .map((res: Response) => res["_embedded"]["controllers"])
-      .do(x => console.log(x));
-    // There were some posts on need to always return an observable, but didn't see this during development
-    // .catch((error:any) => Observable.throw(error || 'Server error'));
+      .map((res: Response) => res["_embedded"]["controllers"]);
+    // .catch(
+    // Handle error in Subscribe() using the AdsErrorService  
+    // You can optionally handle it here, if needed    
+    //   );
+  }
 
+  findByControllerByNameContainingWithoutExistingWorkPackage(criteria: String): Observable<any> {
+    return this.http.get(this.global.apiUrl + "/controllers/search/findByControllerByNameContainingWithoutExistingWorkPackage?controllerNameContains=" + criteria + "&projection=ControllerId")
+      .map((res: Response) => res["_embedded"]["controllers"]);
     // .catch(
     // Handle error in Subscribe() using the AdsErrorService  
     // You can optionally handle it here, if needed    

@@ -792,7 +792,6 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`, `field_template`) VALUES (4, 'propertyValue', '1', 1, 'stringEdit');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (4, 'grouping', '1', 1);
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'Source Controller', '1');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'tgtControllerId', '1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'processed', '1');
 # ALTER TABLE `preference_detail`	ADD COLUMN `field_prop` VARCHAR(50) NULL DEFAULT NULL AFTER `field_name`;
 
@@ -808,7 +807,7 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `
 
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`) VALUES (6, 'Source Controller', '1', 'srcController.controllerName');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`) VALUES (6, 'Target Controller', '1', 'tgtController.controllerName');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (6, 'tgtControllerId', '1');
+
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_template`) VALUES (6, 'processed', '1', 'yesNo');
 
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`) VALUES (7, 'Controller', '1', 'controller.controllerName');
@@ -824,9 +823,6 @@ UPDATE `ads_dev`.`preference_detail` SET `field_prop`='srcController.controllerN
 -- /*!40000 ALTER TABLE `preference_detail` ENABLE KEYS */;
 -- UNLOCK TABLES;
 
-INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (1, 1, NULL, 0);
-INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (2, 2, NULL, 0);
-INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (3, 3, NULL, 0);
 
 
 

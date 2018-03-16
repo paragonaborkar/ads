@@ -73,7 +73,7 @@
 
 
 <ng-template #actionTmpl let-column="column" let-row="row">
-  <button class="btn btn-sm btn-warning" (click)="showDeleteModal(row)">
+  <button class="btn btn-sm btn-warning" (click)="showDeleteModal(row)" *ngIf="!row.processed">
     <i class="fa fa-trash"></i> Delete
   </button>
 </ng-template>
