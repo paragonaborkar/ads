@@ -818,7 +818,6 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (7, 'assetNumber', '1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_template`) VALUES (7, 'createTime', '1', 'dateTime');
 
-UPDATE `ads_dev`.`preference_detail` SET `field_prop`='srcController.controllerName' WHERE  `id`=13;
 
 -- /*!40000 ALTER TABLE `preference_detail` ENABLE KEYS */;
 -- UNLOCK TABLES;
