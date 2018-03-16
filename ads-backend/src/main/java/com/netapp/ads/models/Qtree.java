@@ -2,6 +2,9 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Timestamp;
 import java.math.BigInteger;
 import java.util.Date;
@@ -50,8 +53,8 @@ public class Qtree implements Serializable {
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to Activity
-	@OneToMany(mappedBy="qtree")
-	private List<Activity> activities;
+	@OneToOne(mappedBy="qtree")
+	private Activity activity;
 
 	//bi-directional many-to-one association to NasVolume
 	@ManyToOne
@@ -155,23 +158,23 @@ public class Qtree implements Serializable {
 		this.updateTime = updateTime;
 	}
 
-	public List<Activity> getActivities() {
-		return this.activities;
+	public Activity getActivity() {
+		return this.activity;
 	}
 
-	public void setActivities(List<Activity> activities) {
-		this.activities = activities;
+	public void setActivity(Activity activity) {
+		this.activity = activity;
 	}
 
 	public Activity addActivity(Activity activity) {
-		getActivities().add(activity);
+//		getActivities().add(activity);
 		activity.setQtree(this);
 
 		return activity;
 	}
 
 	public Activity removeActivity(Activity activity) {
-		getActivities().remove(activity);
+//		getActivities().remove(activity);
 		activity.setQtree(null);
 
 		return activity;

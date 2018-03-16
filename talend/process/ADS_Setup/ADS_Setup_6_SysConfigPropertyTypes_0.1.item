@@ -17,13 +17,13 @@
     <contextParameter comment="" name="ADS_EMAIL_SMTP_PORT" prompt="ADS_EMAIL_SMTP_PORT?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="587"/>
     <contextParameter comment="" name="ADS_EMAIL_TO" prompt="ADS_EMAIL_TO?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
     <contextParameter comment="" name="ADS_LOG_DIRECTORY" prompt="ADS_LOG_DIRECTORY?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_Directory" value="C:/netapp/logs/"/>
-    <contextParameter comment="" name="ENV_CONTEXT_FILE" prompt="ENV_CONTEXT_FILE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="C:\projects\backup\ADS_DATA\context\ads_context.properties"/>
+    <contextParameter comment="" name="ENV_CONTEXT_FILE" prompt="ENV_CONTEXT_FILE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="C:\talend\ads_context.properties"/>
     <contextParameter comment="" name="FORMAT_DATE_TO_STRING" prompt="FORMAT_DATE_TO_STRING?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="%Y-%m-%d"/>
     <contextParameter comment="" name="FORMAT_DATETIME_TO_STRING" prompt="FORMAT_DATETIME_TO_STRING?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="%Y-%m-%dT%H:%i:%s"/>
     <contextParameter comment="" name="JOB_ID_XPATH" prompt="JOB_ID_XPATH?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
     <contextParameter comment="" name="JOB_NAME" prompt="JOB_NAME?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;talendJob&quot;"/>
     <contextParameter comment="" name="LOAD_FILES_LOC" prompt="LOAD_FILES_LOC?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_Directory" value="C:/netapp/ads_setup_loadsheets/"/>
-    <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoidGFsZW5kIiwiYWRzX21vZHVsZXMiOnsiZGlzY292ZXIiOnRydWUsInJlcG9ydHMiOmZhbHNlLCJzY2hlZHVsZSI6ZmFsc2UsInBsYW5uaW5nIjpmYWxzZSwiZXhlY3V0ZSI6ZmFsc2UsImNvbm5lY3Rpb25zIjp0cnVlfSwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTUxODgwNzc2MiwiYXV0aG9yaXRpZXMiOlsiQ0xJRU5UIl0sImp0aSI6ImNhMmZmYzRlLTNhMzYtNDNjOS1hMDFhLWY2ZDBjMjI1MzVlMyIsImNsaWVudF9pZCI6InRlc3Rqd3RjbGllbnRpZCJ9.Tubc_IKt1H-9F7KJJGZbxutoRljhHRt8MD9eev4oOYY"/>
+    <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoidGFsZW5kIiwiYWRzX21vZHVsZXMiOnsiZGlzY292ZXIiOnRydWUsInJlcG9ydHMiOmZhbHNlLCJzY2hlZHVsZSI6ZmFsc2UsInBsYW5uaW5nIjpmYWxzZSwiZXhlY3V0ZSI6ZmFsc2UsImNvbm5lY3Rpb25zIjp0cnVlfSwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTUyMTI0ODg1NCwiYXV0aG9yaXRpZXMiOlsiQ0xJRU5UIl0sImp0aSI6IjlhZmJhODZmLTY0ZDAtNDNlMy04YTI5LTc0YjI4NmMxNWQxOCIsImNsaWVudF9pZCI6InRlc3Rqd3RjbGllbnRpZCJ9.-oHzAVBPkLzyTl0lftic4LwOLATqS5R1KoADJu4vvwQ"/>
     <contextParameter comment="" name="RESOURCE_XPATH_USER_NATIVE" prompt="RESOURCE_XPATH_USER_NATIVE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/root/_links/userNative/href"/>
     <contextParameter comment="" name="REST_DATA_RESOURCE_XPATH" prompt="REST_DATA_RESOURCE_XPATH?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/root/_links/self/href"/>
     <contextParameter comment="" name="REST_REQ_JSON" prompt="REST_REQ_JSON?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
@@ -449,7 +449,7 @@
     </metadata>
   </node>
   <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="-128" posY="192">
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_4" show="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_3" show="false"/>
     <elementParameter field="CHECK" name="USE_DYNAMIC_JOB" value="false"/>
     <elementParameter field="TEXT" name="CONTEXT_JOB" value="" show="false"/>
     <elementParameter field="PROCESS_TYPE" name="PROCESS" value="logJobDetails"/>
@@ -473,13 +473,15 @@
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.OAUTH_BEARER_TOKEN"/>
       <elementValue elementRef="PARAM_NAME_COLUMN" value="RESPONSE_RESOURCE_XPATH"/>
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="&quot;/root/_links/jobData/href&quot;"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="REST_URL_BASE"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.REST_URL_BASE"/>
     </elementParameter>
     <elementParameter field="CHECK" name="PROPAGATE_CHILD_RESULT" value="false"/>
     <elementParameter field="CHECK" name="PRINT_PARAMETER" value="false"/>
     <elementParameter field="CHECK" name="TRANSMIT_ORIGINAL_CONTEXT" value="true" show="false"/>
     <elementParameter field="TEXT" name="LABEL" value="LogPreJobDetails"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
-    <metadata connector="FLOW" name="tRunJob_4">
+    <metadata connector="FLOW" name="tRunJob_3">
       <column comment="" key="false" length="-1" name="resourceId" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
     </metadata>
   </node>
@@ -491,7 +493,7 @@
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
     <metadata connector="FLOW" name="tJavaRow_2"/>
   </node>
-  <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="128" posY="352">
+  <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="128" posY="320">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_1" show="false"/>
     <elementParameter field="CHECK" name="USE_DYNAMIC_JOB" value="false"/>
     <elementParameter field="TEXT" name="CONTEXT_JOB" value="" show="false"/>
@@ -526,6 +528,20 @@
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="globalMap.get(&quot;jobId&quot;)"/>
       <elementValue elementRef="PARAM_NAME_COLUMN" value="OAUTH_BEARER_TOKEN"/>
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.OAUTH_BEARER_TOKEN"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_TO"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_TO"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_FROM"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_FROM"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_SMTP_NAME"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_SMTP_NAME"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_SMTP_PORT"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_SMTP_PORT"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_AUTHENTICATION_USER"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_AUTHENTICATION_USER"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_AUTHENTICATION_PASSWORD"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_AUTHENTICATION_PASSWORD"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="REST_URL_BASE"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.REST_URL_BASE"/>
     </elementParameter>
     <elementParameter field="CHECK" name="PROPAGATE_CHILD_RESULT" value="false"/>
     <elementParameter field="CHECK" name="PRINT_PARAMETER" value="false"/>
@@ -599,9 +615,9 @@
     <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="row4" show="false"/>
   </connection>
-  <connection connectorName="FLOW" label="row2" lineStyle="0" metaname="tRunJob_4" offsetLabelX="0" offsetLabelY="0" source="tRunJob_4" target="tJavaRow_2">
+  <connection connectorName="FLOW" label="row1" lineStyle="0" metaname="tRunJob_3" offsetLabelX="0" offsetLabelY="0" source="tRunJob_3" target="tJavaRow_2">
     <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="row2" show="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="row1" show="false"/>
   </connection>
   <connection connectorName="COMPONENT_OK" label="OnComponentOk" lineStyle="3" metaname="tJavaRow_2" offsetLabelX="0" offsetLabelY="0" source="tJavaRow_2" target="tSetGlobalVar_1">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="OnComponentOk4" show="false"/>
@@ -628,7 +644,7 @@
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
   </subjob>
   <subjob>
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_4" show="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_3" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="92;131;150" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
   </subjob>

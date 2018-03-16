@@ -73,8 +73,11 @@
 
 
 <ng-template #actionTmpl let-column="column" let-row="row">
-  <button class="btn btn-sm btn-warning" (click)="showDeleteModal(row)">
+  <button class="btn btn-sm btn-warning" (click)="showDeleteModal(row)" *ngIf="!row.processed">
     <i class="fa fa-trash"></i> Delete
   </button>
 </ng-template>
+
+<app-controller-release-delete class="modal fade" bsModal #deleteModal="bs-modal" *ngIf="isDeleteModal" [config]="{ show: true }" [controllerRelease]="controllerRelease"
+  (delete)="onHide('delete')" (cancel)="onHide('delete')"></app-controller-release-delete>
 

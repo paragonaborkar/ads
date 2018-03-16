@@ -85,9 +85,15 @@ public class Activity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="migration_time_id")
 	private MigrationTime migrationTime;
+	
+    //bi-directional many-to-one association to ActivityMigrationKeyXRef
+    @OneToMany(mappedBy="activity")
+    private List<ActivityMigrationKeyXRef> activityMigrationKeyXRefs;
 
-	//bi-directional many-to-one association to Qtree
-	@ManyToOne
+
+	//bi-directional one-to-one association to Qtree
+//	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="qtree_id")
 	private Qtree qtree;
 
@@ -298,14 +304,14 @@ public class Activity implements Serializable {
 		this.activityResponses = activityResponses;
 	}
 
-	public ActivityResponse addActivityRespons(ActivityResponse activityRespons) {
+	public ActivityResponse addActivityResponse(ActivityResponse activityRespons) {
 		getActivityResponses().add(activityRespons);
 		activityRespons.setActivity(this);
 
 		return activityRespons;
 	}
 
-	public ActivityResponse removeActivityRespons(ActivityResponse activityRespons) {
+	public ActivityResponse removeActivityResponse(ActivityResponse activityRespons) {
 		getActivityResponses().remove(activityRespons);
 		activityRespons.setActivity(null);
 

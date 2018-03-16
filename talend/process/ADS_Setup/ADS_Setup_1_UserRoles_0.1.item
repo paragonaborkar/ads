@@ -17,13 +17,13 @@
     <contextParameter comment="" name="ADS_SETUP_LOADSHEET_SYS_CONFIG_PROPERTY_TYPE_XLSX" prompt="ADS_SETUP_LOADSHEET_SYS_CONFIG_PROPERTY_TYPE_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_SysConfigPropertyType_Template.xlsx"/>
     <contextParameter comment="" name="ADS_SETUP_LOADSHEET_USER_NATIVES_XLSX" prompt="ADS_SETUP_LOADSHEET_USER_NATIVES_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_UserNative_Template.xlsx"/>
     <contextParameter comment="" name="ADS_SETUP_LOADSHEET_USER_ROLES_XLSX" prompt="ADS_SETUP_LOADSHEET_USER_ROLES_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_UserRoles_Template.xlsx"/>
-    <contextParameter comment="" name="ENV_CONTEXT_FILE" prompt="ENV_CONTEXT_FILE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="C:\projects\backup\ADS_DATA\context\ads_context.properties"/>
+    <contextParameter comment="" name="ENV_CONTEXT_FILE" prompt="ENV_CONTEXT_FILE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="C:\talend\ads_context.properties"/>
     <contextParameter comment="" name="FORMAT_DATE_TO_STRING" prompt="FORMAT_DATE_TO_STRING?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="%Y-%m-%d"/>
     <contextParameter comment="" name="FORMAT_DATETIME_TO_STRING" prompt="FORMAT_DATETIME_TO_STRING?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="%Y-%m-%dT%H:%i:%s"/>
     <contextParameter comment="" name="JOB_ID_XPATH" prompt="JOB_ID_XPATH?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
     <contextParameter comment="" name="JOB_NAME" prompt="JOB_NAME?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;talendJob&quot;"/>
     <contextParameter comment="" name="LOAD_FILES_LOC" prompt="LOAD_FILES_LOC?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_Directory" value="C:/netapp/ads_setup_loadsheets/"/>
-    <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoidGFsZW5kIiwiYWRzX21vZHVsZXMiOnsiZGlzY292ZXIiOnRydWUsInJlcG9ydHMiOmZhbHNlLCJzY2hlZHVsZSI6ZmFsc2UsInBsYW5uaW5nIjpmYWxzZSwiZXhlY3V0ZSI6ZmFsc2UsImNvbm5lY3Rpb25zIjp0cnVlfSwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTUxODgwNzc2MiwiYXV0aG9yaXRpZXMiOlsiQ0xJRU5UIl0sImp0aSI6ImNhMmZmYzRlLTNhMzYtNDNjOS1hMDFhLWY2ZDBjMjI1MzVlMyIsImNsaWVudF9pZCI6InRlc3Rqd3RjbGllbnRpZCJ9.Tubc_IKt1H-9F7KJJGZbxutoRljhHRt8MD9eev4oOYY"/>
+    <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoidGFsZW5kIiwiYWRzX21vZHVsZXMiOnsiZGlzY292ZXIiOnRydWUsInJlcG9ydHMiOmZhbHNlLCJzY2hlZHVsZSI6ZmFsc2UsInBsYW5uaW5nIjpmYWxzZSwiZXhlY3V0ZSI6ZmFsc2UsImNvbm5lY3Rpb25zIjp0cnVlfSwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTUyMTI0ODg1NCwiYXV0aG9yaXRpZXMiOlsiQ0xJRU5UIl0sImp0aSI6IjlhZmJhODZmLTY0ZDAtNDNlMy04YTI5LTc0YjI4NmMxNWQxOCIsImNsaWVudF9pZCI6InRlc3Rqd3RjbGllbnRpZCJ9.-oHzAVBPkLzyTl0lftic4LwOLATqS5R1KoADJu4vvwQ"/>
     <contextParameter comment="" name="RESOURCE_XPATH_USER_NATIVE" prompt="RESOURCE_XPATH_USER_NATIVE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/root/_links/userNative/href"/>
     <contextParameter comment="" name="REST_DATA_RESOURCE_XPATH" prompt="REST_DATA_RESOURCE_XPATH?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/root/_links/self/href"/>
     <contextParameter comment="" name="REST_REQ_JSON" prompt="REST_REQ_JSON?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
@@ -472,6 +472,8 @@
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.OAUTH_BEARER_TOKEN"/>
       <elementValue elementRef="PARAM_NAME_COLUMN" value="RESPONSE_RESOURCE_XPATH"/>
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="&quot;/root/_links/jobData/href&quot;"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="REST_URL_BASE"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.REST_URL_BASE"/>
     </elementParameter>
     <elementParameter field="CHECK" name="PROPAGATE_CHILD_RESULT" value="false"/>
     <elementParameter field="CHECK" name="PRINT_PARAMETER" value="false"/>
@@ -525,6 +527,20 @@
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="globalMap.get(&quot;jobId&quot;)"/>
       <elementValue elementRef="PARAM_NAME_COLUMN" value="OAUTH_BEARER_TOKEN"/>
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.OAUTH_BEARER_TOKEN"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_TO"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_TO"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_FROM"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_FROM"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_SMTP_NAME"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_SMTP_NAME"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_SMTP_PORT"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_SMTP_PORT"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_AUTHENTICATION_USER"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_AUTHENTICATION_USER"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_AUTHENTICATION_PASSWORD"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_AUTHENTICATION_PASSWORD"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="REST_URL_BASE"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.REST_URL_BASE"/>
     </elementParameter>
     <elementParameter field="CHECK" name="PROPAGATE_CHILD_RESULT" value="false"/>
     <elementParameter field="CHECK" name="PRINT_PARAMETER" value="false"/>

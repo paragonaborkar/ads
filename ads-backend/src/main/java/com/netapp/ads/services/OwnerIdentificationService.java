@@ -80,7 +80,7 @@ public class OwnerIdentificationService {
 								activityResponse.setOwnerUserCorporateId(applicationOwnerId);
 								activityResponse.setActivity(activity);
 								activityResponseRepository.save(activityResponse);
-								activity.addActivityRespons(activityResponse);
+								activity.addActivityResponse(activityResponse);
 								activity.setNote(QtreeOwnerStatus.Single.name());
 								//activity.setAppNameList(application.getApplicationName());
 								activity = activityRepository.save(activity);
@@ -100,7 +100,7 @@ public class OwnerIdentificationService {
 									ActivityResponse activityResponse = new ActivityResponse();
 									activityResponse.setIsPresumed(true);
 									activityResponse.setOwnerUserCorporateId(applicationOwnerId);
-									activity.addActivityRespons(activityResponse);
+									activity.addActivityResponse(activityResponse);
 									activity.setNote(QtreeOwnerStatus.Multi.name());
 									//activity.setAppNameList(application.getApplicationName());
 									activity = activityRepository.save(activity);
@@ -155,7 +155,7 @@ public class OwnerIdentificationService {
 								ActivityResponse activityResponse = new ActivityResponse();
 								activityResponse.setIsPresumed(true);
 								activityResponse.setOwnerUserCorporateId(host.getHostOwnerUserCorporateId());
-								activity.addActivityRespons(activityResponse);
+								activity.addActivityResponse(activityResponse);
 								activity.setNote(QtreeOwnerStatus.Multi.name());
 								//activity.setAppNameList(application.getApplicationName());
 								activity = activityRepository.save(activity);

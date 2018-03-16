@@ -26,24 +26,38 @@ public class TalendConstants {
 	public final static String JOB_TYPE_OCI_LOAD="OCI_Load";
 	
 	public final static String LOAD_FILES_LOC="LOAD_FILES_LOC";
-	public final static String ADS_SETUP_LOADSHEET_USER_ROLES_XLSX="ADS_CONFIGS_LOADSHEET_USER_ROLES_XLSX";
+	public final static String ADS_SETUP_LOADSHEET_USER_ROLES_XLSX = "ADS_SETUP_LOADSHEET_USER_ROLES_XLSX";
+	public final static String ADS_SETUP_LOADSHEET_USER_NATIVES_XLSX = "ADS_SETUP_LOADSHEET_USER_NATIVES_XLSX";
+	public final static String ADS_SETUP_LOADSHEET_APPLICATION_XLSX = "ADS_SETUP_LOADSHEET_APPLICATION_XLSX";
+	public final static String ADS_SETUP_LOADSHEET_AUDIT_EVENT_XLSX = "ADS_SETUP_LOADSHEET_AUDIT_EVENT_XLSX";
+	public final static String ADS_SETUP_LOADSHEET_AUDIT_REASON_CODE_XLSX = "ADS_SETUP_LOADSHEET_AUDIT_REASON_CODE_XLSX";
+	public final static String ADS_SETUP_LOADSHEET_SYS_CONFIG_PROPERTY_TYPE_XLSX = "ADS_SETUP_LOADSHEET_SYS_CONFIG_PROPERTY_TYPE_XLSX";
+	public final static String ADS_SETUP_LOADSHEET_MST_EMAIL_TYPE_XLSX = "ADS_SETUP_LOADSHEET_MST_EMAIL_TYPE_XLSX";
+	public final static String ADS_SETUP_LOADSHEET_SCHEDULE_XLSX = "ADS_SETUP_LOADSHEET_SCHEDULE_XLSX";
+	public final static String ADS_SETUP_LOADSHEET_MIGRATION_TIME_XLSX = "ADS_SETUP_LOADSHEET_MIGRATION_TIME_XLSX";
+ 
 	
 	public final static String JOB_VERSION_NO="0.1";
 	public final static String UNDERSCORE="_";
 	public final static String TEMP_ATTR_NAME="java.io.tmpdir";
 	public final static String CONTEXT_PARAM="--context_param ";
+	public final static String ENV_CONTEXT_FILE_PARAM_NAME="ENV_CONTEXT_FILE";
+	public final static String ENV_CONTEXT_FILE_NAME="ads_local_context.properties";
 	
-	public TalendConstants() {
-		
-	}
+	public final static String STR_AUTH_TOKEN="OAUTH_BEARER_TOKEN=";
+	public final static String STR_AUTHORIZATION="authorization";
+	public final static String STR_BEARER="bearer";
+	public final static String STR_OS_NAME="os.name";
+	public final static String STR_OS_WINDOWS="win";
+	public final static String STR_CD="cd ";
+	public final static String STR_BAT_EXT=".bat";
+	public final static String STR_SH_EXT=".sh";
+	public final static String STR_SET_PWD="ROOT_PATH=`pwd`";
+	public final static String STR_JAVA="java";
 	
-	public static void main(String[] args) {
-		
-		String operatingSystem = System.getProperty("os.name").toLowerCase();
-		if(operatingSystem.indexOf("win") >= 0) {
-			FLDR_SEPERATOR="\\";
-		} else if(operatingSystem.indexOf("nix") >= 0 || operatingSystem.indexOf("nux") >= 0 || operatingSystem.indexOf("aix") > 0 ) {
-			FLDR_SEPERATOR="/";
-		}
-	}
+	public final static String STR_JOB_SUBMITTED="Job Submitted Successfully";
+	
+	
+	
+
 }

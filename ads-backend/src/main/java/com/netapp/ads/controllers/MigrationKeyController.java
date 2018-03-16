@@ -15,9 +15,11 @@ import com.netapp.ads.batch.MigrationKeyService;
 import com.netapp.ads.models.Activity;
 import com.netapp.ads.models.Controller;
 import com.netapp.ads.models.ControllerRelease;
+import com.netapp.ads.models.ControllerWorkPackage;
 import com.netapp.ads.models.NasVolume;
 import com.netapp.ads.repos.ActivityRepository;
 import com.netapp.ads.repos.ControllerReleaseRepository;
+import com.netapp.ads.repos.ControllerWorkPackageRepository;
 import com.netapp.ads.repos.MigrationKeyRepository;
 import com.netapp.ads.repos.QtreeRepository;
 import com.netapp.ads.rules.engine.ExceptionRuleService;
@@ -54,6 +56,9 @@ public class MigrationKeyController {
 	
 	@Autowired
 	ControllerReleaseRepository controllerReleaseRepository;
+	
+	@Autowired
+	ControllerWorkPackageRepository controllerWorkPackageRepository;
 	
 	@Autowired
 	OwnerIdentificationService ownerIdentificationService;
@@ -113,8 +118,15 @@ public class MigrationKeyController {
 				qtreeDispositionService.executeQtreeDispositionRules(nasVolume.getQtrees());
 				exceptionRuleService.executeQtreeExceptionRules(nasVolume.getQtrees());
 			}
+			
+			// Set the ControllerRelease Processed to true so it cannot be processed by this job again.
 			controllerRelease.setProcessed(true);
 			controllerReleaseRepository.save(controllerRelease);
+			
+			// Set the WorkPackage Processed to true so it cannot be used again.
+			ControllerWorkPackage controllerWorkPackage = controller.getControllerWorkPackage();
+			controllerWorkPackage.setProcessed(true);
+			controllerWorkPackageRepository.save(controllerWorkPackage);
 		}
 		log.debug("populateActivities: COMPLETED");
 		return 0;

@@ -73,7 +73,7 @@ public class Controller implements Serializable {
 	
 	//bi-directional one-to-one association to ControllerTargetsAvailable
 	@OneToOne(mappedBy="controller")
-	private ControllerWorkPackage controllerTargetsAvailable;
+	private ControllerWorkPackage controllerWorkPackage;
 	
 	public Controller() {
 	}
@@ -174,6 +174,14 @@ public class Controller implements Serializable {
 		this.export = export;
 	}
 
+	public ControllerRelease getControllerRelease() {
+		return this.controllerRelease;
+	}
+
+	public void setControllerRelease(ControllerRelease controllerRelease) {
+		this.controllerRelease = controllerRelease;
+	}
+	
 	public Storage getStorage() {
 		return this.storage;
 	}
@@ -227,12 +235,12 @@ public class Controller implements Serializable {
 	}
 	
 	
-	public ControllerWorkPackage getControllerTargetsAvailable() {
-		return this.controllerTargetsAvailable;
+	public ControllerWorkPackage getControllerWorkPackage() {
+		return this.controllerWorkPackage;
 	}
 
-	public void setControllerTargetsAvailable(ControllerWorkPackage controllerTargetsAvailable) {
-		this.controllerTargetsAvailable = controllerTargetsAvailable;
+	public void setControllerWorkPackage(ControllerWorkPackage controllerWorkPackage) {
+		this.controllerWorkPackage = controllerWorkPackage;
 	}
 	
 
