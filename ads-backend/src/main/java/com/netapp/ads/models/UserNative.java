@@ -1,13 +1,25 @@
 package com.netapp.ads.models;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
@@ -19,6 +31,12 @@ import java.util.List;
 public class UserNative implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+//	@Autowired
+//	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+//    @Autowired
+//    private BCryptPasswordEncoder passwordEncoder;
+    
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
@@ -122,7 +140,10 @@ public class UserNative implements Serializable {
 
 	@JsonProperty
 	public void setPassword(String password) {
+//		this.password = bCryptPasswordEncoder.encode(password);
+//		this.password = passwordEncoder.encode(password);
 		this.password = password;
+		
 	}
 
 	public String getSalt() {

@@ -16,20 +16,19 @@
 </div>
 
 
+<div class="row " *ngIf="totalPages && showJasperReport">
 
-<div class=" text-center" *ngIf="totalPages && showJasperReport">
+  <div class="col-md-12 pb-2">
+    <h1 class="text-center">{{moduleDisplayName}} Reports: {{reportTitle}}</h1>
+  </div>
 
-  <h1 class="text-center">{{moduleDisplayName}} Reports: {{reportTitle}}</h1>
-
-  <div class="row">
-    <div class="col-md-3 pull-left">
-
-      <a href="" class="btn btn-outline-secondary" (click)="showJasperReport=false">
-        <span aria-hidden="true">&laquo;</span> Back</a>
+    <div class="col-md-3 ">
+      <button href="" class="btn btn-outline-secondary pull-left" (click)="showJasperReport=false">
+        <span aria-hidden="true">&laquo;</span> Back</button>
     </div>
-    <div class="col-md-6 text-center">
 
-      <ul class="pagination" *ngIf="totalPages > 1">
+    <div class="col-md-6 ">
+      <ul class="pagination justify-content-center" *ngIf="totalPages > 1">
         <li class="page-item " [ngClass]="{disabled: pageCount <= 1}">
           <a class="page-link" href="#" (click)="goToPrevious()">Previous</a>
         </li>
@@ -39,18 +38,18 @@
           <span class="page-link" *ngIf="pageCount == number">{{number}}</span>
         </li>
 
-
         <li class="page-item" [ngClass]="{disabled: pageCount === totalPages}">
           <a class="page-link" href="#" (click)="goToNext()">Next</a>
         </li>
       </ul>
     </div>
-    <div class="col-md-3 pull-right">
 
-      <button class="btn btn-outline-primary" (click)="downloadJasperReport()">Export to Excel</button>
+    <div class="col-md-3">
+      <button class="btn btn-outline-primary pull-right" (click)="downloadJasperReport()">Export to Excel</button>
+  </div>
+</div>
 
-    </div>
-    <!-- 
+<!-- 
   <div class="row" *ngIf="totalPages && showJasperReport">
     <div class="col-md-12 text-center">
       <div *ngIf="totalPages">
@@ -66,8 +65,38 @@
       </div>
     </div>
   </div> -->
+
+<!-- *ngIf="showJasperReport" -->
+
+
+<div innerHtml="{{reportHtml}}" class="" id="reportHtml"></div>
+
+
+<div class="row " *ngIf="totalPages && showJasperReport">
+
+      <div class="col-md-3 ">
+        <button href="" class="btn btn-outline-secondary pull-left" (click)="showJasperReport=false">
+          <span aria-hidden="true">&laquo;</span> Back</button>
+      </div>
+  
+      <div class="col-md-6 ">
+        <ul class="pagination justify-content-center" *ngIf="totalPages > 1">
+          <li class="page-item " [ngClass]="{disabled: pageCount <= 1}">
+            <a class="page-link" href="#" (click)="goToPrevious()">Previous</a>
+          </li>
+  
+          <li class="page-item" [ngClass]="{active: pageCount == number}" *ngFor="let number of numbers">
+            <a class="page-link" href="#" (click)="goToPage(pageNum)" *ngIf="pageCount != number">{{number}}</a>
+            <span class="page-link" *ngIf="pageCount == number">{{number}}</span>
+          </li>
+  
+          <li class="page-item" [ngClass]="{disabled: pageCount === totalPages}">
+            <a class="page-link" href="#" (click)="goToNext()">Next</a>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="col-md-3">
+        <button class="btn btn-outline-primary pull-right" (click)="downloadJasperReport()">Export to Excel</button>
+    </div>
   </div>
-  <!-- *ngIf="showJasperReport" -->
-
-
-  <div innerHtml="{{reportHtml}}" class="" id="reportHtml"></div>
