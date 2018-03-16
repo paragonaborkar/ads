@@ -27,7 +27,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `aggregate_purpose` WRITE;
 /*!40000 ALTER TABLE `aggregate_purpose` DISABLE KEYS */;
-INSERT INTO `aggregate_purpose` VALUES (1,23,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(2,24,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(602,25,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(603,26,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(604,27,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(605,28,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(606,29,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(607,30,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(608,31,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(609,32,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(610,33,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(611,34,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(612,413,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(618,415,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(619,416,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL);
+INSERT INTO `aggregate_purpose` VALUES (1,23,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(2,24,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(602,25,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(603,26,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(604,27,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(605,28,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(606,29,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(607,30,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(608,31,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(609,32,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(610,33,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(611,34,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL),(612,413,NULL,NULL,NULL,'2017-09-27 16:52:25',NULL);
 /*!40000 ALTER TABLE `aggregate_purpose` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -792,6 +792,7 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`, `field_template`) VALUES (4, 'propertyValue', '1', 1, 'stringEdit');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (4, 'grouping', '1', 1);
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'Source Controller', '1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'tgtControllerId', '1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (4, 'processed', '1');
 # ALTER TABLE `preference_detail`	ADD COLUMN `field_prop` VARCHAR(50) NULL DEFAULT NULL AFTER `field_name`;
 
@@ -803,7 +804,6 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `f
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES ('5', 'Qtree Name', 'qtree.name','','1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES ('5', 'Share Count', 'shares.length','','3');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (5, 'disposition', '4', 1);
-
 
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`) VALUES (6, 'Source Controller', '1', 'srcController.controllerName');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`) VALUES (6, 'Target Controller', '1', 'tgtController.controllerName');
@@ -823,8 +823,9 @@ UPDATE `ads_dev`.`preference_detail` SET `field_prop`='srcController.controllerN
 -- /*!40000 ALTER TABLE `preference_detail` ENABLE KEYS */;
 -- UNLOCK TABLES;
 
-
-
+INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (1, 1, NULL, 0);
+INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (2, 2, NULL, 0);
+INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (3, 3, NULL, 0);
 
 -- -- Dumping data for table `ads_report`
 

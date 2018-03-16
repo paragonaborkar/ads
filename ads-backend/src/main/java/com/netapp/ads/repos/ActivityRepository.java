@@ -27,7 +27,6 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>, Jp
 	
 //	Activity findById(@Param("id") Integer id);
 	
-
 	/*	SIMLIAR TO: 
  	select * from activity
 	LEFT JOIN activity_migration_key_x_ref

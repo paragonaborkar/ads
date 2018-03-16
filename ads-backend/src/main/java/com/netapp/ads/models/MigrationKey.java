@@ -35,6 +35,21 @@ public class MigrationKey implements Serializable {
 	//bi-directional many-to-one association to ActivityMigrationKeyXRef
 	@OneToMany(mappedBy="migrationKey")
 	private List<ActivityMigrationKeyXRef> activityMigrationKeyXRefs;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "activity_migration_key_x_ref",
+	        joinColumns = {
+	                @JoinColumn(name = "migration_key_id",
+	                        nullable = false,
+	                        updatable = false) },
+	        inverseJoinColumns = {
+	                @JoinColumn(name = "activity_id",
+	                        nullable = false,
+	                        updatable = false) }
+	        )
+	private List<Activity> activities;
+	
+	private Integer runNo;
 
 	public MigrationKey() {
 	}
@@ -90,7 +105,7 @@ public class MigrationKey implements Serializable {
 	public ActivityMigrationKeyXRef addActivityMigrationKeyXRef(ActivityMigrationKeyXRef activityMigrationKeyXRef) {
 		getActivityMigrationKeyXRefs().add(activityMigrationKeyXRef);
 		activityMigrationKeyXRef.setMigrationKey(this);
-
+		
 		return activityMigrationKeyXRef;
 	}
 
@@ -101,4 +116,44 @@ public class MigrationKey implements Serializable {
 		return activityMigrationKeyXRef;
 	}
 
+	/**
+	 * @return the activities
+	 */
+	public List<Activity> getActivities() {
+		return activities;
+	}
+
+	/**
+	 * @param activities the activities to set
+	 */
+	public void setActivities(List<Activity> activities) {
+		this.activities = activities;
+	}
+	
+	public Activity addActivity(Activity activity) {
+		getActivities().add(activity);
+		//activity.addMigrationKey(this);
+		return activity;
+	}
+
+	public Activity removeActivity(Activity activity) {
+		getActivities().remove(activity);
+		//activity.removeMigrationKey(this);
+		return activity;
+	}
+
+	/**
+	 * @return the runNo
+	 */
+	public Integer getRunNo() {
+		return runNo;
+	}
+
+	/**
+	 * @param runNo the runNo to set
+	 */
+	public void setRunNo(Integer runNo) {
+		this.runNo = runNo;
+	}
+	
 }

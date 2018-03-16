@@ -265,33 +265,6 @@
 						"description": ""
 					},
 					"response": []
-				},
-				{
-					"name": "Populate Activity",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"willDelete\": 0,\n    \"willMigrate\": 1,\n    \"migrateWeek\": \"2018-01-19\",\n    \"migrateDay\": 2,\n    \"callMe\": 1,\n    \"bestNumber\": null,\n    \"archiveCandidate\": 0,\n    \"isLatest\": 0,\n    \"adminOverride\": 0,\n    \"mailCount\": 0,\n    \"migrationTimeId\": null\n}"
-						},
-						"url": {
-							"raw": "{{url}}/populateActivity",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"populateActivity"
-							]
-						},
-						"description": ""
-					},
-					"response": []
 				}
 			]
 		},
@@ -670,7 +643,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"id\":\"503\",\"aggregateName\":\"aggr_64_01\",\"aggregateSizeGb\":\"70020.98\",\"aggregateType\":\"AGGREGATE\",\"isHybrid\":\"false\",\"controller\":\"http://localhost:8080//controllers/1\",\"poolAllocatedCapacityGb\":\"70021.0\",\"poolUsedCapacityGb\":\"46348.926\",\"poolIopsCapability\":\"8100\",\"avgIOpS\":\"1\",\"peakIops\":\"2\"}"
+							"raw": "{\n\t\"id\": \"503\",\n\t\"aggregateName\": \"aggr_64_01\",\n\t\"aggregateSizeGb\": \"70020.98\",\n\t\"aggregateType\": \"AGGREGATE\",\n\t\"isHybrid\": \"false\",\n\t\"controller\": \"http://localhost:8080//controllers/1\",\n\t\"poolAllocatedCapacityGb\": \"70021.0\",\n\t\"poolUsedCapacityGb\": \"46348.926\",\n\t\"poolIopsCapability\": \"8100\",\n\t\"avgIOpS\": \"1\",\n\t\"peakIops\": \"2\"\n}"
 						},
 						"url": {
 							"raw": "{{url}}/aggregates",
@@ -876,6 +849,125 @@
 							],
 							"path": [
 								"applications"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Verum App",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/getVerumApp?ip=10.216.49.131",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"getVerumApp"
+							],
+							"query": [
+								{
+									"key": "ip",
+									"value": "10.216.49.131",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Verum Person",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/getVerumPerson?sid=f591154",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"getVerumPerson"
+							],
+							"query": [
+								{
+									"key": "sid",
+									"value": "f591154",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get ESource",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/getEmployeeProfile?sid=f591154",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"getEmployeeProfile"
+							],
+							"query": [
+								{
+									"key": "sid",
+									"value": "f591154",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create App and User From Verum",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{apiToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/createAppAndUser?ip=10.216.49.131",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"createAppAndUser"
+							],
+							"query": [
+								{
+									"key": "ip",
+									"value": "10.216.49.131",
+									"equals": true
+								}
 							]
 						},
 						"description": ""
@@ -2541,6 +2633,25 @@
 						"description": ""
 					},
 					"response": []
+				},
+				{
+					"name": "Generate Migration Keys",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/generateMigrationKeys",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"generateMigrationKeys"
+							]
+						},
+						"description": ""
+					},
+					"response": []
 				}
 			]
 		},
@@ -3182,6 +3293,25 @@
 							],
 							"path": [
 								"qtrees"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Qtree Owner Custom Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/qtreeowner",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"qtreeowner"
 							]
 						},
 						"description": ""
@@ -4348,7 +4478,7 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "{{url}}/controllerReleases/search/controllerNameStartsWith?startsWith=f",
+							"raw": "{{url}}/controllerReleases/search/controllerNameStartsWith?startsWith=7",
 							"host": [
 								"{{url}}"
 							],
@@ -4360,9 +4490,69 @@
 							"query": [
 								{
 									"key": "startsWith",
-									"value": "f",
+									"value": "7",
 									"equals": true
 								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Owner Identification",
+			"description": "",
+			"item": [
+				{
+					"name": "Populate Activity",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"willDelete\": 0,\n    \"willMigrate\": 1,\n    \"migrateWeek\": \"2018-01-19\",\n    \"migrateDay\": 2,\n    \"callMe\": 1,\n    \"bestNumber\": null,\n    \"archiveCandidate\": 0,\n    \"isLatest\": 0,\n    \"adminOverride\": 0,\n    \"mailCount\": 0,\n    \"migrationTimeId\": null\n}"
+						},
+						"url": {
+							"raw": "{{url}}/populateActivity",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"populateActivity"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Identify Owners",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"willDelete\": 0,\n    \"willMigrate\": 1,\n    \"migrateWeek\": \"2018-01-19\",\n    \"migrateDay\": 2,\n    \"callMe\": 1,\n    \"bestNumber\": null,\n    \"archiveCandidate\": 0,\n    \"isLatest\": 0,\n    \"adminOverride\": 0,\n    \"mailCount\": 0,\n    \"migrationTimeId\": null\n}"
+						},
+						"url": {
+							"raw": "{{url}}/identifyOwners",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"identifyOwners"
 							]
 						},
 						"description": ""
