@@ -57,6 +57,9 @@ export class ManualFunctionComponent implements OnInit {
 
     } else {
       
+        
+      this.updateMessage("", "Job Running...", "");
+
       this.http.post("http://localhost:8080/" + this.jobName, null)
         .map((response) => response)
         .subscribe((response) => {

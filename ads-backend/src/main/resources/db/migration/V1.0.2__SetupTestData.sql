@@ -112,7 +112,7 @@ UNLOCK TABLES;
 -- Dumping data for table vitae_data_refactor.host: ~2 rows (approximately)
 /*!40000 ALTER TABLE `host` DISABLE KEYS */;
 INSERT INTO `host` (`id`, `create_time`, `host_name`, `host_owner_user_corporate_id`, `ip_addr`, `note`, `system_admin_id`, `update_time`) VALUES
-	(1, NULL, 'dv2-ls-cts-001', NULL, '1111.222.333.222', 'Test', NULL, NULL),
+	(1, NULL, 'dv2-ls-cts-001', NULL, '10.216.49.26', 'Test', NULL, NULL),
 	(2, NULL, 'dv2-ls-cts-002', NULL, '198.222.333.222', 'Test', NULL, NULL);
 /*!40000 ALTER TABLE `host` ENABLE KEYS */;
 
@@ -801,7 +801,7 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) V
 #INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'grouping', '1');
 
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES ('5', 'Last Accessed', 'qtree.lastAccessed', 'dateTime', '2');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES ('5', 'Qtree Name', 'qtree.name','','1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES ('5', 'Qtree Name', 'qtree.qtreeName','','1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES ('5', 'Share Count', 'shares.length','','3');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (5, 'disposition', '4', 1);
 
@@ -821,11 +821,11 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `
 
 -- /*!40000 ALTER TABLE `preference_detail` ENABLE KEYS */;
 -- UNLOCK TABLES;
-
+/*
 INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (1, 1, NULL, 0);
 INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (2, 2, NULL, 0);
 INSERT INTO `controller_release` (`id`, `src_controller_id`, `tgt_controller_id`, `processed`) VALUES (3, 3, NULL, 0);
-
+*/
 -- -- Dumping data for table `ads_report`
 
 

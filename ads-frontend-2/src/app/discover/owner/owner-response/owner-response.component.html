@@ -1,172 +1,212 @@
 <div class="modal-dialog modal-lg">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">{{scheduleAction}} Migration</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
-        <span aria-hidden="true">&times;</span>
-      </button>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">{{scheduleAction}} Qtree Owner </h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <h1 class="h4">QTree Name: {{activityInfo.qtree.qtreeName}}</h1>
+            <!-- <pre> {{ formGroup.value | json }} </pre> -->
+
+            <form [formGroup]="formGroup">
+
+                <div class="form-group row" formGroupName="isOwnerFormGroup">
+                    <label for="confirm-owner" class="col-sm-6 form-control-label">Are you the Owner of this Volume? </label>
+                    <div class="col-sm-6">
+                        <div>
+                            <label>
+                                <input class="radio" formControlName="confirmOwner" type="radio" [value]=true>
+                                <span>Yes</span>
+                            </label>
+                            <label>
+                                <input class="radio" formControlName="confirmOwner" type="radio" [value]=false>
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div *ngIf="formGroup.value.isOwnerFormGroup.confirmOwner">
+                    <div class="form-group row" formGroupName="ownerFormGroup">
+                        <label for="decommission-volume" class="col-sm-6 form-control-label">Do you plan to decommission this Volume?</label>
+                        <div class="col-sm-6">
+                            <div>
+                                <label>
+                                    <input class="radio" formControlName="decommissionVolume" type="radio" [value]=true>
+                                    <span>Yes</span>
+                                </label>
+                                <label>
+                                    <input class="radio" formControlName="decommissionVolume" type="radio" [value]=false>
+                                    <span>No</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="formGroup.value.isOwnerFormGroup.confirmOwner && formGroup.value.ownerFormGroup.decommissionVolume == true">
+
+                    <div class="form-group row" formGroupName="ownerFormGroup">
+                        <div class="col-sm-6">
+                            <label for="confirm-owner" class="form-control-label">What date will the Qtree be decommissioned by?:</label>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" [ngClass]="{'is-invalid':controllerInstalledDate.errors?.required && controllerInstalledDate.touched}"
+                                [(ngModel)]="newTarget.controllerInstalledDate" name="controllerInstalledDate" #controllerInstalledDate="ngModel"
+                                required [minDate]="minDate" [maxDate]="maxDate" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue">
+                            <div *ngIf="controllerInstalledDate.errors?.required && controllerInstalledDate.touched" class="invalid-feedback">
+                                Decommissioned By date is required
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="formGroup.value.isOwnerFormGroup.confirmOwner && formGroup.value.ownerFormGroup.decommissionVolume == false">
+
+                    <div class="form-group row" formGroupName="ownerFormGroup">
+                        <div class="col-sm-6">
+                            <label for="confirm-owner" class="form-control-label">Select a date for the migration:</label>
+
+                        </div>
+
+                        <div class="col-sm-6">
+                            <select class="form-control" formControlName="migrationDate">
+                                <option>Get from service</option>
+                                <option>Get from service</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row" formGroupName="ownerFormGroup">
+                        <div class="col-sm-6">
+                            <label for="dayOfWeek" class="form-control-label">Day of the week:</label>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label class="mr-2">
+                                <input class="radio" formControlName="dayOfWeek" type="radio" [value]=1>
+                                <span>Mon</span>
+                            </label>
+                            <label class="mr-2">
+                                <input class="radio" formControlName="dayOfWeek" type="radio" [value]=2>
+                                <span>Tue</span>
+                            </label>
+                            <label class="mr-2">
+                                <input class="radio" formControlName="dayOfWeek" type="radio" [value]=3>
+                                <span>Wed</span>
+                            </label>
+                            <label class="mr-2">
+                                <input class="radio" formControlName="dayOfWeek" type="radio" [value]=4>
+                                <span>Thu</span>
+                            </label>
+                            <label class="mr-2">
+                                <input class="radio" formControlName="dayOfWeek" type="radio" [value]=5>
+                                <span>Fri</span>
+                            </label>
+                            <label class="mr-2">
+                                <input class="radio" formControlName="dayOfWeek" type="radio" [value]=6>
+                                <span>Sat</span>
+                            </label>
+                            <label>
+                                <input class="radio" formControlName="dayOfWeek" type="radio" [value]=0>
+                                <span>Sun</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" formGroupName="ownerFormGroup">
+                        <label for="confirm-owner" class="col-sm-6 form-control-label">Select a start time window (All times in EST):</label>
+                        <div class="col col-md-auto">
+                            <div>
+                                <select class="form-control" formControlName="migrationStartTime">
+                                    <option>06:00 EST</option>
+                                    <option>09:00 EST</option>
+                                    <option>12:00 EST</option>
+                                    <option>15:00 EST</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div *ngIf="formGroup.value.isOwnerFormGroup.confirmOwner == false">
+
+                    <div class="row">
+                        <div class="col-sm-12 ">
+                            <table class="table table-bordered table-hover table-sm " *ngIf="ownersOfAVolume">
+                                <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>STD-ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let owner of ownersOfAVolume._embedded.ownersOfAVolume">
+                                        <td>{{owner.firstName}}</td>
+                                        <td>{{owner.lastName}}</td>
+                                        <td>{{owner.stdId}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" formGroupName="notOwnerFormGroup">
+                        <label for="confirm-owner" class="col-sm-6 form-control-label">If you know the owner who is not in the list please enter it here:</label>
+                        <div class="col-sm-6 ">
+                            <div class="input-group input-group-unstyled">
+
+                                <input type="text" class="form-control" formControlName="newVolumeOwner">
+
+                                <span class="input-group-addon">
+                                    <em class="fa fa-search"></em>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" formGroupName="notOwnerFormGroup">
+                        <div class="col-sm-12">
+                            <label>
+                                <input class="checkbox" type="checkbox" formControlName="dontKnowOwner">
+                                <span>I do not know who the Owner is for this Volume</span>
+                            </label>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="form-group row" formGroupName="isOwnerFormGroup">
+                    <label for="migration-team-contact" class="col-sm-6 form-control-label">Would you like the migration team to contact you?</label>
+                    <div class="col-sm-6">
+                        <div>
+                            <label>
+                                <input class="radio" formControlName="migrationTeamContactMe" type="radio" [value]=true>
+                                <span>Yes</span>
+                            </label>
+                            <label>
+                                <input class="radio" formControlName="migrationTeamContactMe" type="radio" [value]=false>
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default" (click)="close()">Cancel</button>
+            <button class="btn btn-primary" (click)="save()">Save</button>
+        </div>
     </div>
-    <div class="modal-body">
-
-      <h1 class="h4">QTree Name: Add qtree name here</h1>
-      <pre> {{ formGroup.value | json }} </pre>
-
-      <form  [formGroup]="formGroup" >
-
-          <div class="form-group row" formGroupName="isOwnerFormGroup">
-              <label for="confirm-owner" class="col-sm-6 form-control-label">Are you the Owner of this Volume? </label>
-              <div class="col-sm-6">
-                  <div>
-                      <label>
-                          <input class="radio" formControlName="confirmOwner" type="radio" [value]=true>
-                          <span>Yes</span>
-                      </label>
-                      <label>
-                          <input class="radio" formControlName="confirmOwner" type="radio" [value]=false>
-                          <span>No</span>
-                      </label>
-                  </div>
-              </div>
-          </div>
-
-         
-          <div *ngIf="formGroup.value.isOwnerFormGroup.confirmOwner">
-              <div class="form-group row" formGroupName="ownerFormGroup">
-                  <label for="decommission-volume" class="col-sm-6 form-control-label">Do you plan to decommission this Volume?</label>
-                  <div class="col-sm-6">
-                      <div>
-                          <label>
-                              <input class="radio" formControlName="decommissionVolume" type="radio" [value]=true>
-                              <span>Yes</span>
-                          </label>
-                          <label>
-                              <input class="radio" formControlName="decommissionVolume" type="radio" [value]=false>
-                              <span>No</span>
-                          </label>
-                      </div>
-                  </div>
-              </div>
-           
-
-               <div class="form-group row" formGroupName="ownerFormGroup">
-                  <div class="col-sm-6">
-                      <label for="confirm-owner" class="form-control-label">Select a date for the migration:</label>
-                      
-                  </div>
-
-                  <div class="col-sm-6">
-                    <select class="form-control" formControlName="migrationDate">
-                      <option>Get from service</option>
-                      <option>Get from service</option>
-                  </select>
-                  </div>
-              </div>
-
-
-              <div class="form-group row" formGroupName="ownerFormGroup">
-                  <div class="col-sm-6">
-                      <label for="dayOfWeek" class="form-control-label">Day of the week:</label>
-                  </div>
-
-                  <div class="col-sm-6">
-                      <label class="mr-2"><input class="radio" formControlName="dayOfWeek" type="radio" [value]=1><span>Mon</span></label>
-                      <label class="mr-2"><input class="radio" formControlName="dayOfWeek" type="radio" [value]=2><span>Tue</span></label>
-                      <label class="mr-2"><input class="radio" formControlName="dayOfWeek" type="radio" [value]=3><span>Wed</span></label>
-                      <label class="mr-2"><input class="radio" formControlName="dayOfWeek" type="radio" [value]=4><span>Thu</span></label>
-                      <label class="mr-2"><input class="radio" formControlName="dayOfWeek" type="radio" [value]=5><span>Fri</span></label>
-                      <label class="mr-2"><input class="radio" formControlName="dayOfWeek" type="radio" [value]=6><span>Sat</span></label>
-                      <label><input class="radio" formControlName="dayOfWeek" type="radio" [value]=0><span>Sun</span></label>
-                  </div>
-              </div>
-
-              <div class="form-group row" formGroupName="ownerFormGroup">
-                  <label for="confirm-owner" class="col-sm-6 form-control-label">Select a start time window (All times in EST):</label>
-                  <div class="col col-md-auto">
-                      <div>
-                          <select class="form-control" formControlName="migrationStartTime">
-                              <option>06:00 EST</option>
-                              <option>09:00 EST</option>
-                              <option>12:00 EST</option>
-                              <option>15:00 EST</option>
-                          </select>
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-
-          <div *ngIf="formGroup.value.isOwnerFormGroup.confirmOwner == false">
-
-              <div class="row">
-                  <div class="col-sm-12 ">
-                      <table class="table table-bordered table-hover table-sm " *ngIf="ownersOfAVolume">
-                          <thead>
-                              <tr>
-                                  <th>First Name</th>
-                                  <th>Last Name</th>
-                                  <th>STD-ID</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr *ngFor="let owner of ownersOfAVolume._embedded.ownersOfAVolume">
-                                  <td>{{owner.firstName}}</td>
-                                  <td>{{owner.lastName}}</td>
-                                  <td>{{owner.stdId}}</td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-
-              <div class="form-group row" formGroupName="notOwnerFormGroup">
-                  <label for="confirm-owner" class="col-sm-6 form-control-label">If you know the owner who is not in the list please enter it here:</label>
-                  <div class="col-sm-6 ">
-                      <div class="input-group input-group-unstyled">
-
-                          <input type="text" class="form-control" formControlName="newVolumeOwner">
-
-                          <span class="input-group-addon">
-                              <em class="fa fa-search"></em>
-                          </span>
-                      </div>
-                  </div>
-              </div>
-
-              <div class="form-group row" formGroupName="notOwnerFormGroup">
-                  <div class="col-sm-12">
-                      <label>
-                          <input class="checkbox" type="checkbox" formControlName="dontKnowOwner">
-                          <span>I do not know who the Owner is for this Volume</span>
-                      </label>
-                  </div>
-              </div>
-
-
-
-          </div>
-
-          <div class="form-group row" formGroupName="isOwnerFormGroup">
-              <label for="migration-team-contact" class="col-sm-6 form-control-label">Would you like the migration team to contact you?</label>
-              <div class="col-sm-6">
-                  <div>
-                      <label>
-                          <input class="radio" formControlName="migrationTeamContactMe" type="radio" [value]=true>
-                          <span>Yes</span>
-                      </label>
-                      <label>
-                          <input class="radio" formControlName="migrationTeamContactMe" type="radio" [value]=false>
-                          <span>No</span>
-                      </label>
-                  </div>
-              </div>
-          </div>
-      </form>
-
-     
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-default" (click)="close()">Cancel</button>
-      <button class="btn btn-primary" (click)="save()">Save</button>
-    </div>
-  </div>
 </div>
