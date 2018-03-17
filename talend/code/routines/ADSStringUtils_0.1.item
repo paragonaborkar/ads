@@ -40,6 +40,13 @@ public class ADSStringUtils {
     	return strId;
     }
     
+    public static boolean getBooleanForString(String strValue) {
+    	
+    	boolean boolValue=strValue.equalsIgnoreCase("TRUE")?true:false;
+    	
+    	return boolValue;
+    }
+    
     public static String getRestURLForId(String baseURL,String nodeName,String id) {
     	
     	String restURL=baseURL+"/"+nodeName+"/"+id;

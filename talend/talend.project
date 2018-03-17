@@ -115,7 +115,6 @@
       <relatedItems xmi:id="_diaXSfucEee6ltYJbGhRvw" id="Relational" version="Latest" type="routine"/>
       <relatedItems xmi:id="_diaXSvucEee6ltYJbGhRvw" id="TalendStringUtil" version="Latest" type="routine"/>
       <relatedItems xmi:id="_diaXTPucEee6ltYJbGhRvw" id="_WVXa4PfwEeeJ7Ia1X_-gbA - metadata" version="Latest" type="schema"/>
-      <relatedItems xmi:id="_diaXTvucEee6ltYJbGhRvw" id="_5SawYPshEeeJ7Ia1X_-gbA - metadata" version="Latest" type="schema"/>
       <relatedItems xmi:id="_Ecpx8PvXEeeuIL132lN64w" id="_cihKQPvNEee6ltYJbGhRvw" version="Latest" type="job"/>
       <relatedItems xmi:id="_j_MWUPzBEeeuIL132lN64w" id="_hSITIPzBEeeuIL132lN64w" version="Latest" type="context"/>
       <relatedItems xmi:id="_PIRqwQBDEeiY4fwiS5-9dw" id="_5DIXAP_eEeeuIL132lN64w - metadata" version="Latest" type="schema"/>
@@ -739,6 +738,7 @@
       <relatedItems xmi:id="_y1yIOyiUEeiMAP5_yvFAAg" id="ADSStringUtils" version="Latest" type="routine"/>
       <relatedItems xmi:id="_y1yIPCiUEeiMAP5_yvFAAg" id="_NkWPIPs7Eee6ltYJbGhRvw - metadata" version="Latest" type="schema"/>
     </ItemsRelations>
+    <deletedFolders>process/Temp</deletedFolders>
     <migrationTask xmi:id="_234IQJMxEeewYaXDqjyo4w" id="org.talend.designer.core.ui.preferences.migration.ChangeMysqlVersionForProjectSetting" breaks="5.2.0" version="5.1.3" status="ok"/>
     <migrationTask xmi:id="_234IQZMxEeewYaXDqjyo4w" id="org.talend.designer.core.ui.preferences.migration.ChangeOracleVersionForProjectSetting" breaks="5.2.0" version="5.2.1" status="ok"/>
     <migrationTask xmi:id="_234IQpMxEeewYaXDqjyo4w" id="org.talend.designer.maven.ui.ConfigMavenRepositoryRemove" breaks="6.0.1" version="6.0.2" status="ok"/>

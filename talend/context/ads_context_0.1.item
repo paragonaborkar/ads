@@ -44,9 +44,10 @@
   <contextParameter xmi:id="_zTb0cwbdEeiixN-aSZZz5g" comment="" name="ADS_EMAIL_SMTP_PORT" prompt="ADS_EMAIL_SMTP_PORT?" promptNeeded="false" type="id_String" value="587"/>
   <contextParameter xmi:id="_zTb0dAbdEeiixN-aSZZz5g" comment="" name="ADS_EMAIL_AUTHENTICATION_USER" prompt="ADS_EMAIL_AUTHENTICATION_USER?" promptNeeded="false" type="id_String" value="ads.sendemail@gmail.com"/>
   <contextParameter xmi:id="_zTb0dQbdEeiixN-aSZZz5g" comment="" name="ADS_EMAIL_AUTHENTICATION_PASSWORD" prompt="ADS_EMAIL_AUTHENTICATION_PASSWORD?" promptNeeded="false" type="id_String" value="Paragon123"/>
-  <contextParameter xmi:id="_vUe7kBJiEeiJ7fEpjHTLSw" comment="" name="ENV_CONTEXT_FILE" prompt="ENV_CONTEXT_FILE?" promptNeeded="false" type="id_String" value="C:\talend\ads_context.properties"/>
+  <contextParameter xmi:id="_vUe7kBJiEeiJ7fEpjHTLSw" comment="" name="ENV_CONTEXT_FILE" prompt="ENV_CONTEXT_FILE?" promptNeeded="false" type="id_String" value="C:\netapp\talendjobs\ads_local_context.properties"/>
   <contextParameter xmi:id="_mFfVcBKvEeiGnZNriZGEXw" comment="" name="TEST_ROW_COUNT_LIMIT" prompt="TEST_ROW_COUNT_LIMIT?" promptNeeded="false" type="id_String" value="LIMIT 10"/>
   <contextParameter xmi:id="_mwps4BXREeizGJW94Gy4tQ" comment="" name="ADS_LOG_DIRECTORY" prompt="ADS_LOG_DIRECTORY?" promptNeeded="false" type="id_Directory" value="C:/netapp/logs/"/>
   <contextParameter xmi:id="_irmmQBhGEeiTUOi_dA55ag" comment="" name="JOB_NAME" prompt="JOB_NAME?" promptNeeded="false" type="id_String" value="&quot;talendJob&quot;"/>
   <contextParameter xmi:id="_-Yy44BiwEeiTUOi_dA55ag" comment="" name="JOB_ID_XPATH" prompt="JOB_ID_XPATH?" promptNeeded="false" type="id_String" value=""/>
+  <contextParameter xmi:id="_pQkmkClGEeiMAP5_yvFAAg" comment="" name="JOB_SUBMITTED_BY" prompt="JOB_SUBMITTED_BY?" promptNeeded="false" type="id_String" value="talend"/>
 </talendfile:ContextType>

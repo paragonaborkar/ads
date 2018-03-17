@@ -27,6 +27,8 @@ public class ADSConstants {
 	public static String NODE_HOSTS="hosts";
 	public static String NODE_QTREES="gtrees";
 	public static String NODE_NASVOLUMES="nasVolumes";
+	public static String NODE_ROLES="userRoles";
+	
 	
 
 	public static String LOGTYPE_PRE="PreJobLog";

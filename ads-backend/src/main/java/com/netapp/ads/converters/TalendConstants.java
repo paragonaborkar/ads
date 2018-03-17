@@ -26,6 +26,8 @@ public class TalendConstants {
 	public final static String JOB_TYPE_OCI_LOAD="OCI_Load";
 	
 	public final static String LOAD_FILES_LOC="LOAD_FILES_LOC";
+	public final static String JOB_SUBMITTED_BY="JOB_SUBMITTED_BY";
+	
 	public final static String ADS_SETUP_LOADSHEET_USER_ROLES_XLSX = "ADS_SETUP_LOADSHEET_USER_ROLES_XLSX";
 	public final static String ADS_SETUP_LOADSHEET_USER_NATIVES_XLSX = "ADS_SETUP_LOADSHEET_USER_NATIVES_XLSX";
 	public final static String ADS_SETUP_LOADSHEET_APPLICATION_XLSX = "ADS_SETUP_LOADSHEET_APPLICATION_XLSX";
@@ -44,9 +46,9 @@ public class TalendConstants {
 	public final static String ENV_CONTEXT_FILE_PARAM_NAME="ENV_CONTEXT_FILE";
 	public final static String ENV_CONTEXT_FILE_NAME="ads_local_context.properties";
 	
-	public final static String STR_AUTH_TOKEN="OAUTH_BEARER_TOKEN=";
+	public final static String STR_AUTH_TOKEN="OAUTH_BEARER_TOKEN";
 	public final static String STR_AUTHORIZATION="authorization";
-	public final static String STR_BEARER="Bearer";
+	public final static String STR_BEARER="bearer";
 	public final static String STR_OS_NAME="os.name";
 	public final static String STR_OS_WINDOWS="win";
 	public final static String STR_CD="cd ";
@@ -55,7 +57,7 @@ public class TalendConstants {
 	public final static String STR_SET_PWD="ROOT_PATH=`pwd`";
 	public final static String STR_JAVA="java";
 	
-	public final static String STR_JOB_SUBMITTED = "{\"message\":\"Running Job.\"}";
+	public final static String STR_JOB_SUBMITTED="Job Submitted Successfully";
 	
 	
 	
