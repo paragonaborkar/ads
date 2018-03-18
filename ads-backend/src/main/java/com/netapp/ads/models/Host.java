@@ -3,6 +3,7 @@ package com.netapp.ads.models;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -48,13 +49,13 @@ public class Host implements Serializable {
 	@JoinTable(
 		name="host_application_x_ref"
 		, joinColumns={
-			@JoinColumn(name="host_id", nullable=false)
+			@JoinColumn(name="host_id", nullable=false, updatable = false)
 			}
 		, inverseJoinColumns={
-			@JoinColumn(name="application_id", nullable=false)
+			@JoinColumn(name="application_id", nullable=false, updatable = false)
 			}
 		)
-	private List<Application> applications;
+	private List<Application> applications = new ArrayList<Application>();
 
 	//bi-directional many-to-many association to Export
 	@ManyToMany
@@ -67,7 +68,7 @@ public class Host implements Serializable {
 			@JoinColumn(name="exports_id", nullable=false)
 			}
 		)
-	private List<Export> exports;
+	private List<Export> exports = new ArrayList<Export>();
 
 	//bi-directional many-to-one association to MountPoint
 	@OneToMany(mappedBy="host")
@@ -158,6 +159,20 @@ public class Host implements Serializable {
 
 	public void setApplications(List<Application> applications) {
 		this.applications = applications;
+	}
+	
+	public Application addApplication(Application application) {
+		getApplications().add(application);
+		//application.addHost(this);
+
+		return application;
+	}
+
+	public Application removeApplication(Application application) {
+		getApplications().remove(application);
+		//application.removeHost(this);
+
+		return application;
 	}
 
 	public List<Export> getExports() {

@@ -3,6 +3,7 @@ package com.netapp.ads.models;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -43,7 +44,7 @@ public class Application implements Serializable {
 
 	//bi-directional many-to-many association to Host
 	@ManyToMany(mappedBy="applications")
-	private List<Host> hosts;
+	private List<Host> hosts = new ArrayList<Host>();
 
 	//bi-directional many-to-many association to LineOfBusiness
 	@ManyToMany(mappedBy="applications")
@@ -123,6 +124,20 @@ public class Application implements Serializable {
 	public void setHosts(List<Host> hosts) {
 		this.hosts = hosts;
 	}
+	
+	public Host addHost(Host host) {
+		getHosts().add(host);
+		host.addApplication(this);
+
+		return host;
+	}
+
+	public Host removeHost(Host host) {
+		getHosts().remove(host);
+		host.removeApplication(this);
+
+		return host;
+	}	
 
 	public List<LineOfBusiness> getLineOfBusinesses() {
 		return this.lineOfBusinesses;

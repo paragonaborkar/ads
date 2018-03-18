@@ -13,7 +13,6 @@ import org.jeasy.rules.annotation.Condition;
 import org.jeasy.rules.annotation.Fact;
 import org.jeasy.rules.annotation.Priority;
 import org.jeasy.rules.annotation.Rule;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,9 @@ import org.springframework.util.StringUtils;
 
 import com.netapp.ads.models.NasVolume;
 import com.netapp.ads.models.Qtree;
-import com.netapp.ads.repos.NasVolumeRepository;
+import com.netapp.ads.models.QtreeDisposition;
+import com.netapp.ads.repos.QtreeDispositionRepository;
+import com.netapp.ads.repos.QtreeRepository;
 
 @Rule(name = "Discover Owner", description = "Rule to determine if a volume was for dicovery")
 @Service
@@ -41,7 +42,7 @@ public class DiscoveryRule {
 	private int priority;
 
 	@Autowired
-	NasVolumeRepository nasVolumeRepository;
+	QtreeDispositionRepository qtreeDispositionRepository;
 
 	@Priority
 	public int getPriority() {
@@ -52,8 +53,7 @@ public class DiscoveryRule {
 	public boolean when(@Fact("nasVolume") NasVolume nasVolume, @Fact("qtree") Qtree qtree) {
 		logger.debug("Condition: [ENTER]");
 		logger.debug("Condition: qtree: " + qtree.getId());
-		String disposition = qtree.getDisposition();
-		if (StringUtils.isEmpty(disposition)) {
+		if (StringUtils.isEmpty(qtree.getQtreeDisposition().isEmpty())) {
 			logger.debug("Condition: Satisfied");
 			logger.debug("Condition: [EXIT]");
 			return true;
@@ -68,9 +68,11 @@ public class DiscoveryRule {
 	public void then(@Fact("nasVolume") NasVolume nasVolume, @Fact("qtree") Qtree qtree) {
 		logger.debug("Action: [ENTER]");
 		logger.debug("Action: qtree: " + qtree.getId());
-		qtree.setDisposition(disposition);
-		qtree.setJustification(justification);
-		nasVolumeRepository.save(nasVolume);
+		QtreeDisposition qtreeDisposition = new QtreeDisposition();
+		qtreeDisposition.setQtree(qtree);
+		qtreeDisposition.setDisposition(disposition);
+		qtreeDisposition.setJustification(justification);
+		qtreeDispositionRepository.save(qtreeDisposition);
 		logger.debug("Action: [EXIT]");
 	}
 }

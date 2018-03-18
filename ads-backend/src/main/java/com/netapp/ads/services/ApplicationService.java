@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.netapp.ads.models.Host;
 import com.netapp.ads.models.UserCorporate;
 import com.netapp.ads.models.verum.application.Application;
 import com.netapp.ads.models.verum.application.OSI;
@@ -97,7 +98,8 @@ public class ApplicationService {
         return employeeProfile;
 	}
 	
-	public List<com.netapp.ads.models.Application> createApplicationAndUsers(String ipAddress) {
+	public List<com.netapp.ads.models.Application> createApplicationAndUsers(Host host) {
+		String ipAddress = host.getIpAddr();
 		log.debug("createApplicationAndUsers(): [ENTERED]: ipAddress: " + ipAddress);
 		OSI osi = getVerumApp(ipAddress);
 		List<com.netapp.ads.models.Application> applications = new ArrayList<>();
@@ -110,26 +112,28 @@ public class ApplicationService {
 					if(application == null) {
 						log.debug("createApplicationAndUsers(): Application DOES NOT exist. Creating.." );
 						application = new com.netapp.ads.models.Application();
+						//THERE ARE MULTIPLE CONTACTS. LOOKS LIKE OLD CODE IS PICKING ONLY THE LAST ONE. SO DID WE
+						//CAN AN APPLICATION NOT HAVE MORE THAN 1 CONTACT?
+						UserCorporate corporateUser = getOrCreateCorporateUser(verumApplication.getContact().get(0).getSid());
+						if(corporateUser != null) {
+							application.setOwnerUserCorporateId(corporateUser.getId()); //WHAT IF CORPORATE USER DOES NOT EXIST IN SYSTEM? SHOULD WE CREATE? VERUM IS SENDING MULTIPLE CONTACTS
+						}
+						
+						if(!application.getHosts().contains(host)) {
+							application.addHost(host);
+						}
+						application.setApplicationName(verumApplication.getApplicationName());
+						application.setApplicationCode(verumApplication.getAppID());
+						//application.setArchtype(verumApplication.get); WHERE TO GET THIS FROM?
+						//application.setHosts(hosts); DO WE NEED TO SET THIS?
+						application.setInformationOwner(verumApplication.getTechGroupOwner()); //IS THIS CORRECT?
+						//application.setLineOfBusinesses(new ListverumApplication.getOwningLOB()); //DO WE NEED TO SET THIS?
+						application = applicationRepository.save(application);
+						log.debug("createApplicationAndUsers(): Application Created/Updated: " + application.getId());
 					} else {
-						log.debug("createApplicationAndUsers(): Application already exists. Updating..." + application.getId());
+						log.debug("createApplicationAndUsers(): Application already exists: " + application.getId());
 					}
-
-					application.setApplicationName(verumApplication.getApplicationName());
-					application.setApplicationCode(verumApplication.getAppID());
-					//application.setArchtype(verumApplication.get); WHERE TO GET THIS FROM?
-					//application.setHosts(hosts); DO WE NEED TO SET THIS?
-					application.setInformationOwner(verumApplication.getTechGroupOwner()); //IS THIS CORRECT?
-					//application.setLineOfBusinesses(new ListverumApplication.getOwningLOB()); //DO WE NEED TO SET THIS?
-					
-					//THERE ARE MULTIPLE CONTACTS. LOOKS LIKE OLD CODE IS PICKING ONLY THE LAST ONE. SO DID WE
-					//CAN AN APPLICATION NOT HAVE MORE THAN 1 CONTACT?
-					UserCorporate corporateUser = getOrCreateCorporateUser(verumApplication.getContact().get(0).getSid());
-					if(corporateUser != null) {
-						application.setOwnerUserCorporateId(corporateUser.getId()); //WHAT IF CORPORATE USER DOES NOT EXIST IN SYSTEM? SHOULD WE CREATE? VERUM IS SENDING MULTIPLE CONTACTS
-					}
-					application = applicationRepository.save(application);
 					applications.add(application);
-					log.debug("createApplicationAndUsers(): Application Created/Updated: " + application.getId());
 				}
 			}
 		}
@@ -139,64 +143,57 @@ public class ApplicationService {
 	
 	public UserCorporate getOrCreateCorporateUser(String sid) {
 		log.debug("getOrCreateCorporateUser: sid: " + sid);
-		UserCorporate corporateUser = userCorporateRepository.findFirstByUserName(sid);
-		if(corporateUser == null) {
-			log.debug("getOrCreateCorporateUser(): Corporate user DOES NOT exist. Creating....");
-			corporateUser = new UserCorporate();
-		} else {
-			log.debug("getOrCreateCorporateUser(): Corporate user already exists. Updating..." + corporateUser.getId());
-		}
+		UserCorporate corporateUser = null;
 		Person person = getVerumPerson(sid);
 		if(person != null && !person.getVerumObjectList().isEmpty()) {
 			List<com.netapp.ads.models.verum.person.VerumObjectList> personVerumObjectLists = person.getVerumObjectList();
-				for(com.netapp.ads.models.verum.person.VerumObjectList personVerumObjectList: personVerumObjectLists) {
-					corporateUser.setCostCenter(personVerumObjectList.getCostCenter());
-					corporateUser.setUserName(sid);
-					
-					//CHECK IF MANAGER EXISTS AND IF NOT CREATE
-/*					UserCorporate manager = getOrCreateCorporateUser(personVerumObjectList.getManagerSid());
-					if(manager != null) {
-						corporateUser.setUserCorporateManager(manager);
-					}*/
-					
-					UserCorporate manager = userCorporateRepository.findFirstByUserName(personVerumObjectList.getManagerSid());
-					if(manager == null) {
-						log.debug("getOrCreateCorporateUser(): Manager does not exist");
-						EmployeeProfile managerProfile = getEmployeeProfile(personVerumObjectList.getManagerSid());
-						if(managerProfile != null && !managerProfile.getEmployeeList().isEmpty()) {
-							EmployeeList managerEmployee = managerProfile.getEmployeeList().get(0);
-							manager = new UserCorporate();
-							manager.setUserName(personVerumObjectList.getManagerSid());
-							manager.setFirstName(managerEmployee.getFirstName());
-							manager.setLastName(managerEmployee.getLastName());
-							manager.setMiddleName(managerEmployee.getMiddle());
-							manager.setEmail(managerEmployee.getIAddress());
-							manager.setBestPhone(managerEmployee.getPhoneNo());
-							manager.setMobilePhone(managerEmployee.getCellPhoneNo());
-							manager.setTitle(managerEmployee.getTitle());
-							manager.setLocation(managerEmployee.getBuildStreetAddress() + "," + managerEmployee.getBuildState() + "," + managerEmployee.getBuildZip() + "," + managerEmployee.getBuildCountry());
-						}
-					}
-					corporateUser.setUserCorporateManager(manager);
-					
-					EmployeeProfile employeeProfile = getEmployeeProfile(sid);
-					if(employeeProfile != null && !employeeProfile.getEmployeeList().isEmpty()) {
-						//We are getting a targeted user here based on SID so this list should always have 1 value
-						EmployeeList employee = employeeProfile.getEmployeeList().get(0);
-						log.debug("getOrCreateCorporateUser(): eaddress: " + employee.getEAddress());
-						log.debug("getOrCreateCorporateUser(): iaddress: " + employee.getIAddress());
-						corporateUser.setFirstName(employee.getFirstName());
-						corporateUser.setLastName(employee.getLastName());
-						corporateUser.setMiddleName(employee.getMiddle());
-						corporateUser.setEmail(employee.getIAddress());
-						corporateUser.setBestPhone(employee.getPhoneNo());
-						corporateUser.setMobilePhone(employee.getCellPhoneNo());
-						corporateUser.setTitle(employee.getTitle());
-						corporateUser.setLocation(employee.getBuildStreetAddress() + "," + employee.getBuildState() + "," + employee.getBuildZip() + "," + employee.getBuildCountry());
-						corporateUser = userCorporateRepository.save(corporateUser);
-						log.debug("getOrCreateCorporateUser(): Created/Updated Corporate User: " + corporateUser.getId());
-					}
+			com.netapp.ads.models.verum.person.VerumObjectList personVerumObjectList = personVerumObjectLists.get(0);
+			UserCorporate manager = userCorporateRepository.findFirstByUserName(personVerumObjectList.getManagerSid());
+			if(manager == null) {
+				log.debug("getOrCreateCorporateUser(): Manager does not exist");
+				EmployeeProfile managerProfile = getEmployeeProfile(personVerumObjectList.getManagerSid());
+				if(managerProfile != null && !managerProfile.getEmployeeList().isEmpty()) {
+					EmployeeList managerEmployee = managerProfile.getEmployeeList().get(0);
+					manager = new UserCorporate();
+					manager.setUserName(personVerumObjectList.getManagerSid());
+					manager.setFirstName(managerEmployee.getFirstName());
+					manager.setLastName(managerEmployee.getLastName());
+					manager.setMiddleName(managerEmployee.getMiddle());
+					manager.setEmail(managerEmployee.getIAddress());
+					manager.setBestPhone(managerEmployee.getPhoneNo());
+					manager.setMobilePhone(managerEmployee.getCellPhoneNo());
+					manager.setTitle(managerEmployee.getTitle());
+					manager.setLocation(managerEmployee.getBuildStreetAddress() + "," + managerEmployee.getBuildState() + "," + managerEmployee.getBuildZip() + "," + managerEmployee.getBuildCountry());
+					userCorporateRepository.save(manager);
 				}
+			}
+
+			corporateUser = userCorporateRepository.findFirstByUserName(sid);
+			if(corporateUser == null) {
+				log.debug("getOrCreateCorporateUser(): Corporate user DOES NOT exist. Creating....");
+				corporateUser = new UserCorporate();
+				corporateUser.setCostCenter(personVerumObjectList.getCostCenter());
+				corporateUser.setUserName(sid);
+				corporateUser.setUserCorporateManager(manager);
+				
+				EmployeeProfile employeeProfile = getEmployeeProfile(sid);
+				if(employeeProfile != null && !employeeProfile.getEmployeeList().isEmpty()) {
+					//We are getting a targeted user here based on SID so this list should always have 1 value
+					EmployeeList employee = employeeProfile.getEmployeeList().get(0);
+					corporateUser.setFirstName(employee.getFirstName());
+					corporateUser.setLastName(employee.getLastName());
+					corporateUser.setMiddleName(employee.getMiddle());
+					corporateUser.setEmail(employee.getIAddress());
+					corporateUser.setBestPhone(employee.getPhoneNo());
+					corporateUser.setMobilePhone(employee.getCellPhoneNo());
+					corporateUser.setTitle(employee.getTitle());
+					corporateUser.setLocation(employee.getBuildStreetAddress() + "," + employee.getBuildState() + "," + employee.getBuildZip() + "," + employee.getBuildCountry());
+					corporateUser = userCorporateRepository.save(corporateUser);
+					log.debug("getOrCreateCorporateUser(): Created/Updated Corporate User: " + corporateUser.getId());
+				} //end if
+			} else {
+				log.debug("getOrCreateCorporateUser(): Corporate user already exists: " + corporateUser.getId());
+			}
 		}
 		return corporateUser;
 	}

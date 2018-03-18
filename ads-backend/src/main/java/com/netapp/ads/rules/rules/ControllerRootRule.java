@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 
 import com.netapp.ads.models.NasVolume;
 import com.netapp.ads.models.Qtree;
+import com.netapp.ads.models.QtreeDisposition;
+import com.netapp.ads.repos.QtreeDispositionRepository;
 import com.netapp.ads.repos.QtreeRepository;
 
 @Rule(name = "Controller Root", description = "Rule to determine if a volume is a controller root volume")
@@ -41,7 +43,7 @@ public class ControllerRootRule {
 	private int priority;
 	
 	@Autowired
-	QtreeRepository qtreeRepository;
+	QtreeDispositionRepository qtreeDispositionRepository;
 
 	@Priority
 	public int getPriority() {
@@ -69,9 +71,12 @@ public class ControllerRootRule {
 		logger.debug("Action: nasVolume:" + nasVolume.getId());
 
 		for(Qtree qtree : nasVolume.getQtrees()) {
-			qtree.setDisposition(disposition);
-			qtree.setJustification(justification);
-			qtreeRepository.save(qtree);
+			QtreeDisposition qtreeDisposition = new QtreeDisposition();
+			qtreeDisposition.setQtree(qtree);
+			qtree.addQtreeDisposition(qtreeDisposition);
+			qtreeDisposition.setDisposition(disposition);
+			qtreeDisposition.setJustification(justification);
+			qtreeDispositionRepository.save(qtreeDisposition);
 		}
 		logger.debug("Action: [EXIT]");
 	}

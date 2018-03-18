@@ -87,11 +87,11 @@ public class QtreeDispositionServiceImpl implements QtreeDispositionService {
 		Activity activity = new Activity();
 		activity.setQtree(qtree);
 		activity.setVserver(nasVolume.getVserver());
-		activity.setDisposition(qtree.getDisposition());
+		//activity.setDisposition(qtree.getDisposition());
 		activity.setMailingDate(new Date()); //What should this be?
 		activity.setWillDelete(true); //Who sets this
 		activity.setWillMigrate(true); //Who sets this
-		activity.setCallMe(true);
+		//activity.setCallMe(true);
 		activity.setArchiveCandidate(false);
 		activity.setIsLatest(true);
 		activity.setAdminOverride(false);

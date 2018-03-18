@@ -31,7 +31,9 @@ import com.netapp.ads.exception.NetAppAdsException;
 import com.netapp.ads.models.Host;
 import com.netapp.ads.models.NasVolume;
 import com.netapp.ads.models.Qtree;
+import com.netapp.ads.models.QtreeDisposition;
 import com.netapp.ads.models.Share;
+import com.netapp.ads.repos.QtreeDispositionRepository;
 import com.netapp.ads.repos.QtreeRepository;
 
 @Rule(name = "Access Control List", description = "Rule to determine if a volume still has host which access to it")
@@ -69,7 +71,7 @@ public class AccessControlRule {
 	private String cifsJustification;
 
 	@Autowired
-	QtreeRepository qtreeRepository;
+	QtreeDispositionRepository qtreeDispositionRepository;
 
 	@Priority
 	public int getPriority() {
@@ -143,60 +145,21 @@ public class AccessControlRule {
 		}
 		
 		logger.debug("Action: cifsCount: " + cifsCount + ", nfsCount: " + nfsCount);
-		
+
+		QtreeDisposition qtreeDisposition = new QtreeDisposition();
+		qtreeDisposition.setQtree(qtree);
 		if(cifsCount == 0) {
-			if (StringUtils.isEmpty(qtree.getDisposition())) {
-				qtree.setDisposition(nfsDisposition);
-			} else {
-				if (!qtree.getDisposition().contains(nfsDisposition)) {
-					qtree.setDisposition(new StringBuilder(qtree.getDisposition()).append(",").append(nfsDisposition).toString());
-				}
-			}
-
-			if (StringUtils.isEmpty(qtree.getJustification())) {
-				qtree.setJustification(nfsJustification);
-			} else {
-				if (!qtree.getJustification().contains(nfsJustification)) {
-					qtree.setJustification(new StringBuilder(qtree.getJustification()).append(",").append(nfsJustification).toString());
-				}
-			}
-			
+			qtreeDisposition.setDisposition(nfsDisposition);
+			qtreeDisposition.setJustification(nfsJustification);
 		} else if (cifsCount > 0 && nfsCount > 0) {
-			if (StringUtils.isEmpty(qtree.getDisposition())) {
-				qtree.setDisposition(cifsNfsDisposition);
-			} else {
-				if (!qtree.getDisposition().contains(cifsNfsDisposition)) {
-					qtree.setDisposition(new StringBuilder(qtree.getDisposition()).append(",").append(cifsNfsDisposition).toString());
-				}
-			}
-
-			if (StringUtils.isEmpty(qtree.getJustification())) {
-				qtree.setJustification(cifsNfsJustification);
-			} else {
-
-				if (!qtree.getJustification().contains(cifsNfsJustification)) {
-					qtree.setJustification(new StringBuilder(qtree.getJustification()).append(",").append(cifsNfsJustification).toString());
-				}
-			}
+			qtreeDisposition.setDisposition(cifsNfsDisposition);
+			qtreeDisposition.setJustification(cifsNfsJustification);
 		} else {
-			if (StringUtils.isEmpty(qtree.getDisposition())) {
-				qtree.setDisposition(cifsDisposition);
-			} else {
-				if (!qtree.getDisposition().contains(cifsDisposition)) {
-					qtree.setDisposition(new StringBuilder(qtree.getDisposition()).append(",").append(cifsDisposition).toString());
-				}
-			}
-
-			if (StringUtils.isEmpty(qtree.getJustification())) {
-				qtree.setJustification(cifsJustification);
-			} else {
-				if (!qtree.getJustification().contains(cifsJustification)) {
-					nasVolume.setJustification(new StringBuilder(qtree.getJustification()).append(",").append(cifsJustification).toString());
-				}
-			}
+			qtreeDisposition.setDisposition(cifsDisposition);
+			qtreeDisposition.setJustification(cifsJustification);
 		}
 
-		qtreeRepository.save(qtree);
+		qtreeDispositionRepository.save(qtreeDisposition);
 		logger.debug("Action: [EXIT]");
 	}
 	

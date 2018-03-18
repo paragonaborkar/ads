@@ -21,10 +21,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import com.netapp.ads.models.NasVolume;
 import com.netapp.ads.models.Qtree;
+import com.netapp.ads.models.QtreeDisposition;
+import com.netapp.ads.repos.QtreeDispositionRepository;
 import com.netapp.ads.repos.QtreeRepository;
 import com.netapp.ads.util.DateUtils;
 
@@ -62,7 +63,7 @@ public class AgedAccessRule {
 	private int priority;
 
 	@Autowired
-	QtreeRepository qtreeRepository;
+	QtreeDispositionRepository qtreeDispositionRepository;
 
 	@Priority
 	public int getPriority() {
@@ -128,23 +129,11 @@ public class AgedAccessRule {
 			newJustification = justification3;
 		}
 
-		if (StringUtils.isEmpty(qtree.getDisposition())) {
-			qtree.setDisposition(newDisposition);
-		} else {
-			if (!qtree.getDisposition().contains(newDisposition)) {
-				qtree.setDisposition(new StringBuilder(qtree.getDisposition()).append(",").append(newDisposition).toString());
-			}
-		}
-
-		if (StringUtils.isEmpty(qtree.getJustification())) {
-			qtree.setJustification(newJustification);
-		} else {
-			if (!qtree.getJustification().contains(newJustification)) {
-				qtree.setJustification(new StringBuilder(qtree.getJustification()).append(",").append(newJustification).toString());
-			}
-		}
-
-		qtreeRepository.save(qtree);
+		QtreeDisposition qtreeDisposition = new QtreeDisposition();
+		qtreeDisposition.setDisposition(newDisposition);
+		qtreeDisposition.setQtree(qtree);
+		qtreeDisposition.setJustification(newJustification);
+		qtreeDispositionRepository.save(qtreeDisposition);
 		logger.debug("Action: [EXIT]");
 	}
 }
