@@ -9,6 +9,8 @@ package com.netapp.ads.rules.rules;
  *     WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF NETAPP, INC.
  *******************************************************************************/
 
+import java.util.List;
+
 import org.jeasy.rules.annotation.Action;
 import org.jeasy.rules.annotation.Condition;
 import org.jeasy.rules.annotation.Fact;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import com.netapp.ads.models.NasVolume;
 import com.netapp.ads.models.Qtree;
+import com.netapp.ads.models.QtreeDisposition;
 import com.netapp.ads.repos.QtreeRepository;
 
 @Rule(name = "Access Control List", description = "Rule to determine if a volume still has host which access to it")
@@ -36,9 +39,6 @@ public class MissingRootVolumeRule {
 	@Value("${ads.rule.controller_root_rule.disposition}")
 	private String controllerRootRuleDisposition;
 
-	@Autowired
-	QtreeRepository qtreeRepository;
-
 	@Priority
 	public int getPriority() {
 		return priority;
@@ -49,7 +49,7 @@ public class MissingRootVolumeRule {
 		logger.debug("Condition: [ENTER]");
 		logger.debug("Condition: qtree: " + qtree.getId());
 		
-		if(qtree.getDisposition().equals(controllerRootRuleDisposition)) {
+		if(dispositionExists(qtree, controllerRootRuleDisposition)) {
 			return false;
 		}
 		
@@ -65,5 +65,17 @@ public class MissingRootVolumeRule {
 		logger.info("Action: Missing ROOT Volume for Controller: " + qtree.getNasVolume().getController().getId());
 
 		logger.debug("Action: [EXIT]");
+	}
+	
+	public boolean dispositionExists(Qtree qtree, String disposition) {
+		List<QtreeDisposition> qDispositions = qtree.getQtreeDisposition();
+		boolean returnVal = false;
+		for(QtreeDisposition qtreeDisposition: qDispositions) {
+			if(qtreeDisposition.getDisposition().equals(disposition)) {
+				returnVal = true;
+				break;
+			}
+		}
+		return returnVal;
 	}
 }

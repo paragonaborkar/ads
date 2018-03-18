@@ -19,11 +19,13 @@ import org.springframework.stereotype.Repository;
 public interface ActivityRepository extends JpaRepository<Activity, Integer>, JpaSpecificationExecutor<Activity> {
 
 	// Paged list of activities
-	Page findByDisposition(@Param("disposition") String disposition,  Pageable p);
+	//Page findByDisposition(@Param("disposition") String disposition,  Pageable p);
 	
-	@RestResource(path="findActivitiesByDisposition")
+	
+	//Commenting below since we removed disposition from activity
+	//@RestResource(path="findActivitiesByDisposition")
 	//Select a From ActivityEntity a where a.disposition=:disposition AND a.unidentifiedReason IS NULL
-	List<Activity> findByDisposition(@Param("disposition") String disposition);
+	//List<Activity> findByDisposition(@Param("disposition") String disposition);
 	
 //	Activity findById(@Param("id") Integer id);
 	
@@ -36,9 +38,15 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>, Jp
 	WHERE migration_key.migration_key = 'ABC' 
 	AND migration_key.user_corporate_id = 9 
 	AND activity.disposition = 'DiscoverOwner'*/
-    @Query("Select a From Activity a LEFT JOIN a.activityMigrationKeyXRefs x LEFT JOIN x.migrationKey m WHERE m.migrationKey=:migKey AND m.userCorporateId=:corpUserId AND a.disposition=:disposition")
+
+	
+	//Commenting below since we removed disposition from activity
+	//@Query("Select a From Activity a LEFT JOIN a.activityMigrationKeyXRefs x LEFT JOIN x.migrationKey m WHERE m.migrationKey=:migKey AND m.userCorporateId=:corpUserId AND a.disposition=:disposition")
 //    List<Activity> getActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId, @Param("disposition") String disposition);
-    Page getActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId, @Param("disposition") String disposition, Pageable p);
+    //Page getActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId, @Param("disposition") String disposition, Pageable p);
+
+    
+    
     // a.adminOverride as getAdminOverride, a.qtree as qtree
 
 	

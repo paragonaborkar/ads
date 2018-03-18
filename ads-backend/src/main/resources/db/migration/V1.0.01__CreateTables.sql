@@ -39,21 +39,16 @@ CREATE TABLE `activity` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Activity.',
   `qtree_id` int(11) DEFAULT NULL COMMENT 'ID of the QTree which is associated with the Activity',
   `vserver` varchar(255) DEFAULT NULL COMMENT 'vServer of the Activity',
-  `disposition` varchar(255) DEFAULT NULL COMMENT 'Disposition of the Activity',
   `mailing_date` date DEFAULT NULL COMMENT 'Date email was send to the Owner(s) of the Activity?',
   `will_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Boolean indicating if the Owner(s) will delete the QTree.',
   `delete_date` date DEFAULT NULL COMMENT 'Date on which the QTree can be deleted.',
   `will_migrate` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Boolean indicating if the Owner(s) will migrate the QTree.',
   `migrate_week` date DEFAULT NULL COMMENT 'Week selected for migration of the QTree.',
   `migrate_day` int(11) DEFAULT '6' COMMENT 'Day of Week selected for migration of the QTree.',
-  `call_me` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Boolean indicating if the Owner(s) want to be contacted by a Migration Specialist.',
-  `best_number` varchar(100) DEFAULT NULL COMMENT 'Contact number for the Owner if they want to speak to a Migration Specialist.',
-  `call_reason` varchar(2048) DEFAULT NULL COMMENT 'Primary reason why the Owner wants to be contacted by the Migration Specialist',
   `archive_candidate` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Boolean indicating if the QTree is a canidiate for archiving',
   `is_latest` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'DEV TBD -  Boolean indicating if the Activity is the latest. We may be able to get this from the create time. So this may not be needed. Could save us time/code to set this column.',
   `admin_override` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Boolean indicating if the an Admin overrode an Owner',
   `note` varchar(1024) DEFAULT NULL COMMENT 'Note for the Activity',
-  `app_name_list` varchar(1024) DEFAULT NULL COMMENT 'DEV TBD - We should be able to get the app from the Qtree to host to app relations.',
   `mail_count` int(1) DEFAULT '0' COMMENT 'Count of emails sent',
   `migration_time_id` int(11) DEFAULT NULL COMMENT 'Time selected for this Activity',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -159,6 +154,9 @@ CREATE TABLE `activity_response` (
   `is_owner` tinyint(1) NOT NULL,
   `is_presumed` tinyint(1) NOT NULL,
   `suggested_owner_user_corporate_id` int(11) DEFAULT NULL,
+  `call_me` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Boolean indicating if the Owner(s) want to be contacted by a Migration Specialist.',
+  `best_number` varchar(100) DEFAULT NULL COMMENT 'Contact number for the Owner if they want to speak to a Migration Specialist.',
+  `call_reason` varchar(2048) DEFAULT NULL COMMENT 'Primary reason why the Owner wants to be contacted by the Migration Specialist',  
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY(`id`),
@@ -1233,8 +1231,6 @@ CREATE TABLE `qtree` (
   `qtree_type` enum('DEFAULT','EXPLICIT') DEFAULT NULL,
   `security_style` enum('UNIX','NTFS','MIXED') DEFAULT NULL,
   `last_accessed` datetime DEFAULT '1980-01-01 00:00:01',
-  `disposition` varchar(1024) DEFAULT NULL,
-  `justification` varchar(1024) DEFAULT NULL,  
   `qtree_status` varchar(225) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -1843,6 +1839,18 @@ CREATE TABLE `ads_report_detail` (
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 
+DROP TABLE IF EXISTS `qtree_disposition`;
+CREATE TABLE `qtree_disposition` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `qtree_id` int(11) NOT NULL,
+  `disposition` varchar(1024) NOT NULL,
+  `justification` varchar(1024) NOT NULL,
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `qtree_disposition_qtree_fk` FOREIGN KEY (`qtree_id`) REFERENCES `qtree` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8; 
+
 CREATE VIEW `call_me_report` AS
     SELECT 
         `ar`.`id` AS `id`,
@@ -1869,37 +1877,7 @@ CREATE VIEW `call_me_report` AS
 			
 			
 			
-CREATE VIEW `unknown_owner_report` AS
-    SELECT 
-        `a`.`id` AS `id`,
-        `qt`.`qtree_name` AS `qtree_name`,
-        `nv`.`volume_name` AS `volume_name`,
-        `a`.`vserver` AS `vserver`,
-        `a`.`disposition` AS `disposition`,
-        `a`.`mailing_date` AS `mailing_date`,
-        `a`.`will_delete` AS `will_delete`,
-        `a`.`delete_date` AS `delete_date`,
-        `a`.`will_migrate` AS `will_migrate`,
-        `a`.`migrate_week` AS `migrate_week`,
-        `a`.`migrate_day` AS `migrate_day`,
-        `a`.`call_me` AS `call_me`,
-        `a`.`best_number` AS `best_number`,
-        `a`.`call_reason` AS `call_reason`,
-        `a`.`archive_candidate` AS `archive_candidate`,
-        `a`.`is_latest` AS `is_latest`,
-        `a`.`admin_override` AS `admin_override`,
-        `a`.`note` AS `note`,
-        `a`.`app_name_list` AS `app_name_list`,
-        `a`.`mail_count` AS `mail_count`,
-        `a`.`migration_time_id` AS `migration_time_id`,
-        `a`.`create_time` AS `create_time`,
-        `a`.`update_time` AS `update_time`
-    FROM
-        ((`activity` `a`
-        LEFT JOIN `qtree` `qt` ON ((`a`.`qtree_id` = `qt`.`id`)))
-        LEFT JOIN `nas_volume` `nv` ON ((`qt`.`nas_volume_id` = `nv`.`id`)))
-    WHERE
-        (`a`.`disposition` IN ('NFS-Orphan' , 'NFS-Orphan w/CIFS'));
+
             
 			
 CREATE 
@@ -1920,117 +1898,7 @@ VIEW `user_native_report` AS
 		
 		
 		
-CREATE VIEW `volume_decommission_report` AS
-    SELECT 
-        `a`.`id` AS `id`,
-        `qt`.`qtree_name` AS `qtree_name`,
-        `nv`.`volume_name` AS `volume_name`,
-        `a`.`vserver` AS `vserver`,
-        `a`.`disposition` AS `disposition`,
-        `a`.`mailing_date` AS `mailing_date`,
-        `a`.`will_delete` AS `will_delete`,
-        `a`.`delete_date` AS `delete_date`,
-        `a`.`will_migrate` AS `will_migrate`,
-        `a`.`migrate_week` AS `migrate_week`,
-        `a`.`migrate_day` AS `migrate_day`,
-        `a`.`call_me` AS `call_me`,
-        `a`.`best_number` AS `best_number`,
-        `a`.`call_reason` AS `call_reason`,
-        `a`.`archive_candidate` AS `archive_candidate`,
-        `a`.`is_latest` AS `is_latest`,
-        `a`.`admin_override` AS `admin_override`,
-        `a`.`note` AS `note`,
-        `a`.`app_name_list` AS `app_name_list`,
-        `a`.`mail_count` AS `mail_count`,
-        `a`.`migration_time_id` AS `migration_time_id`,
-        `a`.`create_time` AS `create_time`,
-        `a`.`update_time` AS `update_time`
-    FROM
-        ((`activity` `a`
-        LEFT JOIN `qtree` `qt` ON ((`a`.`qtree_id` = `qt`.`id`)))
-        LEFT JOIN `nas_volume` `nv` ON ((`qt`.`nas_volume_id` = `nv`.`id`)))
-    WHERE
-        (`a`.`archive_candidate` = 1);
-            
-            
-CREATE VIEW `multi_owner_report` AS
-    SELECT 
-        `a`.`id` AS `id`,
-        `qt`.`qtree_name` AS `qtree_name`,
-        `nv`.`volume_name` AS `volume_name`,
-        `a`.`vserver` AS `vserver`,
-        `a`.`disposition` AS `disposition`,
-        `a`.`mailing_date` AS `mailing_date`,
-        `a`.`will_delete` AS `will_delete`,
-        `a`.`delete_date` AS `delete_date`,
-        `a`.`will_migrate` AS `will_migrate`,
-        `a`.`migrate_week` AS `migrate_week`,
-        `a`.`migrate_day` AS `migrate_day`,
-        `a`.`call_me` AS `call_me`,
-        `a`.`best_number` AS `best_number`,
-        `a`.`call_reason` AS `call_reason`,
-        `a`.`archive_candidate` AS `archive_candidate`,
-        `a`.`is_latest` AS `is_latest`,
-        `a`.`admin_override` AS `admin_override`,
-        `a`.`note` AS `note`,
-        `a`.`app_name_list` AS `app_name_list`,
-        `a`.`mail_count` AS `mail_count`,
-        `a`.`migration_time_id` AS `migration_time_id`,
-        `a`.`create_time` AS `create_time`,
-        `a`.`update_time` AS `update_time`
-    FROM
-        (((`activity` `a`
-        JOIN `activity_response` `ar` ON ((`ar`.`activity_id` = `a`.`id`)))
-        LEFT JOIN `qtree` `qt` ON ((`a`.`qtree_id` = `qt`.`id`)))
-        LEFT JOIN `nas_volume` `nv` ON ((`qt`.`nas_volume_id` = `nv`.`id`)))
-    WHERE
-        ((SELECT SUM((`ar`.`is_presumed` + `ar`.`is_owner`))) > 1);
-        
-        
-CREATE VIEW `activity_report` AS
-    SELECT 
-        `a`.`id` AS `id`,
-        `qt`.`qtree_name` AS `qtree_name`,
-        `nv`.`volume_name` AS `volume_name`,
-        `a`.`vserver` AS `vserver`,
-        `a`.`disposition` AS `disposition`,
-        `a`.`mailing_date` AS `mailing_date`,
-        `a`.`will_delete` AS `will_delete`,
-        `a`.`delete_date` AS `delete_date`,
-        `a`.`will_migrate` AS `will_migrate`,
-        `a`.`migrate_week` AS `migrate_week`,
-        `a`.`migrate_day` AS `migrate_day`,
-        `a`.`call_me` AS `call_me`,
-        `a`.`best_number` AS `best_number`,
-        `a`.`call_reason` AS `call_reason`,
-        `a`.`archive_candidate` AS `archive_candidate`,
-        `a`.`is_latest` AS `is_latest`,
-        `a`.`admin_override` AS `admin_override`,
-        `a`.`note` AS `note`,
-        `a`.`app_name_list` AS `app_name_list`,
-        `a`.`mail_count` AS `mail_count`,
-        `a`.`migration_time_id` AS `migration_time_id`,
-        `a`.`create_time` AS `create_time`,
-        `a`.`update_time` AS `update_time`
-    FROM
-        ((`activity` `a`
-        LEFT JOIN `qtree` `qt` ON ((`a`.`qtree_id` = `qt`.`id`)))
-        LEFT JOIN `nas_volume` `nv` ON ((`qt`.`nas_volume_id` = `nv`.`id`)));
-        
 
-CREATE VIEW `application_detail_report` AS
-    SELECT 
-        `a`.`id` AS `id`,
-        `a`.`application_code` AS `application_code`,
-        `a`.`application_name` AS `application_name`,
-        `a`.`archtype` AS `archtype`,
-        `uc`.`user_name` AS `user_name`,
-        `a`.`information_owner` AS `information_owner`,
-        `a`.`create_time` AS `create_time`,
-        `a`.`update_time` AS `update_time`
-    FROM
-        (`application` `a`
-        LEFT JOIN `user_corporate` `uc` ON ((`a`.`owner_user_corporate_id` = `uc`.`id`)));
 
 
 --

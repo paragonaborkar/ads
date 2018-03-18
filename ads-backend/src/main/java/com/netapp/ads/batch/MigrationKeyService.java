@@ -1,10 +1,7 @@
 package com.netapp.ads.batch;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -55,20 +52,14 @@ public class MigrationKeyService {
 				//check if it was generated 
 				MigrationKey migrationKey = migrationKeyExists(userCorporateId, currentRunNo);
 				if(migrationKey == null) {
-					String migrationKeyStr = uniqueKeyService.createMigKey();
 					migrationKey = new MigrationKey();
-					migrationKey.setMigrationKey(migrationKeyStr);
+					migrationKey.setMigrationKey(uniqueKeyService.createMigKey());
 					migrationKey.setUserCorporateId(userCorporateId);
 					migrationKey.setRunNo(currentRunNo);
 				}
 				
-				if(migrationKey.getActivities() == null) {
-					migrationKey.setActivities(new ArrayList<Activity>(Arrays.asList(activity)));
-				} else {
-					migrationKey.addActivity(activity);	
-				}
+				migrationKey.addActivity(activity);	
 				migrationKeyRepository.save(migrationKey);
-
 				migrationKeysGenerated.add(migrationKey.getMigrationKey());
 				log.debug("migrationKey: {}", migrationKey);
 			}

@@ -36,6 +36,15 @@ public class ActivityResponse implements Serializable {
 
 	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
+	
+	@Column(name="best_number", length=100)
+	private String bestNumber;
+
+	@Column(name="call_me", nullable=false)
+	private boolean callMe;
+
+	@Column(name="call_reason", length=2048)
+	private String callReason;
 
 	//bi-directional many-to-one association to Activity
 	@ManyToOne
@@ -108,5 +117,29 @@ public class ActivityResponse implements Serializable {
 	public void setActivity(Activity activity) {
 		this.activity = activity;
 	}
+	
+	public String getBestNumber() {
+		return this.bestNumber;
+	}
+
+	public void setBestNumber(String bestNumber) {
+		this.bestNumber = bestNumber;
+	}
+
+	public boolean getCallMe() {
+		return this.callMe;
+	}
+
+	public void setCallMe(boolean callMe) {
+		this.callMe = callMe;
+	}
+
+	public String getCallReason() {
+		return this.callReason;
+	}
+
+	public void setCallReason(String callReason) {
+		this.callReason = callReason;
+	}	
 
 }

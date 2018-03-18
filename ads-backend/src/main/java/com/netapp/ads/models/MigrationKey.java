@@ -3,6 +3,7 @@ package com.netapp.ads.models;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,7 +35,7 @@ public class MigrationKey implements Serializable {
 
 	//bi-directional many-to-one association to ActivityMigrationKeyXRef
 	@OneToMany(mappedBy="migrationKey")
-	private List<ActivityMigrationKeyXRef> activityMigrationKeyXRefs;
+	private List<ActivityMigrationKeyXRef> activityMigrationKeyXRefs = new ArrayList<ActivityMigrationKeyXRef>();
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "activity_migration_key_x_ref",
@@ -47,7 +48,7 @@ public class MigrationKey implements Serializable {
 	                        nullable = false,
 	                        updatable = false) }
 	        )
-	private List<Activity> activities;
+	private List<Activity> activities = new ArrayList<Activity>();
 	
 	private Integer runNo;
 

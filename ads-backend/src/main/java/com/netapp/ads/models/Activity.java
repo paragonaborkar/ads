@@ -2,6 +2,8 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.sql.Timestamp;
 import java.util.List;
@@ -24,20 +26,8 @@ public class Activity implements Serializable {
 	@Column(name="admin_override", nullable=false)
 	private boolean adminOverride;
 
-	@Column(name="app_name_list", length=1024)
-	private String appNameList;
-
 	@Column(name="archive_candidate", nullable=false)
 	private boolean archiveCandidate;
-
-	@Column(name="best_number", length=100)
-	private String bestNumber;
-
-	@Column(name="call_me", nullable=false)
-	private boolean callMe;
-
-	@Column(name="call_reason", length=2048)
-	private String callReason;
 
 	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
@@ -45,9 +35,6 @@ public class Activity implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name="delete_date")
 	private Date deleteDate;
-
-	@Column(length=255)
-	private String disposition;
 
 	@Column(name="is_latest", nullable=false)
 	private boolean isLatest;
@@ -94,19 +81,19 @@ public class Activity implements Serializable {
 
 	//bi-directional many-to-one association to ActivityResponse
 	@OneToMany(mappedBy="activity")
-	private List<ActivityResponse> activityResponses;
+	private List<ActivityResponse> activityResponses = new ArrayList<ActivityResponse>();
 
 	//bi-directional many-to-many association to LineOfBusiness
 	@ManyToMany(mappedBy="activitiesLobXRef")
-	private List<LineOfBusiness> lineOfBusinessesXRefActivities;
+	private List<LineOfBusiness> lineOfBusinessesXRefActivities = new ArrayList<LineOfBusiness>();
 
 	//bi-directional many-to-many association to LineOfBusiness
 	@ManyToMany(mappedBy="activitiesPresumedLobXRef")
-	private List<LineOfBusiness> lineOfBusinessesXRefPresumedActivities;
+	private List<LineOfBusiness> lineOfBusinessesXRefPresumedActivities = new ArrayList<LineOfBusiness>();
 	
 	//bi-directional many-to-one association to ActivityMigrationKeyXRef
 	@OneToMany(mappedBy="activity")
-	private List<ActivityMigrationKeyXRef> activityMigrationKeyXRefs;
+	private List<ActivityMigrationKeyXRef> activityMigrationKeyXRefs = new ArrayList<ActivityMigrationKeyXRef>();
 	
 	@ManyToMany(fetch = FetchType.LAZY,
 	        mappedBy = "activities")
@@ -131,44 +118,12 @@ public class Activity implements Serializable {
 		this.adminOverride = adminOverride;
 	}
 
-	public String getAppNameList() {
-		return this.appNameList;
-	}
-
-	public void setAppNameList(String appNameList) {
-		this.appNameList = appNameList;
-	}
-
 	public boolean getArchiveCandidate() {
 		return this.archiveCandidate;
 	}
 
 	public void setArchiveCandidate(boolean archiveCandidate) {
 		this.archiveCandidate = archiveCandidate;
-	}
-
-	public String getBestNumber() {
-		return this.bestNumber;
-	}
-
-	public void setBestNumber(String bestNumber) {
-		this.bestNumber = bestNumber;
-	}
-
-	public boolean getCallMe() {
-		return this.callMe;
-	}
-
-	public void setCallMe(boolean callMe) {
-		this.callMe = callMe;
-	}
-
-	public String getCallReason() {
-		return this.callReason;
-	}
-
-	public void setCallReason(String callReason) {
-		this.callReason = callReason;
 	}
 
 	public Timestamp getCreateTime() {
@@ -185,14 +140,6 @@ public class Activity implements Serializable {
 
 	public void setDeleteDate(Date deleteDate) {
 		this.deleteDate = deleteDate;
-	}
-
-	public String getDisposition() {
-		return this.disposition;
-	}
-
-	public void setDisposition(String disposition) {
-		this.disposition = disposition;
 	}
 
 	public boolean getIsLatest() {
