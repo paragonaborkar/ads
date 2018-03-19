@@ -1,7 +1,7 @@
 package com.netapp.ads.converters;
 
 public class TalendConstants {
-
+	
 	public final static String  JOB_NAME_USER_ROLES =  "ADS_Setup_1_UserRoles";
 	public final static String  JOB_NAME_USER_NATIVES =  "ADS_Setup_2_UserNatives";
 	public final static String  JOB_NAME_AUDIT_EVENTS =  "ADS_Setup_3_AuditEvents";
