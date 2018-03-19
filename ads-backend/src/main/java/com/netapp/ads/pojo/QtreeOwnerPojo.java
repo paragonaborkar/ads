@@ -25,7 +25,7 @@ public class QtreeOwnerPojo {
 	public QtreeOwnerPojo() {
 	}
 
-	public Timestamp decommissionByDate() {
+	public Timestamp getDecommissionByDate() {
 		return this.decommissionByDate;
 	}
 

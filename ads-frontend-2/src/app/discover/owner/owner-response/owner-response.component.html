@@ -16,6 +16,8 @@
             <h1 class="h4"><strong>NAS Volume Name:</strong> {{activityInfo.nasVolume.volumeName}}</h1>
             <pre> {{ formGroup.value | json }} </pre>
 
+            <pre>{{activityResponse | json}}</pre>
+
             <form [formGroup]="formGroup">
 
                 <div class="form-group row" >

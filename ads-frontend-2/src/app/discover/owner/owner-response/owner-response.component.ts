@@ -7,7 +7,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ActivtyResponse } from "../../activity-response";
 
 import { OwnerResponseService } from './owner-response.service';
-
+import { SessionHelper } from '../../../auth/session.helper';
 import { AdsErrorService } from '../../../common/ads-error.service';
 
 @Component({
@@ -24,7 +24,6 @@ export class OwnerResponseComponent implements OnInit {
   @Input() scheduleAction: any;
   @Input() isMultiOwner: boolean;
 
-
   errorMessage = '';
 
   bsValue = null;
@@ -32,18 +31,19 @@ export class OwnerResponseComponent implements OnInit {
   public formGroup: FormGroup; // our model driven form
 
   activityResponse: ActivtyResponse = new ActivtyResponse();
+  loginInfo;
 
-  constructor(private ownerResponseService: OwnerResponseService, private errorService: AdsErrorService) { }
+  constructor(private ownerResponseService: OwnerResponseService, private errorService: AdsErrorService, private sessionHelper: SessionHelper) { }
 
   ngOnInit() {
-    console.log(this.activityInfo);
+    this.loginInfo = this.sessionHelper.getToken();
 
     this.formGroup = new FormGroup({
       // is Owner ?
       confirmOwner: new FormControl(null, Validators.required),
 
       // If Owner
-      decommissionVolume: new FormControl(null),
+      decommissionVolume: new FormControl(null, Validators.required),
       decommissionByDate: new FormControl(null),
       //   // migrationDate: new FormControl(),        // Use for Schedule module in future.
       //   // migrationStartTime: new FormControl(),   // Use for Schedule module in future.
@@ -59,14 +59,10 @@ export class OwnerResponseComponent implements OnInit {
 
 
     if (!this.isMultiOwner) {
-      let updatedDecommissionVolume = new FormControl(null, Validators.required);
+      // let updatedDecommissionVolume = new FormControl(null, Validators.required);
       let updatedDecommissionByDate = new FormControl(null, Validators.required);
 
-      // migrationDate: new FormControl(),        // Use for Schedule module in future.
-      // migrationStartTime: new FormControl(),   // Use for Schedule module in future.
-      // dayOfWeek: new FormControl()             // Use for Schedule module in future.
-
-      this.formGroup.addControl('decommissionVolume', updatedDecommissionVolume);
+      // this.formGroup.addControl('decommissionVolume', updatedDecommissionVolume);
       this.formGroup.addControl('decommissionByDate', updatedDecommissionByDate);
     }
   }
@@ -93,7 +89,8 @@ export class OwnerResponseComponent implements OnInit {
     this.activityResponse.activityResponseId = this.activityInfo.activityResponses[0].id;
     this.activityResponse.ownerUserCorporateId = this.activityInfo.activityResponses[0].ownerUserCorporateId;
     
-    this.activityResponse.currentUserCorporateId = 
+    // this.activityResponse.currentUserCorporateId = this.loginInfo.corpUserId;
+    this.activityResponse.currentUserCorporateId = 9;
 
     this.activityResponse.isOwner = this.formGroup.value.confirmOwner;
     this.activityResponse.isPresumed = false; // If the Owner responds with T or F, then we set this to false to indicate it was processed.
@@ -104,17 +101,9 @@ export class OwnerResponseComponent implements OnInit {
       this.activityResponse.decommissionByDate = this.formGroup.value.decommissionByDate;
     } else {
       this.activityResponse.dontKnowOwner = this.formGroup.value.dontKnowOwner;
-      this.activityResponse.suggestedOwnerUserCorporateId = 0; // TODO
+      this.activityResponse.suggestedOwnerUserCorporateId = 0; // TODO   // Get from lookup.
     }
 
-    newVolumeOwner:number;
-
-
-
-
-    // this.activityResponse.ownerUserCorporateId; // We don't need to set this, since it'a already set.
-
-    this.activityResponse.suggestedOwnerUserCorporateId; // Get from lookup.
 
     // TODO: Handle an error and display a message in the modal.
     this.ownerResponseService.saveOwnerResponse(this.activityResponse).subscribe(
@@ -126,9 +115,6 @@ export class OwnerResponseComponent implements OnInit {
         // Get the ADS configured error message to display.
         this.errorMessage = this.errorService.processError(err, "saveOwnerResponse", "PATCH");
       });
-
-
-
   }
 
   close() {
