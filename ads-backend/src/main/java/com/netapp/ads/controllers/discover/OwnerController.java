@@ -78,7 +78,6 @@ public class OwnerController {
 					if (ownerResponse.getDecommissionVolume()) {
 						// FIXME: This wasn't set for MMS. 
 						// CHECKING WITH LEW ON WHAT TO SET HERE.
-						activity.setArchiveCandidate(true);
 						activity.setWillDelete(true);
 						activity.setDeleteDate(ownerResponse.getDecommissionByDate());
 						activityRepository.save(activity);

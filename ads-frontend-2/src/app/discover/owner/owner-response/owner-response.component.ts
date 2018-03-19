@@ -44,13 +44,12 @@ export class OwnerResponseComponent implements OnInit {
 
       // If Owner
       decommissionVolume: new FormControl(null, Validators.required),
-      decommissionByDate: new FormControl(null),
       //   // migrationDate: new FormControl(),        // Use for Schedule module in future.
       //   // migrationStartTime: new FormControl(),   // Use for Schedule module in future.
       //   // dayOfWeek: new FormControl()             // Use for Schedule module in future.
 
       // If not Owner
-      newVolumeOwner: new FormControl(),
+      suggestedOwnerUserCorporateId: new FormControl(),
       dontKnowOwner: new FormControl(false),
 
       // For everyone, regardless of Owner response

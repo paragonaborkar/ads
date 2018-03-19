@@ -26,18 +26,12 @@ public class Activity implements Serializable {
 	@Column(name="admin_override", nullable=false)
 	private boolean adminOverride;
 
-	@Column(name="archive_candidate", nullable=false)
-	private boolean archiveCandidate;
-
 	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="delete_date")
 	private Date deleteDate;
-
-	@Column(name="is_latest", nullable=false)
-	private boolean isLatest;
 
 	@Column(name="mail_count")
 	private Integer mailCount;
@@ -58,9 +52,6 @@ public class Activity implements Serializable {
 
 	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
-
-	@Column(length=255)
-	private String vserver;
 
 	@Column(name="will_delete", nullable=false)
 	private boolean willDelete;
@@ -119,13 +110,7 @@ public class Activity implements Serializable {
 		this.adminOverride = adminOverride;
 	}
 
-	public boolean getArchiveCandidate() {
-		return this.archiveCandidate;
-	}
 
-	public void setArchiveCandidate(boolean archiveCandidate) {
-		this.archiveCandidate = archiveCandidate;
-	}
 
 	public Timestamp getCreateTime() {
 		return this.createTime;
@@ -141,14 +126,6 @@ public class Activity implements Serializable {
 
 	public void setDeleteDate(Date deleteDate) {
 		this.deleteDate = deleteDate;
-	}
-
-	public boolean getIsLatest() {
-		return this.isLatest;
-	}
-
-	public void setIsLatest(boolean isLatest) {
-		this.isLatest = isLatest;
 	}
 
 	public Integer getMailCount() {
@@ -199,13 +176,7 @@ public class Activity implements Serializable {
 		this.updateTime = updateTime;
 	}
 
-	public String getVserver() {
-		return this.vserver;
-	}
 
-	public void setVserver(String vserver) {
-		this.vserver = vserver;
-	}
 
 	public boolean getWillDelete() {
 		return this.willDelete;

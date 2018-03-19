@@ -85,15 +85,12 @@ public class QtreeDispositionServiceImpl implements QtreeDispositionService {
 	public boolean populateActivity(NasVolume nasVolume, Qtree qtree) {
 		//Not sure why we iterate through all the qtrees. Can we filter this based on the disposition and justification we set earlier in the rules engine
 		Activity activity = new Activity();
-		activity.setQtree(qtree);
-		activity.setVserver(nasVolume.getVserver());
+		activity.setQtree(qtree);		
 		//activity.setDisposition(qtree.getDisposition());
 		activity.setMailingDate(new Date()); //What should this be?
-		activity.setWillDelete(true); //Who sets this
-		activity.setWillMigrate(true); //Who sets this
+		activity.setWillDelete(false);  // This is set when QTree Owners confirm ownership
+		activity.setWillMigrate(false); // This is set when QTree Owners confirm ownership
 		//activity.setCallMe(true);
-		activity.setArchiveCandidate(false);
-		activity.setIsLatest(true);
 		activity.setAdminOverride(false);
 		activityRepository.save(activity);
 		logger.info("populateActivity: Created Activity: " + activity.getId());
