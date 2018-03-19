@@ -18,15 +18,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Integer>, JpaSpecificationExecutor<Activity> {
 
-	// Paged list of activities
-	//Page findByDisposition(@Param("disposition") String disposition,  Pageable p);
-	
-	
-	//Commenting below since we removed disposition from activity
-	//@RestResource(path="findActivitiesByDisposition")
-	//Select a From ActivityEntity a where a.disposition=:disposition AND a.unidentifiedReason IS NULL
-	//List<Activity> findByDisposition(@Param("disposition") String disposition);
-	
+	// This was used to troubleshoot some issues. Not used in app:
 //	Activity findById(@Param("id") Integer id);
 	
 	/*	SIMLIAR TO: 
@@ -39,21 +31,25 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>, Jp
 	AND migration_key.user_corporate_id = 9 
 	AND activity.disposition = 'DiscoverOwner'*/
 
-	
-	//Commenting below since we removed disposition from activity
-	//@Query("Select a From Activity a LEFT JOIN a.activityMigrationKeyXRefs x LEFT JOIN x.migrationKey m WHERE m.migrationKey=:migKey AND m.userCorporateId=:corpUserId AND a.disposition=:disposition")
-//    List<Activity> getActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId, @Param("disposition") String disposition);
-    //Page getActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId, @Param("disposition") String disposition, Pageable p);
-
+    @Query("Select a From Activity a  "
+    		+ "JOIN a.qtree q " 
+    		+ "JOIN q.qtreeDisposition qd ON qd.disposition = :disposition "
+    		+ "JOIN a.activityResponses ar ON ar.ownerUserCorporateId=:corpUserId AND ar.isPresumed = 1"
+    		+ "JOIN a.activityMigrationKeyXRefs x "
+    		+ "JOIN x.migrationKey m ON m.migrationKey=:migKey AND m.userCorporateId=:corpUserId ")
+    List<Activity> getActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId , @Param("disposition") String disposition);
     
+    
+//  AND qtd.disposition = :disposition
+    //, @Param("disposition") String disposition
     
     // a.adminOverride as getAdminOverride, a.qtree as qtree
 
 	
-	//    @Query("Select a.adminOverride as getAdminOverride From Activity a LEFT JOIN a.activityMigrationKeyXRefs x LEFT JOIN x.migrationKey m WHERE m.migrationKey=:migKey AND m.userCorporateId=:corpUserId AND a.disposition=:disposition")
-//    List<ActivityProjection> getActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId, @Param("disposition") String disposition);
+	// @Query("Select a.adminOverride as getAdminOverride From Activity a LEFT JOIN a.activityMigrationKeyXRefs x LEFT JOIN x.migrationKey m WHERE m.migrationKey=:migKey AND m.userCorporateId=:corpUserId AND a.disposition=:disposition")
+    // List<ActivityProjection> getActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId, @Param("disposition") String disposition);
     
-    
+    // NOT USED IN APP:
 //    @Query(value = "Select a.id From Activity a LEFT JOIN a.activityMigrationKeyXRefs x LEFT JOIN x.migrationKey m WHERE m.migrationKey=:migKey AND m.userCorporateId=:corpUserId AND a.disposition=:disposition")
 //    public String[] getIdOfActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId, @Param("disposition") String disposition);
 

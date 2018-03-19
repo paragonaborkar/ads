@@ -19,30 +19,11 @@ import { Page } from "../common/page";
 
 @Injectable()
 export class OwnerService {
-    private reportServiceUrl = '';
 
+    private validateMigKey = '/validate-migration-key/';
 
     constructor(private http: HttpClient, private errorService: AdsErrorService, private global: Globals) { }
 
-    private activitiesePath = '/activities/search/findByDisposition?disposition=DiscoverOwner&projection=activityWithQtree';
-    
-    private servicePath = '/userNatives/';
-    private validateMigKey = '/validate-migration-key/';
-
-    // {{url}}/activities/search/findByDisposition?disposition=NFS-Orphan&projection=activityWithQtree
-    // {{url}}
-    getAllActivities(page: Page): Observable<any> {
-
-        // return this.http.get(this.global.apiUrl + this.activitiesePath + "&page=" + page.number + "&size=" + page.size)
-        return this.http.get(this.global.apiUrl + "/activities?page=" + page.number + "&size=" + page.size)
-            .map((res: Response) => res)
-        // .catch(
-        // Handle error in Subscribe() using the AdsErrorService  
-        // You can optionally handle it here, if needed    
-        //   );
-    }
-
-    
 
     getAllActivitiesForUser(migKey, corpUserId, page: Page): Observable<any> {
 
@@ -58,17 +39,6 @@ export class OwnerService {
         //   );
     }
 
-
-    getQTreesForOwner(migKey): Observable<any> {
-        console.log("getQTreesForOwner:", migKey);
-
-        return this.http.get(this.global.apiUrl + this.servicePath)
-            .map((res: Response) => res)
-        // .catch(
-        // Handle error in Subscribe() using the AdsErrorService  
-        // You can optionally handle it here, if needed    
-        //   );
-    }
 
 
     validateMigKeyExists(migKey: string, userCorpId: number): Observable<any> {

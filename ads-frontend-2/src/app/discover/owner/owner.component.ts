@@ -10,6 +10,8 @@ import { ApplicationConfigService } from '../../common/application-config.servic
 
 import { Page } from "../../common/page";
 
+
+
 import { DataTableColTemplatesComponent } from '../../common/data-table-col-templates/data-table-col-templates.component'
 
 
@@ -29,7 +31,7 @@ export class OwnerComponent implements OnInit {
 
   public currentUserCorporateId = 9;
 
-
+  
   page = new Page();
 
   // owerListing: any = [];
@@ -80,10 +82,10 @@ export class OwnerComponent implements OnInit {
     this.ownerService.getAllActivitiesForUser("ABC", this.currentUserCorporateId, pageInfo).subscribe(
       data => {
         console.log(data);
-        this.page = data.page;
-        this.page.pageNumber = this.page.number;
+        // this.page = data.page;
+        // this.page.pageNumber = this.page.number;
         // Don't set rows to undefined, it'll break the listing!    
-        if (data.page.totalElements > 0) {
+        if (data._embedded.activities) {
           this.rows = data._embedded.activities;
           this.rows.forEach(activity => {
 
@@ -111,7 +113,7 @@ export class OwnerComponent implements OnInit {
   }
 
   applyPreferences(): void {
-    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.columnTemplates)
+    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.columnTemplates, true)
       .subscribe(columnPreferences => {
         this.columns = columnPreferences;
       }

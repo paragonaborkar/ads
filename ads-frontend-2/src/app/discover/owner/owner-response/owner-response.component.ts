@@ -2,8 +2,13 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-
 import { ModalDirective } from 'ngx-bootstrap/modal';
+
+import { ActivtyResponse } from "../../activity-response";
+
+import { OwnerResponseService } from './owner-response.service';
+
+import { AdsErrorService } from '../../../common/ads-error.service';
 
 @Component({
   selector: 'app-owner-response',
@@ -18,13 +23,13 @@ export class OwnerResponseComponent implements OnInit {
   @Input() activityInfo: any;
   @Input() scheduleAction: any;
 
+  errorMessage = '';
+
   public formGroup: FormGroup; // our model driven form
 
+  activityResponse: ActivtyResponse = new ActivtyResponse();
 
-
-  activityResponse = [];
-
-  constructor() { }
+  constructor(private ownerResponseService:OwnerResponseService, private errorService: AdsErrorService) { }
 
   ngOnInit() {
     console.log(this.activityInfo);
@@ -36,9 +41,10 @@ export class OwnerResponseComponent implements OnInit {
       }),
       ownerFormGroup: new FormGroup({
         decommissionVolume: new FormControl(),
-        migrationDate: new FormControl(),
-        migrationStartTime: new FormControl(),
-        dayOfWeek: new FormControl()
+        controllerInstalledDate: new FormControl(),
+        // migrationDate: new FormControl(),        // Use for Schedule module in future.
+        // migrationStartTime: new FormControl(),   // Use for Schedule module in future.
+        // dayOfWeek: new FormControl()             // Use for Schedule module in future.
       }),
       notOwnerFormGroup: new FormGroup({
         newVolumeOwner: new FormControl(),
@@ -51,16 +57,28 @@ export class OwnerResponseComponent implements OnInit {
   }
 
   save() {
+    console.log(this.formGroup);
 
-    this.formGroup
+    this.activityResponse.isOwner =  this.formGroup.value.isOwnerFormGroup.confirmOwner;
+    this.activityResponse.isPresumed = false; // If the Owner responds with T or F, then we set this to false to indicate it was processed.
+    this.activityResponse.callMe =  this.formGroup.value.isOwnerFormGroup.migrationTeamContactMe;
+   
+    // this.activityResponse.ownerUserCorporateId; // We don't need to set this, since it'a already set.
+
+    this.activityResponse.suggestedOwnerUserCorporateId; // Get from lookup.
+
+      // TODO: Handle an error and display a message in the modal.
+      this.ownerResponseService.saveOwnerResponse(this.activityResponse, this.activityInfo.activityResponses[0].id).subscribe(
+        response => {
+          console.log(response);
+         
+          // this.saved.emit(this.user);
+        },  err => {
+          // Get the ADS configured error message to display.
+          this.errorMessage = this.errorService.processError(err, "saveOwnerResponse", "PUT");
+        });
     
-    // TODO: Handle an error and display a message in the modal.
-    // this.usersService.update(this.User, this.userSelfLink).subscribe(
-    //   response => {
-    //     console.log(response);
-    //     console.log("Saved in modal");
-    //     this.saved.emit(this.User);
-    //   });
+
 
   }
 

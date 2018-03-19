@@ -93,7 +93,7 @@ export class ControllerReleaseComponent implements OnInit {
   applyPreferences(): void {
     // console.log("applyPreferences Start");
 
-    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.columnTemplates)
+    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.columnTemplates, true)
       .subscribe(columnPreferences => {
         this.columns = columnPreferences;
       });

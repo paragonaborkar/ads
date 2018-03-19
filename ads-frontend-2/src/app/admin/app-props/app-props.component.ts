@@ -141,7 +141,7 @@ export class AppPropsComponent implements OnInit {
 
 
   applyPreferences(): void {
-    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.columnTemplates)
+    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.columnTemplates, false)
       .subscribe(columnPreferences => {
         this.columns = columnPreferences;
 

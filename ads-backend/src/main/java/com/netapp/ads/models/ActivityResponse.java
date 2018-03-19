@@ -2,6 +2,13 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.support.RepositoryEntityLinks;
+import org.springframework.hateoas.Link;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Timestamp;
 
 
@@ -13,6 +20,9 @@ import java.sql.Timestamp;
 @Table(name="activity_response")
 public class ActivityResponse implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+//	@Autowired
+//	RepositoryEntityLinks entityLinks;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -53,6 +63,19 @@ public class ActivityResponse implements Serializable {
 
 	public ActivityResponse() {
 	}
+	
+/*	@Transient
+	private String linkToSelf;
+	
+	@Transient
+	public String getLinkToSelf() {
+		return this.linkToSelf.toString();
+	}
+	@Transient
+	public void setLinkToSelf() {
+		this.linkToSelf = entityLinks.linkToSingleResource(ActivityResponse.class, this.getId()).toString();
+	}*/
+	
 
 	public Integer getId() {
 		return this.id;

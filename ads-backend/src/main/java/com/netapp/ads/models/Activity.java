@@ -102,6 +102,7 @@ public class Activity implements Serializable {
 	public Activity() {
 	}
 
+	
 	public Integer getId() {
 		return this.id;
 	}

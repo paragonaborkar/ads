@@ -1,16 +1,20 @@
 <div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title pull-left">{{scheduleAction}} Qtree Owner </h4>
+            <h4 class="modal-title pull-left">{{scheduleAction}} Qtree Ownership</h4>
             <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
 
-            <h1 class="h4">QTree Name: {{activityInfo.qtree.qtreeName}}</h1>
-            <h1 class="h4">NAS Volume Name: {{activityInfo.nasVolume.nasVolumeName}}</h1>
-            <!-- <pre> {{ formGroup.value | json }} </pre> -->
+            <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+                <span>{{errorMessage}}</span>
+              </div>
+              
+            <h1 class="h4"><strong>QTree Name:</strong> {{activityInfo.qtree.qtreeName}}</h1>
+            <h1 class="h4"><strong>NAS Volume Name:</strong> {{activityInfo.nasVolume.volumeName}}</h1>
+            <pre> {{ formGroup.value | json }} </pre>
 
             <form [formGroup]="formGroup">
 
@@ -29,7 +33,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <div *ngIf="formGroup.value.isOwnerFormGroup.confirmOwner">
                     <div class="form-group row" formGroupName="ownerFormGroup">
@@ -67,7 +70,80 @@
                     </div>
                 </div>
 
-                <!-- Schedule is in a future module... keep for future use -->
+
+                <div *ngIf="formGroup.value.isOwnerFormGroup.confirmOwner == false">
+
+                    <div class="row">
+                        <div class="col-sm-12 ">
+                            <table class="table table-bordered table-hover table-sm " *ngIf="ownersOfAVolume">
+                                <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>STD-ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let owner of ownersOfAVolume._embedded.ownersOfAVolume">
+                                        <td>{{owner.firstName}}</td>
+                                        <td>{{owner.lastName}}</td>
+                                        <td>{{owner.stdId}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" formGroupName="notOwnerFormGroup">
+                        <label for="confirm-owner" class="col-sm-6 form-control-label">If you know the owner who is not in the list please enter it here:</label>
+                        <div class="col-sm-6 ">
+                            <div class="input-group input-group-unstyled">
+                                <input type="text" class="form-control" formControlName="newVolumeOwner">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" formGroupName="notOwnerFormGroup">
+                        <div class="col-sm-12">
+                            <label>
+                                <input class="checkbox" type="checkbox" formControlName="dontKnowOwner">
+                                <span>I do not know who the Owner is for this Volume</span>
+                            </label>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="form-group row" formGroupName="isOwnerFormGroup">
+                    <label for="migration-team-contact" class="col-sm-6 form-control-label">Would you like the support team to contact you?</label>
+                    <div class="col-sm-6">
+                        <div>
+                            <label>
+                                <input class="radio" formControlName="migrationTeamContactMe" type="radio" [value]=true>
+                                <span>Yes</span>
+                            </label>
+                            <label>
+                                <input class="radio" formControlName="migrationTeamContactMe" type="radio" [value]=false>
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default" (click)="close()">Cancel</button>
+            <button class="btn btn-primary" (click)="save()">Save</button>
+        </div>
+    </div>
+</div>
+
+
+   <!-- Schedule is in a future module... keep for future use -->
                 <!-- <div *ngIf="formGroup.value.isOwnerFormGroup.confirmOwner && formGroup.value.ownerFormGroup.decommissionVolume == false">
 
                     <div class="form-group row" formGroupName="ownerFormGroup">
@@ -136,80 +212,3 @@
                         </div>
                     </div>
                 </div> -->
-
-
-                <div *ngIf="formGroup.value.isOwnerFormGroup.confirmOwner == false">
-
-                    <div class="row">
-                        <div class="col-sm-12 ">
-                            <table class="table table-bordered table-hover table-sm " *ngIf="ownersOfAVolume">
-                                <thead>
-                                    <tr>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>STD-ID</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let owner of ownersOfAVolume._embedded.ownersOfAVolume">
-                                        <td>{{owner.firstName}}</td>
-                                        <td>{{owner.lastName}}</td>
-                                        <td>{{owner.stdId}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="form-group row" formGroupName="notOwnerFormGroup">
-                        <label for="confirm-owner" class="col-sm-6 form-control-label">If you know the owner who is not in the list please enter it here:</label>
-                        <div class="col-sm-6 ">
-                            <div class="input-group input-group-unstyled">
-
-                                <input type="text" class="form-control" formControlName="newVolumeOwner">
-
-                                <span class="input-group-addon">
-                                    <em class="fa fa-search"></em>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row" formGroupName="notOwnerFormGroup">
-                        <div class="col-sm-12">
-                            <label>
-                                <input class="checkbox" type="checkbox" formControlName="dontKnowOwner">
-                                <span>I do not know who the Owner is for this Volume</span>
-                            </label>
-                        </div>
-                    </div>
-
-
-
-                </div>
-
-                <div class="form-group row" formGroupName="isOwnerFormGroup">
-                    <label for="migration-team-contact" class="col-sm-6 form-control-label">Would you like the support team to contact you?</label>
-                    <div class="col-sm-6">
-                        <div>
-                            <label>
-                                <input class="radio" formControlName="migrationTeamContactMe" type="radio" [value]=true>
-                                <span>Yes</span>
-                            </label>
-                            <label>
-                                <input class="radio" formControlName="migrationTeamContactMe" type="radio" [value]=false>
-                                <span>No</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-default" (click)="close()">Cancel</button>
-            <button class="btn btn-primary" (click)="save()">Save</button>
-        </div>
-    </div>
-</div>

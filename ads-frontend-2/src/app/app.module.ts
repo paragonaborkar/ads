@@ -48,7 +48,7 @@ import { ControllerWorkPackageService } from './discover/controller-work-package
 import { ControllerTypeaheadService } from './discover/controller-typeahead/controller-typeahead.service';
 
 import { ReportCommonService } from './common/report-listing-common/report-common.service';
-
+import { OwnerResponseService } from './discover/owner/owner-response/owner-response.service';
 
 
 // Declarations
@@ -189,6 +189,7 @@ import { ControllerReleaseDeleteComponent } from './discover/controller-release/
 
 
     OwnerService,
+    OwnerResponseService,
     ControllerReleaseService,
     ControllerWorkPackageService,
     ControllerTypeaheadService,
