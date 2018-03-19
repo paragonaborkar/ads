@@ -10,8 +10,6 @@ import { ApplicationConfigService } from '../../common/application-config.servic
 
 import { Page } from "../../common/page";
 
-
-
 import { DataTableColTemplatesComponent } from '../../common/data-table-col-templates/data-table-col-templates.component'
 
 
@@ -31,6 +29,7 @@ export class OwnerComponent implements OnInit {
 
   public currentUserCorporateId = 9;
 
+  public isMultiOwner = true;
   
   page = new Page();
 

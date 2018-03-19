@@ -1,7 +1,7 @@
 <div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title pull-left">{{scheduleAction}} Qtree Ownership</h4>
+            <h4 class="modal-title pull-left">{{scheduleAction}} QTree Ownership</h4>
             <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -11,14 +11,14 @@
             <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
                 <span>{{errorMessage}}</span>
               </div>
-              
+
             <h1 class="h4"><strong>QTree Name:</strong> {{activityInfo.qtree.qtreeName}}</h1>
             <h1 class="h4"><strong>NAS Volume Name:</strong> {{activityInfo.nasVolume.volumeName}}</h1>
             <pre> {{ formGroup.value | json }} </pre>
 
             <form [formGroup]="formGroup">
 
-                <div class="form-group row" formGroupName="isOwnerFormGroup">
+                <div class="form-group row" >
                     <label for="confirm-owner" class="col-sm-6 form-control-label">Are you the Owner of this Volume? </label>
                     <div class="col-sm-6">
                         <div>
@@ -34,44 +34,42 @@
                     </div>
                 </div>
 
-                <div *ngIf="formGroup.value.isOwnerFormGroup.confirmOwner">
-                    <div class="form-group row" formGroupName="ownerFormGroup">
+                <div *ngIf="formGroup.value.confirmOwner">
+                    <div class="form-group row" >
                         <label for="decommission-volume" class="col-sm-6 form-control-label">Do you plan to decommission this Volume?</label>
                         <div class="col-sm-6">
                             <div>
                                 <label>
-                                    <input class="radio" formControlName="decommissionVolume" type="radio" [value]=true>
+                                    <input class="radio" formControlName="decommissionVolume" type="radio" [value]=true (change)="onDecommissionVolumeValueChanged(true)">
                                     <span>Yes</span>
                                 </label>
                                 <label>
-                                    <input class="radio" formControlName="decommissionVolume" type="radio" [value]=false>
+                                    <input class="radio" formControlName="decommissionVolume" type="radio" [value]=false (change)="onDecommissionVolumeValueChanged(false)">
                                     <span>No</span>
                                 </label>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div *ngIf="formGroup.value.isOwnerFormGroup.confirmOwner && formGroup.value.ownerFormGroup.decommissionVolume == true">
+                <div *ngIf="formGroup.value.confirmOwner && formGroup.value.decommissionVolume == true">
 
-                    <div class="form-group row" formGroupName="ownerFormGroup">
+                    <div class="form-group row">
                         <div class="col-sm-6">
                             <label for="confirm-owner" class="form-control-label">What date will the Qtree be decommissioned by?:</label>
                         </div>
 
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" [ngClass]="{'is-invalid':controllerInstalledDate.errors?.required && controllerInstalledDate.touched}"
-                                [(ngModel)]="newTarget.controllerInstalledDate" name="controllerInstalledDate" #controllerInstalledDate="ngModel"
-                                required [minDate]="minDate" [maxDate]="maxDate" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue">
-                            <div *ngIf="controllerInstalledDate.errors?.required && controllerInstalledDate.touched" class="invalid-feedback">
-                                Decommissioned By date is required
-                            </div>
+                            <input type="text" class="form-control"  formControlName="decommissionByDate"
+                                
+                                 [minDate]="minDate" [maxDate]="maxDate" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue">
+                            
 
                         </div>
                     </div>
                 </div>
 
 
-                <div *ngIf="formGroup.value.isOwnerFormGroup.confirmOwner == false">
+                <div *ngIf="formGroup.value.confirmOwner == false && !this.isMultiOwner">
 
                     <div class="row">
                         <div class="col-sm-12 ">
@@ -94,7 +92,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row" formGroupName="notOwnerFormGroup">
+                    <div class="form-group row" >
                         <label for="confirm-owner" class="col-sm-6 form-control-label">If you know the owner who is not in the list please enter it here:</label>
                         <div class="col-sm-6 ">
                             <div class="input-group input-group-unstyled">
@@ -103,29 +101,26 @@
                         </div>
                     </div>
 
-                    <div class="form-group row" formGroupName="notOwnerFormGroup">
+                    <div class="form-group row" >
                         <div class="col-sm-12">
                             <label>
                                 <input class="checkbox" type="checkbox" formControlName="dontKnowOwner">
                                 <span>I do not know who the Owner is for this Volume</span>
                             </label>
                         </div>
-                    </div>
-
-
-
+                    </div>/
                 </div>
 
-                <div class="form-group row" formGroupName="isOwnerFormGroup">
+                <div class="form-group row" >
                     <label for="migration-team-contact" class="col-sm-6 form-control-label">Would you like the support team to contact you?</label>
                     <div class="col-sm-6">
                         <div>
                             <label>
-                                <input class="radio" formControlName="migrationTeamContactMe" type="radio" [value]=true>
+                                <input class="radio" formControlName="migrationTeamContactMe" type="radio" [value]="true">
                                 <span>Yes</span>
                             </label>
                             <label>
-                                <input class="radio" formControlName="migrationTeamContactMe" type="radio" [value]=false>
+                                <input class="radio" formControlName="migrationTeamContactMe" type="radio" [value]="false">
                                 <span>No</span>
                             </label>
                         </div>

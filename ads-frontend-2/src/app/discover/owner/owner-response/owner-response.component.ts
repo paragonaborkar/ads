@@ -19,65 +19,114 @@ export class OwnerResponseComponent implements OnInit {
   @ViewChild('ownerResponseModal') public ownerResponseModal: ModalDirective;
   @Output() saved = new EventEmitter();
   @Output() cancel = new EventEmitter();
-  
+
   @Input() activityInfo: any;
   @Input() scheduleAction: any;
+  @Input() isMultiOwner: boolean;
+
 
   errorMessage = '';
+
+  bsValue = null;
 
   public formGroup: FormGroup; // our model driven form
 
   activityResponse: ActivtyResponse = new ActivtyResponse();
 
-  constructor(private ownerResponseService:OwnerResponseService, private errorService: AdsErrorService) { }
+  constructor(private ownerResponseService: OwnerResponseService, private errorService: AdsErrorService) { }
 
   ngOnInit() {
     console.log(this.activityInfo);
 
     this.formGroup = new FormGroup({
-      isOwnerFormGroup: new FormGroup({
-        confirmOwner: new FormControl(null, Validators.required),
-        migrationTeamContactMe: new FormControl(false)
-      }),
-      ownerFormGroup: new FormGroup({
-        decommissionVolume: new FormControl(),
-        controllerInstalledDate: new FormControl(),
-        // migrationDate: new FormControl(),        // Use for Schedule module in future.
-        // migrationStartTime: new FormControl(),   // Use for Schedule module in future.
-        // dayOfWeek: new FormControl()             // Use for Schedule module in future.
-      }),
-      notOwnerFormGroup: new FormGroup({
-        newVolumeOwner: new FormControl(),
-        dontKnowOwner: new FormControl()
-      })
+      // is Owner ?
+      confirmOwner: new FormControl(null, Validators.required),
 
+      // If Owner
+      decommissionVolume: new FormControl(null),
+      decommissionByDate: new FormControl(null),
+      //   // migrationDate: new FormControl(),        // Use for Schedule module in future.
+      //   // migrationStartTime: new FormControl(),   // Use for Schedule module in future.
+      //   // dayOfWeek: new FormControl()             // Use for Schedule module in future.
 
+      // If not Owner
+      newVolumeOwner: new FormControl(),
+      dontKnowOwner: new FormControl(false),
 
+      // For everyone, regardless of Owner response
+      migrationTeamContactMe: new FormControl(false)
     });
+
+
+    if (!this.isMultiOwner) {
+      let updatedDecommissionVolume = new FormControl(null, Validators.required);
+      let updatedDecommissionByDate = new FormControl(null, Validators.required);
+
+      // migrationDate: new FormControl(),        // Use for Schedule module in future.
+      // migrationStartTime: new FormControl(),   // Use for Schedule module in future.
+      // dayOfWeek: new FormControl()             // Use for Schedule module in future.
+
+      this.formGroup.addControl('decommissionVolume', updatedDecommissionVolume);
+      this.formGroup.addControl('decommissionByDate', updatedDecommissionByDate);
+    }
   }
+
+
+
+  onDecommissionVolumeValueChanged(value: any) {
+    let control = this.formGroup.get('decommissionByDate');
+    // Using setValidators to add and remove validators. No better support for adding and removing validators to controller atm.
+    // See issue: https://github.com/angular/angular/issues/10567
+    if (value) {
+      control.setValidators([Validators.required]);
+    } else {
+      control.setValidators([]);
+    }
+
+    control.updateValueAndValidity(); //Need to call this to trigger a update
+  }
+
 
   save() {
     console.log(this.formGroup);
 
-    this.activityResponse.isOwner =  this.formGroup.value.isOwnerFormGroup.confirmOwner;
+    this.activityResponse.activityResponseId = this.activityInfo.activityResponses[0].id;
+    this.activityResponse.ownerUserCorporateId = this.activityInfo.activityResponses[0].ownerUserCorporateId;
+    
+    this.activityResponse.currentUserCorporateId = 
+
+    this.activityResponse.isOwner = this.formGroup.value.confirmOwner;
     this.activityResponse.isPresumed = false; // If the Owner responds with T or F, then we set this to false to indicate it was processed.
-    this.activityResponse.callMe =  this.formGroup.value.isOwnerFormGroup.migrationTeamContactMe;
-   
+    this.activityResponse.callMe = this.formGroup.value.migrationTeamContactMe;
+
+    if (this.activityResponse.isOwner) {
+      this.activityResponse.decommissionVolume = this.formGroup.value.decommissionVolume;
+      this.activityResponse.decommissionByDate = this.formGroup.value.decommissionByDate;
+    } else {
+      this.activityResponse.dontKnowOwner = this.formGroup.value.dontKnowOwner;
+      this.activityResponse.suggestedOwnerUserCorporateId = 0; // TODO
+    }
+
+    newVolumeOwner:number;
+
+
+
+
     // this.activityResponse.ownerUserCorporateId; // We don't need to set this, since it'a already set.
 
     this.activityResponse.suggestedOwnerUserCorporateId; // Get from lookup.
 
-      // TODO: Handle an error and display a message in the modal.
-      this.ownerResponseService.saveOwnerResponse(this.activityResponse, this.activityInfo.activityResponses[0].id).subscribe(
-        response => {
-          console.log(response);
-         
-          // this.saved.emit(this.user);
-        },  err => {
-          // Get the ADS configured error message to display.
-          this.errorMessage = this.errorService.processError(err, "saveOwnerResponse", "PUT");
-        });
-    
+    // TODO: Handle an error and display a message in the modal.
+    this.ownerResponseService.saveOwnerResponse(this.activityResponse).subscribe(
+      response => {
+        console.log(response);
+
+        // this.saved.emit(this.user);
+      }, err => {
+        // Get the ADS configured error message to display.
+        this.errorMessage = this.errorService.processError(err, "saveOwnerResponse", "PATCH");
+      });
+
 
 
   }

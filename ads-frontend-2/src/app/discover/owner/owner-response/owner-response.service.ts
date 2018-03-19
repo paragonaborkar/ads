@@ -15,10 +15,12 @@ export class OwnerResponseService {
 
   constructor(private http: HttpClient, private errorService: AdsErrorService, private global: Globals) { }
 
-  saveOwnerResponse(obj, activityId): Observable<any> {
-    console.log('create saveOwnerResponse:', obj, activityId);
+  saveOwnerResponse(obj): Observable<any> {
+    console.log('create saveOwnerResponse:', obj);
     return this.http
-      .patch(this.global.apiUrl  +this.servicePath + activityId, obj)
+    
+      .patch(this.global.apiUrl  + "/saveQtreeOwner/", obj)
+      // .patch(this.global.apiUrl  +this.servicePath + activityId, obj)
       .map((res: Response) => res);
     // .catch(
     // Handle error in Subscribe() using the AdsErrorService      

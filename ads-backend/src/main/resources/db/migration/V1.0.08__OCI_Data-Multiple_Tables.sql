@@ -23,7 +23,7 @@ UNLOCK TABLES;
 /*!40000 ALTER TABLE `host` DISABLE KEYS */;
 INSERT INTO `host` (`id`, `create_time`, `host_name`, `host_owner_user_corporate_id`, `ip_addr`, `note`, `system_admin_id`, `update_time`) VALUES
 	(1, NULL, 'dv2-ls-cts-001', NULL, '10.216.49.26', 'Test', NULL, NULL),
-	(2, NULL, 'dv2-ls-cts-002', NULL, '198.222.333.222', 'Test', NULL, NULL);
+	(2, NULL, 'dv2-ls-cts-002', NULL, '10.216.49.27', 'Test', NULL, NULL);
 /*!40000 ALTER TABLE `host` ENABLE KEYS */;
 --
 -- Dumping data for table `controller`
