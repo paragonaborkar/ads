@@ -2003,7 +2003,7 @@ CREATE VIEW `activity_report` AS
 			LEFT JOIN `nas_volume` `nv` ON (`qt`.`nas_volume_id` = `nv`.`id`));
 
 CREATE OR REPLACE VIEW `multi_owner_report` AS
-    SELECT 
+	SELECT DISTINCT
 			`a`.`id` AS `id`,
 			`qt`.`qtree_name` AS `qtree_name`,
 			`nv`.`volume_name` AS `volume_name`,
@@ -2029,11 +2029,11 @@ CREATE OR REPLACE VIEW `multi_owner_report` AS
     FROM
         (`activity` `a`
         JOIN `activity_response` `ar` ON (`ar`.`activity_id` = `a`.`id`)
-        LEFT JOIN `qtree` `qt` ON (`a`.`qtree_id` = `qt`.`id`)
-        LEFT JOIN `qtree_disposition` `qtd` ON (`qtd`.`qtree_id` = `qt`.`id`)
-        LEFT JOIN `nas_volume` `nv` ON (`qt`.`nas_volume_id` = `nv`.`id`))
+        JOIN `qtree` `qt` ON (`a`.`qtree_id` = `qt`.`id`)
+        JOIN `qtree_disposition` `qtd` ON (`qtd`.`qtree_id` = `qt`.`id`)
+        JOIN `nas_volume` `nv` ON (`qt`.`nas_volume_id` = `nv`.`id`))
     WHERE
-    	 `a`.`id` IN (SELECT `activity_id` FROM activity_response WHERE is_presumed = 1 GROUP BY owner_user_corporate_id HAVING count(*) > 1);        
+    	 `a`.`id` IN (SELECT `activity_id` FROM activity_response WHERE is_presumed = 1 GROUP BY activity_id HAVING count(*) > 1);      
 
 
 
