@@ -1,0 +1,1 @@
+INSERT INTO `exports` (`id`, `controller_name`, `volume_path`, `access_type`, `reason`, `user_corporate_id`, `lob_id`, `impact_status`, `peregrine_queue`, `contact`, `create_time`, `update_time`) VALUES (1, 'UNKNOWN', '/tmp', 'UNKNOWN', 'UNKNOWN', 1, 1, 'UNKNOWN', 'UNKNOWN', 'UNKNOWN', '2018-02-02 09:59:56', NULL);

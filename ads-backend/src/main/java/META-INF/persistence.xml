@@ -68,9 +68,7 @@
 		<class>com.netapp.ads.models.MstEmailingDate</class>
 		<class>com.netapp.ads.models.MstEmailingDatePK</class>
 		<class>com.netapp.ads.models.NasVolume</class>
-		<class>com.netapp.ads.models.NasVolumePK</class>
 		<class>com.netapp.ads.models.Qtree</class>
-		<class>com.netapp.ads.models.QtreePK</class>
 		<class>com.netapp.ads.models.Replication</class>
 		<class>com.netapp.ads.models.ReplicationPK</class>
 		<class>com.netapp.ads.models.Schedule</class>

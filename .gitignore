@@ -1,6 +1,5 @@
 *.log
 *.class
-.project
 .metadata
 **/.recommenders
 **/ads-backend/target
@@ -13,3 +12,6 @@ RemoteSystemsTempFiles/
 ads-backend/.factorypath
 package-lock.json
 
+# ---- SonarQube
+.sonar
+.scannerwork

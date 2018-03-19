@@ -1,0 +1,44 @@
+<div class="row d-flex justify-content-center">
+
+  <div class="col-md-8 mb-2">
+    <h2 class="h3">QTree Ownership</h2>
+  </div>
+
+  <div class="col-md-7">
+
+  </div>
+  <div class="col-md-1">
+    <div class="pull-right">
+      <button type="button" class="btn btn-link" (click)="showPropertyModal()">
+        <i class="fa fa-cog fa-2x" title="Column Settings"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="col-md-8" *ngIf="rows.length > 0 && columns.length > 0">
+    <ngx-datatable class="material card" [rows]="rows" [columns]="columns" [columnMode]="'flex'" [rowHeight]="auto" [externalPaging]="false"
+      [count]="page.totalElements" [offset]="page.number" [limit]="page.size" [headerHeight]="50" [footerHeight]="50" (page)='setPage($event)'>
+    </ngx-datatable>
+  </div>
+  <div class="col-md-8" *ngIf="rows.length == 0  && columns.length > 0">
+      <div class="alert alert-secondary" role="alert">
+          There are no QTree's to process.
+        </div>
+    </div>
+</div>
+
+
+
+<app-data-table-col-templates></app-data-table-col-templates>
+
+<ng-template #actionTmpl let-column="column" let-row="row">
+  <button class="btn btn-sm btn-primary" (click)="showScheduleModal(row, 'Confirm')" *ngIf="row.activityResponses[0].isPresumed">
+    <i class="fa fa-check"></i> Respond
+  </button>
+  <button class="btn btn-sm btn-warning" md-icon-button (click)="showScheduleModal(row, 'Update Response')" *ngIf="!row.activityResponses[0].isPresumed">
+    <i class="fa fa-exclamation-circle"></i> Update Response
+  </button>
+</ng-template>
+
+<app-owner-response class="modal fade" *ngIf="isScheduleModal" [config]="{ show: true }" bsModal #ownerResponseModal="bs-modal" (cancel)="hideScheduleModal()"
+  [activityInfo]="activityInfo" [scheduleAction]="scheduleAction"></app-owner-response>

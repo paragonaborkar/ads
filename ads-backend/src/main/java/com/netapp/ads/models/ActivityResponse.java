@@ -2,7 +2,7 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -11,90 +11,135 @@ import java.util.Date;
  */
 @Entity
 @Table(name="activity_response")
-@NamedQuery(name="ActivityResponse.findAll", query="SELECT a FROM ActivityResponse a")
 public class ActivityResponse implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private ActivityResponsePK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_time")
-	private Date createTime;
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
-	@Column(name="is_owner")
-	private byte isOwner;
+	@Column(name="is_owner", nullable=false)
+	private boolean isOwner;
 
-	@Column(name="is_presumed")
-	private byte isPresumed;
+	@Column(name="is_presumed", nullable=false)
+	private boolean isPresumed;
 
-	@Column(name="owner_user_corporate_id")
-	private int ownerUserCorporateId;
+	@Column(name="owner_user_corporate_id", nullable=false)
+	private Integer ownerUserCorporateId;
 
 	@Column(name="suggested_owner_user_corporate_id")
-	private int suggestedOwnerUserCorporateId;
+	private Integer suggestedOwnerUserCorporateId;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_time")
-	private Date updateTime;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
+	
+	@Column(name="best_number", length=100)
+	private String bestNumber;
+
+	@Column(name="call_me", nullable=false)
+	private boolean callMe;
+
+	@Column(name="call_reason", length=2048)
+	private String callReason;
+
+	//bi-directional many-to-one association to Activity
+	@ManyToOne
+	@JoinColumn(name="activity_id", nullable=false)
+	private Activity activity;
 
 	public ActivityResponse() {
 	}
 
-	public ActivityResponsePK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(ActivityResponsePK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
-	public byte getIsOwner() {
+	public boolean getIsOwner() {
 		return this.isOwner;
 	}
 
-	public void setIsOwner(byte isOwner) {
+	public void setIsOwner(boolean isOwner) {
 		this.isOwner = isOwner;
 	}
 
-	public byte getIsPresumed() {
+	public boolean getIsPresumed() {
 		return this.isPresumed;
 	}
 
-	public void setIsPresumed(byte isPresumed) {
+	public void setIsPresumed(boolean isPresumed) {
 		this.isPresumed = isPresumed;
 	}
 
-	public int getOwnerUserCorporateId() {
+	public Integer getOwnerUserCorporateId() {
 		return this.ownerUserCorporateId;
 	}
 
-	public void setOwnerUserCorporateId(int ownerUserCorporateId) {
+	public void setOwnerUserCorporateId(Integer ownerUserCorporateId) {
 		this.ownerUserCorporateId = ownerUserCorporateId;
 	}
 
-	public int getSuggestedOwnerUserCorporateId() {
+	public Integer getSuggestedOwnerUserCorporateId() {
 		return this.suggestedOwnerUserCorporateId;
 	}
 
-	public void setSuggestedOwnerUserCorporateId(int suggestedOwnerUserCorporateId) {
+	public void setSuggestedOwnerUserCorporateId(Integer suggestedOwnerUserCorporateId) {
 		this.suggestedOwnerUserCorporateId = suggestedOwnerUserCorporateId;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
+
+	public Activity getActivity() {
+		return this.activity;
+	}
+
+	public void setActivity(Activity activity) {
+		this.activity = activity;
+	}
+	
+	public String getBestNumber() {
+		return this.bestNumber;
+	}
+
+	public void setBestNumber(String bestNumber) {
+		this.bestNumber = bestNumber;
+	}
+
+	public boolean getCallMe() {
+		return this.callMe;
+	}
+
+	public void setCallMe(boolean callMe) {
+		this.callMe = callMe;
+	}
+
+	public String getCallReason() {
+		return this.callReason;
+	}
+
+	public void setCallReason(String callReason) {
+		this.callReason = callReason;
+	}	
 
 }

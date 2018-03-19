@@ -2,7 +2,7 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -11,40 +11,43 @@ import java.util.Date;
  */
 @Entity
 @Table(name="system_admin")
-@NamedQuery(name="SystemAdmin.findAll", query="SELECT s FROM SystemAdmin s")
 public class SystemAdmin implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private SystemAdminPK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Column(name="contact_type")
+	@Column(name="contact_type", nullable=false, length=1)
 	private String contactType;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_time")
-	private Date createTime;
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
-	@Column(name="mailing_list")
+	@Column(name="mailing_list", length=255)
 	private String mailingList;
 
+	@Column(length=512)
 	private String note;
 
-	@Column(name="system_admin")
+	@Column(name="system_admin", nullable=false, length=100)
 	private String systemAdmin;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_time")
-	private Date updateTime;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
+
+	@Column(name="user_corporate_id", nullable=false)
+	private Integer userCorporateId;
 
 	public SystemAdmin() {
 	}
 
-	public SystemAdminPK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(SystemAdminPK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -56,11 +59,11 @@ public class SystemAdmin implements Serializable {
 		this.contactType = contactType;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
@@ -88,12 +91,20 @@ public class SystemAdmin implements Serializable {
 		this.systemAdmin = systemAdmin;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public Integer getUserCorporateId() {
+		return this.userCorporateId;
+	}
+
+	public void setUserCorporateId(Integer userCorporateId) {
+		this.userCorporateId = userCorporateId;
 	}
 
 }

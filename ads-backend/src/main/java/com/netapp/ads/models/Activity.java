@@ -1,289 +1,301 @@
 package com.netapp.ads.models;
 
+import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Date;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.sql.Timestamp;
-import java.util.Objects;
+import java.util.List;
 
+
+/**
+ * The persistent class for the activity database table.
+ * 
+ */
 @Entity
-@Table(name = "activity")
-@NamedQuery(name="Activity.findAll", query="SELECT a FROM Activity a")
-public class Activity {
-    private Integer id;
-    private Integer qtreeId;
-    private String vserver;
-    private String disposition;
-    private Date mailingDate;
-    private Byte willDelete;
-    private Date deleteDate;
-    private Byte willMigrate;
-    private Date migrateWeek;
-    private Integer migrateDay;
-    private Byte callMe;
-    private String bestNumber;
-    private String callReason;
-    private Byte archiveCandidate;
-    private Byte isLatest;
-    private Byte adminOverride;
-    private String note;
-    private String appNameList;
-    private Integer mailCount;
-    private Integer migrationTimeId;
-    private Timestamp createTime;
-    private Timestamp updateTime;
+@Table(name="activity")
+public class Activity implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id", nullable = false)
-    public Integer getId() {
-        return id;
-    }
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	@Column(name="admin_override", nullable=false)
+	private boolean adminOverride;
 
-    @Basic
-    @Column(name = "qtree_id", nullable = true)
-    public Integer getQtreeId() {
-        return qtreeId;
-    }
+	@Column(name="archive_candidate", nullable=false)
+	private boolean archiveCandidate;
 
-    public void setQtreeId(Integer qtreeId) {
-        this.qtreeId = qtreeId;
-    }
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
-    @Basic
-    @Column(name = "vserver", nullable = true, length = 255)
-    public String getVserver() {
-        return vserver;
-    }
+	@Temporal(TemporalType.DATE)
+	@Column(name="delete_date")
+	private Date deleteDate;
 
-    public void setVserver(String vserver) {
-        this.vserver = vserver;
-    }
+	@Column(name="is_latest", nullable=false)
+	private boolean isLatest;
 
-    @Basic
-    @Column(name = "disposition", nullable = true, length = 255)
-    public String getDisposition() {
-        return disposition;
-    }
+	@Column(name="mail_count")
+	private Integer mailCount;
 
-    public void setDisposition(String disposition) {
-        this.disposition = disposition;
-    }
+	@Temporal(TemporalType.DATE)
+	@Column(name="mailing_date")
+	private Date mailingDate;
 
-    @Basic
-    @Column(name = "mailing_date", nullable = true)
-    public Date getMailingDate() {
-        return mailingDate;
-    }
+	@Column(name="migrate_day")
+	private Integer migrateDay;
 
-    public void setMailingDate(Date mailingDate) {
-        this.mailingDate = mailingDate;
-    }
+	@Temporal(TemporalType.DATE)
+	@Column(name="migrate_week")
+	private Date migrateWeek;
 
-    @Basic
-    @Column(name = "will_delete", nullable = false)
-    public Byte getWillDelete() {
-        return willDelete;
-    }
+	@Column(length=1024)
+	private String note;
 
-    public void setWillDelete(Byte willDelete) {
-        this.willDelete = willDelete;
-    }
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
 
-    @Basic
-    @Column(name = "delete_date", nullable = true)
-    public Date getDeleteDate() {
-        return deleteDate;
-    }
+	@Column(length=255)
+	private String vserver;
 
-    public void setDeleteDate(Date deleteDate) {
-        this.deleteDate = deleteDate;
-    }
+	@Column(name="will_delete", nullable=false)
+	private boolean willDelete;
 
-    @Basic
-    @Column(name = "will_migrate", nullable = false)
-    public Byte getWillMigrate() {
-        return willMigrate;
-    }
+	@Column(name="will_migrate", nullable=false)
+	private boolean willMigrate;
 
-    public void setWillMigrate(Byte willMigrate) {
-        this.willMigrate = willMigrate;
-    }
+	//bi-directional many-to-one association to MigrationTime
+	@ManyToOne
+	@JoinColumn(name="migration_time_id")
+	private MigrationTime migrationTime;
+	
+	//bi-directional one-to-one association to Qtree
+//	@ManyToOne
+	@OneToOne
+	@JoinColumn(name="qtree_id")
+	private Qtree qtree;
 
-    @Basic
-    @Column(name = "migrate_week", nullable = true)
-    public Date getMigrateWeek() {
-        return migrateWeek;
-    }
+	//bi-directional many-to-one association to ActivityResponse
+	@OneToMany(mappedBy="activity")
+	private List<ActivityResponse> activityResponses = new ArrayList<ActivityResponse>();
 
-    public void setMigrateWeek(Date migrateWeek) {
-        this.migrateWeek = migrateWeek;
-    }
+	//bi-directional many-to-many association to LineOfBusiness
+	@ManyToMany(mappedBy="activitiesLobXRef")
+	private List<LineOfBusiness> lineOfBusinessesXRefActivities = new ArrayList<LineOfBusiness>();
 
-    @Basic
-    @Column(name = "migrate_day", nullable = true)
-    public Integer getMigrateDay() {
-        return migrateDay;
-    }
+	//bi-directional many-to-many association to LineOfBusiness
+	@ManyToMany(mappedBy="activitiesPresumedLobXRef")
+	private List<LineOfBusiness> lineOfBusinessesXRefPresumedActivities = new ArrayList<LineOfBusiness>();
+	
+	//bi-directional many-to-one association to ActivityMigrationKeyXRef
+	@OneToMany(mappedBy="activity")
+	private List<ActivityMigrationKeyXRef> activityMigrationKeyXRefs = new ArrayList<ActivityMigrationKeyXRef>();
+	
+	@ManyToMany(fetch = FetchType.LAZY,
+	        mappedBy = "activities")
+	private List<MigrationKey> migrationKeys;
 
-    public void setMigrateDay(Integer migrateDay) {
-        this.migrateDay = migrateDay;
-    }
+	public Activity() {
+	}
 
-    @Basic
-    @Column(name = "call_me", nullable = false)
-    public Byte getCallMe() {
-        return callMe;
-    }
+	public Integer getId() {
+		return this.id;
+	}
 
-    public void setCallMe(Byte callMe) {
-        this.callMe = callMe;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    @Basic
-    @Column(name = "best_number", nullable = true, length = 100)
-    public String getBestNumber() {
-        return bestNumber;
-    }
+	public boolean getAdminOverride() {
+		return this.adminOverride;
+	}
 
-    public void setBestNumber(String bestNumber) {
-        this.bestNumber = bestNumber;
-    }
+	public void setAdminOverride(boolean adminOverride) {
+		this.adminOverride = adminOverride;
+	}
 
-    @Basic
-    @Column(name = "call_reason", nullable = true, length = 2048)
-    public String getCallReason() {
-        return callReason;
-    }
+	public boolean getArchiveCandidate() {
+		return this.archiveCandidate;
+	}
 
-    public void setCallReason(String callReason) {
-        this.callReason = callReason;
-    }
+	public void setArchiveCandidate(boolean archiveCandidate) {
+		this.archiveCandidate = archiveCandidate;
+	}
 
-    @Basic
-    @Column(name = "archive_candidate", nullable = false)
-    public Byte getArchiveCandidate() {
-        return archiveCandidate;
-    }
+	public Timestamp getCreateTime() {
+		return this.createTime;
+	}
 
-    public void setArchiveCandidate(Byte archiveCandidate) {
-        this.archiveCandidate = archiveCandidate;
-    }
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
 
-    @Basic
-    @Column(name = "is_latest", nullable = false)
-    public Byte getIsLatest() {
-        return isLatest;
-    }
+	public Date getDeleteDate() {
+		return this.deleteDate;
+	}
 
-    public void setIsLatest(Byte isLatest) {
-        this.isLatest = isLatest;
-    }
+	public void setDeleteDate(Date deleteDate) {
+		this.deleteDate = deleteDate;
+	}
 
-    @Basic
-    @Column(name = "admin_override", nullable = false)
-    public Byte getAdminOverride() {
-        return adminOverride;
-    }
+	public boolean getIsLatest() {
+		return this.isLatest;
+	}
 
-    public void setAdminOverride(Byte adminOverride) {
-        this.adminOverride = adminOverride;
-    }
+	public void setIsLatest(boolean isLatest) {
+		this.isLatest = isLatest;
+	}
 
-    @Basic
-    @Column(name = "note", nullable = true, length = 1024)
-    public String getNote() {
-        return note;
-    }
+	public Integer getMailCount() {
+		return this.mailCount;
+	}
 
-    public void setNote(String note) {
-        this.note = note;
-    }
+	public void setMailCount(Integer mailCount) {
+		this.mailCount = mailCount;
+	}
 
-    @Basic
-    @Column(name = "app_name_list", nullable = true, length = 1024)
-    public String getAppNameList() {
-        return appNameList;
-    }
+	public Date getMailingDate() {
+		return this.mailingDate;
+	}
 
-    public void setAppNameList(String appNameList) {
-        this.appNameList = appNameList;
-    }
+	public void setMailingDate(Date mailingDate) {
+		this.mailingDate = mailingDate;
+	}
 
-    @Basic
-    @Column(name = "mail_count", nullable = true)
-    public Integer getMailCount() {
-        return mailCount;
-    }
+	public Integer getMigrateDay() {
+		return this.migrateDay;
+	}
 
-    public void setMailCount(Integer mailCount) {
-        this.mailCount = mailCount;
-    }
+	public void setMigrateDay(Integer migrateDay) {
+		this.migrateDay = migrateDay;
+	}
 
-    @Basic
-    @Column(name = "migration_time_id", nullable = true)
-    public Integer getMigrationTimeId() {
-        return migrationTimeId;
-    }
+	public Date getMigrateWeek() {
+		return this.migrateWeek;
+	}
 
-    public void setMigrationTimeId(Integer migrationTimeId) {
-        this.migrationTimeId = migrationTimeId;
-    }
+	public void setMigrateWeek(Date migrateWeek) {
+		this.migrateWeek = migrateWeek;
+	}
 
-    @Basic
-    @Column(name = "create_time", nullable = true)
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
+	public String getNote() {
+		return this.note;
+	}
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
+	public void setNote(String note) {
+		this.note = note;
+	}
 
-    @Basic
-    @Column(name = "update_time", nullable = true)
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
+	public Timestamp getUpdateTime() {
+		return this.updateTime;
+	}
 
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Activity that = (Activity) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(qtreeId, that.qtreeId) &&
-                Objects.equals(vserver, that.vserver) &&
-                Objects.equals(disposition, that.disposition) &&
-                Objects.equals(mailingDate, that.mailingDate) &&
-                Objects.equals(willDelete, that.willDelete) &&
-                Objects.equals(deleteDate, that.deleteDate) &&
-                Objects.equals(willMigrate, that.willMigrate) &&
-                Objects.equals(migrateWeek, that.migrateWeek) &&
-                Objects.equals(migrateDay, that.migrateDay) &&
-                Objects.equals(callMe, that.callMe) &&
-                Objects.equals(bestNumber, that.bestNumber) &&
-                Objects.equals(callReason, that.callReason) &&
-                Objects.equals(archiveCandidate, that.archiveCandidate) &&
-                Objects.equals(isLatest, that.isLatest) &&
-                Objects.equals(adminOverride, that.adminOverride) &&
-                Objects.equals(note, that.note) &&
-                Objects.equals(appNameList, that.appNameList) &&
-                Objects.equals(mailCount, that.mailCount) &&
-                Objects.equals(migrationTimeId, that.migrationTimeId) &&
-                Objects.equals(createTime, that.createTime) &&
-                Objects.equals(updateTime, that.updateTime);
-    }
+	public String getVserver() {
+		return this.vserver;
+	}
 
-    @Override
-    public int hashCode() {
+	public void setVserver(String vserver) {
+		this.vserver = vserver;
+	}
 
-        return Objects.hash(id, qtreeId, vserver, disposition, mailingDate, willDelete, deleteDate, willMigrate, migrateWeek, migrateDay, callMe, bestNumber, callReason, archiveCandidate, isLatest, adminOverride, note, appNameList, mailCount, migrationTimeId, createTime, updateTime);
-    }
+	public boolean getWillDelete() {
+		return this.willDelete;
+	}
+
+	public void setWillDelete(boolean willDelete) {
+		this.willDelete = willDelete;
+	}
+
+	public boolean getWillMigrate() {
+		return this.willMigrate;
+	}
+
+	public void setWillMigrate(boolean willMigrate) {
+		this.willMigrate = willMigrate;
+	}
+
+	public MigrationTime getMigrationTime() {
+		return this.migrationTime;
+	}
+
+	public void setMigrationTime(MigrationTime migrationTime) {
+		this.migrationTime = migrationTime;
+	}
+
+	public Qtree getQtree() {
+		return this.qtree;
+	}
+
+	public void setQtree(Qtree qtree) {
+		this.qtree = qtree;
+	}
+
+	public List<ActivityResponse> getActivityResponses() {
+		return this.activityResponses;
+	}
+
+	public void setActivityResponses(List<ActivityResponse> activityResponses) {
+		this.activityResponses = activityResponses;
+	}
+
+	public ActivityResponse addActivityResponse(ActivityResponse activityRespons) {
+		getActivityResponses().add(activityRespons);
+		activityRespons.setActivity(this);
+
+		return activityRespons;
+	}
+
+	public ActivityResponse removeActivityResponse(ActivityResponse activityRespons) {
+		getActivityResponses().remove(activityRespons);
+		activityRespons.setActivity(null);
+
+		return activityRespons;
+	}
+
+	public List<LineOfBusiness> getLineOfBusinessesXRefActivities() {
+		return this.lineOfBusinessesXRefActivities;
+	}
+
+	public void setLineOfBusinessesXRefActivities(List<LineOfBusiness> lineOfBusinessesXRefActivities) {
+		this.lineOfBusinessesXRefActivities = lineOfBusinessesXRefActivities;
+	}
+
+	public List<LineOfBusiness> getLineOfBusinessesXRefPresumedActivities() {
+		return this.lineOfBusinessesXRefPresumedActivities;
+	}
+
+	public void setLineOfBusinessesXRefPresumedActivities(List<LineOfBusiness> lineOfBusinessesXRefPresumedActivities) {
+		this.lineOfBusinessesXRefPresumedActivities = lineOfBusinessesXRefPresumedActivities;
+	}
+	
+	public List<MigrationKey> getMigrationKeys() {
+		return this.migrationKeys;
+	}
+
+	public void setMigrationKeys(List<MigrationKey> migrationKeys) {
+		this.migrationKeys = migrationKeys;
+	}
+
+	public MigrationKey addMigrationKey(MigrationKey migrationKey) {
+		getMigrationKeys().add(migrationKey);
+		migrationKey.addActivity(this);
+		return migrationKey;
+	}
+
+	public MigrationKey removeMigrationKey(MigrationKey migrationKey) {
+		getMigrationKeys().remove(migrationKey);
+		migrationKey.removeActivity(this);
+		return migrationKey;
+	}
+
+
+
 }

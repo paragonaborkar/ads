@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-md-12">
+    <div>
+      <span class="h3">Property Preferences</span>
+      <p class="title-description">Settings for Listing Pages</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="row justify-content-center">
+  <div class="col-xs-12 col-md-6 col-lg-5">
+    <div class="form-group row">
+      <label for="selectedPreference" class="col-xs-12 col-md-4 col-lg-2 col-form-label">Select Page: </label>
+      <div class="col-xs-12 col-md-4 col-lg-5">
+        <select class="form-control" [(ngModel)]="selectedPreferenceId" name="selectedPreferenceId" (change)="getPreferenceDetails(selectedPreferenceId)">
+          <option [value]="NOT_VALID">Select Page</option>
+          <option *ngFor="let preference of preferences" [value]="preference._links.preferenceDetails.href">{{preference.pageName | friendlyLabel}} 
+            <!-- ({{preference.preferenceType}} 
+            Native ID:{{preference.nativeUserId}} Corp ID:{{preference.corpUserId}}) -->
+          </option>
+        </select>
+      </div>
+      <!-- <div class="col-auto">
+        <button class="btn btn-primary" (click)="getPreferenceDetails(selectedPreferenceId)">View Settings</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<ng-template #itemTemplate let-item="item" let-index="index">
+  <span>
+    <i class="fa fa-bars" aria-hidden="true"></i> 
+    <!-- TODO: Create a pipe to remove underscores. I've added 2 pipes here to show how to call 2 pipes. Just remove uppercase and add custom pipe -->
+    <strong>&nbsp;{{item.initData.fieldName | friendlyLabel}}</strong>
+  </span>
+  <!-- {{item | json }} -->
+</ng-template>
+
+
+<div class="row mt-5 d-flex justify-content-center  pb-5" *ngIf="showSettingsPanel">
+  <div class="col-xs-6 col-md-6 col-xl-4">
+    <div class="card no-select">
+      <div class="card-header bg-primary text-white">
+        Visible
+      </div>
+      <div class="card-body">
+        <bs-sortable [(ngModel)]="itemObjectsLeft" [itemTemplate]="itemTemplate" fieldName="fieldName" itemClass="sortable-item"
+          itemActiveClass="sortable-item-active" placeholderItem="Nothing visible, drag here to add." placeholderClass="sortable-item" wrapperClass="sortable-wrapper"
+          (drop)="drop()"></bs-sortable>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="col-xs-6 col-md-6 col-xl-4 ">
+    <div class="card no-select">
+      <div class="card-header bg-warning text-white">
+        Hidden
+      </div>
+      <div class="card-body">
+        <bs-sortable [(ngModel)]="itemObjectsRight" [itemTemplate]="itemTemplate" fieldName="fieldName" itemClass="sortable-item"
+          itemActiveClass="sortable-item-active" placeholderItem="Nothing hidden, drag here to hide." placeholderClass="sortable-item" wrapperClass="sortable-wrapper"
+          (drop)="drop()"></bs-sortable>
+      </div>
+    </div>
+
+  </div>
+</div>
