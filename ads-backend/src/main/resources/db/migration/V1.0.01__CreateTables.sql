@@ -15,9 +15,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
---
--- Table structure for table `activity`
---
+
 DROP TABLE IF EXISTS `job_data`;
 CREATE TABLE `job_data` (
 	`job_id` INT NOT NULL AUTO_INCREMENT,
@@ -38,19 +36,19 @@ DROP TABLE IF EXISTS `activity`;
 CREATE TABLE `activity` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Activity.',
   `qtree_id` int(11) DEFAULT NULL COMMENT 'ID of the QTree which is associated with the Activity',
-  `vserver` varchar(255) DEFAULT NULL COMMENT 'vServer of the Activity',
-  `mailing_date` date DEFAULT NULL COMMENT 'Date email was send to the Owner(s) of the Activity?',
+--  `vserver` varchar(255) DEFAULT NULL COMMENT 'vServer of the Activity', 
   `will_delete` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Boolean indicating if the Owner(s) will delete the QTree.',
   `delete_date` date DEFAULT NULL COMMENT 'Date on which the QTree can be deleted.',
   `will_migrate` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Boolean indicating if the Owner(s) will migrate the QTree.',
   `migrate_week` date DEFAULT NULL COMMENT 'Week selected for migration of the QTree.',
   `migrate_day` int(11) DEFAULT '6' COMMENT 'Day of Week selected for migration of the QTree.',
-  `archive_candidate` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Boolean indicating if the QTree is a canidiate for archiving',
-  `is_latest` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'DEV TBD -  Boolean indicating if the Activity is the latest. We may be able to get this from the create time. So this may not be needed. Could save us time/code to set this column.',
+  `migration_time_id` int(11) DEFAULT NULL COMMENT 'Time selected for this Activity',
+  -- `archive_candidate` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Boolean indicating if the QTree is a canidiate for archiving',
+  -- `is_latest` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'DEV TBD -  Boolean indicating if the Activity is the latest. We may be able to get this from the create time. So this may not be needed. Could save us time/code to set this column.',
   `admin_override` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Boolean indicating if the an Admin overrode an Owner',
   `note` varchar(1024) DEFAULT NULL COMMENT 'Note for the Activity',
+  `mailing_date` date DEFAULT NULL COMMENT 'Date email was send to the Owner(s) of the Activity?',
   `mail_count` int(1) DEFAULT '0' COMMENT 'Count of emails sent',
-  `migration_time_id` int(11) DEFAULT NULL COMMENT 'Time selected for this Activity',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

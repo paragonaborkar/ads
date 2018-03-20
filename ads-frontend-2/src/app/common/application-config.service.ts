@@ -86,7 +86,7 @@ export class ApplicationConfigService {
 
 
   // getPreferencesForColumns(pageName, columns, hdrTmpl, actionTmpl, dateTimeTmpl, asIsTmpl): Observable<any> {
-    getPreferencesForColumns(pageName, columns, columnTemplates): Observable<any> {
+    getPreferencesForColumns(pageName, columns, columnTemplates, actionColumn:boolean): Observable<any> {
     
     var loginInfo = this.sessionHelper.getToken();
 
@@ -147,7 +147,7 @@ export class ApplicationConfigService {
           }
         });
 
-        if (columnTemplates.actionHeaderTmpl != null) {
+        if (columnTemplates.actionHeaderTmpl != null && actionColumn) {
           columns.push({
             headerTemplate:columnTemplates.actionHeaderTmpl,
             cellTemplate: columnTemplates.actionTmpl,

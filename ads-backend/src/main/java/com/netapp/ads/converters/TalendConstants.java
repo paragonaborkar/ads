@@ -48,16 +48,19 @@ public class TalendConstants {
 	
 	public final static String STR_AUTH_TOKEN="OAUTH_BEARER_TOKEN";
 	public final static String STR_AUTHORIZATION="authorization";
-	public final static String STR_BEARER="bearer";
+	// Capital B... not lower case for Bearer.
+    public final static String STR_BEARER="Bearer";
 	public final static String STR_OS_NAME="os.name";
 	public final static String STR_OS_WINDOWS="win";
 	public final static String STR_CD="cd ";
 	public final static String STR_BAT_EXT=".bat";
 	public final static String STR_SH_EXT=".sh";
-	public final static String STR_SET_PWD="ROOT_PATH=`pwd`";
+	public final static String STR_SET_PWD="ROOT_PATH=`pwd`";   
 	public final static String STR_JAVA="java";
 	
-	public final static String STR_JOB_SUBMITTED="Job Submitted Successfully";
+//	public final static String STR_JOB_SUBMITTED="Job Submitted Successfully";
+	// We MUST return a JSON string in our REST Controller!
+	public final static String STR_JOB_SUBMITTED = "{\"message\":\"Running Job.\"}"; 
 	
 	
 	

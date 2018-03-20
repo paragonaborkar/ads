@@ -41,4 +41,4 @@
 </ng-template>
 
 <app-owner-response class="modal fade" *ngIf="isScheduleModal" [config]="{ show: true }" bsModal #ownerResponseModal="bs-modal" (cancel)="hideScheduleModal()"
-  [activityInfo]="activityInfo" [scheduleAction]="scheduleAction"></app-owner-response>
+  [activityInfo]="activityInfo" [scheduleAction]="scheduleAction" [isMultiOwner]="isMultiOwner"></app-owner-response>

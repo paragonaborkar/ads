@@ -23,7 +23,7 @@ export class ReportListingCommonComponent implements OnInit {
   customReport = '';
   totalPages = 0;
   showJasperReport;
-  pageCount;
+  currentPageNumber;
   report;
   myVar: boolean;
   reportName = '';
@@ -35,7 +35,7 @@ export class ReportListingCommonComponent implements OnInit {
 
     console.log(this.moduleName);
 
-    this.pageCount = 1;
+    this.currentPageNumber = 1;
 
     this.myVar = true;
 
@@ -64,16 +64,21 @@ export class ReportListingCommonComponent implements OnInit {
   }
 
 
-  openJasperReport(requestedPageNumber, reportName, reportTitle): void {
+  openJasperReport(requestedPageNumber, reportName, reportTitle, firstTime): void {
     console.log(reportName);
 
     this.myVar = false;
-    this.reportName = reportName;
-    this.reportTitle = reportTitle;
-    this.showJasperReport = true;
+
+    if (firstTime) {
+      this.reportName = reportName;
+      this.reportTitle = reportTitle;
+      this.showJasperReport = true;
+      this.currentPageNumber = requestedPageNumber;
+    }
+
     if (!requestedPageNumber)
       requestedPageNumber = 1;
-    this.pageCount = requestedPageNumber;
+
 
     this.reportCommonService.openJasperReport(requestedPageNumber, reportName, this.moduleName)
       .subscribe(
@@ -86,17 +91,19 @@ export class ReportListingCommonComponent implements OnInit {
 
           this.totalPages = res.totalPages;
           this.numbers = [];
+
           // An array of number for the paging.
-          for (var i = 1; i <= this.totalPages; i++) {
+          for (let i = 1; i <= this.totalPages; i++) {
             this.numbers.push(i);
           }
 
 
           let jasperFormatting = false;
           if (!jasperFormatting) {
-            var div = document.createElement('div');
+            let div = document.createElement('div');
+            div.setAttribute("id", "reportContentAds");
             div.innerHTML = this.report.report;
-            var x = div.getElementsByClassName("jrPage");
+            let x = div.getElementsByClassName("jrPage");
 
             console.log(" x.item(0).childNodes.item(1)", x.item(0).childNodes.item(1));
 
@@ -124,6 +131,7 @@ export class ReportListingCommonComponent implements OnInit {
             }
 
             this.reportHtml = "<table class=\"table table-striped mt-3\">" + x.item(0).innerHTML + "</table>";
+
           } else {
             var ele = document.getElementById("reportHtml");
 
@@ -136,20 +144,24 @@ export class ReportListingCommonComponent implements OnInit {
 
 
   goToPrevious(): void {
-    this.pageCount = --this.pageCount;
-    this.openJasperReport(this.pageCount, this.reportName, this.moduleName);
+    this.currentPageNumber = --this.currentPageNumber;
+    this.openJasperReport(this.currentPageNumber, this.reportName, this.moduleName, false);
   }
 
   goToNext(): void {
-    this.pageCount = ++this.pageCount;
-    this.openJasperReport(this.pageCount, this.reportName, this.moduleName);
+    this.currentPageNumber = ++this.currentPageNumber;
+    this.openJasperReport(this.currentPageNumber, this.reportName, this.moduleName, false);
   }
+
   goToPage(pageNum): void {
-    this.openJasperReport(pageNum, this.reportName, this.moduleName);
+    console.log("pageNum:" + pageNum);
+    this.currentPageNumber=pageNum;
+
+    this.openJasperReport(this.currentPageNumber, this.reportName, this.moduleName, false);
   }
 
   downloadJasperReport(reportName) {
     reportName = this.reportName;
-    this.reportCommonService.downloadJasperReport(reportName,this.moduleName);
+    this.reportCommonService.downloadJasperReport(reportName, this.moduleName);
   }
 }

@@ -10,6 +10,7 @@ import javax.persistence.TemporalType;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
+import org.springframework.hateoas.Link;
 
 import com.netapp.ads.models.Activity;
 import com.netapp.ads.models.ActivityResponse;
@@ -24,25 +25,12 @@ import com.netapp.ads.models.Share;
 
 @Projection(name="activityWithQtree", types = { Activity.class})
 public interface ActivityWithQtree {
+
 	public boolean getAdminOverride();
 
-	public String getAppNameList();
-
-	public boolean getArchiveCandidate();
-
-	public String getBestNumber();
-
-	public boolean getCallMe();
-
-	public String getCallReason();
-	
 	public Timestamp getCreateTime();
 
 	public Date getDeleteDate();
-
-	public String getDisposition();
-
-	public boolean getIsLatest();
 
 	public Integer getMailCount();
 
@@ -55,8 +43,6 @@ public interface ActivityWithQtree {
 	public String getNote();
 
 	public Timestamp getUpdateTime();
-
-	public String getVserver();
 
 	public boolean getWillDelete();
 

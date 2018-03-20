@@ -17,4 +17,6 @@ import org.springframework.stereotype.Repository;
 public interface QtreeDispositionRepository extends JpaRepository<QtreeDisposition, Integer>, JpaSpecificationExecutor<Qtree> {
 	
 	List<QtreeDisposition> findByDisposition(@Param("disposition") String disposition);
+	
+	QtreeDisposition findOneByDispositionAndQtree(@Param("disposition") String disposition, @Param("qtree") Qtree qtree);
 }

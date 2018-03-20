@@ -86,7 +86,7 @@ export class ControllerWorkPackageComponent implements OnInit {
   }
 
   applyPreferences(): void {
-    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.columnTemplates)
+    this.applicationConfigService.getPreferencesForColumns(this.pageName, this.columns, this.columnTemplates, true)
     
       .subscribe(columnPreferences => {
         this.columns = columnPreferences;
