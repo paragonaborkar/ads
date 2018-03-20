@@ -29,6 +29,8 @@ export class ReportListingCommonComponent implements OnInit {
   reportName = '';
   reportTitle = '';
 
+  reportColumnHeaders;
+
   constructor(private reportCommonService: ReportCommonService, private errorService: AdsErrorService) { }
 
   ngOnInit() {
@@ -110,6 +112,12 @@ export class ReportListingCommonComponent implements OnInit {
             let len = x.item(0).childNodes.item(1).childNodes.length;
             for (let i = 0; i <= len; i++) {
               let e = x.item(0).childNodes.item(1).childNodes[i];
+              
+              // Get the table headers and save them. These are not provided on 1+ pages.
+              if (i==3 && firstTime) {
+                this.reportColumnHeaders = e;
+              }
+
               if (i <= 2) {
                 x.item(0).childNodes.item(1).removeChild(e);
               }
@@ -124,13 +132,18 @@ export class ReportListingCommonComponent implements OnInit {
             x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
 
 
-            var all = x.item(0).getElementsByTagName('*');
-
+            // Remove all style from Jasper
+            var all = x.item(0).getElementsByTagName('*');           
             for (var i = -1, l = all.length; ++i < l;) {
               all[i].removeAttribute('style');
             }
 
-            this.reportHtml = "<table class=\"table table-striped mt-3\">" + x.item(0).innerHTML + "</table>";
+            if (firstTime || this.currentPageNumber == 1) {
+              this.reportHtml = "<table class=\"table table-striped mt-3\">" + x.item(0).innerHTML + "</table>";
+            } else {
+              
+              this.reportHtml = "<table class=\"table table-striped mt-3\">" + this.reportColumnHeaders.innerHTML + x.item(0).innerHTML + "</table>";
+            }
 
           } else {
             var ele = document.getElementById("reportHtml");

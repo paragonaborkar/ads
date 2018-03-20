@@ -31,7 +31,7 @@ export class OwnerComponent implements OnInit {
 
   //TODO: Hook up multi-owner
   public isMultiOwner = false;
-  
+
   page = new Page();
 
   // owerListing: any = [];
@@ -87,14 +87,13 @@ export class OwnerComponent implements OnInit {
         // Don't set rows to undefined, it'll break the listing!    
         if (data._embedded.activities) {
           this.rows = data._embedded.activities;
-          this.rows.forEach(activity => {
 
+          this.rows.forEach(activity => {
             activity["activityResponses"].forEach(activtyResponse => {
               if (activtyResponse["ownerUserCorporateId"] != this.currentUserCorporateId) {
-                // DEBUG AND TEST:
-                console.log("DEBUG AND TEST: Deleting:", this.rows["activityResponses"][activtyResponse]);
-                // We are getting all responses, delete what doesn't apply to this user so we don't update it by accident.
-                delete this.rows["activityResponses"][activtyResponse];
+                this.isMultiOwner = true;
+                // Keep other owners in a multi owner scenerio and display on the Owner modal.
+                // console.log("DEBUG AND TEST: Deleting:", this.rows["activityResponses"].activtyResponse);              
               }
             });
 

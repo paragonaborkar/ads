@@ -10,16 +10,30 @@
 
             <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
                 <span>{{errorMessage}}</span>
-              </div>
+            </div>
 
-            <h1 class="h4"><strong>QTree Name:</strong> {{activityInfo.qtree.qtreeName}}</h1>
-            <h1 class="h4"><strong>NAS Volume Name:</strong> {{activityInfo.nasVolume.volumeName}}</h1>
-            <!-- <pre> {{ formGroup.value | json }} </pre>
-            <pre>{{activityResponse | json}}</pre> -->
+            <div class="row">
+                <div class="col-sm-3 h4">
+                    <strong>QTree:</strong>
+                </div>
+                <div class="col-sm-6 h4">{{activityInfo.qtree.qtreeName}}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3 h4">
+                    <strong>NAS Volume:</strong>
+                </div>
+                <div class="col-sm-6 h4"> {{activityInfo.nasVolume.volumeName}}</div>
+            </div>
+
+            <pre>{{ formGroup.value | json }} </pre>
+            <pre>{{activityResponse | json}}</pre>
+            <pre>{{isMultiOwner}}</pre>
+            <pre>activityResponseInfoSource: {{ activityResponseInfoSource | json }} </pre>
 
             <form [formGroup]="formGroup">
 
-                <div class="form-group row" >
+                <div class="form-group row">
                     <label for="confirm-owner" class="col-sm-6 form-control-label">Are you the Owner of this Volume? </label>
                     <div class="col-sm-6">
                         <div>
@@ -35,8 +49,8 @@
                     </div>
                 </div>
 
-                <div *ngIf="formGroup.value.confirmOwner">
-                    <div class="form-group row" >
+                <div *ngIf="formGroup.value.confirmOwner && !isMultiOwner">
+                    <div class="form-group row">
                         <label for="decommission-volume" class="col-sm-6 form-control-label">Do you plan to decommission this Volume?</label>
                         <div class="col-sm-6">
                             <div>
@@ -52,7 +66,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="formGroup.value.confirmOwner && formGroup.value.decommissionVolume == true">
+                <div *ngIf="formGroup.value.confirmOwner && formGroup.value.decommissionVolume == true && !isMultiOwner">
 
                     <div class="form-group row">
                         <div class="col-sm-6">
@@ -60,40 +74,38 @@
                         </div>
 
                         <div class="col-sm-3">
-                            <input type="text" class="form-control"  id="decommissionByDate" formControlName="decommissionByDate"
-                                
-                                 [minDate]="minDate" [maxDate]="maxDate" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue">
-                            
+                            <input type="text" class="form-control" id="decommissionByDate" formControlName="decommissionByDate" [minDate]="minDate"
+                                [maxDate]="maxDate" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue">
+
 
                         </div>
                     </div>
                 </div>
 
 
-                <div *ngIf="formGroup.value.confirmOwner == false && !this.isMultiOwner">
-
+                <div *ngIf="formGroup.value.confirmOwner == false">
                     <div class="row">
                         <div class="col-sm-12 ">
-                            <table class="table table-bordered table-hover table-sm " *ngIf="ownersOfAVolume">
+                            <table class="table table-bordered table-hover table-sm " *ngIf="potentialOwners">
                                 <thead>
                                     <tr>
                                         <th>First Name</th>
                                         <th>Last Name</th>
-                                        <th>STD-ID</th>
+                                        <th>ID</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let owner of ownersOfAVolume._embedded.ownersOfAVolume">
-                                        <td>{{owner.firstName}}</td>
-                                        <td>{{owner.lastName}}</td>
-                                        <td>{{owner.stdId}}</td>
+                                    <tr *ngFor="let potentialOwner of potentialOwners">
+                                        <td>{{potentialOwner.firstName}}</td>
+                                        <td>{{potentialOwner.lastName}}</td>
+                                        <td>{{potentialOwner.ownerUserCorporateId}}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
-                    <div class="form-group row" >
+                    <div class="form-group row">
                         <label for="confirm-owner" class="col-sm-6 form-control-label">If you know the owner who is not in the list please enter it here:</label>
                         <div class="col-sm-6 ">
                             <div class="input-group input-group-unstyled">
@@ -102,17 +114,17 @@
                         </div>
                     </div>
 
-                    <div class="form-group row" >
+                    <div class="form-group row">
                         <div class="col-sm-12">
                             <label>
                                 <input class="checkbox" id="dontKnowOwner" type="checkbox" formControlName="dontKnowOwner">
                                 <span>I do not know who the Owner is for this Volume</span>
                             </label>
                         </div>
-                    </div>/
+                    </div>
                 </div>
 
-                <div class="form-group row" >
+                <div class="form-group row">
                     <label for="migration-team-contact" class="col-sm-6 form-control-label">Would you like the support team to contact you?</label>
                     <div class="col-sm-6">
                         <div>
@@ -139,8 +151,8 @@
 </div>
 
 
-   <!-- Schedule is in a future module... keep for future use -->
-                <!-- <div *ngIf="formGroup.value.isOwnerFormGroup.confirmOwner && formGroup.value.ownerFormGroup.decommissionVolume == false">
+<!-- Schedule is in a future module... keep for future use -->
+<!-- <div *ngIf="formGroup.value.isOwnerFormGroup.confirmOwner && formGroup.value.ownerFormGroup.decommissionVolume == false">
 
                     <div class="form-group row" formGroupName="ownerFormGroup">
                         <div class="col-sm-6">

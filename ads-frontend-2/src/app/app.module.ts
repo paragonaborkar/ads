@@ -49,7 +49,7 @@ import { ControllerTypeaheadService } from './discover/controller-typeahead/cont
 
 import { ReportCommonService } from './common/report-listing-common/report-common.service';
 import { OwnerResponseService } from './discover/owner/owner-response/owner-response.service';
-
+import { ManualFunctionService } from './common/manual-function/manual-function.service';
 
 // Declarations
 import { AppComponent } from './app.component';
@@ -193,7 +193,8 @@ import { ControllerReleaseDeleteComponent } from './discover/controller-release/
     ControllerReleaseService,
     ControllerWorkPackageService,
     ControllerTypeaheadService,
-    ReportCommonService
+    ReportCommonService,
+    ManualFunctionService
 
     ],
   bootstrap: [AppComponent]

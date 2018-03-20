@@ -20,9 +20,11 @@ export class OwnerResponseComponent implements OnInit {
   @Output() saved = new EventEmitter();
   @Output() cancel = new EventEmitter();
 
-  @Input() activityInfo: any;
+  @Input() activityInfo = [];
   @Input() scheduleAction: any;
-  @Input() isMultiOwner: boolean;
+
+  isMultiOwner: boolean;
+  potentialOwners = [];
 
   errorMessage = '';
 
@@ -31,12 +33,35 @@ export class OwnerResponseComponent implements OnInit {
   public formGroup: FormGroup; // our model driven form
 
   activityResponse: ActivtyResponse = new ActivtyResponse();
-  loginInfo;
+  activityResponseInfoSource = {};
+  corporateUserIdFromJwt = 9;
+
 
   constructor(private ownerResponseService: OwnerResponseService, private errorService: AdsErrorService, private sessionHelper: SessionHelper) { }
 
   ngOnInit() {
-    this.loginInfo = this.sessionHelper.getToken();
+
+    let loginInfo = this.sessionHelper.getToken();
+    // this.corporateUserIdFromJwt = loginInfo.corpUserId; // ************************************* FIX
+
+    this.activityInfo["activityResponses"].forEach(activtyResponse => {
+      // If we have an ActivityResponse for another Owner that hasn't responded yet, it's MultiOwner.
+      if (activtyResponse["ownerUserCorporateId"] != this.corporateUserIdFromJwt) {
+        
+        this.potentialOwners.push(activtyResponse);
+
+        if (!activtyResponse["isOwner"] && activtyResponse["isPresumed"]) {
+          this.isMultiOwner = true;
+          console.log("isMultiOwner:" + this.isMultiOwner);
+          // Get list of first, last names, Corp Ids to display in table.
+
+
+        } else {
+          this.activityResponseInfoSource = activtyResponse;
+        }
+      }
+
+    });
 
     this.formGroup = new FormGroup({
       // is Owner ?
@@ -44,6 +69,7 @@ export class OwnerResponseComponent implements OnInit {
 
       // If Owner
       decommissionVolume: new FormControl(null, Validators.required),
+      decommissionByDate: new FormControl(null),
       //   // migrationDate: new FormControl(),        // Use for Schedule module in future.
       //   // migrationStartTime: new FormControl(),   // Use for Schedule module in future.
       //   // dayOfWeek: new FormControl()             // Use for Schedule module in future.
@@ -85,11 +111,10 @@ export class OwnerResponseComponent implements OnInit {
   save() {
     console.log(this.formGroup);
 
-    this.activityResponse.activityResponseId = this.activityInfo.activityResponses[0].id;
-    this.activityResponse.ownerUserCorporateId = this.activityInfo.activityResponses[0].ownerUserCorporateId;
-    
-    // this.activityResponse.currentUserCorporateId = this.loginInfo.corpUserId;
-    this.activityResponse.currentUserCorporateId = 9;
+    this.activityResponse.activityResponseId = this.activityResponseInfoSource["id"];
+    this.activityResponse.ownerUserCorporateId = this.activityResponseInfoSource["ownerUserCorporateId"];
+
+    this.activityResponse.currentUserCorporateId = this.corporateUserIdFromJwt;
 
     this.activityResponse.isOwner = this.formGroup.value.confirmOwner;
     this.activityResponse.isPresumed = false; // If the Owner responds with T or F, then we set this to false to indicate it was processed.
