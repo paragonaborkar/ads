@@ -87,7 +87,7 @@ public class QtreeDispositionServiceImpl implements QtreeDispositionService {
 		Activity activity = new Activity();
 		activity.setQtree(qtree);		
 		//activity.setDisposition(qtree.getDisposition());
-		activity.setMailingDate(new Date()); //What should this be?
+		// activity.setMailingDate(new Date()); //What should this be? Should be set to NULL
 		activity.setWillDelete(false);  // This is set when QTree Owners confirm ownership
 		activity.setWillMigrate(false); // This is set when QTree Owners confirm ownership
 		//activity.setCallMe(true);

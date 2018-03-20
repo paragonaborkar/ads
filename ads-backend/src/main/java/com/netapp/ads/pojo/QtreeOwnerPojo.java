@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 public class QtreeOwnerPojo {
 	private static final long serialVersionUID = 1L;
 	
+	private boolean isMultiOwner;
 	private boolean callMe;
 	private boolean isOwner;
 	private boolean	isPresumed;
@@ -16,6 +17,7 @@ public class QtreeOwnerPojo {
 	private int ownerUserCorporateId;
 	private int currentUserCorporateId;
 	private int suggestedOwnerUserCorporateId;
+	private String suggestedOwnerUserCorporateResourceUrl;
 	
 	private int activityResponseId;
 	
@@ -31,6 +33,14 @@ public class QtreeOwnerPojo {
 
 	public void setDecommissionByDate(Timestamp decommissionByDate) {
 		this.decommissionByDate = decommissionByDate;
+	}
+	
+	public boolean getIsMultiOwner() {
+		return this.isMultiOwner;
+	}
+
+	public void setIsMultiOwner(boolean isMultiOwner) {
+		this.isMultiOwner = isMultiOwner;
 	}
 
 	public boolean getIsOwner() {
@@ -83,14 +93,21 @@ public class QtreeOwnerPojo {
 		this.ownerUserCorporateId = ownerUserCorporateId;
 	}
 
-	public Integer getSuggestedOwnerUserCorporateId() {
+	public int getSuggestedOwnerUserCorporateId() {
 		return this.suggestedOwnerUserCorporateId;
 	}
 
-	public void setSuggestedOwnerUserCorporateId(Integer suggestedOwnerUserCorporateId) {
+	public void setSuggestedOwnerUserCorporateId(int suggestedOwnerUserCorporateId) {
 		this.suggestedOwnerUserCorporateId = suggestedOwnerUserCorporateId;
 	}
 	
+	public String getSuggestedOwnerUserCorporateResourceUrl() {
+		return this.suggestedOwnerUserCorporateResourceUrl;
+	}
+
+	public void setSuggestedOwnerUserCorporateResourceUrl(String suggestedOwnerUserCorporateResourceUrl) {
+		this.suggestedOwnerUserCorporateResourceUrl = suggestedOwnerUserCorporateResourceUrl;
+	}
 	
 	public Integer getActivityResponseId() {
 		return this.activityResponseId;

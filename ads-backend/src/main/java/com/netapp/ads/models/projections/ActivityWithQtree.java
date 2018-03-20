@@ -63,6 +63,13 @@ public interface ActivityWithQtree {
 	// This doesn't work:
 //	@Value("#{target.getQtree().getShares().getHost()}")
 //	List<Host>  getHost();
+
+	//https://stackoverflow.com/questions/28137297/how-to-conditionally-expose-data-in-spring-data-rest-projection
+//	Nested Data to be returned goals:
+//	Qtrees[]
+//			Shares[]
+//					Hosts[]
+//							Apps[]
 	
 
 }

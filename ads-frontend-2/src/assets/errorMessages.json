@@ -80,5 +80,10 @@
             "5xx": "delete 5xx error message",
             "500": "delete 500 error message"
         }
+    },
+    "getCorpOwnerDetailsForOwnership": {
+        "GET": {
+            "DEFAULT": "Sorry, could not get potential owner details."
+        }
     }
 }

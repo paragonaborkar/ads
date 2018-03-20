@@ -49,7 +49,7 @@ import { ControllerTypeaheadService } from './discover/controller-typeahead/cont
 
 import { ReportCommonService } from './common/report-listing-common/report-common.service';
 import { OwnerResponseService } from './discover/owner/owner-response/owner-response.service';
-
+import { ManualFunctionService } from './common/manual-function/manual-function.service';
 
 // Declarations
 import { AppComponent } from './app.component';
@@ -100,6 +100,7 @@ import { SaveMessageTimerComponent } from './common/save-message-timer/save-mess
 import { DataTableColTemplatesComponent } from './common/data-table-col-templates/data-table-col-templates.component';
 import { ManualFunctionComponent } from './common/manual-function/manual-function.component';
 import { ControllerReleaseDeleteComponent } from './discover/controller-release/controller-release-delete/controller-release-delete.component';
+import { OperationalOverrideComponent } from './admin/operational-override/operational-override.component';
 
 
 
@@ -159,7 +160,8 @@ import { ControllerReleaseDeleteComponent } from './discover/controller-release/
     ControllerWorkPackageCreateComponent,
     ControllerWorkPackageDeleteComponent,
     ManualFunctionComponent,
-    ControllerReleaseDeleteComponent
+    ControllerReleaseDeleteComponent,
+    OperationalOverrideComponent
 
     
 
@@ -180,6 +182,9 @@ import { ControllerReleaseDeleteComponent } from './discover/controller-release/
     BsDatepickerModule.forRoot(),
     LoggerModule.forRoot({serverLoggingUrl: 'http://localhost:8080/remoteLog', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR})
   ],
+  // entryComponents:[
+  //   OwnerResponseComponent
+  // ],
   providers: [Globals, AuthGuard,  SessionHelper, UserService, LoginService, AdsHelperService, AdsErrorService, 
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     UserAdminService,
@@ -193,7 +198,8 @@ import { ControllerReleaseDeleteComponent } from './discover/controller-release/
     ControllerReleaseService,
     ControllerWorkPackageService,
     ControllerTypeaheadService,
-    ReportCommonService
+    ReportCommonService,
+    ManualFunctionService
 
     ],
   bootstrap: [AppComponent]

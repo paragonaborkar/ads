@@ -1,4 +1,6 @@
 export class ActivtyResponse {
+  isMultiOwner:boolean = false;
+  
   callMe:boolean = false;
   isOwner:boolean = false;
   isPresumed: boolean = true;
@@ -7,6 +9,7 @@ export class ActivtyResponse {
   decommissionByDate;
 
   suggestedOwnerUserCorporateId: number;
+  suggestedOwnerUserCorporateResourceUrl: string;
   
   ownerUserCorporateId:number;
 	currentUserCorporateId:number;
