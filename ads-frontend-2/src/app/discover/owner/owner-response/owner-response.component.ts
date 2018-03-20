@@ -59,9 +59,10 @@ export class OwnerResponseComponent implements OnInit {
       // If we have an ActivityResponse for another Owner that hasn't responded yet, it's MultiOwner.
       if (activtyResponse["ownerUserCorporateId"] != this.corporateUserIdFromJwt) {
 
-        this.potentialOwners.push(activtyResponse);
-
         if (!activtyResponse["isOwner"] && activtyResponse["isPresumed"]) {
+          // Only display unprocessed Owners (Users) as potential Owners.
+          this.potentialOwners.push(activtyResponse);
+
           this.isMultiOwner = true;
           console.log("isMultiOwner:" + this.isMultiOwner);
           // Get list of first, last names, Corp Ids to display in table.
@@ -83,6 +84,8 @@ export class OwnerResponseComponent implements OnInit {
       }
 
     });
+
+console.log("this.potentialOwners:", this.potentialOwners);
 
     this.formGroup = new FormGroup({
       // is Owner ?

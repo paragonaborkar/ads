@@ -91,9 +91,9 @@
 
 
                 <div *ngIf="formGroup.value.confirmOwner == false">
-                    <div class="row">
+                    <div class="row" *ngIf="potentialOwners.length > 0">
                         <div class="col-sm-12 ">
-                            <table class="table table-bordered table-hover table-sm " *ngIf="potentialOwners">
+                            <table class="table table-bordered table-hover table-sm ">
                                 <thead>
                                     <tr>
                                         <th>First Name</th>
