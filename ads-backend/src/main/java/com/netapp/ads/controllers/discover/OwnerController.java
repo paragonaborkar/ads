@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +22,7 @@ import com.netapp.ads.models.UserCorporate;
 import com.netapp.ads.pojo.QtreeOwnerPojo;
 import com.netapp.ads.repos.ActivityRepository;
 import com.netapp.ads.repos.ActivityResponseRepository;
+import com.netapp.ads.repos.MigrationKeyRepository;
 import com.netapp.ads.repos.QtreeDispositionRepository;
 import com.netapp.ads.repos.QtreeRepository;
 import com.netapp.ads.repos.UserCorporateRepository;
@@ -50,7 +53,21 @@ public class OwnerController {
 	@Autowired
 	UserCorporateRepository  userCorporateRepository;
 
+	@Autowired
+	MigrationKeyRepository migKeyRepo;
 
+	/**
+	 * Validate Migration Key with Corporate User
+	 * @param migrationKey
+	 * @param userCorporateId
+	 * @return
+	 */
+	@PreAuthorize("hasAuthority('CORP_USER')")
+	@RequestMapping(value = "/validateMigrationKey/{migrationKey}/{userCorporateId}", method = RequestMethod.GET)
+	public boolean validateMigKey(@PathVariable(name = "migrationKey") String migrationKey,
+			@PathVariable(name = "userCorporateId") int userCorporateId) {
+		return migKeyRepo.isMigrationKeyExists(migrationKey, userCorporateId);
+	}
 
 	/**
 	 * @param ownerResponse

@@ -100,6 +100,7 @@ import { SaveMessageTimerComponent } from './common/save-message-timer/save-mess
 import { DataTableColTemplatesComponent } from './common/data-table-col-templates/data-table-col-templates.component';
 import { ManualFunctionComponent } from './common/manual-function/manual-function.component';
 import { ControllerReleaseDeleteComponent } from './discover/controller-release/controller-release-delete/controller-release-delete.component';
+import { OperationalOverrideComponent } from './admin/operational-override/operational-override.component';
 
 
 
@@ -159,7 +160,8 @@ import { ControllerReleaseDeleteComponent } from './discover/controller-release/
     ControllerWorkPackageCreateComponent,
     ControllerWorkPackageDeleteComponent,
     ManualFunctionComponent,
-    ControllerReleaseDeleteComponent
+    ControllerReleaseDeleteComponent,
+    OperationalOverrideComponent
 
     
 

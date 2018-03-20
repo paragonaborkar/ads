@@ -16,7 +16,8 @@ import { ReportListingComponent } from './admin/report-listing/report-listing.co
 
 import { AdminManualFunctionsComponent } from './admin/admin-manual-functions/admin-manual-functions.component';
 import { AdminNativeUserComponent } from './admin/admin-native-user/admin-native-user.component';
-
+import { OperationalOverrideComponent } from './admin/operational-override/operational-override.component';
+import { AppPropsComponent } from './admin/app-props/app-props.component';
 
 import { ConnectionsManualFunctionsComponent } from './connections/connections-manual-functions/connections-manual-functions.component';
 import { ReportListingConnComponent } from './connections/report-listing-conn/report-listing-conn.component';
@@ -29,7 +30,7 @@ import { ReportListingDisComponent } from './discover/report-listing-dis/report-
 import { ControllerReleaseComponent } from './discover/controller-release/controller-release.component';
 import { ControllerWorkPackageCreateComponent } from './discover/controller-work-package/controller-work-package-create/controller-work-package-create.component';
 
-import { AppPropsComponent } from './admin/app-props/app-props.component';
+
 import { Error404Component } from './error-404/error-404.component';
 
 import { ControllerWorkPackageComponent } from './discover/controller-work-package/controller-work-package.component';
@@ -41,7 +42,7 @@ const routes: Routes = [
   //{ path: '', redirectTo: '/', pathMatch: 'full' },
   { path: 'login',  component: LoginComponent },
    
-  {path: 'admin/native-user-mgmt', component: AdminNativeUserComponent, canActivate: [AuthGuard] },
+  {path: 'admin/admin-user-mgmt', component: AdminNativeUserComponent, canActivate: [AuthGuard] },
 
   { path: 'home',  component: HomeComponent, canActivate: [AuthGuard] },
  
@@ -50,7 +51,9 @@ const routes: Routes = [
   { path: 'admin/property-preferences',  component: PropPreferencesComponent, canActivate: [AuthGuard] },
   { path: 'admin/application-properties',  component: AppPropsComponent, canActivate: [AuthGuard] },
   { path: 'admin/manual-functions',  component: AdminManualFunctionsComponent, canActivate: [AuthGuard] },
+  { path: 'admin/operational-override',  component: OperationalOverrideComponent, canActivate: [AuthGuard] },
 
+  
 
   { path: 'connections/manual-functions',  component: ConnectionsManualFunctionsComponent, canActivate: [AuthGuard] },
   { path: 'connections/report-listing',  component: ReportListingConnComponent, canActivate: [AuthGuard] },

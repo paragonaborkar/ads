@@ -66,6 +66,10 @@ export class ReportListingCommonComponent implements OnInit {
   }
 
 
+  back() {
+    this.showJasperReport = false;
+    this.reportHtml = "";
+  }
   openJasperReport(requestedPageNumber, reportName, reportTitle, firstTime): void {
     console.log(reportName);
 
@@ -94,65 +98,70 @@ export class ReportListingCommonComponent implements OnInit {
           this.totalPages = res.totalPages;
           this.numbers = [];
 
-          // An array of number for the paging.
-          for (let i = 1; i <= this.totalPages; i++) {
-            this.numbers.push(i);
-          }
+          if (this.totalPages > 0) {
 
-
-          let jasperFormatting = false;
-          if (!jasperFormatting) {
-            let div = document.createElement('div');
-            div.setAttribute("id", "reportContentAds");
-            div.innerHTML = this.report.report;
-            let x = div.getElementsByClassName("jrPage");
-
-            console.log(" x.item(0).childNodes.item(1)", x.item(0).childNodes.item(1));
-
-            let len = x.item(0).childNodes.item(1).childNodes.length;
-            for (let i = 0; i <= len; i++) {
-              let e = x.item(0).childNodes.item(1).childNodes[i];
-              
-              // Get the table headers and save them. These are not provided on 1+ pages.
-              if (i==3 && firstTime) {
-                this.reportColumnHeaders = e;
-              }
-
-              if (i <= 2) {
-                x.item(0).childNodes.item(1).removeChild(e);
-              }
+            // An array of number for the paging.
+            for (let i = 1; i <= this.totalPages; i++) {
+              this.numbers.push(i);
             }
 
-            // Remove junk at the end of the report.
-            x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
-            x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
-            x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
-            x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
-            x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
-            x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
+
+            let jasperFormatting = false;
+            if (!jasperFormatting) {
+              let div = document.createElement('div');
+              div.setAttribute("id", "reportContentAds");
+              div.innerHTML = this.report.report;
+              let x = div.getElementsByClassName("jrPage");
+
+              // console.log(" x.item(0).childNodes.item(1)", x.item(0).childNodes.item(1));
+
+              let len = x.item(0).childNodes.item(1).childNodes.length;
+
+              for (let i = 0; i <= len; i++) {
+                let e = x.item(0).childNodes.item(1).childNodes[i];
+
+                // Get the table headers and save them. These are not provided on 1+ pages.
+                if (i == 3 && firstTime) {
+                  this.reportColumnHeaders = e;
+                }
+
+                if (i <= 2) {
+                  x.item(0).childNodes.item(1).removeChild(e);
+                }
+              }
+
+              // Remove junk at the end of the report.
+              x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
+              x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
+              x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
+              x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
+              x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
+              x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
 
 
-            // Remove all style from Jasper
-            var all = x.item(0).getElementsByTagName('*');           
-            for (var i = -1, l = all.length; ++i < l;) {
-              all[i].removeAttribute('style');
-            }
+              // Remove all style from Jasper
+              var all = x.item(0).getElementsByTagName('*');
+              for (var i = -1, l = all.length; ++i < l;) {
+                all[i].removeAttribute('style');
+              }
 
-            if (firstTime || this.currentPageNumber == 1) {
-              this.reportHtml = "<table class=\"table table-striped mt-3\">" + x.item(0).innerHTML + "</table>";
+              if (firstTime || this.currentPageNumber == 1) {
+                this.reportHtml = "<table class=\"table table-striped mt-3\">" + x.item(0).innerHTML + "</table>";
+              } else {
+
+                this.reportHtml = "<table class=\"table table-striped mt-3\">" + this.reportColumnHeaders.innerHTML + x.item(0).innerHTML + "</table>";
+              }
+
             } else {
-              
-              this.reportHtml = "<table class=\"table table-striped mt-3\">" + this.reportColumnHeaders.innerHTML + x.item(0).innerHTML + "</table>";
+              var ele = document.getElementById("reportHtml");
+
+              ele.innerHTML = this.report.report;
             }
 
-          } else {
-            var ele = document.getElementById("reportHtml");
-
-            ele.innerHTML = this.report.report;
+            // ele.innerHTML = "<table class=\"table table-striped mt-3\">" + x.item(0).innerHTML + "</table>";
           }
-
-          // ele.innerHTML = "<table class=\"table table-striped mt-3\">" + x.item(0).innerHTML + "</table>";
         });
+
   }
 
 
@@ -168,8 +177,8 @@ export class ReportListingCommonComponent implements OnInit {
 
   goToPage(pageNum): void {
     console.log("pageNum:" + pageNum);
-    
-    this.currentPageNumber=pageNum;
+
+    this.currentPageNumber = pageNum;
 
     this.openJasperReport(this.currentPageNumber, this.reportName, this.moduleName, false);
   }

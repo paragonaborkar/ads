@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 import 'rxjs/add/operator/switchMap';
@@ -47,7 +47,7 @@ export class OwnerComponent implements OnInit {
 
 
 
-  constructor( private route: ActivatedRoute, private ownerService: OwnerService, private sessionHelper: SessionHelper, private applicationConfigService: ApplicationConfigService) {
+  constructor( private router: Router, private route: ActivatedRoute, private ownerService: OwnerService, private sessionHelper: SessionHelper, private applicationConfigService: ApplicationConfigService) {
     this.page.number = 1;
     this.page.pageNumber = 1;
     this.page.size = 1000;
@@ -60,11 +60,15 @@ export class OwnerComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.migkey = params['migKey'];
     });
-      
     
+    // FIXME: Complete this when SSO is ready.....
     // this.route.params
     //   .switchMap((params: ParamMap) => this.ownerService.validateMigKeyExists(params['migKey'], loginInfo.corpUserId))
-    //   .subscribe((data) => this.owerListing = data);
+    //   .subscribe((data) => {
+    //     console.log("validateMigKeyExists:", data);
+    //   },  err => {
+    //     this.router.navigate(['/discover/owner']);
+    //   });
 
   }
 

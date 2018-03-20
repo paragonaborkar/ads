@@ -31,21 +31,9 @@ public class MigrationKeyController {
 
 	private static final Logger log = LoggerFactory.getLogger(MigrationKeyController.class);
 
-	@Autowired
-	MigrationKeyRepository migKeyRepo;
 
-	/**
-	 * Validate Migration Key with Corporate User
-	 * @param migrationKey
-	 * @param userCorporateId
-	 * @return
-	 */
-	@PreAuthorize("hasAuthority('CORP_USER')")
-	@RequestMapping(value = "/validate-migration-key/{migrationKey}/{userCorporateId}", method = RequestMethod.GET)
-	public boolean validateMigKey(@PathVariable(name = "migrationKey") String migrationKey,
-			@PathVariable(name = "userCorporateId") int userCorporateId) {
-		return migKeyRepo.isMigrationKeyExists(migrationKey, userCorporateId);
-	}
+
+
 
 
 	@Autowired

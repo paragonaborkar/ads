@@ -20,7 +20,7 @@ import { Page } from "../common/page";
 @Injectable()
 export class OwnerService {
 
-    private validateMigKey = '/validate-migration-key/';
+    private validateMigKey = '/validateMigrationKey/';
 
     constructor(private http: HttpClient, private errorService: AdsErrorService, private global: Globals) { }
 
