@@ -41,8 +41,14 @@ public class ActivityResponse implements Serializable {
 	@Column(name="owner_user_corporate_id", nullable=false)
 	private Integer ownerUserCorporateId;
 
-	@Column(name="suggested_owner_user_corporate_id")
-	private Integer suggestedOwnerUserCorporateId;
+//	@Column(name="suggested_owner_user_corporate_id")
+//	private Integer suggestedOwnerUserCorporateId;
+	
+	@ManyToOne
+	@JoinColumn(name="suggested_owner_user_corporate_id", nullable=true)
+	private UserCorporate suggestedOwnerUserCorporate;
+		
+		
 
 	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
@@ -117,12 +123,20 @@ public class ActivityResponse implements Serializable {
 		this.ownerUserCorporateId = ownerUserCorporateId;
 	}
 
-	public Integer getSuggestedOwnerUserCorporateId() {
+/*	public Integer getSuggestedOwnerUserCorporateId() {
 		return this.suggestedOwnerUserCorporateId;
 	}
 
 	public void setSuggestedOwnerUserCorporateId(Integer suggestedOwnerUserCorporateId) {
 		this.suggestedOwnerUserCorporateId = suggestedOwnerUserCorporateId;
+	}*/
+	
+	public UserCorporate getSuggestedOwnerUserCorporate() {
+		return this.suggestedOwnerUserCorporate;
+	}
+
+	public void setSuggestedOwnerUserCorporate(UserCorporate suggestedOwnerUserCorporate) {
+		this.suggestedOwnerUserCorporate = suggestedOwnerUserCorporate;
 	}
 
 	public Timestamp getUpdateTime() {

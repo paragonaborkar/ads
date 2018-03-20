@@ -180,6 +180,9 @@ import { ControllerReleaseDeleteComponent } from './discover/controller-release/
     BsDatepickerModule.forRoot(),
     LoggerModule.forRoot({serverLoggingUrl: 'http://localhost:8080/remoteLog', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR})
   ],
+  // entryComponents:[
+  //   OwnerResponseComponent
+  // ],
   providers: [Globals, AuthGuard,  SessionHelper, UserService, LoginService, AdsHelperService, AdsErrorService, 
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     UserAdminService,
