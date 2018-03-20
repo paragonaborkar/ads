@@ -28,13 +28,9 @@ public interface ActivityWithQtree {
 
 	public boolean getAdminOverride();
 
-	public boolean getArchiveCandidate();
-
 	public Timestamp getCreateTime();
 
 	public Date getDeleteDate();
-
-	public boolean getIsLatest();
 
 	public Integer getMailCount();
 
@@ -47,8 +43,6 @@ public interface ActivityWithQtree {
 	public String getNote();
 
 	public Timestamp getUpdateTime();
-
-	public String getVserver();
 
 	public boolean getWillDelete();
 
