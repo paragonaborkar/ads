@@ -14,9 +14,8 @@
 
             <h1 class="h4"><strong>QTree Name:</strong> {{activityInfo.qtree.qtreeName}}</h1>
             <h1 class="h4"><strong>NAS Volume Name:</strong> {{activityInfo.nasVolume.volumeName}}</h1>
-            <pre> {{ formGroup.value | json }} </pre>
-
-            <pre>{{activityResponse | json}}</pre>
+            <!-- <pre> {{ formGroup.value | json }} </pre>
+            <pre>{{activityResponse | json}}</pre> -->
 
             <form [formGroup]="formGroup">
 
@@ -25,11 +24,11 @@
                     <div class="col-sm-6">
                         <div>
                             <label>
-                                <input class="radio" formControlName="confirmOwner" type="radio" [value]=true>
+                                <input class="radio" id="isOwnerTrue" formControlName="confirmOwner" type="radio" [value]="true">
                                 <span>Yes</span>
                             </label>
                             <label>
-                                <input class="radio" formControlName="confirmOwner" type="radio" [value]=false>
+                                <input class="radio" id="isOwnerFalse" formControlName="confirmOwner" type="radio" [value]="false">
                                 <span>No</span>
                             </label>
                         </div>
@@ -42,11 +41,11 @@
                         <div class="col-sm-6">
                             <div>
                                 <label>
-                                    <input class="radio" formControlName="decommissionVolume" type="radio" [value]=true (change)="onDecommissionVolumeValueChanged(true)">
+                                    <input class="radio" id="decommissionTrue" formControlName="decommissionVolume" type="radio" [value]="true" (change)="onDecommissionVolumeValueChanged(true)">
                                     <span>Yes</span>
                                 </label>
                                 <label>
-                                    <input class="radio" formControlName="decommissionVolume" type="radio" [value]=false (change)="onDecommissionVolumeValueChanged(false)">
+                                    <input class="radio" id="decommissionFalse" formControlName="decommissionVolume" type="radio" [value]="false" (change)="onDecommissionVolumeValueChanged(false)">
                                     <span>No</span>
                                 </label>
                             </div>
@@ -61,7 +60,7 @@
                         </div>
 
                         <div class="col-sm-3">
-                            <input type="text" class="form-control"  formControlName="decommissionByDate"
+                            <input type="text" class="form-control"  id="decommissionByDate" formControlName="decommissionByDate"
                                 
                                  [minDate]="minDate" [maxDate]="maxDate" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue">
                             
@@ -98,7 +97,7 @@
                         <label for="confirm-owner" class="col-sm-6 form-control-label">If you know the owner who is not in the list please enter it here:</label>
                         <div class="col-sm-6 ">
                             <div class="input-group input-group-unstyled">
-                                <input type="text" class="form-control" formControlName="suggestedOwnerUserCorporateId">
+                                <input type="text" id="suggestedOwnerUserCorporateId" class="form-control" formControlName="suggestedOwnerUserCorporateId">
                             </div>
                         </div>
                     </div>
@@ -106,7 +105,7 @@
                     <div class="form-group row" >
                         <div class="col-sm-12">
                             <label>
-                                <input class="checkbox" type="checkbox" formControlName="dontKnowOwner">
+                                <input class="checkbox" id="dontKnowOwner" type="checkbox" formControlName="dontKnowOwner">
                                 <span>I do not know who the Owner is for this Volume</span>
                             </label>
                         </div>
@@ -118,11 +117,11 @@
                     <div class="col-sm-6">
                         <div>
                             <label>
-                                <input class="radio" formControlName="migrationTeamContactMe" type="radio" [value]="true">
+                                <input class="radio" id="migrationTeamContactMeTrue" formControlName="migrationTeamContactMe" type="radio" [value]="true">
                                 <span>Yes</span>
                             </label>
                             <label>
-                                <input class="radio" formControlName="migrationTeamContactMe" type="radio" [value]="false">
+                                <input class="radio" id="migrationTeamContactMeFalse" formControlName="migrationTeamContactMe" type="radio" [value]="false">
                                 <span>No</span>
                             </label>
                         </div>

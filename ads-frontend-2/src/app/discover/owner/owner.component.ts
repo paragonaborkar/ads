@@ -29,7 +29,8 @@ export class OwnerComponent implements OnInit {
 
   public currentUserCorporateId = 9;
 
-  public isMultiOwner = true;
+  //TODO: Hook up multi-owner
+  public isMultiOwner = false;
   
   page = new Page();
 
@@ -133,5 +134,7 @@ export class OwnerComponent implements OnInit {
 
   hideScheduleModal() {
     this.isScheduleModal = false;
+    this.setPage(this.page);
   }
+
 }

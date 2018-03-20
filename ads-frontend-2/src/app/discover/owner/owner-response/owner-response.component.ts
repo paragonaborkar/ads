@@ -108,8 +108,7 @@ export class OwnerResponseComponent implements OnInit {
     this.ownerResponseService.saveOwnerResponse(this.activityResponse).subscribe(
       response => {
         console.log(response);
-
-        // this.saved.emit(this.user);
+        this.saved.emit();
       }, err => {
         // Get the ADS configured error message to display.
         this.errorMessage = this.errorService.processError(err, "saveOwnerResponse", "PATCH");

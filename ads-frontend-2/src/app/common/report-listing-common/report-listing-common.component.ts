@@ -155,6 +155,7 @@ export class ReportListingCommonComponent implements OnInit {
 
   goToPage(pageNum): void {
     console.log("pageNum:" + pageNum);
+    
     this.currentPageNumber=pageNum;
 
     this.openJasperReport(this.currentPageNumber, this.reportName, this.moduleName, false);

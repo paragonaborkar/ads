@@ -40,5 +40,6 @@
   </button>
 </ng-template>
 
-<app-owner-response class="modal fade" *ngIf="isScheduleModal" [config]="{ show: true }" bsModal #ownerResponseModal="bs-modal" (cancel)="hideScheduleModal()"
+<app-owner-response class="modal fade" *ngIf="isScheduleModal" [config]="{ show: true }" bsModal #ownerResponseModal="bs-modal" 
+(cancel)="hideScheduleModal()" (saved)="hideScheduleModal()"
   [activityInfo]="activityInfo" [scheduleAction]="scheduleAction" [isMultiOwner]="isMultiOwner"></app-owner-response>
