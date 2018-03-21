@@ -54,7 +54,7 @@ public class MigrationKeyService {
 				if(migrationKey == null) {
 					migrationKey = new MigrationKey();
 					migrationKey.setMigrationKey(uniqueKeyService.createMigKey());
-					migrationKey.setUserCorporateId(userCorporateId);
+					migrationKey.setUserCorporate(activityResponse.getOwnerUserCorporate());
 					migrationKey.setRunNo(currentRunNo);
 				}
 				

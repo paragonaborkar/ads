@@ -116,7 +116,8 @@ public class OwnerIdentificationService {
 					activity.setNote(QtreeOwnerStatus.Single.name());
 				}
 			} else {
-				createActivityResponse(activity, activityResponses, host.getHostOwnerUserCorporateId());
+//				createActivityResponse(activity, activityResponses, host.getHostOwnerUserCorporateId());
+				createActivityResponse(activity, activityResponses, host.getHostOwnerUserCorporate());
 			} // else
 		} //main else for host
 	}
@@ -143,7 +144,8 @@ public class OwnerIdentificationService {
 							UserCorporate corporateUser = getOrCreateCorporateUser(contact.getSid());
 							if(corporateUser != null) {
 								//application.setOwnerUserCorporateId(corporateUser.getId()); //WHAT IF CORPORATE USER DOES NOT EXIST IN SYSTEM? SHOULD WE CREATE? VERUM IS SENDING MULTIPLE CONTACTS
-								createActivityResponse(activity, activityResponses, corporateUser.getId());
+//								createActivityResponse(activity, activityResponses, corporateUser.getId());
+								createActivityResponse(activity, activityResponses, corporateUser);
 								corpOwnerId = corporateUser.getId();
 							}
 						}
@@ -236,8 +238,10 @@ public class OwnerIdentificationService {
 		return false;
 	}
 	
-	public Activity createActivityResponse(Activity activity, List<ActivityResponse> activityResponses, Integer ownerUserCorporateId) {
-		if(shouldCreateActivityResponseForThisApplication(activity, activityResponses, ownerUserCorporateId)) {
+//	public Activity createActivityResponse(Activity activity, List<ActivityResponse> activityResponses, Integer ownerUserCorporateId) {
+	public Activity createActivityResponse(Activity activity, List<ActivityResponse> activityResponses, UserCorporate ownerUserCorporate) {
+//		if(shouldCreateActivityResponseForThisApplication(activity, activityResponses, ownerUserCorporateId)) {
+		if(shouldCreateActivityResponseForThisApplication(activity, activityResponses, ownerUserCorporate)) {
 			if(activityResponses.isEmpty())
 				activity.setNote(QtreeOwnerStatus.Single.name());
 			else
@@ -245,7 +249,7 @@ public class OwnerIdentificationService {
 
 			ActivityResponse activityResponse = new ActivityResponse();
 			activityResponse.setIsPresumed(true);
-			activityResponse.setOwnerUserCorporateId(ownerUserCorporateId);
+			activityResponse.setOwnerUserCorporate(ownerUserCorporate);
 			activityResponse.setActivity(activity);
 			activityResponseRepository.save(activityResponse);
 			activity.addActivityResponse(activityResponse);
@@ -255,7 +259,8 @@ public class OwnerIdentificationService {
 		return activity;
 	}
 	
-	public boolean shouldCreateActivityResponseForThisApplication(Activity activity, List<ActivityResponse> activityResponses, Integer ownerUserCorporateId) {
+//	public boolean shouldCreateActivityResponseForThisApplication(Activity activity, List<ActivityResponse> activityResponses, Integer ownerUserCorporateId) {
+		public boolean shouldCreateActivityResponseForThisApplication(Activity activity, List<ActivityResponse> activityResponses, UserCorporate ownerUserCorporate) {
 		boolean createActivityResponse = false;
 		//Activity Response is empty so create one for this user
 		if(activityResponses.isEmpty()) {
@@ -266,7 +271,8 @@ public class OwnerIdentificationService {
 			//is this owner already added for this qtree
 			boolean ownerAlreadyAdded = false;
 			for(ActivityResponse activityResponse: activityResponses) {
-				if(activityResponse.getOwnerUserCorporateId().intValue() == ownerUserCorporateId.intValue()) {
+				if(activityResponse.getOwnerUserCorporate() == ownerUserCorporate) {
+//					if(activityResponse.getOwnerUserCorporateId().intValue() == ownerUserCorporateId.intValue()) {
 					ownerAlreadyAdded = true;
 					break;
 				}
@@ -283,7 +289,7 @@ public class OwnerIdentificationService {
 		if(!activityResponses.isEmpty()) {
 			if(activity.getActivityResponses().size() == 1) {
 				host.setNote(QtreeOwnerStatus.Single.name());
-				host.setHostOwnerUserCorporateId(activity.getActivityResponses().get(0).getOwnerUserCorporateId());
+				host.setHostOwnerUserCorporate(activity.getActivityResponses().get(0).getOwnerUserCorporate());
 			} else {
 				host.setNote(QtreeOwnerStatus.Multi.name());
 			}

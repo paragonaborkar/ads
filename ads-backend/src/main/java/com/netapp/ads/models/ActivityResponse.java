@@ -38,8 +38,12 @@ public class ActivityResponse implements Serializable {
 	@Column(name="is_presumed", nullable=false)
 	private boolean isPresumed;
 
-	@Column(name="owner_user_corporate_id", nullable=false)
+	@Column(name="owner_user_corporate_id", insertable=false, updatable=false)
 	private Integer ownerUserCorporateId;
+	
+	@ManyToOne
+	@JoinColumn(name="owner_user_corporate_id", nullable=true)
+	private UserCorporate ownerUserCorporate;
 
 //	@Column(name="suggested_owner_user_corporate_id")
 //	private Integer suggestedOwnerUserCorporateId;
@@ -119,8 +123,16 @@ public class ActivityResponse implements Serializable {
 		return this.ownerUserCorporateId;
 	}
 
-	public void setOwnerUserCorporateId(Integer ownerUserCorporateId) {
-		this.ownerUserCorporateId = ownerUserCorporateId;
+//	public void setOwnerUserCorporateId(Integer ownerUserCorporateId) {
+//		this.ownerUserCorporateId = ownerUserCorporateId;
+//	}
+	
+	public UserCorporate getOwnerUserCorporate() {
+		return this.ownerUserCorporate;
+	}
+
+	public void setOwnerUserCorporate(UserCorporate ownerUserCorporate) {
+		this.ownerUserCorporate = ownerUserCorporate;
 	}
 
 /*	public Integer getSuggestedOwnerUserCorporateId() {
