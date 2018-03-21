@@ -2033,6 +2033,19 @@ CREATE OR REPLACE VIEW `multi_owner_report` AS
     WHERE
     	 `a`.`id` IN (SELECT `activity_id` FROM activity_response WHERE is_presumed = 1 GROUP BY activity_id HAVING count(*) > 1);      
 
+CREATE VIEW `application_detail_report` AS
+    SELECT 
+        `a`.`id` AS `id`,
+        `a`.`application_code` AS `application_code`,
+        `a`.`application_name` AS `application_name`,
+        `a`.`archtype` AS `archtype`,
+        `uc`.`user_name` AS `user_name`,
+        `a`.`information_owner` AS `information_owner`,
+        `a`.`create_time` AS `create_time`,
+        `a`.`update_time` AS `update_time`
+    FROM
+        (`application` `a`
+        LEFT JOIN `user_corporate` `uc` ON ((`a`.`owner_user_corporate_id` = `uc`.`id`)));
 
 
 --
