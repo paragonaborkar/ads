@@ -160,8 +160,13 @@ console.log("this.potentialOwners:", this.potentialOwners);
         console.log(response);
         this.saved.emit();
       }, err => {
-        // Get the ADS configured error message to display.
-        this.errorMessage = this.errorService.processError(err, "saveOwnerResponse", "PATCH");
+        console.log(err);
+        if (err.status == "409") {
+          this.errorMessage = err.error.message;
+        } else {
+          // Get the ADS configured error message to display.
+          this.errorMessage = this.errorService.processError(err, "saveOwnerResponse", "PATCH");
+        }
       });
   }
 

@@ -143,27 +143,25 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `activity_response`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `activity_response` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Activity Response',
-  `activity_id` int(11) NOT NULL,
-  `owner_user_corporate_id` int(11) NOT NULL,
-  `is_owner` tinyint(1) NOT NULL,
-  `is_presumed` tinyint(1) NOT NULL,
-  `suggested_owner_user_corporate_id` int(11) DEFAULT NULL,
-  `call_me` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Boolean indicating if the Owner(s) want to be contacted by a Migration Specialist.',
-  `best_number` varchar(100) DEFAULT NULL COMMENT 'Contact number for the Owner if they want to speak to a Migration Specialist.',
-  `call_reason` varchar(2048) DEFAULT NULL COMMENT 'Primary reason why the Owner wants to be contacted by the Migration Specialist',  
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY(`id`),
-  UNIQUE KEY `candidate_fk_key` (`activity_id`,`owner_user_corporate_id`),
-  CONSTRAINT `fk_activity_response_id` FOREIGN KEY (`activity_id`) REFERENCES `activity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
 --
+CREATE TABLE `activity_response` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Activity Response',
+  `activity_id` INT(11) NOT NULL,
+  `owner_user_corporate_id` INT(11) NOT NULL,
+  `is_owner` TINYINT(1) NOT NULL DEFAULT '0',
+  `is_presumed` TINYINT(1) NOT NULL DEFAULT '1',
+  `suggested_owner_user_corporate_id` INT(11) NULL DEFAULT NULL,
+  `call_me` TINYINT(1) NOT NULL DEFAULT '0',
+  `best_number` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Contact number for the Owner if they want to speak to a Migration Specialist.',
+  `call_reason` VARCHAR(2048) NULL DEFAULT NULL COMMENT 'Primary reason why the Owner wants to be contacted by the Migration Specialist',
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `candidate_fk_key` (`activity_id`, `owner_user_corporate_id`),
+  INDEX `fk_user_corporate_id` (`owner_user_corporate_id`),
+  CONSTRAINT `fk_activity_response_id` FOREIGN KEY (`activity_id`) REFERENCES `activity` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT `fk_user_corporate_id` FOREIGN KEY (`owner_user_corporate_id`) REFERENCES `user_corporate` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 -- Table structure for table `aggregate`
 --
 

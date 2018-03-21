@@ -22,6 +22,7 @@ import { Page } from "../../common/page";
   styleUrls: ['./owner.component.scss']
 })
 export class OwnerComponent implements OnInit {
+  public pageName = "OwnerListing";
   @ViewChild(DataTableColTemplatesComponent) dataTableColsTemplate: DataTableColTemplatesComponent;
   columnTemplates = {};
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
@@ -33,11 +34,7 @@ export class OwnerComponent implements OnInit {
 
   public currentUserCorporateId = 9;
 
-
-
   page = new Page();
-
-  public pageName = "OwnerListing";
   
   migkey = '';
 

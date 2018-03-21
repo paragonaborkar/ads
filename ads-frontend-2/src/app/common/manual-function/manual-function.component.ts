@@ -61,6 +61,9 @@ export class ManualFunctionComponent implements OnInit {
       this.manualFunctionService.runJob(this.jobName).subscribe(data => {
           // this.message = data;
           this.updateMessage("Completed", "", "");
+        }, error => {
+          this.updateMessage("", "", "Error running job.");
+          console.log(error);
         });
     }
   }

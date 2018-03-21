@@ -31,7 +31,7 @@ export class OwnerService {
 
         let pagingParms = "&page=" + page.number + "&size=" + page.size;
 
-        return this.http.get(this.global.apiUrl + "/activities/search/getActivitiesFromMigrationKeyAndCorpUserId?" + urlParms +pagingParms)
+        return this.http.get(this.global.apiUrl + "/activities/search/getActivitiesFromMigrationKeyAndCorpUserId?" + urlParms + pagingParms)
             .map((res: Response) => res)
         // .catch(
         // Handle error in Subscribe() using the AdsErrorService  

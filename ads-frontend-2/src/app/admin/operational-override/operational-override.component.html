@@ -1,3 +1,43 @@
-<p>
-  operational-override works!
-</p>
+<div class="row justify-content-center d-flex ">
+  <div class="col-md-8">
+    <div class="h3">Operational Override</div>
+  </div>
+
+  <div class="col-md-1">
+    <div class="pull-right">
+      <button type="button" class="btn btn-link" (click)="showPropertyModal()">
+        <i class="fa fa-cog fa-2x" title="Column Settings"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row d-flex justify-content-center">
+  <div class="col-md-9" *ngIf="rows.length > 0 && columns.length > 0">
+    <ngx-datatable class="material card" [rows]="rows" [columns]="columns" [columnMode]="'flex'" [rowHeight]="auto" [externalPaging]="false"
+      [count]="page.totalElements" [offset]="page.number" [limit]="page.size" [headerHeight]="50" [footerHeight]="50" (page)='setPage($event)'>
+    </ngx-datatable>
+  </div>
+  <div class="col-md-9" *ngIf="rows.length == 0  && columns.length > 0">
+    <div class="alert alert-secondary" role="alert">
+      There are no QTree's to process.
+    </div>
+  </div>
+</div>
+
+
+
+<app-data-table-col-templates></app-data-table-col-templates>
+
+<ng-template #actionTmpl let-column="column" let-row="row">
+  <button class="btn btn-sm btn-primary" (click)="showScheduleModal(row, 'Confirm')" *ngIf="row.activityResponses[0].isPresumed">
+    <i class="fa fa-check"></i> Reset
+  </button>
+</ng-template>
+
+
+
+<prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal" [config]="{ show: true }" bsModal #propPreferenceModal="bs-modal"
+  (done)="hidePropertyModal()" [pageName]="pageName"></prop-preferences-modal>
