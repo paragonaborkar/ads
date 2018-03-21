@@ -1,7 +1,9 @@
 package com.netapp.ads.controllers.discover;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -30,6 +32,7 @@ import com.netapp.ads.models.ControllerRelease;
 import com.netapp.ads.models.ControllerWorkPackage;
 import com.netapp.ads.models.MigrationKey;
 import com.netapp.ads.models.NasVolume;
+import com.netapp.ads.models.UserCorporate;
 import com.netapp.ads.repos.ActivityRepository;
 import com.netapp.ads.repos.ControllerReleaseRepository;
 import com.netapp.ads.repos.ControllerWorkPackageRepository;
@@ -156,30 +159,52 @@ public class DiscoverProcessingController {
 	@RequestMapping(value="/sendOwnerFirstEmail", method=RequestMethod.POST)
 	public String sendOwnerFirstEmail() {
 
+		HashMap<UserCorporate, ArrayList<String>> emailsToSend = new HashMap<UserCorporate, ArrayList<String>>();
+		
 //		String emailTo = "szemanick@consultparagon.com";
 //		String subject  = "ActivityResponse:" + ar.getId();
 //		String templateName = "Newsletter/newsletter";
 
 		// Activity activities = activityRepository.getOne(101);
 
+		// We cannot assume a previous set of emails was sent out. It could have failed. So search for Activities where emails have not been sent for it.
 		List<Activity> activities = activityRepository.findByMailCount(0);
 
 		for(Activity activity : activities) {
 			// Get the activity to mig key x_ref mapping... a list of migration_key_id's...
 			List<MigrationKey> migKeys = activity.getMigrationKeys();
 			for(MigrationKey migKey : migKeys) {
-				migKey.getMigrationKey();
+				
 				System.out.println(migKey.getMigrationKey() + " " + migKey.getUserCorporate().getLastName());
+  
+				if (emailsToSend.containsKey(migKey.getUserCorporate())) {
+					ArrayList<String> migKeysForUser = emailsToSend.get(migKey.getUserCorporate());
+					migKeysForUser.add(migKey.getMigrationKey());
+					emailsToSend.put(migKey.getUserCorporate(), migKeysForUser);
+				} else {
+					ArrayList<String> migKeysForUser = new ArrayList<>();
+					migKeysForUser.add(migKey.getMigrationKey());
+					emailsToSend.put(migKey.getUserCorporate(), migKeysForUser);
+				}
+					
 			}
+		}
+		
+		// REMOVE THIS.... FOR DEBUGGING:
+		Iterator it = emailsToSend.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry pair = (Map.Entry) it.next();
+	        UserCorporate u = (UserCorporate) pair.getKey();
+	        ArrayList<String> mKeys = (ArrayList<String>) pair.getValue();	        
+	        System.out.println(u.getLastName() + " = " + mKeys.toString());
+	    }
+				
 
 //			We don't need the responses. 
 //			List<ActivityResponse> allResponses = activity.getActivityResponses();
 //			for(ActivityResponse response : allResponses) {}
-			
-		}
-
-
-
+		
+		
 		/*		final Context context = new Context(Locale.ENGLISH);
 		try {
 			if(templateName != null) {
