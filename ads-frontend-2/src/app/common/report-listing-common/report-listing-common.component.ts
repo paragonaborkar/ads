@@ -85,8 +85,10 @@ export class ReportListingCommonComponent implements OnInit {
     if (!requestedPageNumber)
       requestedPageNumber = 1;
 
+    let recordsPerPage = 8;
 
-    this.reportCommonService.openJasperReport(requestedPageNumber, reportName, this.moduleName)
+
+    this.reportCommonService.openJasperReport(requestedPageNumber, reportName, this.moduleName, recordsPerPage)
       .subscribe(
         res => {
 
@@ -130,27 +132,12 @@ export class ReportListingCommonComponent implements OnInit {
                 }
               }
 
-              // Remove junk at the end of the report.
-              x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
-              x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
-              x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
-              x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
-              x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
-              x.item(0).childNodes.item(1).removeChild(x.item(0).childNodes.item(1).lastChild);
-
-
               // Remove all style from Jasper
               var all = x.item(0).getElementsByTagName('*');
               for (var i = -1, l = all.length; ++i < l;) {
                 all[i].removeAttribute('style');
               }
-
-              if (firstTime || this.currentPageNumber == 1) {
                 this.reportHtml = "<table class=\"table table-striped mt-3\">" + x.item(0).innerHTML + "</table>";
-              } else {
-
-                this.reportHtml = "<table class=\"table table-striped mt-3\">" + this.reportColumnHeaders.innerHTML + x.item(0).innerHTML + "</table>";
-              }
 
             } else {
               var ele = document.getElementById("reportHtml");
