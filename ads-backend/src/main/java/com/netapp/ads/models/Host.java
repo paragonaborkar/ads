@@ -26,8 +26,13 @@ public class Host implements Serializable {
 	@Column(name="host_name", length=255)
 	private String hostName;
 
-	@Column(name="host_owner_user_corporate_id")
+	@Column(name="host_owner_user_corporate_id", insertable=false, updatable=false)
 	private Integer hostOwnerUserCorporateId;
+	
+	@ManyToOne
+	@JoinColumn(name="host_owner_user_corporate_id", nullable=true)
+	private UserCorporate hostOwnerUserCorporate;
+
 
 	@Column(name="ip_addr", length=255)
 	private String ipAddr;
@@ -109,9 +114,18 @@ public class Host implements Serializable {
 		return this.hostOwnerUserCorporateId;
 	}
 
-	public void setHostOwnerUserCorporateId(Integer hostOwnerUserCorporateId) {
-		this.hostOwnerUserCorporateId = hostOwnerUserCorporateId;
+//	public void setHostOwnerUserCorporateId(Integer hostOwnerUserCorporateId) {
+//		this.hostOwnerUserCorporateId = hostOwnerUserCorporateId;
+//	}
+	
+	public UserCorporate getHostOwnerUserCorporate() {
+		return this.hostOwnerUserCorporate;
 	}
+
+	public void setHostOwnerUserCorporate(UserCorporate hostOwnerUserCorporate) {
+		this.hostOwnerUserCorporate = hostOwnerUserCorporate;
+	}
+
 
 	public String getIpAddr() {
 		return this.ipAddr;

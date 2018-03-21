@@ -39,6 +39,9 @@ import { AppPropsService } from './admin/app-props/app-props.service';
 
 
 import { UserAdminService } from './admin/admin-native-user/user-admin.service';
+import { OperationalOverrideService } from './admin/operational-override/operational-override.service';
+
+
 import { PagerService } from './common/pager.service';      // Currently used in user admin. Possibly many pages.
 import { ApplicationConfigService } from './common/application-config.service';
 
@@ -50,6 +53,7 @@ import { ControllerTypeaheadService } from './discover/controller-typeahead/cont
 import { ReportCommonService } from './common/report-listing-common/report-common.service';
 import { OwnerResponseService } from './discover/owner/owner-response/owner-response.service';
 import { ManualFunctionService } from './common/manual-function/manual-function.service';
+
 
 // Declarations
 import { AppComponent } from './app.component';
@@ -101,6 +105,7 @@ import { DataTableColTemplatesComponent } from './common/data-table-col-template
 import { ManualFunctionComponent } from './common/manual-function/manual-function.component';
 import { ControllerReleaseDeleteComponent } from './discover/controller-release/controller-release-delete/controller-release-delete.component';
 import { OperationalOverrideComponent } from './admin/operational-override/operational-override.component';
+import { OpOverrideConfirmComponent } from './admin/operational-override/op-override-confirm/op-override-confirm.component';
 
 
 
@@ -161,7 +166,8 @@ import { OperationalOverrideComponent } from './admin/operational-override/opera
     ControllerWorkPackageDeleteComponent,
     ManualFunctionComponent,
     ControllerReleaseDeleteComponent,
-    OperationalOverrideComponent
+    OperationalOverrideComponent,
+    OpOverrideConfirmComponent
 
     
 
@@ -199,7 +205,8 @@ import { OperationalOverrideComponent } from './admin/operational-override/opera
     ControllerWorkPackageService,
     ControllerTypeaheadService,
     ReportCommonService,
-    ManualFunctionService
+    ManualFunctionService,
+    OperationalOverrideService
 
     ],
   bootstrap: [AppComponent]

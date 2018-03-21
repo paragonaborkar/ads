@@ -2,12 +2,10 @@
 INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (2, 'UserListing', 'USER', 0, 1);
 INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (3, 'UserListing', 'SYSTEM', 0, 0);
 INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (4, 'SysPropListing', 'SYSTEM', '0', 0);
-
 INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (5, 'OwnerListing', 'SYSTEM', '0', 0);
-
 INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (6, 'ControllerReleaseListing', 'SYSTEM', 0, 0);
 INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (7, 'ControllerTargetListing', 'SYSTEM', 0, 0);
-
+INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (8, 'OperationalOverrideListing', 'SYSTEM', '0', 0);
 
 
 INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (2,  'firstName', 2, '0');
@@ -55,3 +53,10 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) V
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_template`) VALUES (7, 'processed', '1', 'yesNo');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (7, 'assetNumber', '1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_template`) VALUES (7, 'createTime', '1', 'dateTime');
+
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Last Accessed', 'qtree.lastAccessed', 'dateTime', '2');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Qtree Name', 'qtree.qtreeName','','1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Share Count', 'shares.length','','3');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Volume Name', 'nasVolume.volumeName','','1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Reason', 'unidentifiedReason','','1');
+

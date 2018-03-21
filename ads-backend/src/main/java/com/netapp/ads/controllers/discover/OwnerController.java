@@ -35,7 +35,8 @@ public class OwnerController {
 	public final static String OK = "{\"message\":\"OK\"}";
 	public final static String USER_ID_NO_MATCH = "{\"message\":\"This activity response is not for the current user\"}";
 	public final static String BAD_DISPOSITION = "{\"message\":\"This QTree Disposition value indicates that this Qtree had been associated with an Owner already.\"}";
-	public final static String OWNER_ALREADY_DISCOVERED = "{\"message\":\"This QTree had been previously associated with an Owner.\"}";
+	public final static String OWNER_ALREADY_DISCOVERED_NO_DECOMMISSION = "{\"message\":\"This QTree had been previously associated with an Owner. They have not requested a decommission.\"}";
+	public final static String OWNER_ALREADY_DISCOVERED_DECOMMISSION = "{\"message\":\"This QTree had been previously associated with an Owner. They have requested a decommission.\"}";
 
 	@Autowired
 	ActivityRepository activityRepository;
@@ -69,6 +70,31 @@ public class OwnerController {
 		return migKeyRepo.isMigrationKeyExists(migrationKey, userCorporateId);
 	}
 
+
+	public boolean activityHasOneOwner(List<ActivityResponse> allResponses, ActivityResponse currentActivityResponse) {
+
+		int ownerCount = 0;
+		int presumedCount = 0; // Unprocessed by Owners
+
+		for(ActivityResponse ar : allResponses) {
+			// Is another user responded that they are the Owner OR there are presumed Owners that didn't respond yet. 
+			// Then we are not in a situation where multiple potential owner existed that are reduced to 1 Owner.
+			if (ar.getIsOwner() && !ar.getIsPresumed())
+				ownerCount++;
+
+			if (!ar.getIsOwner() && ar.getIsPresumed())
+				presumedCount++;
+		}
+
+		if (presumedCount > 0) // Pending Owner responses!
+			return false;
+		
+		if (ownerCount > 1)	// Too many Owners!
+			return false;
+		
+		return true;
+	}
+
 	/**
 	 * @param ownerResponse
 	 * @return
@@ -81,12 +107,13 @@ public class OwnerController {
 		if (arToUpdate.getOwnerUserCorporateId() == ownerResponse.getCurrentUserCorporateId()) {
 
 			Activity activity = arToUpdate.getActivity();
+			List<ActivityResponse> allResponses = activity.getActivityResponses();
 			Qtree qtree = activity.getQtree();
 			QtreeDisposition qtreeDisposition = qtreeDispositionRepository.findOneByDispositionAndQtree("DiscoverOwner", qtree);
-			
+
 			System.out.println("qtreeDisposition.getDisposition():"+qtreeDisposition.getDisposition() + "-" + qtreeDisposition.getId());
 			System.out.println("activity id:"+activity.getId());
-						
+
 			if (qtreeDisposition.getDisposition() != "OwnerDiscover") {
 
 				System.out.println("ar.getCallMe():" + ownerResponse.getCallMe());
@@ -99,29 +126,25 @@ public class OwnerController {
 				arToUpdate.setIsPresumed(false);
 
 				if (ownerResponse.getIsOwner()) {
- 
 					if (ownerResponse.getDecommissionVolume()) {
 						// FAIL SAFE Check - Ensures we don't set the QTree to be deleted if there are multiple people claiming they are the owners.
-						// Get all actvitiyResponses and ensure that no owner already said they want to delete this qtree.
-						List<ActivityResponse> allResponses = activity.getActivityResponses();
+						// Go through all actvitiyResponses and ensure that no owner already said they want to delete this qtree or if they didn't want to delete the qtree.
 						for(ActivityResponse ar : allResponses) {
 							if (arToUpdate != ar) {
 								if (ar.getIsOwner()) {
-									return new ResponseEntity(OWNER_ALREADY_DISCOVERED, HttpStatus.CONFLICT);
+									if (activity.getWillDecommission())
+										return new ResponseEntity(OWNER_ALREADY_DISCOVERED_DECOMMISSION, HttpStatus.CONFLICT);
+									else
+										return new ResponseEntity(OWNER_ALREADY_DISCOVERED_NO_DECOMMISSION, HttpStatus.CONFLICT);
 								}
 							}
 						}
-						
+
 						// This wasn't set in the original version of MMS. 
 						// In the UI the question is in regards to decommisioning the QTree.
-						activity.setWillDelete(true);
-						activity.setDeleteDate(ownerResponse.getDecommissionByDate());
+						activity.setWillDecommission(true);
+						activity.setDecommisionDate(ownerResponse.getDecommissionByDate());
 						activityRepository.save(activity);
-
-						// DiscoverOwner to "Discovered"
-						System.out.println("qtreeDisposition:" + qtreeDisposition.getDisposition() + qtreeDisposition.getId());
-						qtreeDisposition.setDisposition("Discovered");
-						qtreeDispositionRepository.save(qtreeDisposition);
 					}
 
 				} else {
@@ -132,6 +155,13 @@ public class OwnerController {
 						if (suggestedOwner != null)
 							arToUpdate.setSuggestedOwnerUserCorporate(suggestedOwner);
 					}
+				}
+
+				if (activityHasOneOwner(allResponses, arToUpdate)) {
+					// DiscoverOwner to "Discovered"
+					System.out.println("qtreeDisposition:" + qtreeDisposition.getDisposition() + qtreeDisposition.getId());
+					qtreeDisposition.setDisposition("Discovered");
+					qtreeDispositionRepository.save(qtreeDisposition);
 				}
 
 				activityResponseRepository.save(arToUpdate);

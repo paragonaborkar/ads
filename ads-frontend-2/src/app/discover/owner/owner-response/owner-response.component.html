@@ -13,17 +13,17 @@
             </div>
 
             <div class="row">
-                <div class="col-sm-3 h4">
+                <div class="col-sm-3 h5">
                     <strong>QTree:</strong>
                 </div>
-                <div class="col-sm-6 h4">{{activityInfo.qtree.qtreeName}}</div>
+                <div class="col-sm-9 h5">{{activityInfo.qtree.qtreeName}}</div>
             </div>
 
             <div class="row">
-                <div class="col-sm-3 h4">
+                <div class="col-sm-3 h5">
                     <strong>NAS Volume:</strong>
                 </div>
-                <div class="col-sm-6 h4"> {{activityInfo.nasVolume.volumeName}}</div>
+                <div class="col-sm-9 h5"> {{activityInfo.nasVolume.volumeName}}</div>
             </div>
 
             <label>
@@ -93,6 +93,7 @@
                 <div *ngIf="formGroup.value.confirmOwner == false">
                     <div class="row" *ngIf="potentialOwners.length > 0">
                         <div class="col-sm-12 ">
+                            <label><strong>Potential Owners:</strong></label>
                             <table class="table table-bordered table-hover table-sm ">
                                 <thead>
                                     <tr>

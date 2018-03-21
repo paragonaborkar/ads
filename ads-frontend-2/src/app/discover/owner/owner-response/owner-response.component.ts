@@ -2,14 +2,11 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-
 import { ActivtyResponse } from "../../activity-response";
-
 import { OwnerResponseService } from './owner-response.service';
 import { SessionHelper } from '../../../auth/session.helper';
 import { AdsErrorService } from '../../../common/ads-error.service';
 
-// import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 
 import { Observable } from 'rxjs/Observable';
@@ -39,9 +36,8 @@ export class OwnerResponseComponent implements OnInit {
 
   activityResponse: ActivtyResponse = new ActivtyResponse();
   activityResponseInfoSource = {};
-  corporateUserIdFromJwt = 9;
-  // public bsModalRef: BsModalRef,
-
+  corporateUserIdFromJwt = 0;
+  
   constructor( private ownerResponseService: OwnerResponseService, private errorService: AdsErrorService, private sessionHelper: SessionHelper) { }
 
   ngOnInit() {
@@ -53,7 +49,7 @@ export class OwnerResponseComponent implements OnInit {
 
 
     let loginInfo = this.sessionHelper.getToken();
-    // this.corporateUserIdFromJwt = loginInfo.corpUserId; // ************************************* FIX
+    this.corporateUserIdFromJwt = loginInfo.corpUserId;
 
     this.activityInfo["activityResponses"].forEach(activtyResponse => {
       // If we have an ActivityResponse for another Owner that hasn't responded yet, it's MultiOwner.
@@ -160,8 +156,13 @@ console.log("this.potentialOwners:", this.potentialOwners);
         console.log(response);
         this.saved.emit();
       }, err => {
-        // Get the ADS configured error message to display.
-        this.errorMessage = this.errorService.processError(err, "saveOwnerResponse", "PATCH");
+        console.log(err);
+        if (err.status == "409") {
+          this.errorMessage = err.error.message;
+        } else {
+          // Get the ADS configured error message to display.
+          this.errorMessage = this.errorService.processError(err, "saveOwnerResponse", "PATCH");
+        }
       });
   }
 

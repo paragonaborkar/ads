@@ -13,15 +13,13 @@ import { DataTableColTemplatesComponent } from '../../common/data-table-col-temp
 import { Page } from "../../common/page";
 
 
-
-// import { OwnerResponseComponent } from './owner-response/owner-response.component';
-
 @Component({
   selector: 'app-owner',
   templateUrl: './owner.component.html',
   styleUrls: ['./owner.component.scss']
 })
 export class OwnerComponent implements OnInit {
+  public pageName = "OwnerListing";
   @ViewChild(DataTableColTemplatesComponent) dataTableColsTemplate: DataTableColTemplatesComponent;
   columnTemplates = {};
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
@@ -31,21 +29,15 @@ export class OwnerComponent implements OnInit {
   public activityInfo: any = {};
   public scheduleAction = '';
 
-  public currentUserCorporateId = 9;
-
-
+  public currentUserCorporateId = 0;
 
   page = new Page();
-
-  public pageName = "OwnerListing";
   
   migkey = '';
 
   // Listing of actvities/owner information to display 
   rows: any[] = [];
   columns: any = [];
-
-
 
   constructor( private router: Router, private route: ActivatedRoute, private ownerService: OwnerService, private sessionHelper: SessionHelper, private applicationConfigService: ApplicationConfigService) {
     this.page.number = 1;
@@ -56,19 +48,20 @@ export class OwnerComponent implements OnInit {
   ngOnInit() {
 
     var loginInfo = this.sessionHelper.getToken();
+    this.currentUserCorporateId = loginInfo.corpUserId;
 
     this.route.params.subscribe(params => {
       this.migkey = params['migKey'];
     });
     
     // FIXME: Complete this when SSO is ready.....
-    // this.route.params
-    //   .switchMap((params: ParamMap) => this.ownerService.validateMigKeyExists(params['migKey'], loginInfo.corpUserId))
-    //   .subscribe((data) => {
-    //     console.log("validateMigKeyExists:", data);
-    //   },  err => {
-    //     this.router.navigate(['/discover/owner']);
-    //   });
+    this.route.params
+      .switchMap((params: ParamMap) => this.ownerService.validateMigKeyExists(params['migKey'], loginInfo.corpUserId))
+      .subscribe((data) => {
+        console.log("validateMigKeyExists:", data);
+      },  err => {
+        this.router.navigate(['/discover/owner']);
+      });
 
   }
 
@@ -106,6 +99,9 @@ export class OwnerComponent implements OnInit {
               if (activtyResponse["ownerUserCorporateId"] != this.currentUserCorporateId) {
                 // Keep other owners in a multi owner scenerio and display on the Owner modal.
                 // console.log("DEBUG AND TEST: Deleting:", this.rows["activityResponses"].activtyResponse);              
+
+                //FIXME: Do we need to merge up additional information like hosts and applications? 
+                // Ideally we get all data in 1 request, but if we cannot, then request and merge here.
               }
             });
 
@@ -138,18 +134,10 @@ export class OwnerComponent implements OnInit {
 
 
   showScheduleModal(row, action) {
-   
     this.activityInfo = row;
     this.scheduleAction = action;
-    
-    const initialState = {
-      activityInfo: this.activityInfo,
-      scheduleAction: this.scheduleAction,
-      class: 'modal-lg'
-    }
 
     this.isScheduleModal = true;
-
   }
 
   hideScheduleModal() {

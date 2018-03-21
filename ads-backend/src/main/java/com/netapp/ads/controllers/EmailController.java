@@ -51,7 +51,6 @@ public class EmailController {
     				inlineResources.put("imageNews3", new ClassPathResource("templates/Newsletter/news-3.jpg"));
     				inlineResources.put("imageNews4", new ClassPathResource("templates/Newsletter/news-4.jpg"));
     				inlineResources.put("imageCalendar", new ClassPathResource("templates/Newsletter/calendar.png"));
-    				
     			}
 				emailService.sendTemplatedMail(emailTo, subject, emailTemplate, context, inlineResources);
     		}

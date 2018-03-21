@@ -18,8 +18,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Integer>, JpaSpecificationExecutor<Activity> {
 
-	// This was used to troubleshoot some issues. Not used in app:
-//	Activity findById(@Param("id") Integer id);
+	List<Activity> findByMailCount(@Param("mailCount") Integer mailCount);
+	
+	// owner_user_corporate_id cannot be null or 0. It's a foreign key to user_corporate
+	// Is it more likely that an ActivityResponse won't be created if we do not have a valid User to set? If so, then I think we will need a mismatch query.
+	@Query("Select a From Activity a  "
+    		+ "JOIN a.qtree q " 
+    		+ "JOIN q.qtreeDisposition qd ON qd.disposition = 'DiscoverOwner' "
+    		+ "LEFT JOIN a.activityResponses ar WHERE ar.id IS NULL")
+	Page<Activity> findUnidentifiedOwners(Pageable p);
 	
 	/*	SIMLIAR TO: 
  	select * from activity
@@ -30,7 +37,6 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>, Jp
 	WHERE migration_key.migration_key = 'ABC' 
 	AND migration_key.user_corporate_id = 9 
 	AND activity.disposition = 'DiscoverOwner'*/
-
     @Query("Select a From Activity a  "
     		+ "JOIN a.qtree q " 
     		+ "JOIN q.qtreeDisposition qd ON qd.disposition = :disposition "
@@ -39,18 +45,5 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>, Jp
     		+ "JOIN x.migrationKey m ON m.migrationKey=:migKey AND m.userCorporateId=:corpUserId ")
     List<Activity> getActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId , @Param("disposition") String disposition);
     
-    
-//  AND qtd.disposition = :disposition
-    //, @Param("disposition") String disposition
-    
-    // a.adminOverride as getAdminOverride, a.qtree as qtree
-
-	
-	// @Query("Select a.adminOverride as getAdminOverride From Activity a LEFT JOIN a.activityMigrationKeyXRefs x LEFT JOIN x.migrationKey m WHERE m.migrationKey=:migKey AND m.userCorporateId=:corpUserId AND a.disposition=:disposition")
-    // List<ActivityProjection> getActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId, @Param("disposition") String disposition);
-    
-    // NOT USED IN APP:
-//    @Query(value = "Select a.id From Activity a LEFT JOIN a.activityMigrationKeyXRefs x LEFT JOIN x.migrationKey m WHERE m.migrationKey=:migKey AND m.userCorporateId=:corpUserId AND a.disposition=:disposition")
-//    public String[] getIdOfActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId, @Param("disposition") String disposition);
 
 }
