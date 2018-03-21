@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.1' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of system-get-info [Execution Time: 304 ms] -->
+	<results status='passed'>
+		<system-info>
+			<system-name>ads-dev-7dot1</system-name>
+			<system-id>4225919154</system-id>
+			<system-model>SIMBOX</system-model>
+			<system-machine-type>SIMBOX</system-machine-type>
+			<vendor-id>NetApp</vendor-id>
+			<system-serial-number>1810000050</system-serial-number>
+		</system-info>
+		<vfilers>
+			<vfiler-info>
+				<name>vfiler0</name>
+				<ipspace>default-ipspace</ipspace>
+				<uuid>00000000-0000-0000-0000-000000000000</uuid>
+				<vfnets>
+					<vfnet-info>
+						<ipaddress>10.216.15.31</ipaddress>
+						<netmask>255.255.255.0</netmask>
+						<interface>e0a</interface>
+					</vfnet-info>
+					<vfnet-info>
+						<ipaddress>10.216.15.33</ipaddress>
+						<netmask>255.255.255.0</netmask>
+						<interface>e0a</interface>
+					</vfnet-info>
+				</vfnets>
+			</vfiler-info>
+			<vfiler-info>
+				<name>vfiler1</name>
+				<ipspace>default-ipspace</ipspace>
+				<uuid>00000000-0000-0000-0000-000000000000</uuid>
+				<vfnets>
+					<vfnet-info>
+						<ipaddress>10.216.15.31</ipaddress>
+						<netmask>255.255.255.0</netmask>
+						<interface>e0a</interface>
+					</vfnet-info>
+					<vfnet-info>
+						<ipaddress>10.216.15.33</ipaddress>
+						<netmask>255.255.255.0</netmask>
+						<interface>e0a</interface>
+					</vfnet-info>
+				</vfnets>
+			</vfiler-info>
+		</vfilers>
+		<interface-config-info>
+			<interface-config-info>
+				<interface-name>e0a</interface-name>
+				<ipspace-name>default-ipspace</ipspace-name>
+				<v4-primary-address>
+					<ip-address-info>
+						<addr-family>af-inet</addr-family>
+						<address>10.216.15.31</address>
+						<netmask-or-prefix>255.255.255.0</netmask-or-prefix>
+						<broadcast>10.216.15.255</broadcast>
+						<creator>vfiler:vfiler0</creator>
+					</ip-address-info>
+				</v4-primary-address>
+				<mac-address>00:50:56:9b:4a:25</mac-address>
+				<mediatype>auto-1000t-fd-up</mediatype>
+				<flowcontrol>full</flowcontrol>
+			</interface-config-info>
+		</interface-config-info>
+	</results>
+</netapp>
