@@ -30,8 +30,12 @@ public class MigrationKey implements Serializable {
 	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
-	@Column(name="user_corporate_id", nullable=false)
+	@Column(name="user_corporate_id", insertable=false, updatable=false)
 	private Integer userCorporateId;
+	
+	@ManyToOne
+	@JoinColumn(name="user_corporate_id", nullable=false)
+	private UserCorporate userCorporate;
 
 	//bi-directional many-to-one association to ActivityMigrationKeyXRef
 	@OneToMany(mappedBy="migrationKey")
@@ -90,9 +94,17 @@ public class MigrationKey implements Serializable {
 	public Integer getUserCorporateId() {
 		return this.userCorporateId;
 	}
+//
+//	public void setUserCorporateId(Integer userCorporateId) {
+//		this.userCorporateId = userCorporateId;
+//	}
+	
+	public UserCorporate getUserCorporate() {
+		return this.userCorporate;
+	}
 
-	public void setUserCorporateId(Integer userCorporateId) {
-		this.userCorporateId = userCorporateId;
+	public void setUserCorporate(UserCorporate userCorporate) {
+		this.userCorporate = userCorporate;
 	}
 
 	public List<ActivityMigrationKeyXRef> getActivityMigrationKeyXRefs() {

@@ -48,7 +48,7 @@ CREATE TABLE `activity` (
   `admin_override` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Boolean indicating if the an Admin overrode an Owner',
   `note` varchar(1024) DEFAULT NULL COMMENT 'Note for the Activity',
   `mailing_date` date DEFAULT NULL COMMENT 'Date email was send to the Owner(s) of the Activity?',
-  `mail_count` int(1) DEFAULT '0' COMMENT 'Count of emails sent',
+  `mail_count` int(1) NOT NULL DEFAULT '0' COMMENT 'Count of emails sent',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

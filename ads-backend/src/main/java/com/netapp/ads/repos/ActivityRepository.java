@@ -18,8 +18,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Integer>, JpaSpecificationExecutor<Activity> {
 
-	// This was used to troubleshoot some issues. Not used in app:
-//	Activity findById(@Param("id") Integer id);
+	List<Activity> findByMailCount(@Param("mailCount") Integer mailCount);
 	
 	/*	SIMLIAR TO: 
  	select * from activity
