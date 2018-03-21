@@ -105,6 +105,7 @@ import { DataTableColTemplatesComponent } from './common/data-table-col-template
 import { ManualFunctionComponent } from './common/manual-function/manual-function.component';
 import { ControllerReleaseDeleteComponent } from './discover/controller-release/controller-release-delete/controller-release-delete.component';
 import { OperationalOverrideComponent } from './admin/operational-override/operational-override.component';
+import { OpOverrideConfirmComponent } from './admin/operational-override/op-override-confirm/op-override-confirm.component';
 
 
 
@@ -165,7 +166,8 @@ import { OperationalOverrideComponent } from './admin/operational-override/opera
     ControllerWorkPackageDeleteComponent,
     ManualFunctionComponent,
     ControllerReleaseDeleteComponent,
-    OperationalOverrideComponent
+    OperationalOverrideComponent,
+    OpOverrideConfirmComponent
 
     
 

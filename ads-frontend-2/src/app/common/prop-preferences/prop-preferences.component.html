@@ -1,32 +1,24 @@
-<div class="row">
-  <div class="col-md-12">
+<div class="row d-flex justify-content-center">
+  <div class="col-md-8">
     <div>
       <span class="h3">Property Preferences</span>
       <p class="title-description">Settings for Listing Pages</p>
     </div>
-  </div>
-</div>
 
-
-<div class="row justify-content-center">
-  <div class="col-xs-12 col-md-6 col-lg-5">
-    <div class="form-group row">
-      <label for="selectedPreference" class="col-xs-12 col-md-4 col-lg-2 col-form-label">Select Page: </label>
-      <div class="col-xs-12 col-md-4 col-lg-5">
-        <select class="form-control" [(ngModel)]="selectedPreferenceId" name="selectedPreferenceId" (change)="getPreferenceDetails(selectedPreferenceId)">
+ 
+    <div class="form-group row d-flex justify-content-center">
+      <label for="selectedPreference" class="col-xs-12 col-md-6 col-lg-2 col-form-label  text-right">Select Page: </label>
+      <div class="col-xs-12 col-md-6 col-lg-5">
+        <select class="form-control" [(ngModel)]="selectedPreferenceId" id="selectedPreferenceId" name="selectedPreferenceId" (change)="getPreferenceDetails(selectedPreferenceId)">
           <option [value]="NOT_VALID">Select Page</option>
           <option *ngFor="let preference of preferences" [value]="preference._links.preferenceDetails.href">{{preference.pageName | friendlyLabel}} 
-            <!-- ({{preference.preferenceType}} 
-            Native ID:{{preference.nativeUserId}} Corp ID:{{preference.corpUserId}}) -->
+          
           </option>
         </select>
       </div>
-      <!-- <div class="col-auto">
-        <button class="btn btn-primary" (click)="getPreferenceDetails(selectedPreferenceId)">View Settings</button>
-      </div> -->
+    
     </div>
-  </div>
-</div>
+
 
 <ng-template #itemTemplate let-item="item" let-index="index">
   <span>

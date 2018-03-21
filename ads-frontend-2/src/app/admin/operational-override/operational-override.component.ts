@@ -24,7 +24,7 @@ export class OperationalOverrideComponent implements OnInit {
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
   
   public isPropPreferenceModal = false;
-  public isScheduleModal = false;
+  public isConfirmModal = false;
   public activityInfo: any = {};
   public scheduleAction = '';
 
@@ -105,6 +105,17 @@ export class OperationalOverrideComponent implements OnInit {
     this.setPage(this.page);
   }
 
+  showConfirmModal(row) {
+   
+    this.activityInfo = row;
+    this.isConfirmModal = true;
+
+  }
+  
+  hideConfirmModal() {
+    this.isConfirmModal = false;
+    this.setPage(this.page);
+  }
 
 
 

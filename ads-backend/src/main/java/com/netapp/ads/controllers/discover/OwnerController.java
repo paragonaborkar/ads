@@ -35,8 +35,8 @@ public class OwnerController {
 	public final static String OK = "{\"message\":\"OK\"}";
 	public final static String USER_ID_NO_MATCH = "{\"message\":\"This activity response is not for the current user\"}";
 	public final static String BAD_DISPOSITION = "{\"message\":\"This QTree Disposition value indicates that this Qtree had been associated with an Owner already.\"}";
-	public final static String OWNER_ALREADY_DISCOVERED_NO_DELETE = "{\"message\":\"This QTree had been previously associated with an Owner. They have not requested a deletion.\"}";
-	public final static String OWNER_ALREADY_DISCOVERED_DELETE = "{\"message\":\"This QTree had been previously associated with an Owner. They have requested a deletion.\"}";
+	public final static String OWNER_ALREADY_DISCOVERED_NO_DECOMMISSION = "{\"message\":\"This QTree had been previously associated with an Owner. They have not requested a decommission.\"}";
+	public final static String OWNER_ALREADY_DISCOVERED_DECOMMISSION = "{\"message\":\"This QTree had been previously associated with an Owner. They have requested a decommission.\"}";
 
 	@Autowired
 	ActivityRepository activityRepository;
@@ -132,18 +132,18 @@ public class OwnerController {
 						for(ActivityResponse ar : allResponses) {
 							if (arToUpdate != ar) {
 								if (ar.getIsOwner()) {
-									if (activity.getWillDelete())
-										return new ResponseEntity(OWNER_ALREADY_DISCOVERED_DELETE, HttpStatus.CONFLICT);
+									if (activity.getWillDecommission())
+										return new ResponseEntity(OWNER_ALREADY_DISCOVERED_DECOMMISSION, HttpStatus.CONFLICT);
 									else
-										return new ResponseEntity(OWNER_ALREADY_DISCOVERED_NO_DELETE, HttpStatus.CONFLICT);
+										return new ResponseEntity(OWNER_ALREADY_DISCOVERED_NO_DECOMMISSION, HttpStatus.CONFLICT);
 								}
 							}
 						}
 
 						// This wasn't set in the original version of MMS. 
 						// In the UI the question is in regards to decommisioning the QTree.
-						activity.setWillDelete(true);
-						activity.setDeleteDate(ownerResponse.getDecommissionByDate());
+						activity.setWillDecommission(true);
+						activity.setDecommisionDate(ownerResponse.getDecommissionByDate());
 						activityRepository.save(activity);
 					}
 

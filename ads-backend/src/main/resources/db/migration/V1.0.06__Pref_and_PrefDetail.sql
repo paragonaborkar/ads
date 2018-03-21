@@ -58,4 +58,5 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `f
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Qtree Name', 'qtree.qtreeName','','1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Share Count', 'shares.length','','3');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Volume Name', 'nasVolume.volumeName','','1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Reason', 'unidentifiedReason','','1');
 

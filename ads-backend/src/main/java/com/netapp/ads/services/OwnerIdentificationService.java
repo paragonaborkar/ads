@@ -143,10 +143,13 @@ public class OwnerIdentificationService {
 						for(Contact contact: contacts) {
 							UserCorporate corporateUser = getOrCreateCorporateUser(contact.getSid());
 							if(corporateUser != null) {
+								log.error("User to add to activity response!:" + corporateUser.getLastName());
 								//application.setOwnerUserCorporateId(corporateUser.getId()); //WHAT IF CORPORATE USER DOES NOT EXIST IN SYSTEM? SHOULD WE CREATE? VERUM IS SENDING MULTIPLE CONTACTS
 //								createActivityResponse(activity, activityResponses, corporateUser.getId());
 								createActivityResponse(activity, activityResponses, corporateUser);
 								corpOwnerId = corporateUser.getId();
+							} else {
+								log.error("No User to add to activity response!");
 							}
 						}
 

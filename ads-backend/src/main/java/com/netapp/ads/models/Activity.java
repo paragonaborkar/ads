@@ -30,8 +30,8 @@ public class Activity implements Serializable {
 	private Timestamp createTime;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="delete_date")
-	private Date deleteDate;
+	@Column(name="decommission_date")
+	private Date decommissionDate;
 
 	@Column(name="mail_count")
 	private Integer mailCount;
@@ -50,11 +50,14 @@ public class Activity implements Serializable {
 	@Column(length=1024)
 	private String note;
 
+	@Column(length=1024)
+	private String unidentifiedReason;
+
 	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
-	@Column(name="will_delete", nullable=false)
-	private boolean willDelete;
+	@Column(name="will_decommission", nullable=false)
+	private boolean willDecommission;
 
 	@Column(name="will_migrate", nullable=false)
 	private boolean willMigrate;
@@ -120,12 +123,12 @@ public class Activity implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public Date getDeleteDate() {
-		return this.deleteDate;
+	public Date getDecommisionDate() {
+		return this.decommissionDate;
 	}
 
-	public void setDeleteDate(Date deleteDate) {
-		this.deleteDate = deleteDate;
+	public void setDecommisionDate(Date decommissionDate) {
+		this.decommissionDate = decommissionDate;
 	}
 
 	public Integer getMailCount() {
@@ -167,6 +170,14 @@ public class Activity implements Serializable {
 	public void setNote(String note) {
 		this.note = note;
 	}
+	
+	public String getUnidentifiedReason() {
+		return this.unidentifiedReason;
+	}
+
+	public void setUnidentifiedReason(String unidentifiedReason) {
+		this.unidentifiedReason = unidentifiedReason;
+	}
 
 	public Timestamp getUpdateTime() {
 		return this.updateTime;
@@ -176,14 +187,12 @@ public class Activity implements Serializable {
 		this.updateTime = updateTime;
 	}
 
-
-
-	public boolean getWillDelete() {
-		return this.willDelete;
+	public boolean getWillDecommission() {
+		return this.willDecommission;
 	}
 
-	public void setWillDelete(boolean willDelete) {
-		this.willDelete = willDelete;
+	public void setWillDecommission(boolean willDecommission) {
+		this.willDecommission = willDecommission;
 	}
 
 	public boolean getWillMigrate() {

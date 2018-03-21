@@ -22,7 +22,7 @@
   </div>
   <div class="col-md-9" *ngIf="rows.length == 0  && columns.length > 0">
     <div class="alert alert-secondary" role="alert">
-      There are no QTree's to process.
+      There are no QTree's to reset.
     </div>
   </div>
 </div>
@@ -32,10 +32,13 @@
 <app-data-table-col-templates></app-data-table-col-templates>
 
 <ng-template #actionTmpl let-column="column" let-row="row">
-  <button class="btn btn-sm btn-primary" (click)="showScheduleModal(row, 'Confirm')" *ngIf="true">
+  <button class="btn btn-sm btn-primary" (click)="showConfirmModal(row)" *ngIf="true">
     <i class="fa fa-check"></i> Reset
   </button>
 </ng-template>
+
+<app-op-override-confirm class="modal fade" *ngIf="isConfirmModal" [config]="{ show: true }" bsModal #opOverrideConfirmModal="bs-modal"
+  (cancel)="hideConfirmModal()" (saved)="hideConfirmModal()" [activityInfo]="activityInfo"></app-op-override-confirm>
 
 
 

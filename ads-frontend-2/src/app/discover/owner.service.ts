@@ -28,7 +28,6 @@ export class OwnerService {
     getAllActivitiesForUser(migKey, corpUserId, page: Page): Observable<any> {
 
         let urlParms = "migKey=" + migKey + "&corpUserId=" + corpUserId + "&disposition=DiscoverOwner" + "&projection=activityWithQtree";
-
         let pagingParms = "&page=" + page.number + "&size=" + page.size;
 
         return this.http.get(this.global.apiUrl + "/activities/search/getActivitiesFromMigrationKeyAndCorpUserId?" + urlParms + pagingParms)
