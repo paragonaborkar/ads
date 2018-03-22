@@ -13,11 +13,8 @@ import { UserService } from './user.service';
 })
 export class LoginComponent implements OnInit {
 	result;
-	model: any = {
-		// username: "jdoe@corp.com",
-		// password: "123"
-	};
-	
+	model: any = {};
+
 	loading = false;
 	error = '';
 	redirectUrl: string;
@@ -27,30 +24,24 @@ export class LoginComponent implements OnInit {
 
 
 
-	constructor(private router: Router,
-		private activatedRoute: ActivatedRoute,
-		private authenticationService: LoginService,
-		private userService: UserService,
-		private _sessionHelper: SessionHelper
-	) {
+	constructor(private router: Router, private activatedRoute: ActivatedRoute, private authenticationService: LoginService, private userService: UserService, private _sessionHelper: SessionHelper) {
 		if (this._sessionHelper.isAuthenticated()) {
-			
-                this.router.navigate(['/home']);
-			
+			this.router.navigate(['/home']);
 		}
 	}
 
 	ngOnInit() {
-		let response = (this.activatedRoute.snapshot.queryParams["response"]);	
-		if(response!==null && response!==undefined){
+		let response = (this.activatedRoute.snapshot.queryParams["response"]);
+		if (response !== null && response !== undefined) {
 			let res = JSON.parse(atob(response));
 			this.userService.login(res);
 			this.navigateAfterSuccess();
 		}
 		let err_msg = (this.activatedRoute.snapshot.queryParams["error"]);
-		if(err_msg!==null && err_msg!==undefined){
+		if (err_msg !== null && err_msg !== undefined) {
 			alert(err_msg);
 		}
+
 	}
 
 	loadDevLogin() {
@@ -61,7 +52,6 @@ export class LoginComponent implements OnInit {
 	}
 
 	login(isValid) {
-		console.log("Form is valid ", isValid);
 		if (isValid) {
 			this.loading = true;
 			this.showNavOptions = true;
@@ -72,9 +62,7 @@ export class LoginComponent implements OnInit {
 				console.log(result);
 
 				if (result) {
-					//console.log('result',JSON.stringify(result));
 					this.userService.login(result);
-
 					this.navigateAfterSuccess();
 				} else {
 					this.error = 'Username or password is incorrect';
@@ -87,7 +75,7 @@ export class LoginComponent implements OnInit {
 					}
 					else {
 						this.serverError = true;
-					}					
+					}
 					this.loading = false;
 				}
 			);
@@ -95,18 +83,17 @@ export class LoginComponent implements OnInit {
 	}
 
 	private navigateAfterSuccess() {
-		var migkey=localStorage.getItem('migKey');
-		if(migkey!==null && migkey !=undefined){
-			this.router.navigate(['/discover/qtrees-ownership']);
+		// var migkey=localStorage.getItem('migKey');
+		// if(migkey!==null && migkey !=undefined){
+		// 	this.router.navigate(['/discover/qtrees-ownership']);
+		// }
+		// else{
+		this.redirectUrl = '/home';
+		if (this.redirectUrl) {
+			this.router.navigateByUrl(this.redirectUrl);
+		} else {
+			this.router.navigate(['/']);
 		}
-		else{
-			this.redirectUrl = '/home';
-			if (this.redirectUrl) {
-				this.router.navigateByUrl(this.redirectUrl);
-			} else {
-				this.router.navigate(['/']);
-			}
-		}
-		
+		// }
 	}
 }

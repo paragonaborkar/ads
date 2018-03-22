@@ -34,16 +34,19 @@ import { ControllerWorkPackageCreateComponent } from './discover/controller-work
 import { Error404Component } from './error-404/error-404.component';
 
 import { ControllerWorkPackageComponent } from './discover/controller-work-package/controller-work-package.component';
+import { OwnerHomeComponent } from './common/owner-home/owner-home.component';
 
 
 // import { Error404LoggedInComponent } from './common/error-404-logged-in/error-404-logged-in.component';
 
 const routes: Routes = [
   //{ path: '', redirectTo: '/', pathMatch: 'full' },
+  
   { path: 'login',  component: LoginComponent },
    
   {path: 'admin/admin-user-mgmt', component: AdminNativeUserComponent, canActivate: [AuthGuard] },
 
+  { path: 'index',  component: OwnerHomeComponent, canActivate: [AuthGuard] },
   { path: 'home',  component: HomeComponent, canActivate: [AuthGuard] },
  
   { path: 'admin/report-listing',  component: ReportListingComponent, canActivate: [AuthGuard] },

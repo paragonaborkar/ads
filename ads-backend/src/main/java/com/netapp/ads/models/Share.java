@@ -21,7 +21,7 @@ public class Share implements Serializable {
 	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
-	@Column(name="owner_user_corporate_id", nullable=false)
+	@Column(name="owner_user_corporate_id", nullable=true)
 	private Integer ownerUserCorporateId;
 
 	@Column(name="share_name", nullable=false, length=255)

@@ -113,6 +113,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.netapp.ads.Application;
 import com.netapp.ads.filter.CORSFilter;
 import com.netapp.ads.services.SAMLUserDetailsServiceImpl;
 
@@ -443,8 +444,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public SavedRequestAwareAuthenticationSuccessHandler successRedirectHandler() {
 		SavedRequestAwareAuthenticationSuccessHandler successRedirectHandler = new SavedRequestAwareAuthenticationSuccessHandler() {
 			@Override
-			public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-					Authentication auth) throws ServletException, IOException {
+			public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth) throws ServletException, IOException {
+				
 				if (auth != null && auth instanceof ExpiringUsernameAuthenticationToken) {
 					String token = null;
 					try {
@@ -456,7 +457,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					if (token != null) {
 						final byte[] authBytes = token.getBytes(StandardCharsets.UTF_8);
 						final String encodedToken = Base64.getEncoder().encodeToString(authBytes);
-						response.sendRedirect(successRedirectURL + "?response=" + encodedToken);
+						response.sendRedirect(successRedirectURL + "?response=" + encodedToken + "&userId=" + Application.ssoWorkAroundId);
 						SecurityContextHolder.clearContext();
 					}
 				}
@@ -614,6 +615,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		// This value is similar/same as the client id and secret in the application.properties file.
+		// FIX ME: make this configurable
 		headers.add("Authorization", "Basic dGVzdGp3dGNsaWVudGlkOlhZN2ttem9OemwxMDA=");
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 		authAssertionIdUserNameCache.put(((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID(),

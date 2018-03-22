@@ -249,8 +249,10 @@ public class TalendJobController {
 
 	}
 
-	@RequestMapping(value = "runAllOciLoads", method = RequestMethod.POST)
+	@RequestMapping(value = "runAllOci", method = RequestMethod.POST)
 	public String loadAllOCIData() {
+		
+		// FIXME: We cannot launch the next job until the previous one completed!
 		loadHosts();
 		loadStorage();
 		loadDataCenters();

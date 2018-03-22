@@ -106,6 +106,7 @@ import { ManualFunctionComponent } from './common/manual-function/manual-functio
 import { ControllerReleaseDeleteComponent } from './discover/controller-release/controller-release-delete/controller-release-delete.component';
 import { OperationalOverrideComponent } from './admin/operational-override/operational-override.component';
 import { OpOverrideConfirmComponent } from './admin/operational-override/op-override-confirm/op-override-confirm.component';
+import { OwnerHomeComponent } from './common/owner-home/owner-home.component';
 
 
 
@@ -167,7 +168,8 @@ import { OpOverrideConfirmComponent } from './admin/operational-override/op-over
     ManualFunctionComponent,
     ControllerReleaseDeleteComponent,
     OperationalOverrideComponent,
-    OpOverrideConfirmComponent
+    OpOverrideConfirmComponent,
+    OwnerHomeComponent
 
     
 

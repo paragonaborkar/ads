@@ -1355,21 +1355,21 @@ DROP TABLE IF EXISTS `share`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `share` (
-  `id` int(11) NOT NULL COMMENT 'ID of the Share. This is not a Surrogate!',
-  `qtree_id` int(11) NOT NULL,
-  `share_name` varchar(255) NOT NULL,
-  `share_type` varchar(20) NOT NULL DEFAULT 'N/A',
-  `host_id` int(11) NOT NULL DEFAULT '0',
-  `owner_user_corporate_id` int(11) NOT NULL DEFAULT '0',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `id` INT(11) NOT NULL COMMENT 'ID of the Share. This is not a Surrogate!',
+  `qtree_id` INT(11) NOT NULL,
+  `share_name` VARCHAR(255) NOT NULL,
+  `share_type` VARCHAR(20) NOT NULL DEFAULT 'N/A',
+  `host_id` INT(11) NOT NULL DEFAULT '0',
+  `owner_user_corporate_id` INT(11) NULL DEFAULT '0',
+  `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `shareId` (`id`,`host_id`),
-  KEY `share_user_idx` (`owner_user_corporate_id`),
-  KEY `share_host_appOwner_idx` (`host_id`),
-  KEY `fk_share_qtree1_idx` (`qtree_id`),
-  CONSTRAINT `fk_share_host_app_owner1` FOREIGN KEY (`host_id`) REFERENCES `host` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_share_qtree1` FOREIGN KEY (`qtree_id`) REFERENCES `qtree` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE INDEX `shareId` (`id`, `host_id`),
+  INDEX `share_user_idx` (`owner_user_corporate_id`),
+  INDEX `share_host_appOwner_idx` (`host_id`),
+  INDEX `fk_share_qtree1_idx` (`qtree_id`),
+  CONSTRAINT `fk_share_host_app_owner1` FOREIGN KEY (`host_id`) REFERENCES `host` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT `fk_share_qtree1` FOREIGN KEY (`qtree_id`) REFERENCES `qtree` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

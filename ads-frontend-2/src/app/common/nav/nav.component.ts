@@ -18,18 +18,22 @@ export class NavComponent implements OnInit {
   public email: String;
 
   constructor(private userService: UserService, private sessionHelper: SessionHelper, private globals: Globals) {
-    if (this.isLogedIn()) {
-      console.log(globals.appModulesAvailable);
-      let tokenInfo = sessionHelper.getToken();
+
+  }
+
+  ngOnInit() {
+   
+  }
+
+  ngDoCheck() {
+    if (this.sessionHelper.isAuthenticated()) {
+      // console.log(this.globals.appModulesAvailable);
+      let tokenInfo = this.sessionHelper.getToken();
 
       this.firstName = tokenInfo.firstName;
       this.lastName = tokenInfo.lastName;
       this.email = tokenInfo.email;
     }
-  }
-
-  ngOnInit() {
-
   }
 
   isLogedIn() {

@@ -27,7 +27,7 @@
             </div>
 
             <label>
-                <span>Debug</span> 
+                <span>Debug</span>
                 <input class="checkbox" type="checkbox" #debug="ngModel" ngModel>
 
             </label>
@@ -43,7 +43,7 @@
                 <div class="form-group row">
                     <label for="confirm-owner" class="col-sm-6 form-control-label">Are you the Owner of this Volume? </label>
                     <div class="col-sm-6">
-                        <div>
+                        <div class="no-select">
                             <label>
                                 <input class="radio" id="isOwnerTrue" formControlName="confirmOwner" type="radio" [value]="true">
                                 <span>Yes</span>
@@ -60,7 +60,7 @@
                     <div class="form-group row">
                         <label for="decommission-volume" class="col-sm-6 form-control-label">Do you plan to decommission this Volume?</label>
                         <div class="col-sm-6">
-                            <div>
+                            <div class="no-select">
                                 <label>
                                     <input class="radio" id="decommissionTrue" formControlName="decommissionVolume" type="radio" [value]="true" (change)="onDecommissionVolumeValueChanged(true)">
                                     <span>Yes</span>
@@ -93,7 +93,9 @@
                 <div *ngIf="formGroup.value.confirmOwner == false">
                     <div class="row" *ngIf="potentialOwners.length > 0">
                         <div class="col-sm-12 ">
-                            <label><strong>Potential Owners:</strong></label>
+                            <label>
+                                <strong>Potential Owners:</strong>
+                            </label>
                             <table class="table table-bordered table-hover table-sm ">
                                 <thead>
                                     <tr>
@@ -141,9 +143,9 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="migration-team-contact" class="col-sm-6 form-control-label">Would you like the support team to contact you?</label>
+                    <label for="migration-team-contact" class="col-sm-6 form-control-label no-select">Would you like the support team to contact you?</label>
                     <div class="col-sm-6">
-                        <div>
+                        <div class="no-select">
                             <label>
                                 <input class="radio" id="migrationTeamContactMeTrue" formControlName="migrationTeamContactMe" type="radio" [value]="true">
                                 <span>Yes</span>
