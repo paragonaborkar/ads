@@ -19,7 +19,7 @@ public class TalendConstants {
 	public final static String  JOB_NAME_NAS_VOLUMES =  "OCI_Load_6_NasVolumes";
 	public final static String  JOB_NAME_QTREES =  "OCI_Load_7_QTrees";
 	public final static String  JOB_NAME_SHARES =  "OCI_Load_8_Shares";
-	public final static String  BATCH_SCRIPTS_LOC="C:\\projects\\Spring Jobs\\ADS_DATA\\";
+
 	public static String  FLDR_SEPERATOR="\\";
 	
 	public final static String JOB_TYPE_ADS_SETUP="ADS_Setup";
@@ -58,11 +58,7 @@ public class TalendConstants {
 	public final static String STR_SET_PWD="ROOT_PATH=`pwd`";   
 	public final static String STR_JAVA="java";
 	
-//	public final static String STR_JOB_SUBMITTED="Job Submitted Successfully";
 	// We MUST return a JSON string in our REST Controller!
 	public final static String STR_JOB_SUBMITTED = "{\"message\":\"Running Job.\"}"; 
-	
-	
-	
 
 }

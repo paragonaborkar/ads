@@ -638,7 +638,7 @@ CREATE TABLE `data_center` (
   `data_center_full_name` varchar(1024) DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
   `country` varchar(255) DEFAULT NULL,
-  `region` varchar(60) NOT NULL DEFAULT 'UNKNOWN',
+  `region` varchar(60) NULL DEFAULT 'UNKNOWN',
   `data_geo_location` point DEFAULT NULL COMMENT 'For future use: Compliance and Rules Engine.',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
