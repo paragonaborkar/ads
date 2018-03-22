@@ -1,4 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+
+import { SessionHelper } from '../../auth/session.helper';
+import { OwnerHomeService } from './owner-home.service';
+
 
 @Component({
   selector: 'app-owner-home',
@@ -6,10 +15,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./owner-home.component.scss']
 })
 export class OwnerHomeComponent implements OnInit {
-
-  constructor() { }
+  queueToProcess=[];
+  constructor(private ownerHomeService: OwnerHomeService, private sessionHelper: SessionHelper) { }
 
   ngOnInit() {
+
+    var loginInfo = this.sessionHelper.getToken();
+
+    this.ownerHomeService.getActivitiesResponsesPending(loginInfo.corpUserId).subscribe(data => {
+      // this.message = data;
+      console.log(data);
+      this.queueToProcess = data._embedded.migrationKeys;
+    }, error => {
+      //FIXME: Display the error message.
+      console.log(error);
+    });
   }
 
 }

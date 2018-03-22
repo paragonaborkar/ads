@@ -6,12 +6,12 @@
         <a class="nav-link active" id="oci-tab" data-toggle="tab" href="#oci" role="tab" aria-controls="oci" aria-selected="true">Load OCI Data</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="app-tab" data-toggle="tab" href="#app" role="tab" aria-controls="app" aria-selected="false">Populate Activities and Applications</a>
+        <a class="nav-link" id="app-tab" data-toggle="tab" href="#app" role="tab" aria-controls="app" aria-selected="false">Load Activities &amp; Applications</a>
       </li>
 
     </ul>
 
-    <div class="tab-content mt-3" id="tabContent">
+    <div class="tab-content mt-4" id="tabContent">
       <div class="tab-pane fade show active" id="oci" role="tabpanel" aria-labelledby="oci-tab">
 
         <h2 class="h3">Load OCI Data</h2>
@@ -30,7 +30,7 @@
       </div>
 
       <div class="tab-pane fade" id="app" role="tabpanel" aria-labelledby="app-tab">
-        <h2 class="h3">Populate Activities and Applications</h2>
+        <h2 class="h3">Load Activities &amp; Applications</h2>
         <app-manual-function [fileUpload]="false" [displayJobName]="'1. Populate Activities'" [jobName]="'populateActivity'"></app-manual-function>
         <app-manual-function [fileUpload]="false" [displayJobName]="'2. Populate Applications &amp; Owners'" [jobName]="'identifyOwners'"></app-manual-function>
         <app-manual-function [fileUpload]="false" [displayJobName]="'3. Generate Keys'" [jobName]="'generateMigrationKeys'"></app-manual-function>

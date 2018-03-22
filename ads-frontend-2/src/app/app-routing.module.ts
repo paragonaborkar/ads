@@ -65,8 +65,9 @@ const routes: Routes = [
   { path: 'discover/manual-functions',  component: DiscoverManualFunctionsComponent, canActivate: [AuthGuard] },
 
 
-  { path: 'discover/owner',  component: OwnerNotFoundComponent, canActivate: [AuthGuard] },
+  { path: 'owner',  component: OwnerNotFoundComponent, canActivate: [AuthGuard] },
   { path: 'discover/owner/:migKey',  component: OwnerComponent, canActivate: [AuthGuard] },
+  { path: 'owner/:migKey',  component: OwnerComponent, canActivate: [AuthGuard] },
   { path: 'discover/controller-release',  component: ControllerReleaseComponent, canActivate: [AuthGuard] },
   { path: 'discover/report-listing',  component: ReportListingDisComponent, canActivate: [AuthGuard] },
   

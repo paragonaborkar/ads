@@ -53,7 +53,7 @@ export class AdminNativeUserComponent implements OnInit {
   constructor(private usersService: UserAdminService, private applicationConfigService: ApplicationConfigService, private adsHelper: AdsHelperService, private sessionHelper: SessionHelper) {
     this.page.number = 1;
     this.page.pageNumber = 1;
-    this.page.size = 3;
+    this.page.size = 10;
   }
 
 

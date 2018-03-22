@@ -53,7 +53,7 @@ import { ControllerTypeaheadService } from './discover/controller-typeahead/cont
 import { ReportCommonService } from './common/report-listing-common/report-common.service';
 import { OwnerResponseService } from './discover/owner/owner-response/owner-response.service';
 import { ManualFunctionService } from './common/manual-function/manual-function.service';
-
+import { OwnerHomeService } from './common/owner-home/owner-home.service';
 
 // Declarations
 import { AppComponent } from './app.component';
@@ -208,7 +208,8 @@ import { OwnerHomeComponent } from './common/owner-home/owner-home.component';
     ControllerTypeaheadService,
     ReportCommonService,
     ManualFunctionService,
-    OperationalOverrideService
+    OperationalOverrideService,
+    OwnerHomeService
 
     ],
   bootstrap: [AppComponent]
