@@ -16,4 +16,5 @@ package-lock.json
 .sonar
 .scannerwork
 
+talend/.Java/target
 .gitignore

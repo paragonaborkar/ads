@@ -22,9 +22,10 @@
     <contextParameter comment="" name="FORMAT_DATETIME_TO_STRING" prompt="FORMAT_DATETIME_TO_STRING?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="%Y-%m-%dT%H:%i:%s"/>
     <contextParameter comment="" name="JOB_ID_XPATH" prompt="JOB_ID_XPATH?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
     <contextParameter comment="" name="JOB_NAME" prompt="JOB_NAME?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;talendJob&quot;"/>
+    <contextParameter comment="Provided by REST service. Stored in DB's status tracking table. Default to nothing so it's auto generated if run directly in Talend." name="JOB_RUN_NAME" prompt="JOB_RUN_NAME?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
     <contextParameter comment="" name="JOB_SUBMITTED_BY" prompt="JOB_SUBMITTED_BY?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="talend"/>
     <contextParameter comment="" name="LOAD_FILES_LOC" prompt="LOAD_FILES_LOC?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_Directory" value="C:/netapp/ads_setup_loadsheets/"/>
-    <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwidXNlcl9uYW1lIjoidGFsZW5kIiwiYWRzX21vZHVsZXMiOnsiZGlzY292ZXIiOnRydWUsInJlcG9ydHMiOmZhbHNlLCJzY2hlZHVsZSI6ZmFsc2UsInBsYW5uaW5nIjpmYWxzZSwiZXhlY3V0ZSI6ZmFsc2UsImNvbm5lY3Rpb25zIjp0cnVlfSwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTUyMTI0ODg1NCwiYXV0aG9yaXRpZXMiOlsiQ0xJRU5UIl0sImp0aSI6IjlhZmJhODZmLTY0ZDAtNDNlMy04YTI5LTc0YjI4NmMxNWQxOCIsImNsaWVudF9pZCI6InRlc3Rqd3RjbGllbnRpZCJ9.-oHzAVBPkLzyTl0lftic4LwOLATqS5R1KoADJu4vvwQ"/>
+    <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6IiIsInVzZXJfbmFtZSI6InRhbGVuZCIsImF1dGhvcml0aWVzIjpbIkNMSUVOVCJdLCJjbGllbnRfaWQiOiJ0ZXN0and0Y2xpZW50aWQiLCJmaXJzdE5hbWUiOiIiLCJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwiY29ycFVzZXJJZCI6MCwiYWRzX21vZHVsZXMiOnsiZGlzY292ZXIiOnRydWUsInJlcG9ydHMiOmZhbHNlLCJzY2hlZHVsZSI6ZmFsc2UsInBsYW5uaW5nIjpmYWxzZSwiZXhlY3V0ZSI6ZmFsc2UsImNvbm5lY3Rpb25zIjp0cnVlfSwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sIm5hdGl2ZVVzZXJJZCI6MCwiZXhwIjoxNTIxODU1MjY2LCJ1c2VyUm9sZSI6IiIsImp0aSI6IjZlOGI5YWYzLTU1NDEtNDQxYy04ZjE4LWIzNjBmYzQ3MTFlMyIsImVtYWlsIjoiIn0.m5Lrs54MzFvk2Px6ssZK452jfHaQMkZLZCyXFsZWLh4"/>
     <contextParameter comment="" name="RESOURCE_XPATH_USER_NATIVE" prompt="RESOURCE_XPATH_USER_NATIVE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/root/_links/userNative/href"/>
     <contextParameter comment="" name="REST_DATA_RESOURCE_XPATH" prompt="REST_DATA_RESOURCE_XPATH?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/root/_links/self/href"/>
     <contextParameter comment="" name="REST_REQ_JSON" prompt="REST_REQ_JSON?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
@@ -566,7 +567,7 @@
     <elementParameter field="CHECK" name="TRANSMIT_WHOLE_CONTEXT" value="false"/>
     <elementParameter field="TABLE" name="CONTEXTPARAMS">
       <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_NAME"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="ADSStringUtils.getJobInstanceName((String)jobName)"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="ADSStringUtils.getJobInstanceName((String)jobName, context.JOB_RUN_NAME)"/>
       <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_START_TIME"/>
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="ADSStringUtils.getCurrentTimeInRestFormat()"/>
       <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_SUBMITTED_BY"/>
@@ -747,7 +748,7 @@
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
   </subjob>
   <subjob>
-    <elementParameter field="CHECK" name="SHOW_SUBJOB_TITLE" value="true"/>
+    <elementParameter field="CHECK" name="SHOW_SUBJOB_TITLE" value="true" show="false"/>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tPrejob_2" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="230;100;0"/>
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="255;220;180"/>
