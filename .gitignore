@@ -16,5 +16,4 @@ package-lock.json
 .sonar
 .scannerwork
 
-talend/
 .gitignore
