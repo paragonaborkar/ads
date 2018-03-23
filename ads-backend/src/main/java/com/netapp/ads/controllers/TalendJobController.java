@@ -27,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.netapp.ads.converters.TalendConstants;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 
 @RestController
 @RequestMapping("/talendJobs")
@@ -42,7 +44,7 @@ public class TalendJobController {
 
 		String batchScript = getBatchScript(TalendConstants.JOB_NAME_USER_ROLES);
 		String jobName = getJobInstanceName(TalendConstants.JOB_NAME_USER_ROLES);
-
+		System.out.println("jobName:" + jobName);
 		System.out.println("batchScript**" + batchScript);
 
 		runADSJob(jobName, inputFile, batchScript,TalendConstants.ADS_SETUP_LOADSHEET_USER_ROLES_XLSX);
@@ -340,6 +342,7 @@ public class TalendJobController {
 		commandString.append(" "+TalendConstants.CONTEXT_PARAM+ TalendConstants.ENV_CONTEXT_FILE_PARAM_NAME + "=" + batchScriptsLoc+"/"+TalendConstants.ENV_CONTEXT_FILE_NAME);
 		commandString.append(" "+TalendConstants.CONTEXT_PARAM+TalendConstants.STR_AUTH_TOKEN+ "=" + authorizationToken);
 		commandString.append(" "+TalendConstants.CONTEXT_PARAM+TalendConstants.JOB_SUBMITTED_BY+ "=" + loginUserName);
+		commandString.append(" "+TalendConstants.CONTEXT_PARAM+TalendConstants.JOB_RUN_NAME + "=" + jobName);
 		
 		CommandLine commandLine = createBatchScript(batchScript,commandString.toString(),jobName);
 

@@ -11,8 +11,10 @@
 
       <br>
       <br>The link(s) below will take you to the portal to identify the disposition for your volumes.
+    
     </p>
     <br>
+
     <div class="row">
       <div class="col-md-6">
         <h4>Tasks Pending: Actual</h4>
@@ -20,7 +22,7 @@
           <thead class="thead-light">
             <tr>
               <th scope="col">#</th>
-              <th scope="col">URL</th>
+              <th scope="col">Task</th>
               <th scope="col">Key</th>
               <th scope="col">Created On</th>
      
@@ -30,7 +32,7 @@
             <tr *ngFor="let item of queueToProcess; let i = index">
               <th scope="row">{{i+1}}</th>
               <td>
-                <a routerLink="../owner/{{item.migrationKey}}">View QTrees</a>
+                <a routerLink="../owner/{{item.migrationKey}}">Process QTrees</a>
               </td>
               <td>{{item.migrationKey}}</td>
               <td>{{item.createTime | date:'short'}}</td>
@@ -40,12 +42,12 @@
         </table>
       </div>
       <div class="col-md-6">
-        <h4>Tasks Pending: Example</h4>
-        <table class="table table-sm">
+        <h4 >Tasks Pending: Example</h4>
+        <table class="table table-sm" >
           <thead class="thead-light">
             <tr>
               <th scope="col">#</th>
-              <th scope="col">URL</th>
+              <th scope="col">Task</th>
               <th scope="col">QTrees</th>
               <th scope="col">Due On</th>
               <th scope="col"></th>

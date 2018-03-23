@@ -1510,6 +1510,7 @@ CREATE TABLE `user_corporate` (
   `first_name` varchar(45) NOT NULL,
   `last_name` varchar(45) NOT NULL,
   `middle_name` varchar(45) DEFAULT NULL,
+  `user_role_id` int(11) DEFAULT NULL,
   `title` varchar(255) DEFAULT 'UNKNOWN',
   `email` varchar(255) NOT NULL,
   `work_phone` varchar(45) DEFAULT NULL,
@@ -1524,7 +1525,9 @@ CREATE TABLE `user_corporate` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `stdId_UNIQUE` (`user_name`),
   KEY `mgrStdId_idx` (`manager_user_corporate_id`),
-  CONSTRAINT `fk_user_corporate_user_corporate1` FOREIGN KEY (`manager_user_corporate_id`) REFERENCES `user_corporate` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_user_corporate_user_corporate1` FOREIGN KEY (`manager_user_corporate_id`) REFERENCES `user_corporate` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  INDEX `user_role_id_idx` (`user_role_id`),
+  CONSTRAINT `fk_user_corporate_user_role1` FOREIGN KEY (`user_role_id`) REFERENCES `user_roles` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

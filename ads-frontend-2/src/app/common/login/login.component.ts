@@ -88,7 +88,14 @@ export class LoginComponent implements OnInit {
 		// 	this.router.navigate(['/discover/qtrees-ownership']);
 		// }
 		// else{
-		this.redirectUrl = '/home';
+
+		
+		var loginInfo = this._sessionHelper.getToken();
+    	if (loginInfo.corpUserId > 0)
+			this.redirectUrl = '/index';
+		else 
+			this.redirectUrl = '/home';
+			
 		if (this.redirectUrl) {
 			this.router.navigateByUrl(this.redirectUrl);
 		} else {

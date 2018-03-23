@@ -27,6 +27,8 @@ public class TalendConstants {
 	
 	public final static String LOAD_FILES_LOC="LOAD_FILES_LOC";
 	public final static String JOB_SUBMITTED_BY="JOB_SUBMITTED_BY";
+	public final static String JOB_RUN_NAME="JOB_NAME";
+	
 	
 	public final static String ADS_SETUP_LOADSHEET_USER_ROLES_XLSX = "ADS_SETUP_LOADSHEET_USER_ROLES_XLSX";
 	public final static String ADS_SETUP_LOADSHEET_USER_NATIVES_XLSX = "ADS_SETUP_LOADSHEET_USER_NATIVES_XLSX";

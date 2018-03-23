@@ -16,6 +16,7 @@ import { OwnerHomeService } from './owner-home.service';
 })
 export class OwnerHomeComponent implements OnInit {
   queueToProcess=[];
+
   constructor(private ownerHomeService: OwnerHomeService, private sessionHelper: SessionHelper) { }
 
   ngOnInit() {
