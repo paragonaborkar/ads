@@ -64,6 +64,7 @@ import org.springframework.security.saml.SAMLEntryPoint;
 import org.springframework.security.saml.SAMLLogoutFilter;
 import org.springframework.security.saml.SAMLLogoutProcessingFilter;
 import org.springframework.security.saml.SAMLProcessingFilter;
+import org.springframework.security.saml.SAMLRelayStateSuccessHandler;
 import org.springframework.security.saml.SAMLWebSSOHoKProcessingFilter;
 import org.springframework.security.saml.context.SAMLContextProviderImpl;
 import org.springframework.security.saml.key.JKSKeyManager;
@@ -440,29 +441,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// Handler deciding where to redirect user after successful login
 	@Bean
-	public SavedRequestAwareAuthenticationSuccessHandler successRedirectHandler() {
-		SavedRequestAwareAuthenticationSuccessHandler successRedirectHandler = new SavedRequestAwareAuthenticationSuccessHandler() {
+	public SAMLRelayStateSuccessHandler successHandler() {
+		
+		SAMLRelayStateSuccessHandler sAMLRelayStateSuccessHandler = new SAMLRelayStateSuccessHandler() {
 			@Override
 			public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 					Authentication auth) throws ServletException, IOException {
-				if (auth != null && auth instanceof ExpiringUsernameAuthenticationToken) {
-					String token = null;
-					try {
-						token = generateTokenForSAML(auth);
-					} catch (Exception e) {
-						response.sendRedirect(successRedirectURL + "?error=" + "Error in SSO Login");
-					}
-
-					if (token != null) {
-						final byte[] authBytes = token.getBytes(StandardCharsets.UTF_8);
-						final String encodedToken = Base64.getEncoder().encodeToString(authBytes);
-						response.sendRedirect(successRedirectURL + "?response=" + encodedToken);
-						SecurityContextHolder.clearContext();
-					}
-				}
-			}
+				Object credentials = auth.getCredentials();
+		        if (credentials instanceof SAMLCredential) {
+		            SAMLCredential samlCredential = (SAMLCredential) credentials;
+		            String relayStateURL = getTargetURL(samlCredential.getRelayState());
+		            String token = null;
+		            	try {
+							token = generateTokenForSAML(auth);
+						} catch (Exception e) {
+							response.sendRedirect(successRedirectURL + "?error=" + "Error in SSO Login");
+						}
+		            	if (token != null) {
+							final byte[] authBytes = token.getBytes(StandardCharsets.UTF_8);
+							final String encodedToken = Base64.getEncoder().encodeToString(authBytes);
+							if(relayStateURL != null) {
+								response.sendRedirect(relayStateURL + "?response=" + encodedToken);
+							}else {
+								response.sendRedirect(successRedirectURL+ "?response=" + encodedToken);
+							}
+							SecurityContextHolder.clearContext();
+						}
+		            }
+		        }
+			
 		};
-		return successRedirectHandler;
+		return sAMLRelayStateSuccessHandler;
+		
 	}
 
 	// Handler deciding where to redirect user after failed login
@@ -477,7 +487,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public SAMLWebSSOHoKProcessingFilter samlWebSSOHoKProcessingFilter() throws Exception {
 		SAMLWebSSOHoKProcessingFilter samlWebSSOHoKProcessingFilter = new SAMLWebSSOHoKProcessingFilter();
-		samlWebSSOHoKProcessingFilter.setAuthenticationSuccessHandler(successRedirectHandler());
+		samlWebSSOHoKProcessingFilter.setAuthenticationSuccessHandler(successHandler());
 		samlWebSSOHoKProcessingFilter.setAuthenticationManager(authenticationManager());
 		samlWebSSOHoKProcessingFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
 		return samlWebSSOHoKProcessingFilter;
@@ -488,7 +498,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public SAMLProcessingFilter samlWebSSOProcessingFilter() throws Exception {
 		SAMLProcessingFilter samlWebSSOProcessingFilter = new SAMLProcessingFilter();
 		samlWebSSOProcessingFilter.setAuthenticationManager(authenticationManager());
-		samlWebSSOProcessingFilter.setAuthenticationSuccessHandler(successRedirectHandler());
+		samlWebSSOProcessingFilter.setAuthenticationSuccessHandler(successHandler());
 		samlWebSSOProcessingFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
 		return samlWebSSOProcessingFilter;
 	}
