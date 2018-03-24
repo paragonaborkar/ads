@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Globals } from '../../globals';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/map';
 
 import { ManualFunctionService } from './manual-function.service';
@@ -15,6 +16,8 @@ import { ManualFunctionService } from './manual-function.service';
   styleUrls: ['./manual-function.component.scss']
 })
 export class ManualFunctionComponent implements OnInit {
+  private subscription: Subscription;
+  private timer: Observable<any>;
 
   fileName = "";
   myFile: File;
@@ -31,6 +34,11 @@ export class ManualFunctionComponent implements OnInit {
 
   ngOnInit() { }
 
+  ngOnDestroy() {
+    if ( this.subscription && this.subscription instanceof Subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 
   updateMessage(successMsg, runningMsg, errorMsg) {
     this.successMsg = successMsg;
@@ -57,15 +65,36 @@ export class ManualFunctionComponent implements OnInit {
 
     } else {
 
-      this.updateMessage("", "Job Running...", "");
+      // This is for Talend Jobs.
+      this.updateMessage("", "Job Submitted...", "");
       this.manualFunctionService.runJob(this.jobName).subscribe(data => {
           // this.message = data;
-          this.updateMessage("Completed", "", "");
+          console.log("data from job request", data);
+          this.runningJobName = data.jobName;
+          this.updateMessage("", "Job Running...", "");
+          this.timer = Observable.timer(5000); // 5000 millisecond means 5 seconds
+          this.pollForProgress();
         }, error => {
           this.updateMessage("", "", "Error running job.");
           console.log(error);
         });
     }
+  }
+
+  runningJobName = '';
+pollingCount = 0;
+
+  public pollForProgress(){    
+    this.subscription = this.timer.subscribe(() => {
+      this.manualFunctionService.getJobStatus(this.runningJobName).subscribe(data => {
+        console.log(data);
+        if (data.status = 'InProgress' && this.pollingCount< 5) {
+          this.timer = Observable.timer(5000);
+          this.pollForProgress();
+          this.pollingCount++;
+        }
+      });
+    });
   }
 
 

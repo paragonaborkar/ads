@@ -61,6 +61,6 @@ public class TalendConstants {
 	public final static String STR_JAVA="java";
 	
 	// We MUST return a JSON string in our REST Controller!
-	public final static String STR_JOB_SUBMITTED = "{\"message\":\"Running Job.\"}"; 
+	public final static String STR_JOB_SUBMITTED = "{\"message\":\"Running Job.\", \"jobName\":\"PLACEHOLDER\"}"; 
 
 }

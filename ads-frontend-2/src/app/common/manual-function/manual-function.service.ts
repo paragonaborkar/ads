@@ -25,6 +25,12 @@ export class ManualFunctionService {
   }
 
 
+  getJobStatus(jobName): Observable<any> {
+    return this.http
+    .get(this.global.apiUrl  + "/jobDatas/search/findOneByName?jobName=" + jobName)
+    .map((res: Response) => res);
+  }
+
   postFileAndRunJob(fileToUpload: File, jobName): Observable<boolean> {
     let headers = new HttpHeaders({ 'AdsFile': "AdsFile-TOBEREMOVED" });
     const formData: FormData = new FormData();
