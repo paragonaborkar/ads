@@ -25,6 +25,7 @@ export class ManualFunctionComponent implements OnInit {
   @Input() displayJobName = "";
   @Input() jobName = "";
   @Input() fileUpload: boolean = false;
+  @Input() pollForStatus: boolean = false;
 
   successMsg = "";
   runningMsg = "";
@@ -35,7 +36,7 @@ export class ManualFunctionComponent implements OnInit {
   ngOnInit() { }
 
   ngOnDestroy() {
-    if ( this.subscription && this.subscription instanceof Subscription) {
+    if (this.subscription && this.subscription instanceof Subscription) {
       this.subscription.unsubscribe();
     }
   }
@@ -68,30 +69,40 @@ export class ManualFunctionComponent implements OnInit {
       // This is for Talend Jobs.
       this.updateMessage("", "Job Submitted...", "");
       this.manualFunctionService.runJob(this.jobName).subscribe(data => {
-          // this.message = data;
+        
+        if (this.pollForStatus) {
+          // This is for Talend jobs.
           console.log("data from job request", data);
           this.runningJobName = data.jobName;
           this.updateMessage("", "Job Running...", "");
-          this.timer = Observable.timer(5000); // 5000 millisecond means 5 seconds
+          this.timer = Observable.timer(5000);
           this.pollForProgress();
-        }, error => {
-          this.updateMessage("", "", "Error running job.");
-          console.log(error);
-        });
+        } else {
+          // This is for code that runs on the backend server and is sync.
+          this.updateMessage("Job Completed", "", "");
+        }
+      }, error => {
+        this.updateMessage("", "", "Error running job.");
+        console.log(error);
+      });
     }
   }
 
   runningJobName = '';
-pollingCount = 0;
+  pollingCount = 0;
 
-  public pollForProgress(){    
+  public pollForProgress() {
     this.subscription = this.timer.subscribe(() => {
       this.manualFunctionService.getJobStatus(this.runningJobName).subscribe(data => {
         console.log(data);
-        if (data.status = 'InProgress' && this.pollingCount< 5) {
-          this.timer = Observable.timer(5000);
-          this.pollForProgress();
-          this.pollingCount++;
+        if (data.status == 'Finished') {
+          this.updateMessage("Job Completed.", "", "");
+        } else {
+          if (data.status == 'InProgress' && this.pollingCount < 10) {
+            this.timer = Observable.timer(2000);
+            this.pollForProgress();
+            this.pollingCount++;
+          }
         }
       });
     });

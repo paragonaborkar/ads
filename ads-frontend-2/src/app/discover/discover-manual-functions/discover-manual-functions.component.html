@@ -15,14 +15,14 @@
       <div class="tab-pane fade show active" id="oci" role="tabpanel" aria-labelledby="oci-tab">
 
         <h2 class="h3">Load OCI Data</h2>
-        <app-manual-function [fileUpload]="false" [displayJobName]="'1. Load Hosts'" [jobName]="'talendJobs/hosts'"></app-manual-function>
-        <app-manual-function [fileUpload]="false" [displayJobName]="'2. Load Storage'" [jobName]="'talendJobs/storage'"></app-manual-function>
-        <app-manual-function [fileUpload]="false" [displayJobName]="'3. Load Data Centers'" [jobName]="'talendJobs/dataCenters'"></app-manual-function>
-        <app-manual-function [fileUpload]="false" [displayJobName]="'4. Load Controllers'" [jobName]="'talendJobs/controllers'"></app-manual-function>
-        <app-manual-function [fileUpload]="false" [displayJobName]="'5. Load Aggregates'" [jobName]="'talendJobs/aggregates'"></app-manual-function>
-        <app-manual-function [fileUpload]="false" [displayJobName]="'6. Load NAS Volumes'" [jobName]="'talendJobs/nasVolumes'"></app-manual-function>
-        <app-manual-function [fileUpload]="false" [displayJobName]="'7. Load QTrees'" [jobName]="'talendJobs/qtrees'"></app-manual-function>
-        <app-manual-function [fileUpload]="false" [displayJobName]="'8. Load Shares'" [jobName]="'talendJobs/shares'"></app-manual-function>
+        <app-manual-function [fileUpload]="false" [pollForStatus]="true" [displayJobName]="'1. Load Hosts'" [jobName]="'talendJobs/hosts'"></app-manual-function>
+        <app-manual-function [fileUpload]="false" [pollForStatus]="true" [displayJobName]="'2. Load Storage'" [jobName]="'talendJobs/storage'"></app-manual-function>
+        <app-manual-function [fileUpload]="false" [pollForStatus]="true" [displayJobName]="'3. Load Data Centers'" [jobName]="'talendJobs/dataCenters'"></app-manual-function>
+        <app-manual-function [fileUpload]="false" [pollForStatus]="true" [displayJobName]="'4. Load Controllers'" [jobName]="'talendJobs/controllers'"></app-manual-function>
+        <app-manual-function [fileUpload]="false" [pollForStatus]="true" [displayJobName]="'5. Load Aggregates'" [jobName]="'talendJobs/aggregates'"></app-manual-function>
+        <app-manual-function [fileUpload]="false" [pollForStatus]="true" [displayJobName]="'6. Load NAS Volumes'" [jobName]="'talendJobs/nasVolumes'"></app-manual-function>
+        <app-manual-function [fileUpload]="false" [pollForStatus]="true" [displayJobName]="'7. Load QTrees'" [jobName]="'talendJobs/qtrees'"></app-manual-function>
+        <app-manual-function [fileUpload]="false" [pollForStatus]="true" [displayJobName]="'8. Load Shares'" [jobName]="'talendJobs/shares'"></app-manual-function>
         <br>
         <app-manual-function [fileUpload]="false" [displayJobName]="'Run All 8 OCI Jobs'" [jobName]="'talendJobs/runAllOci'"></app-manual-function>
         
@@ -31,12 +31,12 @@
 
       <div class="tab-pane fade" id="app" role="tabpanel" aria-labelledby="app-tab">
         <h2 class="h3">Load Activities &amp; Applications</h2>
-        <app-manual-function [fileUpload]="false" [displayJobName]="'1. Populate Activities'" [jobName]="'populateActivity'"></app-manual-function>
-        <app-manual-function [fileUpload]="false" [displayJobName]="'2. Populate Applications &amp; Owners'" [jobName]="'identifyOwners'"></app-manual-function>
-        <app-manual-function [fileUpload]="false" [displayJobName]="'3. Generate Keys'" [jobName]="'generateMigrationKeys'"></app-manual-function>
-        <app-manual-function [fileUpload]="false" [displayJobName]="'4. Email Potential Owners - First Email'" [jobName]="'sendOwnerFirstEmail'"></app-manual-function>
+        <app-manual-function [fileUpload]="false" [pollForStatus]="false" [displayJobName]="'1. Populate Activities'" [jobName]="'populateActivity'"></app-manual-function>
+        <app-manual-function [fileUpload]="false" [pollForStatus]="false" [displayJobName]="'2. Populate Applications &amp; Owners'" [jobName]="'identifyOwners'"></app-manual-function>
+        <app-manual-function [fileUpload]="false" [pollForStatus]="false" [displayJobName]="'3. Generate Keys'" [jobName]="'generateMigrationKeys'"></app-manual-function>
+        <app-manual-function [fileUpload]="false" [pollForStatus]="false" [displayJobName]="'4. Email Potential Owners - First Email'" [jobName]="'sendOwnerFirstEmail'"></app-manual-function>
 
-        <app-manual-function [fileUpload]="false" [displayJobName]="'5. Email Potential Owners - Reminder Email'" [jobName]="'ADDDDDDDD'"></app-manual-function>
+        <app-manual-function [fileUpload]="false" [pollForStatus]="false" [displayJobName]="'5. Email Potential Owners - Reminder Email'" [jobName]="'ADDDDDDDD'"></app-manual-function>
 
       </div>
     </div>

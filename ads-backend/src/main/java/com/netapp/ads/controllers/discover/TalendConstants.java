@@ -1,4 +1,4 @@
-package com.netapp.ads.converters;
+package com.netapp.ads.controllers.discover;
 
 public class TalendConstants {
 	
