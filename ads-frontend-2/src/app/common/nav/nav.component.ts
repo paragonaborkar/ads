@@ -16,8 +16,8 @@ export class NavComponent implements OnInit {
   public firstName: String;
   public lastName: String;
   public email: String;
-  nativeUserId:number;
-  corpUserId:number;
+  public userRole: String;
+
 
   constructor(private userService: UserService, private sessionHelper: SessionHelper, private globals: Globals) {
 
@@ -35,9 +35,7 @@ export class NavComponent implements OnInit {
       this.firstName = tokenInfo.firstName;
       this.lastName = tokenInfo.lastName;
       this.email = tokenInfo.email;
-
-      this.nativeUserId = tokenInfo.nativeUserId;
-      this.corpUserId = tokenInfo.corpUserId;
+      this.userRole = tokenInfo.userRole;
     }
   }
 
