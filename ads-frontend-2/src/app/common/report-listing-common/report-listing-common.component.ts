@@ -28,6 +28,8 @@ export class ReportListingCommonComponent implements OnInit {
   myVar: boolean;
   reportName = '';
   reportTitle = '';
+  rowsPerPage = 10;
+
 
   reportColumnHeaders;
 
@@ -70,6 +72,11 @@ export class ReportListingCommonComponent implements OnInit {
     this.showJasperReport = false;
     this.reportHtml = "";
   }
+
+  pagingUpdated() {
+    this.openJasperReport(1, this.reportName, this.reportTitle, false);
+  }
+
   openJasperReport(requestedPageNumber, reportName, reportTitle, firstTime): void {
     console.log(reportName);
 
@@ -85,10 +92,9 @@ export class ReportListingCommonComponent implements OnInit {
     if (!requestedPageNumber)
       requestedPageNumber = 1;
 
-    let recordsPerPage = 8;
+   
 
-
-    this.reportCommonService.openJasperReport(requestedPageNumber, reportName, this.moduleName, recordsPerPage)
+    this.reportCommonService.openJasperReport(requestedPageNumber, reportName, this.moduleName, this.rowsPerPage)
       .subscribe(
         res => {
 
