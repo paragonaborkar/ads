@@ -88,8 +88,13 @@ export class NativeUserCreateComponent implements OnInit {
         this.user = {};
         this.saved.emit(this.user);
       },  err => {
-        // Get the ADS configured error message to display.
-        this.errorMessage = this.errorService.processError(err, "createNativeUser", "POST");
+
+        if (err.status == "409") {
+          this.errorMessage = "User Name already exsits. Pick another User Name.";
+        } else {
+          // Get the ADS configured error message to display.
+          this.errorMessage = this.errorService.processError(err, "createNativeUser", "POST"); 
+        }
       });
 
   }
