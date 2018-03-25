@@ -23,7 +23,7 @@
     <contextParameter comment="" name="FORMAT_DATETIME_TO_STRING" prompt="FORMAT_DATETIME_TO_STRING?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="%Y-%m-%dT%H:%i:%s"/>
     <contextParameter comment="" name="JOB_ID_XPATH" prompt="JOB_ID_XPATH?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
     <contextParameter comment="" name="JOB_NAME" prompt="JOB_NAME?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="&quot;talendJob&quot;"/>
-    <contextParameter comment="Provided by REST service. Stored in DB's status tracking table. Default to nothing so it's auto generated if run directly in Talend." name="JOB_RUN_NAME" prompt="JOB_RUN_NAME?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
+    <contextParameter comment="Provided by REST service. Stored in DB's status tracking table. Default to nothing so it's auto generated if run directly in Talend." name="JOB_RUN_NAME" prompt="JOB_RUN_NAME?" promptNeeded="false" type="id_String" value=""/>
     <contextParameter comment="" name="JOB_SUBMITTED_BY" prompt="JOB_SUBMITTED_BY?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="talend"/>
     <contextParameter comment="" name="LOAD_FILES_LOC" prompt="LOAD_FILES_LOC?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_Directory" value="C:/netapp/ads_setup_loadsheets/"/>
     <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6IiIsInVzZXJfbmFtZSI6InRhbGVuZCIsImF1dGhvcml0aWVzIjpbIkNMSUVOVCJdLCJjbGllbnRfaWQiOiJ0ZXN0and0Y2xpZW50aWQiLCJmaXJzdE5hbWUiOiIiLCJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwiY29ycFVzZXJJZCI6MCwiYWRzX21vZHVsZXMiOnsiZGlzY292ZXIiOnRydWUsInJlcG9ydHMiOmZhbHNlLCJzY2hlZHVsZSI6ZmFsc2UsInBsYW5uaW5nIjpmYWxzZSwiZXhlY3V0ZSI6ZmFsc2UsImNvbm5lY3Rpb25zIjp0cnVlfSwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sIm5hdGl2ZVVzZXJJZCI6MCwiZXhwIjoxNTIxODU1MjY2LCJ1c2VyUm9sZSI6IiIsImp0aSI6IjZlOGI5YWYzLTU1NDEtNDQxYy04ZjE4LWIzNjBmYzQ3MTFlMyIsImVtYWlsIjoiIn0.m5Lrs54MzFvk2Px6ssZK452jfHaQMkZLZCyXFsZWLh4"/>
@@ -115,7 +115,7 @@
     <elementParameter field="CHECK" name="ON_METERCATCHER_FLAG" value="false"/>
     <elementParameter field="CHECK" name="ON_CONSOLE_FLAG" value="false" show="false"/>
     <elementParameter field="CHECK" name="ON_FILES_FLAG" value="false" show="false"/>
-    <elementParameter field="DIRECTORY" name="FILE_PATH" value="&quot;C:/Users/pathram/Desktop/TOS_DI-20170623_1246-V6.4.1/TOS_DI-20170623_1246-V6.4.1/workspace/.metadata&quot;" show="false"/>
+    <elementParameter field="DIRECTORY" name="FILE_PATH" value="&quot;C:/Users/zemastev/Desktop/talend/.metadata&quot;" show="false"/>
     <elementParameter field="TEXT" name="FILENAME_STATS" value="&quot;stats_file.txt&quot;" show="false"/>
     <elementParameter field="TEXT" name="FILENAME_LOGS" value="&quot;logs_file.txt&quot;" show="false"/>
     <elementParameter field="TEXT" name="FILENAME_METTER" value="&quot;meter_file.txt&quot;" show="false"/>
@@ -350,8 +350,6 @@
     <elementParameter field="TEXT" name="FIRST_COLUMN" value="1"/>
     <elementParameter field="TEXT" name="LAST_COLUMN" value=""/>
     <elementParameter field="CHECK" name="DIE_ON_ERROR" value="false"/>
-    <elementParameter field="TECHNICAL" name="SCHEMA:SCHEMA_TYPE" value="REPOSITORY" show="false"/>
-    <elementParameter field="TECHNICAL" name="SCHEMA:REPOSITORY_SCHEMA_TYPE" value="_RKmoUAxLEeiiuqmUHsf0Sw - metadata" show="false"/>
     <elementParameter field="TECHNICAL" name="SCHEMA_REJECT:SCHEMA_TYPE" value="REPOSITORY" show="false"/>
     <elementParameter field="TECHNICAL" name="SCHEMA_REJECT:REPOSITORY_SCHEMA_TYPE" value="_5DIXAP_eEeeuIL132lN64w - metadata" show="false"/>
     <elementParameter field="CHECK" name="ADVANCED_SEPARATOR" value="false"/>
@@ -514,8 +512,6 @@
     <elementParameter field="CHECK" name="APPEND" value="true"/>
     <elementParameter field="CHECK" name="INCLUDEHEADER" value="true"/>
     <elementParameter field="CHECK" name="COMPRESS" value="false" show="false"/>
-    <elementParameter field="TECHNICAL" name="SCHEMA:SCHEMA_TYPE" value="REPOSITORY" show="false"/>
-    <elementParameter field="TECHNICAL" name="SCHEMA:REPOSITORY_SCHEMA_TYPE" value="_W5yNABK_EeiGnZNriZGEXw - SRC_DATA" show="false"/>
     <elementParameter field="CHECK" name="ADVANCED_SEPARATOR" value="false"/>
     <elementParameter field="TEXT" name="THOUSANDS_SEPARATOR" value="&quot;,&quot;" show="false"/>
     <elementParameter field="TEXT" name="DECIMAL_SEPARATOR" value="&quot;.&quot;" show="false"/>
@@ -671,7 +667,7 @@
     <elementParameter field="CHECK" name="TRANSMIT_WHOLE_CONTEXT" value="false"/>
     <elementParameter field="TABLE" name="CONTEXTPARAMS">
       <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_NAME"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="ADSStringUtils.getJobInstanceName((String)jobName, context.JOB_RUN_NAME)"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="ADSStringUtils.getJobInstanceName((String)jobName, context.JOB_NAME)"/>
       <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_START_TIME"/>
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="ADSStringUtils.getCurrentTimeInRestFormat()"/>
       <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_SUBMITTED_BY"/>
