@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.netapp.ads.models.AdsReportDetail;
 
-import ar.com.fdvs.dj.domain.AutoText;
 import ar.com.fdvs.dj.domain.DynamicReport;
 import ar.com.fdvs.dj.domain.Style;
 import ar.com.fdvs.dj.domain.builders.ColumnBuilder;
@@ -45,7 +44,7 @@ public class DynamicJasper {
 		drb.setTitle(reportTitle).setDetailHeight(15) // defines the height for each record of the report
 				.setMargins(30, 20, 30, 15) // define the margin space for each side (top, bottom, left and right)
 				.setDefaultStyles(titleStyle, subtitleStyle, headerStyle, detailStyle).setColumnsPerPage(1);
-		drb.addAutoText(AutoText.AUTOTEXT_PAGE_X_OF_Y, AutoText.POSITION_FOOTER, AutoText.ALIGNMENT_RIGHT);
+		
 
 		/**
 		 * Column definitions. We use a new ColumnBuilder instance for each column, the
