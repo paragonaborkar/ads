@@ -107,6 +107,7 @@ import { ControllerReleaseDeleteComponent } from './discover/controller-release/
 import { OperationalOverrideComponent } from './admin/operational-override/operational-override.component';
 import { OpOverrideConfirmComponent } from './admin/operational-override/op-override-confirm/op-override-confirm.component';
 import { OwnerHomeComponent } from './common/owner-home/owner-home.component';
+import { NativeUserChangePwComponent } from './admin/admin-native-user/native-user-change-pw/native-user-change-pw.component';
 
 
 
@@ -169,7 +170,8 @@ import { OwnerHomeComponent } from './common/owner-home/owner-home.component';
     ControllerReleaseDeleteComponent,
     OperationalOverrideComponent,
     OpOverrideConfirmComponent,
-    OwnerHomeComponent
+    OwnerHomeComponent,
+    NativeUserChangePwComponent
 
     
 

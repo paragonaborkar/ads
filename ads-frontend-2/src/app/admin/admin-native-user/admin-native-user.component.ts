@@ -48,6 +48,7 @@ export class AdminNativeUserComponent implements OnInit {
   public isCreateModal = false;
   public isUpdateModal = false;
   public isDeleteModal = false;
+  public isPwModal = false;
   public isPropPreferenceModal = false;
 
   constructor(private usersService: UserAdminService, private applicationConfigService: ApplicationConfigService, private adsHelper: AdsHelperService, private sessionHelper: SessionHelper) {
@@ -110,7 +111,7 @@ export class AdminNativeUserComponent implements OnInit {
   showUpdateModal(row) {
 
     console.log("rowrowrowrow:");
-    console.log( row);
+    console.log(row);
     console.log(row._links.self.href);
     this.User = row;
     this.isUpdateModal = true;
@@ -122,9 +123,11 @@ export class AdminNativeUserComponent implements OnInit {
     this.isDeleteModal = true;
   }
 
-  // TODO: This need to be implemented
+
   showChangePassword(row) {
     console.log(row._links.self.href);
+    this.User = row;
+    this.isPwModal = true;
   }
 
   showPropertyModal() {
@@ -151,6 +154,8 @@ export class AdminNativeUserComponent implements OnInit {
     } else if (modalToHide === 'update') {
       this.isUpdateModal = false;
       this.setPage({ offset: this.page.pageNumber });
+    } else if (modalToHide === 'changePw') {
+      this.isPwModal = false;
     } else if (modalToHide === 'propPreferenceModal') {
       this.isPropPreferenceModal = false;
       this.columns = [];    // This makes the columns display refresh after the user updates it.
