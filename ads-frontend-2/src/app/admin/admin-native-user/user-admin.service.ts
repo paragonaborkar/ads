@@ -131,5 +131,20 @@ export class UserAdminService {
     //   );
   }
 
+  
+  changePassword(user: Object): Observable<any> {
+    console.log(user);
+
+    const url = user['_links']['self']['href'];
+    console.log('Calling delete for URL:' + url);
+    return this.http
+      .patch(url, user)
+      .map(() => null)
+    // .catch(
+    // Handle error in Subscribe() using the AdsErrorService      
+    // You can optionally handle it here, if needed
+    //   );
+  }
+
 
 }

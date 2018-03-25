@@ -25,7 +25,7 @@ public class ExportHostXRefIDConverter implements BackendIdConverter {
 	public Serializable fromRequestId(String id, Class<?> entity) {
 		log.debug(getClass().getName() + ": fromRequestId: Entered: " + id + ", " + entity);
 		if(id != null) {
-			String[] stringKeys = id.split(Constants.CONVERTER_ID_URL_SEPARATOR);
+			String[] stringKeys = id.split(ConverterConstants.CONVERTER_ID_URL_SEPARATOR);
 			log.debug(getClass().getName() + ": fromRequestId: stringKeys: " + stringKeys[0] + ", " + stringKeys[1]);
 			return new ExportsHostXRefPK(Integer.parseInt(stringKeys[0]), Integer.parseInt(stringKeys[1]));
 		}

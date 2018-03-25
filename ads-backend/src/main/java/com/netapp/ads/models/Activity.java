@@ -123,7 +123,7 @@ public class Activity implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public Date getDecommisionDate() {
+	public Date getDecommissionDate() {
 		return this.decommissionDate;
 	}
 

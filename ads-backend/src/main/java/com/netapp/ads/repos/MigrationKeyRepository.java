@@ -55,4 +55,20 @@ public interface MigrationKeyRepository extends JpaRepository<MigrationKey, Inte
 	 */
 	@Query("SELECT MAX(m.runNo) from MigrationKey m")
     Integer getMaxRunNo();
+	
+	/*	SIMLIAR TO: 
+ 	select * from activity
+	LEFT JOIN activity_migration_key_x_ref
+		ON activity.id = activity_migration_key_x_ref.activity_id
+	LEFT JOIN migration_key
+		ON activity_migration_key_x_ref.migration_key_id = migration_key.id
+	WHERE migration_key.migration_key = 'ABC' 
+	AND migration_key.user_corporate_id = 9 
+	AND activity.disposition = 'DiscoverOwner'*/
+    @Query("Select m from MigrationKey m  "
+    		+ "JOIN m.activityMigrationKeyXRefs x "
+    		+ "JOIN x.activity a "
+    		+ "JOIN a.activityResponses ar WHERE m.userCorporateId=:corpUserId AND ar.isPresumed = 1")
+    List<MigrationKey> getActivitiesResponsesPending(@Param("corpUserId") Integer corpUserId);
+  
 }

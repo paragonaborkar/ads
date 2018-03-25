@@ -30,7 +30,7 @@ public interface ActivityWithQtree {
 
 	public Timestamp getCreateTime();
 
-	public Date getDeleteDate();
+	public Date getDecommissionDate();
 
 	public Integer getMailCount();
 
@@ -44,9 +44,11 @@ public interface ActivityWithQtree {
 
 	public Timestamp getUpdateTime();
 
-	public boolean getWillDelete();
+	public boolean getWillDecommission();
 
 	public boolean getWillMigrate();
+	
+	public String getUnidentifiedReason();
 
 	
 	public Qtree getQtree();

@@ -4,6 +4,7 @@ package com.netapp.ads.services;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.netapp.ads.Application;
 import com.netapp.ads.config.AdsUser;
 import com.netapp.ads.config.SecurityConfig;
 import com.netapp.ads.models.UserApi;
@@ -42,7 +44,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		
 		if (username.indexOf("SSO") != -1) {
@@ -53,7 +54,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				throw new UsernameNotFoundException(String.format("The user is not enabled", username));
 			} else {
 				SecurityConfig.authAssertionIdUserNameCache.remove(split[1]);
-				UserCorporate userCorporate = userCorporateRepository.findFirstByEmail(split[2]);
+				UserCorporate userCorporate;
+				if (Application.ssoWorkAroundId != "") {
+					// FIXME:  THIS IS ONLY A TEMPORANY SOLUTION SO WE CAN LOGIN AS MANY CORP USERS
+					Log.error("THIS IS ONLY A TEMPORANY SOLUTION SO WE CAN LOGIN AS MANY CORP USERS");
+					userCorporate = userCorporateRepository.getOne(Integer.parseInt(Application.ssoWorkAroundId));
+				} else {
+					userCorporate = userCorporateRepository.findFirstByEmail(split[2]);
+				}
+				
 				return new AdsUser(split[2],new BCryptPasswordEncoder().encode(split[1]), grantedAuthorities, userCorporate);
 			}
 		}

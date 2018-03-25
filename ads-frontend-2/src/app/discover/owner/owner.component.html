@@ -31,11 +31,8 @@
 <app-data-table-col-templates></app-data-table-col-templates>
 
 <ng-template #actionTmpl let-column="column" let-row="row">
-  <button class="btn btn-sm btn-primary" (click)="showScheduleModal(row, 'Confirm')" *ngIf="row.activityResponses[0].isPresumed">
+  <button class="btn btn-sm btn-primary" (click)="showScheduleModal(row, 'Confirm')">
     <i class="fa fa-check"></i> Respond
-  </button>
-  <button class="btn btn-sm btn-warning" md-icon-button (click)="showScheduleModal(row, 'Update Response')" *ngIf="!row.activityResponses[0].isPresumed">
-    <i class="fa fa-exclamation-circle"></i> Update Response
   </button>
 </ng-template>
 

@@ -28,6 +28,7 @@ export class OwnerComponent implements OnInit {
   public isScheduleModal = false;
   public activityInfo: any = {};
   public scheduleAction = '';
+  activtyResponseForCurrentUser = [];
 
   public currentUserCorporateId = 0;
 
@@ -57,12 +58,14 @@ export class OwnerComponent implements OnInit {
     // FIXME: Complete this when SSO is ready.....
     this.route.params
       .switchMap((params: ParamMap) => this.ownerService.validateMigKeyExists(params['migKey'], loginInfo.corpUserId))
-      .subscribe((data) => {
-        console.log("validateMigKeyExists:", data);
+      .subscribe((validateMigKeyExists) => {
+        console.log("validateMigKeyExists:", validateMigKeyExists);
+        if (!validateMigKeyExists) {
+          this.router.navigate(['/owner']);
+        }
       },  err => {
-        this.router.navigate(['/discover/owner']);
+        this.router.navigate(['/owner']);
       });
-
   }
 
 
@@ -96,6 +99,9 @@ export class OwnerComponent implements OnInit {
 
           this.rows.forEach(activity => {
             activity["activityResponses"].forEach(activtyResponse => {
+              if (activtyResponse["ownerUserCorporateId"] == this.currentUserCorporateId) {
+                this.activtyResponseForCurrentUser = activtyResponse;
+              }
               if (activtyResponse["ownerUserCorporateId"] != this.currentUserCorporateId) {
                 // Keep other owners in a multi owner scenerio and display on the Owner modal.
                 // console.log("DEBUG AND TEST: Deleting:", this.rows["activityResponses"].activtyResponse);              
@@ -134,10 +140,12 @@ export class OwnerComponent implements OnInit {
 
 
   showScheduleModal(row, action) {
+    
     this.activityInfo = row;
     this.scheduleAction = action;
 
     this.isScheduleModal = true;
+    console.log("show called");
   }
 
   hideScheduleModal() {

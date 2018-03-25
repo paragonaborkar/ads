@@ -603,7 +603,7 @@
         <mapperTableEntries name="body" expression="" type="id_String" nullable="true"/>
         <mapperTableEntries name="string" expression="row3.root " type="id_String" nullable="true"/>
       </outputTables>
-      <outputTables sizeState="INTERMEDIATE" name="Completed" expressionFilter="ADSStringUtils.isIdNull(context.JOB_ID)==false" activateExpressionFilter="true" columnNameFilter="context.JOB_LOG_TYPE.equals(&quot;Post&quot;);">
+      <outputTables sizeState="INTERMEDIATE" name="Completed" expressionFilter="ADSStringUtils.isIdNull(context.JOB_ID)==false" activateExpressionFilter="true">
         <mapperTableEntries name="body" type="id_String" nullable="true"/>
         <mapperTableEntries name="string" expression="row3.root " type="id_String" nullable="true"/>
       </outputTables>

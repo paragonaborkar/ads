@@ -20,8 +20,7 @@ public class SAMLUserDetailsServiceImpl implements SAMLUserDetailsService {
 	// Logger
 	private static final Logger LOG = LoggerFactory.getLogger(SAMLUserDetailsServiceImpl.class);
 	
-	public Object loadUserBySAML(SAMLCredential credential)
-			throws UsernameNotFoundException {
+	public Object loadUserBySAML(SAMLCredential credential) throws UsernameNotFoundException {
 		
 		// The method is supposed to identify local account of user referenced by
 		// data in the SAML assertion and return UserDetails object describing the user.

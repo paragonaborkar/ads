@@ -71,6 +71,11 @@ public class UserCorporate implements Serializable {
 	//bi-directional many-to-one association to UserCorporate
 	@OneToMany(mappedBy="userCorporateManager")
 	private List<UserCorporate> userCorporates;
+	
+	//bi-directional many-to-one association to UserRole
+	@ManyToOne
+	@JoinColumn(name="user_role_id")
+	private UserRole userRole;
 
 	public UserCorporate() {
 	}
@@ -223,6 +228,14 @@ public class UserCorporate implements Serializable {
 		userCorporate.setUserCorporateManager(null);
 
 		return userCorporate;
+	}
+	
+	public UserRole getUserRole() {
+		return this.userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
 	}
 
 }

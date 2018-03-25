@@ -26,9 +26,9 @@
 
 <ng-template #actionTmpl let-column="column" let-row="row">
   <button class="btn btn-sm btn-primary" (click)="showUpdateModal(row)">
-    <i class="fa fa-check"></i>
+    <i class="fa fa-edit"></i>
   </button>
-  <button class="btn btn-sm btn-warning" md-icon-button (click)="changePassword(row)">
+  <button class="btn btn-sm btn-warning" md-icon-button (click)="showChangePassword(row)">
     <i class="fa fa-key"></i>
   </button>
   <button class="btn btn-sm btn-danger" md-icon-button (click)="showDeleteModal(row)">
@@ -50,3 +50,7 @@
 
 <native-user-delete class="modal fade" bsModal #deleteModal="bs-modal" *ngIf="isDeleteModal" [config]="{ show: true }" [User]="User"
   (delete)="onHide('delete')" (cancel)="onHide('delete')"></native-user-delete>
+
+<app-native-user-change-pw  class="modal fade" bsModal #pwModal="bs-modal" *ngIf="isPwModal" [config]="{ show: true }" [User]="User"
+  (changePw)="onHide('changePw')" (cancel)="onHide('changePw')"></app-native-user-change-pw>
+ 

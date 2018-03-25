@@ -226,7 +226,7 @@
     <nodeData xsi:type="TalendMapper:MapperData">
       <uiProperties/>
       <varTables sizeState="INTERMEDIATE" name="Var" minimized="true"/>
-      <outputTables sizeState="INTERMEDIATE" name="main" columnNameFilter="">
+      <outputTables sizeState="INTERMEDIATE" name="main">
         <mapperTableEntries name="line" expression="input.line + &quot;,&quot; +lookup.responseStatus + &quot;,&quot; +  lookup.resourceId + &quot;,&quot; +  lookup.errorCode+ &quot;,&quot; +   lookup.errorMessage " type="id_String" nullable="true"/>
       </outputTables>
       <inputTables sizeState="INTERMEDIATE" name="input" matchingMode="UNIQUE_MATCH" lookupMode="LOAD_ONCE">
