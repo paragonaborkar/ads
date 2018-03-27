@@ -30,6 +30,7 @@ export class ManualFunctionComponent implements OnInit {
   successMsg = "";
   runningMsg = "";
   errorMsg = "";
+  maxPollingAttempts = 10;
 
   constructor(private http: HttpClient, private global: Globals, private manualFunctionService: ManualFunctionService) { }
 
@@ -98,12 +99,16 @@ export class ManualFunctionComponent implements OnInit {
         if (data.status == 'Finished') {
           this.updateMessage("Job Completed.", "", "");
         } else {
-          if (data.status == 'InProgress' && this.pollingCount < 10) {
+          if (data.status == 'InProgress' && this.pollingCount < this.maxPollingAttempts) {
             this.timer = Observable.timer(2000);
             this.pollForProgress();
             this.pollingCount++;
           }
         }
+        if (this.pollingCount >= this.maxPollingAttempts) {
+          this.updateMessage("", "Job still running. Reached max polling attempts.", "");
+        }
+
       });
     });
   }
