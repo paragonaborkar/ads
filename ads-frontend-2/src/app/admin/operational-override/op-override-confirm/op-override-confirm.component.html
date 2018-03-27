@@ -41,26 +41,23 @@
         <div class="form-group row">
           <label for="requestedBy" class="col-sm-4 form-control-label">Requested By</label>
           <div class="col-sm-6">
-            <input type="text" id="requestedBy" class="form-control" formControlName="requestedBy">
+            <!-- <input type="text" id="requestedBy" class="form-control" formControlName="requestedBy"> -->
+            
+            <div class="input-group input-group-unstyled">
+              <input id="requestedBy" class="form-control" formControlName="requestedBy" [(ngModel)]="asyncSelected"
+                placeholder="Person Lookup" [typeahead]="dataSource" (typeaheadLoading)="changeTypeaheadLoading($event)" (typeaheadNoResults)="changeTypeaheadNoResults($event)"
+                (typeaheadOnSelect)="typeaheadOnSelect($event)" [typeaheadOptionsLimit]="7" typeaheadOptionField="fullName"
+               >
+            </div>
           </div>
         </div>
-
 
         <div class="form-group row">
           <label for="reasonCode" class="col-sm-4 form-control-label">Reason Code</label>
           <div class="col-sm-6 ">
             <select class="form-control" formControlName="reasonCode">
-              <!-- <option *ngFor="let role of roleArray" [value]="role._links.self.href">{{role.userRole}}</option> -->
-              <option></option>
-              <option>Here's the reason...</option>
+              <option *ngFor="let reason of unidentifiedAuditReasons" [value]="reason.fieldValue">{{reason.fieldValue}}</option>
             </select>
-
-            <!-- <div class="input-group input-group-unstyled">
-              <input id="suggestedOwnerUserCorporateId" class="form-control" formControlName="suggestedOwnerUserCorporateId" [(ngModel)]="asyncSelected"
-                placeholder="Owner Lookup" [typeahead]="dataSource" (typeaheadLoading)="changeTypeaheadLoading($event)" (typeaheadNoResults)="changeTypeaheadNoResults($event)"
-                (typeaheadOnSelect)="typeaheadOnSelect($event)" [typeaheadOptionsLimit]="7" typeaheadOptionField="fullName"
-                [attr.disabled]="formGroup.value.dontKnowOwner?'disabled':null">
-            </div> -->
           </div>
         </div>
 
@@ -68,7 +65,8 @@
           <div class="form-group col-sm-12 ">
             <label for="reason" class="form-control-label">Reason</label>
             
-              <textarea id="reason" class="form-control" formControlName="reason"></textarea>
+            <!-- FIXME: where is this stored? Check maxlength of that column -->
+              <textarea id="reason" class="form-control" formControlName="reason" maxlength="200"></textarea>
             
           </div>
         </div>

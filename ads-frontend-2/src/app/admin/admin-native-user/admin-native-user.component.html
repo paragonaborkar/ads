@@ -38,19 +38,19 @@
 
 
 
-<prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal" [config]="{ show: true }" bsModal #propPreferenceModal="bs-modal"
+<prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal" [config]="{ show: true, backdrop:'static' }" bsModal #propPreferenceModal="bs-modal"
   (done)="onHide('propPreferenceModal')" [pageName]="pageName"></prop-preferences-modal>
 
 
-<native-user-create class="modal fade" bsModal #addModal="bs-modal" *ngIf="isCreateModal" [config]="{ show: true }" (saved)="onHide('create')"
+<native-user-create class="modal fade" bsModal #addModal="bs-modal" *ngIf="isCreateModal" [config]="{ show: true, backdrop:'static' }" (saved)="onHide('create')"
   (cancel)="onHide('create')"></native-user-create>
 
-<native-user-update class="modal fade" bsModal #updateModal="bs-modal" *ngIf="isUpdateModal" [config]="{ show: true }" [inputUser]="User"
+<native-user-update class="modal fade" bsModal #updateModal="bs-modal" *ngIf="isUpdateModal" [config]="{ show: true, backdrop:'static' }" [inputUser]="User"
   (saved)="onHide('update')" (cancel)="onHide('update')"></native-user-update>
 
-<native-user-delete class="modal fade" bsModal #deleteModal="bs-modal" *ngIf="isDeleteModal" [config]="{ show: true }" [User]="User"
+<native-user-delete class="modal fade" bsModal #deleteModal="bs-modal" *ngIf="isDeleteModal" [config]="{ show: true, backdrop:'static' }" [User]="User"
   (delete)="onHide('delete')" (cancel)="onHide('delete')"></native-user-delete>
 
-<app-native-user-change-pw  class="modal fade" bsModal #pwModal="bs-modal" *ngIf="isPwModal" [config]="{ show: true }" [User]="User"
+<app-native-user-change-pw  class="modal fade" bsModal #pwModal="bs-modal" *ngIf="isPwModal" [config]="{ show: true, backdrop:'static' }" [User]="User"
   (changePw)="onHide('changePw')" (cancel)="onHide('changePw')"></app-native-user-change-pw>
  

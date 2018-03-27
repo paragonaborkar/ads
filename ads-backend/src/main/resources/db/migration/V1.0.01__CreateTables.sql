@@ -15,6 +15,15 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+DROP TABLE IF EXISTS `sys_field_value`;
+CREATE TABLE `sys_field_value` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `field_name` VARCHAR(50) NULL DEFAULT NULL,
+  `field_value` VARCHAR(50) NULL DEFAULT NULL,
+  `field_cascade_name` VARCHAR(50) NULL DEFAULT NULL,
+  `field_cascade_value` VARCHAR(50) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
 
 DROP TABLE IF EXISTS `job_data`;
 CREATE TABLE `job_data` (
