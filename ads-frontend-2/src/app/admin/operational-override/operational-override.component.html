@@ -42,5 +42,5 @@
 
 
 
-<prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal" [config]="{ show: true }" bsModal #propPreferenceModal="bs-modal"
+<prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal" [config]="{ show: true, backdrop:'static' }" bsModal #propPreferenceModal="bs-modal"
   (done)="hidePropertyModal()" [pageName]="pageName"></prop-preferences-modal>
