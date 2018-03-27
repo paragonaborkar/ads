@@ -48,10 +48,11 @@ public class JasperReportServiceImpl implements JasperReportService {
 	@Autowired
 	private AdsReportRepository adsReportRepository;
 
+
 	/**
 	 * This method is called to generate Report
 	 */
-	@SuppressWarnings("deprecation")
+//	@SuppressWarnings("deprecation")
 	@Override
 	public Report generateReport(Integer pageNo, Integer recordsPerPage, String reportName, String adsModule) {
 		DynamicJasper dj = new DynamicJasper();
@@ -134,11 +135,10 @@ public class JasperReportServiceImpl implements JasperReportService {
 			xlsExporter.setExporterOutput(new SimpleOutputStreamExporterOutput(file));
 			SimpleXlsReportConfiguration xlsReportConfiguration = new SimpleXlsReportConfiguration();
 			xlsReportConfiguration.setOnePagePerSheet(false);
-			xlsReportConfiguration.setRemoveEmptySpaceBetweenRows(true);
-			xlsReportConfiguration.setDetectCellType(true);
 			xlsReportConfiguration.setWhitePageBackground(false);
 			xlsReportConfiguration.setIgnoreGraphics(true);
 			xlsReportConfiguration.setIgnorePageMargins(true);
+			xlsReportConfiguration.setWrapText(false);
 
 			xlsExporter.setConfiguration(xlsReportConfiguration);
 			xlsExporter.exportReport();
