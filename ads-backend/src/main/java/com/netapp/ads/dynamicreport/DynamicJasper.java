@@ -18,6 +18,7 @@ public class DynamicJasper {
 
 	/**
 	 * Add columns and styling in Report
+	 * 
 	 * @param reportColumns
 	 * @param reportTitle
 	 * @return
@@ -71,18 +72,27 @@ public class DynamicJasper {
 
 	/**
 	 * Add Columns for Download Report
+	 * 
 	 * @param reportColumns
 	 * @return
 	 */
 	public DynamicReport downloadReport(List<AdsReportDetail> reportColumns) {
+
+		Font font = new Font(10, "Calibri", false, false, false);
+		Style titleStyle = new StyleBuilder(false).setFont(font).build();
+		Style subTitleStyle = new StyleBuilder(false).setFont(font).build();
+		Style detailStyle = new StyleBuilder(false).setFont(font).build();
+		Style headerStyle = new StyleBuilder(false).setFont(font).build();
+
 		/**
 		 * Creates the DynamicReportBuilder and sets the basic options for the report
 		 */
 		DynamicReportBuilder drb = new DynamicReportBuilder();
 		drb.setIgnorePagination(true);
-		drb.setPrintColumnNames(true);
-		drb.setMargins(0, 0, 0, 0);
 		drb.setUseFullPageWidth(true);
+		drb.setMargins(0, 0, 0, 0);
+		drb.setDefaultStyles(titleStyle, subTitleStyle, headerStyle, detailStyle);
+		drb.setHeaderHeight(15);
 
 		/**
 		 * Column definitions. We use a new ColumnBuilder instance for each column, the
@@ -91,9 +101,10 @@ public class DynamicJasper {
 		for (AdsReportDetail obj : reportColumns) {
 
 			AbstractColumn column = ColumnBuilder.getNew().setColumnProperty(obj.getColumnName(), obj.getColumnType())
-					.setTitle(obj.getColumnLabel()).build();
+					.setTitle(obj.getColumnLabel()).setStyle(headerStyle).setWidth(130).build();
 
 			drb.addColumn(column);
+
 		}
 
 		DynamicReport dr = drb.build();
