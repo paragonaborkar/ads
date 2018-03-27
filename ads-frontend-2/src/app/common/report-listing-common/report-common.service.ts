@@ -28,8 +28,8 @@ export class ReportCommonService {
     //   );
   }
 
-  openJasperReport(pageNo, reportName, moduleName): Observable<any> {
-    return this.http.get(this.global.apiUrl + '/generateReport?pageNo=' + pageNo + '&reportName=' + reportName + '&reportModule=' +moduleName)
+  openJasperReport(pageNo, reportName, moduleName, recordsPerPage): Observable<any> {
+    return this.http.get(this.global.apiUrl + '/generateReport?pageNo=' + pageNo + '&reportName=' + reportName + '&reportModule=' +moduleName + '&recordsPerPage=' +recordsPerPage)
       .map((res: Response) => res)
     // .catch(
     // Handle error in Subscribe() using the AdsErrorService  

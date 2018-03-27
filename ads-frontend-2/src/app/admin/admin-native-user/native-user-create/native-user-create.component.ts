@@ -28,11 +28,11 @@ export class NativeUserCreateComponent implements OnInit {
   ngOnInit() {
     this.user.enabled = "true";
 
-    this.user.userName="asd user";
-    this.user.email="asd@asd.com";
-    this.user.firstName="asd";
-    this.user.lastName="asd";
-    this.user.password="123";
+    // this.user.userName="asd user";
+    // this.user.email="asd@asd.com";
+    // this.user.firstName="asd";
+    // this.user.lastName="asd";
+    // this.user.password="123";
     this.user.userRole="http://localhost:8080/userRoles/2";
     
     
@@ -88,8 +88,13 @@ export class NativeUserCreateComponent implements OnInit {
         this.user = {};
         this.saved.emit(this.user);
       },  err => {
-        // Get the ADS configured error message to display.
-        this.errorMessage = this.errorService.processError(err, "createNativeUser", "POST");
+
+        if (err.status == "409") {
+          this.errorMessage = "User Name already exsits. Pick another User Name.";
+        } else {
+          // Get the ADS configured error message to display.
+          this.errorMessage = this.errorService.processError(err, "createNativeUser", "POST"); 
+        }
       });
 
   }

@@ -37,7 +37,7 @@
   </button>
 </ng-template>
 
-<app-op-override-confirm class="modal fade" *ngIf="isConfirmModal" [config]="{ show: true }" bsModal #opOverrideConfirmModal="bs-modal"
+<app-op-override-confirm class="modal fade" *ngIf="isConfirmModal" [config]="{ show: true, backdrop:'static' }" bsModal #opOverrideConfirmModal="bs-modal"
   (cancel)="hideConfirmModal()" (saved)="hideConfirmModal()" [activityInfo]="activityInfo"></app-op-override-confirm>
 
 

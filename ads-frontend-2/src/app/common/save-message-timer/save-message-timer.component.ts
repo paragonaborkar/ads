@@ -19,6 +19,12 @@ export class SaveMessageTimerComponent implements OnInit {
 
   ngOnInit() { }
 
+  ngOnDestroy() {
+    if ( this.subscription && this.subscription instanceof Subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   public setSuccessTimer(){
     // set to true to show div
     this.showSuccess = true;
@@ -30,9 +36,5 @@ export class SaveMessageTimerComponent implements OnInit {
     });
   }
 
-  public ngOnDestroy() {
-    if ( this.subscription && this.subscription instanceof Subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
+
 }

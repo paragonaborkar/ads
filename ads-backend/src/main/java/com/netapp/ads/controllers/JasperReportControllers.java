@@ -41,10 +41,11 @@ public class JasperReportControllers {
 	@RequestMapping(value = "/generateReport", method = RequestMethod.GET)
 	public Report generateReport(HttpServletRequest request, HttpServletResponse response, ModelMap map,
 			@RequestParam(name = "pageNo", required = true) Integer pageNo,
+			@RequestParam(name = "recordsPerPage", required = true) Integer recordsPerPage,
 			@RequestParam(name = "reportName", required = true) String reportName,
 			@RequestParam(name = "reportModule", required = true) String adsModule) throws Exception {
 
-		return jasperReportService.generateReport(pageNo, reportName, adsModule);
+		return jasperReportService.generateReport(pageNo,recordsPerPage, reportName, adsModule);
 
 	}
 

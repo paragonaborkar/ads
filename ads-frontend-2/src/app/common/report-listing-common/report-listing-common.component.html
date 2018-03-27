@@ -67,7 +67,19 @@
   </div>
 
   <div class="col-md-3">
-    <button class="btn btn-outline-primary pull-right" (click)="downloadJasperReport()">Export to Excel</button>
+    <form class="form-inline  pull-right">
+      <div class="form-group mr-2">
+        <label for="pagesPerPage">Rows:&nbsp;</label>
+        <select class="form-control form-control-sm" name="rowsPerPage" [(ngModel)]="rowsPerPage" (change)="pagingUpdated()">
+          <option value=1>1</option>
+          <option value=3>3</option>
+          <option value=10>10</option>
+          <option value=25>25</option>
+          <option value=50>50</option>
+        </select>
+      </div>
+      <button class="btn btn-outline-primary" (click)="downloadJasperReport()">Export to Excel</button>
+    </form>
   </div>
 </div>
 

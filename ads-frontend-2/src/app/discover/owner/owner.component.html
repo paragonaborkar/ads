@@ -31,17 +31,14 @@
 <app-data-table-col-templates></app-data-table-col-templates>
 
 <ng-template #actionTmpl let-column="column" let-row="row">
-  <button class="btn btn-sm btn-primary" (click)="showScheduleModal(row, 'Confirm')" *ngIf="row.activityResponses[0].isPresumed">
+  <button class="btn btn-sm btn-primary" (click)="showScheduleModal(row, 'Confirm')">
     <i class="fa fa-check"></i> Respond
-  </button>
-  <button class="btn btn-sm btn-warning" md-icon-button (click)="showScheduleModal(row, 'Update Response')" *ngIf="!row.activityResponses[0].isPresumed">
-    <i class="fa fa-exclamation-circle"></i> Update Response
   </button>
 </ng-template>
 
-<app-owner-response class="modal fade" *ngIf="isScheduleModal" [config]="{ show: true }" bsModal #ownerResponseModal="bs-modal"
+<app-owner-response class="modal fade" *ngIf="isScheduleModal" [config]="{ show: true, backdrop:'static' }" bsModal #ownerResponseModal="bs-modal"
   (cancel)="hideScheduleModal()" (saved)="hideScheduleModal()" [activityInfo]="activityInfo" [scheduleAction]="scheduleAction"></app-owner-response>
 
-  <prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal" [config]="{ show: true }" bsModal #propPreferenceModal="bs-modal"
+  <prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal" [config]="{ show: true, backdrop:'static' }" bsModal #propPreferenceModal="bs-modal"
   (done)="hidePropertyModal()" [pageName]="pageName"></prop-preferences-modal>
 

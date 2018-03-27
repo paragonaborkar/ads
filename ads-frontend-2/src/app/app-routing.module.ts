@@ -34,16 +34,19 @@ import { ControllerWorkPackageCreateComponent } from './discover/controller-work
 import { Error404Component } from './error-404/error-404.component';
 
 import { ControllerWorkPackageComponent } from './discover/controller-work-package/controller-work-package.component';
+import { OwnerHomeComponent } from './common/owner-home/owner-home.component';
 
 
 // import { Error404LoggedInComponent } from './common/error-404-logged-in/error-404-logged-in.component';
 
 const routes: Routes = [
   //{ path: '', redirectTo: '/', pathMatch: 'full' },
+  
   { path: 'login',  component: LoginComponent },
    
   {path: 'admin/admin-user-mgmt', component: AdminNativeUserComponent, canActivate: [AuthGuard] },
 
+  { path: 'index',  component: OwnerHomeComponent, canActivate: [AuthGuard] },
   { path: 'home',  component: HomeComponent, canActivate: [AuthGuard] },
  
   { path: 'admin/report-listing',  component: ReportListingComponent, canActivate: [AuthGuard] },
@@ -62,8 +65,9 @@ const routes: Routes = [
   { path: 'discover/manual-functions',  component: DiscoverManualFunctionsComponent, canActivate: [AuthGuard] },
 
 
-  { path: 'discover/owner',  component: OwnerNotFoundComponent, canActivate: [AuthGuard] },
+  { path: 'owner',  component: OwnerNotFoundComponent, canActivate: [AuthGuard] },
   { path: 'discover/owner/:migKey',  component: OwnerComponent, canActivate: [AuthGuard] },
+  { path: 'owner/:migKey',  component: OwnerComponent, canActivate: [AuthGuard] },
   { path: 'discover/controller-release',  component: ControllerReleaseComponent, canActivate: [AuthGuard] },
   { path: 'discover/report-listing',  component: ReportListingDisComponent, canActivate: [AuthGuard] },
   

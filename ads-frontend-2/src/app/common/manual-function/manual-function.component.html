@@ -7,7 +7,7 @@
       <div class="custom-file">
         <input type="file" class="custom-file-input" #fileupload [(ngModel)]="myFile" name="myFile" (change)="fileChange(fileupload.files)"
           required/>
-        <label class="custom-file-label text-sm" for="myFile">{{fileName || "Choose file..."}}</label>
+        <label class="custom-file-label text-sm text-truncate" for="myFile">{{fileName || "Choose file..."}}</label>
       </div>
     </div>
 
