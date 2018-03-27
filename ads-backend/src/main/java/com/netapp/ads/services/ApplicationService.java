@@ -53,6 +53,12 @@ public class ApplicationService {
 		this.restTemplate = restTemplateBuilder.basicAuthorization("bill", "abc123").build();
 	}
 	
+	/**
+	 * Get verum application based on IP Address of the host
+	 * 
+	 * @param ipAddress
+	 * @return
+	 */
 	public OSI getVerumApp(String ipAddress) {
 		log.debug("getVerumApp(): [ENTERED] : ipAddress: " + ipAddress);
 		
@@ -67,6 +73,12 @@ public class ApplicationService {
 		return osi;
 	}
 	
+	/**
+	 * Get details about an employee from Verum based on SID
+	 * 
+	 * @param sid
+	 * @return
+	 */
 	public Person getVerumPerson(String sid) {
 		log.debug("getVerumPerson(): [ENTERED] : sid: " + sid);
 		
@@ -80,6 +92,12 @@ public class ApplicationService {
         return person;
 	}	
 	
+	/**
+	 * Get complete profile of an employee based on sid
+	 * 
+	 * @param sid
+	 * @return
+	 */
 	public EmployeeProfile getEmployeeProfile(String sid) {
 		log.debug("getEsourceContact(): [ENTERED] : sid: " + sid + ", eSourceUri: " + eSourceUri);
 		
@@ -91,6 +109,11 @@ public class ApplicationService {
         return employeeProfile;
 	}
 	
+	/**
+	 * Get default HTTP headers that are to be sent with every request to Verum
+	 * 
+	 * @return
+	 */
 	public HttpHeaders getDefaultHttpHeaders() {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.TEXT_PLAIN);

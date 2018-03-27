@@ -46,4 +46,15 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>, Jp
     List<Activity> getActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId , @Param("disposition") String disposition);
     
 
+	/**
+	 * Find activities for which migration keys have not been generated
+	 * 
+	 * @return List of matching Activities
+	 */
+	@Query("Select a From Activity a  "
+    		+ "JOIN a.qtree q "
+    		+ "JOIN q.qtreeDisposition qd ON qd.disposition = :disposition "
+    		+ "Where a.activityMigrationKeyXRefs is empty")
+	List<Activity> findActivitiesWithoutMigrationKeys(@Param("disposition") String disposition);
+
 }

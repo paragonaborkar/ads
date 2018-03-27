@@ -13,6 +13,7 @@ import javax.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,6 +48,9 @@ public class DiscoverProcessingController {
 
 	private static final Logger log = LoggerFactory.getLogger(DiscoverProcessingController.class);
 
+	@Value("${ads.rule.discovery_rule.disposition}")
+	public String discoveryDisposition;
+	
 	@Autowired
 	EmailService emailService;
 
@@ -147,10 +151,17 @@ public class DiscoverProcessingController {
 		return 0;
 	}	
 
+	/**
+	 * Calls the migration key service to generate migration keys for
+	 * only those activities which don't have a key
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/generateMigrationKeys", method = RequestMethod.POST)
 	public Integer generateMigrationKeys() {
 		//Add DiscoverOwner clause
-		List<Activity> activities = activityRepository.findAll();
+		List<Activity> activities = activityRepository.findActivitiesWithoutMigrationKeys(discoveryDisposition);
+		log.debug("Number of activities to generate migration keys: {}", activities.size());
 		migrationKeyService.generateMigrationKeys(activities);
 		return 0;
 	}
