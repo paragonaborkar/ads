@@ -36,9 +36,9 @@
   </button>
 </ng-template>
 
-<app-owner-response class="modal fade" *ngIf="isScheduleModal" [config]="{ show: true }" bsModal #ownerResponseModal="bs-modal"
+<app-owner-response class="modal fade" *ngIf="isScheduleModal" [config]="{ show: true, backdrop:'static' }" bsModal #ownerResponseModal="bs-modal"
   (cancel)="hideScheduleModal()" (saved)="hideScheduleModal()" [activityInfo]="activityInfo" [scheduleAction]="scheduleAction"></app-owner-response>
 
-  <prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal" [config]="{ show: true }" bsModal #propPreferenceModal="bs-modal"
+  <prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal" [config]="{ show: true, backdrop:'static' }" bsModal #propPreferenceModal="bs-modal"
   (done)="hidePropertyModal()" [pageName]="pageName"></prop-preferences-modal>
 
