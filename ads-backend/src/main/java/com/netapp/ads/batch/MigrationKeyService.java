@@ -41,27 +41,32 @@ public class MigrationKeyService {
 		Integer maxRunNo = migrationKeyRepository.getMaxRunNo();
 		Integer currentRunNo = maxRunNo == null ? 1 : new AtomicInteger(maxRunNo).incrementAndGet();
 		for(Activity activity: activities) {
-			log.debug("generateMigrationKeys: activity: {} ", activity.getId());
-			//activity response
-			List<ActivityResponse> activityResponses = activity.getActivityResponses();
-			for(ActivityResponse activityResponse: activityResponses) {
-				Integer userCorporateId = activityResponse.getOwnerUserCorporateId();
-				log.debug("generateMigrationKeys: activity: {}, userCorporateId: {} ", activity.getId(), userCorporateId);
-				
-				//check if migration key exists for this user
-				//check if it was generated 
-				MigrationKey migrationKey = migrationKeyExists(userCorporateId, currentRunNo);
-				if(migrationKey == null) {
-					migrationKey = new MigrationKey();
-					migrationKey.setMigrationKey(uniqueKeyService.createMigKey());
-					migrationKey.setUserCorporate(activityResponse.getOwnerUserCorporate());
-					migrationKey.setRunNo(currentRunNo);
+			//Only generate migration keys for this activity if not previously generated
+			if(activity.getMigrationKeys().isEmpty()) {
+				log.debug("generateMigrationKeys: Generating migration keys for activity: {} ", activity.getId());
+				//activity response
+				List<ActivityResponse> activityResponses = activity.getActivityResponses();
+				for(ActivityResponse activityResponse: activityResponses) {
+					Integer userCorporateId = activityResponse.getOwnerUserCorporateId();
+					log.debug("generateMigrationKeys: activity: {}, userCorporateId: {} ", activity.getId(), userCorporateId);
+					
+					//check if migration key exists for this user
+					//check if it was generated 
+					MigrationKey migrationKey = migrationKeyExists(userCorporateId, currentRunNo);
+					if(migrationKey == null) {
+						migrationKey = new MigrationKey();
+						migrationKey.setMigrationKey(uniqueKeyService.createMigKey());
+						migrationKey.setUserCorporate(activityResponse.getOwnerUserCorporate());
+						migrationKey.setRunNo(currentRunNo);
+					}
+					
+					migrationKey.addActivity(activity);	
+					migrationKeyRepository.save(migrationKey);
+					migrationKeysGenerated.add(migrationKey.getMigrationKey());
+					log.debug("migrationKey: {}", migrationKey);
 				}
-				
-				migrationKey.addActivity(activity);	
-				migrationKeyRepository.save(migrationKey);
-				migrationKeysGenerated.add(migrationKey.getMigrationKey());
-				log.debug("migrationKey: {}", migrationKey);
+			} else {
+				log.info("Migration Keys already generated for activity: {}", activity.getId());
 			}
 		}
 		log.debug("generateMigrationKeys: [EXIT]");
