@@ -26,6 +26,8 @@ import com.netapp.ads.models.Share;
 @Projection(name="activityWithQtree", types = { Activity.class})
 public interface ActivityWithQtree {
 
+	public Integer getId();
+	
 	public boolean getAdminOverride();
 
 	public Timestamp getCreateTime();

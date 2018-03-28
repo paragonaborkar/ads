@@ -70,4 +70,16 @@ export class OperationalOverrideService {
 
   }
 
+  resetUnidentified(info): Observable<any> {
+
+      return this.http
+      .post(this.global.apiUrl + "/resubmitUnidentified", info)
+      .map((res: Response) => res);
+    // .catch(
+    // Handle error in Subscribe() using the AdsErrorService      
+    // You can optionally handle it here, if needed
+    //   );
+
+  }
+
 }

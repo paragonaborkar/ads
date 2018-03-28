@@ -27,14 +27,14 @@
         <div class="col-sm-8 h5"> {{activityInfo.nasVolume.volumeName}}</div>
       </div>
 
-      <label>
+      <!-- <label>
         <span>Debug</span>
         <input class="checkbox" type="checkbox" #debug="ngModel" ngModel>
 
       </label>
       <div *ngIf="debug.value">
-        <pre>isMultiOwner: {{isMultiOwner}}</pre>
-      </div>
+        <pre>{{unidentifiedResponse | json}}</pre>       
+      </div> -->
 
       <form [formGroup]="formGroup" autocomplete="off">
 

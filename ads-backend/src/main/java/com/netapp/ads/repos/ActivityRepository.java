@@ -25,7 +25,7 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>, Jp
 	@Query("Select a From Activity a  "
     		+ "JOIN a.qtree q " 
     		+ "JOIN q.qtreeDisposition qd ON qd.disposition = 'DiscoverOwner' "
-    		+ "LEFT JOIN a.activityResponses ar WHERE ar.id IS NULL")
+    		+ "LEFT JOIN a.activityResponses ar WHERE ar.id IS NULL AND a.adminOverride = false")
 	Page<Activity> findUnidentifiedOwners(Pageable p);
 	
 	/*	SIMLIAR TO: 

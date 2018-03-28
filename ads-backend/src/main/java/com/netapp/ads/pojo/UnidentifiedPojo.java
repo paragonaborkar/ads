@@ -9,12 +9,14 @@ public class UnidentifiedPojo {
 	private String activityResourceUrl;
 	
 	private int currentUserCorporateId;
+	private int currentUserNativeId;
 	
 	private String reasonCode;
 	private String reason;
 	
 	private int requestedByUserCorporateId;
 	private String requestedByUserCorporateResourceUrl;
+	private String requestedByName;
 	
 
 	public UnidentifiedPojo() {
@@ -26,6 +28,14 @@ public class UnidentifiedPojo {
 
 	public void setCurrentUserCorporateId(Integer currentUserCorporateId) {
 		this.currentUserCorporateId = currentUserCorporateId;
+	}
+	
+	public Integer getCurrentUserNativeId() {
+		return this.currentUserNativeId;
+	}
+
+	public void setCurrentUserNativeId(Integer currentUserNativeId) {
+		this.currentUserNativeId = currentUserNativeId;
 	}
 	
 	public String getActivityResourceUrl() {
@@ -69,6 +79,17 @@ public class UnidentifiedPojo {
 	public void getRequestedByUserCorporateResourceUrl(String requestedByUserCorporateResourceUrl) {
 		this.requestedByUserCorporateResourceUrl = requestedByUserCorporateResourceUrl;
 	}
+	
+	
+	public String getRequestedByName() {
+		return this.requestedByName;
+	}
+
+	public void setRequestedByName(String requestedByName) {
+		this.requestedByName = requestedByName;
+	}
+	
+	
 	
 	public Integer getActivityId() {
 		return this.activityId;
