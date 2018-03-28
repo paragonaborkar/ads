@@ -65,5 +65,25 @@
 				<flowcontrol>full</flowcontrol>
 			</interface-config-info>
 		</interface-config-info>
+	
+<!--getNaCifsShares  -->>	
+	<records>8</records>
+	<cifs-shares>
+		<cifs-share-info>
+			<share-name>ETC$</share-name>
+			<mount-point>/etc</mount-point>
+			<description>Remote Administration</description>
+		</cifs-share-info>
+		<cifs-share-info>
+			<share-name>HOME</share-name>
+			<mount-point>/vol/vol0/home</mount-point>
+			<description>Default Share</description>
+		</cifs-share-info>
+		<cifs-share-info>
+			<share-name>C$</share-name>
+			<mount-point>/</mount-point>
+			<description>Remote Administration</description>
+		</cifs-share-info>
+	</cifs-shares>
 	</results>
 </netapp>

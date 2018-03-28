@@ -2,7 +2,6 @@ package com.netapp.ads.hhcc.vo;
 
 import java.util.List;
 
-
 public class NfsStatClientsInfo {
 
 	public List<ADSNfsStat> clientInfo;
