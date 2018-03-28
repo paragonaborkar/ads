@@ -13,6 +13,5 @@ public class CIFSSession {
 	public void setVolumeList(List<Volume> volumeList) {
 		this.volumeList = volumeList;
 	}
-	
-	
+
 }

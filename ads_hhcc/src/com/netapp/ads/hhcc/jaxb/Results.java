@@ -3,8 +3,7 @@ package com.netapp.ads.hhcc.jaxb;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(
-		name="results")
+@XmlRootElement(name = "results")
 public class Results {
 
 	private String status;
@@ -14,21 +13,50 @@ public class Results {
 	private String tag;
 	private int records;
 	private NfsTop nfsTop;
+	private long localTime;
+	private long utcTime;
+	private CIFSShares cIFSShares;
 
-	
+	public CIFSShares getcIFSShares() {
+		return cIFSShares;
+	}
+
+	@XmlElement(name = "cifs-shares")
+	public void setcIFSShares(CIFSShares cIFSShares) {
+		this.cIFSShares = cIFSShares;
+	}
+
+	public long getLocalTime() {
+		return localTime;
+	}
+
+	@XmlElement(name = "local-time")
+	public void setLocalTime(long localTime) {
+		this.localTime = localTime;
+	}
+
+	public long getUtcTime() {
+		return utcTime;
+	}
+
+	@XmlElement(name = "utc-time")
+	public void setUtcTime(long utcTime) {
+		this.utcTime = utcTime;
+	}
+
 	public NfsTop getNfsTop() {
 		return nfsTop;
 	}
-	
+
 	@XmlElement(name = "nfs-top")
 	public void setNfsTop(NfsTop nfsTop) {
 		this.nfsTop = nfsTop;
 	}
-	
+
 	public String getTag() {
 		return tag;
 	}
-	
+
 	@XmlElement(name = "tag")
 	public void setTag(String tag) {
 		this.tag = tag;
@@ -42,7 +70,6 @@ public class Results {
 	public void setRecords(int records) {
 		this.records = records;
 	}
-	
 
 	public InterfaceConfigInfo getInterfaceConfigInfo() {
 		return interfaceConfigInfo;
@@ -79,9 +106,5 @@ public class Results {
 	public void setSystemInfo(SystemInfo systemInfo) {
 		this.systemInfo = systemInfo;
 	}
-
-	
-	
-	
 
 }
