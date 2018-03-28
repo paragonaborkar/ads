@@ -1,0 +1,35 @@
+.card .card-header .title {
+    color: #fff;
+}
+
+
+.card.card-default .card-header .title  {
+    color: #fff;
+}
+
+/*.card.card-default .card-header .title  {
+    color: #4f5f6f;
+}*/
+
+
+.card.card-default .card-header {
+	background-color: #9c81e0;	
+}
+
+
+
+.btn.btn-default {
+    color: #fff;
+    background-color: #9c81e0;
+    border-color: #9c81e0;
+}
+
+.btn {
+    color: #fff;
+ 
+}
+
+.btn:hover {
+    color: #fff;
+ 
+}

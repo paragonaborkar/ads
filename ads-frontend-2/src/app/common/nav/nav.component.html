@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top">
+ 
+  <a class="navbar-brand" href="" routerLink="{{userRole =='ROLE_USER' ? 'index' : 'home'}}" >
+    <div class="logo"></div>
+  </a>
+
+
+
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse no-select" id="navbarsExampleDefault" *ngIf="isLogedIn()">
+
+
+    <ul class="navbar-nav mr-auto" >
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="{{userRole =='ROLE_USER' ? 'index' : 'home'}}">Home 
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item dropdown" *ngIf="userRole !== 'ROLE_USER'">
+        <a class="nav-link dropdown-toggle" href="#" id="connectionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Connections</a>
+        <div class="dropdown-menu" aria-labelledby="connectionDropdown">
+          <a class="dropdown-item" routerLink="connections/report-listing">Reports</a>
+          <a class="dropdown-item" routerLink="connections/manual-functions">Manual Functions</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown" *ngIf="userRole !== 'ROLE_USER'">
+        <a class="nav-link dropdown-toggle" href="#" id="discoverDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Discover</a>
+        <div class="dropdown-menu" aria-labelledby="discoverDropdown">
+          <a class="dropdown-item" routerLink="discover/owner/ABC">QTrees Owner (Key: ABC) (temp)</a>
+          <a class="dropdown-item" routerLink="discover/controller-release">Controller Release</a>
+          <a class="dropdown-item" routerLink="discover/controller-target">Controller Work Packages</a>
+          <a class="dropdown-item" routerLink="discover/report-listing">Reports</a>
+          <a class="dropdown-item" routerLink="discover/manual-functions">Manual Functions</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown" *ngIf="userRole !== 'ROLE_USER'">
+        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+        <div class="dropdown-menu" aria-labelledby="adminDropdown">
+          <a class="dropdown-item" routerLink="admin/operational-override">Operational Override</a>
+          <a class="dropdown-item" routerLink="admin/admin-user-mgmt">Admin User Management</a>
+          <a class="dropdown-item" routerLink="admin/property-preferences">Display Preferences</a>
+          <a class="dropdown-item" routerLink="admin/application-properties">Application Properties</a>
+          <a class="dropdown-item" routerLink="admin/report-listing">Reports</a>
+          <a class="dropdown-item" routerLink="admin/manual-functions">Manual Functions </a>
+        </div>
+      </li>
+
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <div class="mr-3 text-white">{{firstName}} {{lastName }} ({{email}}) | {{userRole}}</div>
+      <a href="#" class="text-white lead" (click)="logout()">
+        <i class="fa fa-sign-out"></i>
+      </a>
+
+    </form>
+  </div>
+</nav>

@@ -12,20 +12,21 @@ import java.util.List;
  */
 @Entity
 @Table(name="data_protection_policy")
-@NamedQuery(name="DataProtectionPolicy.findAll", query="SELECT d FROM DataProtectionPolicy d")
 public class DataProtectionPolicy implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
-	@Column(name="data_protection_policy_name")
+	@Column(name="data_protection_policy_name", length=45)
 	private String dataProtectionPolicyName;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	//bi-directional many-to-one association to MigrationCutoverSrcToTgt
@@ -35,11 +36,11 @@ public class DataProtectionPolicy implements Serializable {
 	public DataProtectionPolicy() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -1,0 +1,66 @@
+$blue:    #0067c5;
+
+$theme-colors: (
+  "primary": #0067c5,
+  "danger": #ff4136
+);
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  padding-top: 5rem;
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+  
+.starter-template {
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+
+
+  .no-select {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+  }
+
+
+  .card-with-link { 
+    cursor: pointer; 
+  }
+
+  .sortable-item { 
+    cursor: pointer; 
+  }
+// @import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+@import 'styles-icons.scss';
+@import 'styles-material.scss';
+@import 'styles-table-material.scss';
+// @import 'styles-bootstrap.scss';
+
+// @import '~@swimlane/ngx-datatable/release/index.css';
+// @import '~@swimlane/ngx-datatable/release/themes/material.css';
+// @import '~@swimlane/ngx-datatable/release/assets/icons.css';
+
+
+
+
+
+
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #28a745; /* green */
+}
+
+.custom-select.is-invalid, .form-control.is-invalid, .was-validated .custom-select:invalid, .was-validated .form-control:invalid,
+.ng-invalid:not(form)  {
+  border-left: 5px solid #dc3545; /* red */
+}

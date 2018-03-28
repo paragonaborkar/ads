@@ -10,7 +10,6 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="activity_presumed_lob_x_ref")
-@NamedQuery(name="ActivityPresumedLobXRef.findAll", query="SELECT a FROM ActivityPresumedLobXRef a")
 public class ActivityPresumedLobXRef implements Serializable {
 	private static final long serialVersionUID = 1L;
 
