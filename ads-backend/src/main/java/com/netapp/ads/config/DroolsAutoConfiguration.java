@@ -80,6 +80,7 @@ public class DroolsAutoConfiguration {
 	 */
 	private Resource[] getRuleFiles() throws IOException {
 		ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
+		log.info("Loading rules from: {}", RULES_PATH);
 		return resourcePatternResolver.getResources(RULES_PATH + "**/*.*");
 	}
 }
