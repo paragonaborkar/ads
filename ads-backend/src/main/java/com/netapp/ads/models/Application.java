@@ -48,7 +48,7 @@ public class Application implements Serializable {
 
 	//bi-directional many-to-many association to LineOfBusiness
 	@ManyToMany(mappedBy="applications")
-	private List<LineOfBusiness> lineOfBusinesses;
+	private List<LineOfBusiness> lineOfBusinesses = new ArrayList<LineOfBusiness>();
 
 	public Application() {
 	}
@@ -147,4 +147,15 @@ public class Application implements Serializable {
 		this.lineOfBusinesses = lineOfBusinesses;
 	}
 
+	public LineOfBusiness addLineOfBusinesses(LineOfBusiness lineOfBusinesses) {
+		getLineOfBusinesses().add(lineOfBusinesses);
+		lineOfBusinesses.addApplication(this);
+		return lineOfBusinesses;
+	}
+
+	public LineOfBusiness removeLineOfBusinesses(LineOfBusiness lineOfBusinesses) {
+		getLineOfBusinesses().remove(lineOfBusinesses);
+		lineOfBusinesses.removeApplication(this);
+		return lineOfBusinesses;
+	}
 }

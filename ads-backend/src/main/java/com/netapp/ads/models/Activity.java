@@ -248,6 +248,18 @@ public class Activity implements Serializable {
 	public void setLineOfBusinessesXRefActivities(List<LineOfBusiness> lineOfBusinessesXRefActivities) {
 		this.lineOfBusinessesXRefActivities = lineOfBusinessesXRefActivities;
 	}
+	
+	public LineOfBusiness addLineOfBusinesses(LineOfBusiness lineOfBusinesses) {
+		getLineOfBusinessesXRefActivities().add(lineOfBusinesses);
+		lineOfBusinesses.addActivity(this);
+		return lineOfBusinesses;
+	}
+
+	public LineOfBusiness removeLineOfBusinesses(LineOfBusiness lineOfBusinesses) {
+		getLineOfBusinessesXRefActivities().remove(lineOfBusinesses);
+		lineOfBusinesses.removeActivity(this);
+		return lineOfBusinesses;
+	}	
 
 	public List<LineOfBusiness> getLineOfBusinessesXRefPresumedActivities() {
 		return this.lineOfBusinessesXRefPresumedActivities;

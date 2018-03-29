@@ -3,6 +3,7 @@ package com.netapp.ads.models;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -46,7 +47,7 @@ public class LineOfBusiness implements Serializable {
 
 	//bi-directional many-to-one association to Export
 	@OneToMany(mappedBy="lineOfBusiness")
-	private List<Export> exports;
+	private List<Export> exports = new ArrayList<Export>();
 
 	//bi-directional many-to-many association to Activity
 	@ManyToMany
@@ -59,7 +60,7 @@ public class LineOfBusiness implements Serializable {
 			@JoinColumn(name="activity_id", nullable=false)
 			}
 		)
-	private List<Activity> activitiesLobXRef;
+	private List<Activity> activitiesLobXRef = new ArrayList<Activity>();
 
 	//bi-directional many-to-many association to Activity
 	@ManyToMany
@@ -72,7 +73,7 @@ public class LineOfBusiness implements Serializable {
 			@JoinColumn(name="activity_id", nullable=false)
 			}
 		)
-	private List<Activity> activitiesPresumedLobXRef;
+	private List<Activity> activitiesPresumedLobXRef = new ArrayList<Activity>();
 
 	//bi-directional many-to-many association to Application
 	@ManyToMany
@@ -85,7 +86,7 @@ public class LineOfBusiness implements Serializable {
 			@JoinColumn(name="application_id", nullable=false)
 			}
 		)
-	private List<Application> applications;
+	private List<Application> applications = new ArrayList<Application>();
 
 	public LineOfBusiness() {
 	}
@@ -191,6 +192,16 @@ public class LineOfBusiness implements Serializable {
 	public void setActivitiesLobXRef(List<Activity> activities) {
 		this.activitiesLobXRef = activities;
 	}
+	
+	public Activity addActivity(Activity activity) {
+		getActivitiesLobXRef().add(activity);
+		return activity;
+	}
+
+	public Activity removeActivity(Activity activity) {
+		getActivitiesLobXRef().remove(activity);
+		return activity;
+	}	
 
 	public List<Activity> getActivitiesPresumedLobXRef() {
 		return this.activitiesPresumedLobXRef;
@@ -206,6 +217,16 @@ public class LineOfBusiness implements Serializable {
 
 	public void setApplications(List<Application> applications) {
 		this.applications = applications;
+	}
+
+	public Application addApplication(Application application) {
+		getApplications().add(application);
+		return application;
+	}
+
+	public Application removeApplication(Application application) {
+		getApplications().remove(application);
+		return application;
 	}
 
 }
