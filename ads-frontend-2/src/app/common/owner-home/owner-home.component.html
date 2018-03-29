@@ -1,0 +1,115 @@
+<div class="row d-flex justify-content-center">
+
+  <div class="col-md-8 mb-2">
+    <h1 class="h2">Global Technology Infrastructure</h1>
+
+
+    <p>You have been identified as the Application Owner for the Application(s) using the volumes on hosts that are connected
+      to NAS storage that is scheduled for decommissioning. Your Volumes will need to either be migrated or decommissioned
+      before that can take place. To do this we need to coordinate an application outage window between all the applications
+      connected to the volumes(s).
+
+      <br>
+      <br>The link(s) below will take you to the portal to identify the disposition for your volumes.
+    
+    </p>
+    <br>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Tasks Pending: Actual</h4>
+        <table class="table table-sm">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Task</th>
+              <th scope="col">Key</th>
+              <th scope="col">Created On</th>
+     
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of queueToProcess; let i = index">
+              <th scope="row">{{i+1}}</th>
+              <td>
+                <a routerLink="../owner/{{item.migrationKey}}">Process QTrees</a>
+              </td>
+              <td>{{item.migrationKey}}</td>
+              <td>{{item.createTime | date:'short'}}</td>
+     
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-6">
+        <h4 >Tasks Pending: Example</h4>
+        <table class="table table-sm" >
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Task</th>
+              <th scope="col">QTrees</th>
+              <th scope="col">Due On</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>
+                <a href="#">Link A</a>
+              </td>
+              <td>2</td>
+              <td>Jan 2, 2018</td>
+              <td>
+                <span class="badge badge-danger">Very Late</span>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>
+                <a href="#">Link B</a>
+              </td>
+              <td>3</td>
+              <td>Mar 3, 2018</td>
+              <td>
+                <span class="badge badge-warning">Late</span>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>
+                <a href="#">Link B</a>
+              </td>
+              <td>7</td>
+              <td>Mar 30, 2018</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <br>
+    <div class="alert alert-warning" role="alert">
+      <strong>Action Required:</strong> You will need to go to this links above and provide the information or to indicate you are
+      not the owner of the volume.
+    </div>
+
+
+    <br>You will be asked to confirm ownership. Please action this within 3 business days.
+
+    <br> Detailed instructions are provided on the portal sign in page and help is available on the portal page. You will be
+    asked to confirm ownership and schedule the migration.
+
+    <br>
+    <br>If you have questions, please contact “Global Technology Infrastructure”. We will be happy to confirm this email and
+    answer your questions.
+
+    <br>
+    <br>Thank you for your assistance and prompt attention,
+    <br>Migration Planning and Execution Team
+    <br>
+    <br>
+    <br>
+    <p class="font-weight-light">Internal Use Only</p>
+  </div>
+</div>

@@ -1,42 +1,34 @@
 package com.netapp.ads.controllers.discover;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-
-import javax.mail.MessagingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.thymeleaf.context.Context;
 
 import com.netapp.ads.batch.MigrationKeyService;
 import com.netapp.ads.email.EmailService;
 import com.netapp.ads.models.Activity;
-import com.netapp.ads.models.ActivityResponse;
 import com.netapp.ads.models.Controller;
 import com.netapp.ads.models.ControllerRelease;
 import com.netapp.ads.models.ControllerWorkPackage;
 import com.netapp.ads.models.MigrationKey;
 import com.netapp.ads.models.NasVolume;
+import com.netapp.ads.models.Qtree;
+import com.netapp.ads.models.QtreeDisposition;
 import com.netapp.ads.models.UserCorporate;
 import com.netapp.ads.repos.ActivityRepository;
 import com.netapp.ads.repos.ControllerReleaseRepository;
 import com.netapp.ads.repos.ControllerWorkPackageRepository;
-import com.netapp.ads.repos.MigrationKeyRepository;
+import com.netapp.ads.repos.QtreeDispositionRepository;
 import com.netapp.ads.repos.QtreeRepository;
 import com.netapp.ads.rules.engine.ExceptionRuleService;
 import com.netapp.ads.rules.engine.QtreeDispositionService;
@@ -47,6 +39,9 @@ public class DiscoverProcessingController {
 
 	private static final Logger log = LoggerFactory.getLogger(DiscoverProcessingController.class);
 
+	@Value("${ads.rule.discovery_rule.disposition}")
+	public String discoveryDisposition;
+	
 	@Autowired
 	EmailService emailService;
 
@@ -73,6 +68,9 @@ public class DiscoverProcessingController {
 
 	@Autowired
 	QtreeRepository qtreeRepository;
+	
+	@Autowired
+	QtreeDispositionRepository qtreeDispositionRepository;
 
 	/*	
  	For testing populateActivites perform following database clean-up
@@ -147,10 +145,17 @@ public class DiscoverProcessingController {
 		return 0;
 	}	
 
+	/**
+	 * Calls the migration key service to generate migration keys for
+	 * only those activities which don't have a key
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/generateMigrationKeys", method = RequestMethod.POST)
 	public Integer generateMigrationKeys() {
 		//Add DiscoverOwner clause
-		List<Activity> activities = activityRepository.findAll();
+		List<Activity> activities = activityRepository.findActivitiesWithoutMigrationKeys(discoveryDisposition);
+		log.debug("Number of activities to generate migration keys: {}", activities.size());
 		migrationKeyService.generateMigrationKeys(activities);
 		return 0;
 	}

@@ -4,13 +4,13 @@ package com.netapp.ads.hhcc.jaxb;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(
-		name="netapp")
+@XmlRootElement(name = "netapp")
 public class NetApp {
 
-/*    namespace="http://www.netapp.com/filer/admin",
-*/
-    		
+	/*
+	 * namespace="http://www.netapp.com/filer/admin",
+	 */
+
 	private Results results;
 
 	public Results getResults() {
@@ -21,6 +21,5 @@ public class NetApp {
 	public void setResults(Results results) {
 		this.results = results;
 	}
-	
-	
+
 }

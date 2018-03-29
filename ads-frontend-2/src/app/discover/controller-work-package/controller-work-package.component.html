@@ -76,9 +76,9 @@
 
 
 
-<prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal" [config]="{ show: true }" bsModal #propPreferenceModal="bs-modal"
+<prop-preferences-modal class="modal fade" *ngIf="isPropPreferenceModal" [config]="{ show: true, backdrop:'static' }" bsModal #propPreferenceModal="bs-modal"
   (done)="onHide('propPreferenceModal')" [pageName]="pageName"></prop-preferences-modal>
 
 
-  <controller-work-package-delete class="modal fade" bsModal #deleteModal="bs-modal" *ngIf="isDeleteModal" [config]="{ show: true }" [controllerTargetAvailable]="controllerTargetAvailable"
+  <controller-work-package-delete class="modal fade" bsModal #deleteModal="bs-modal" *ngIf="isDeleteModal" [config]="{ show: true, backdrop:'static' }" [controllerTargetAvailable]="controllerTargetAvailable"
   (delete)="onHide('delete')" (cancel)="onHide('delete')"></controller-work-package-delete>

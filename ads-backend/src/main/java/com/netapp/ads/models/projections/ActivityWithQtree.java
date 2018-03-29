@@ -26,11 +26,13 @@ import com.netapp.ads.models.Share;
 @Projection(name="activityWithQtree", types = { Activity.class})
 public interface ActivityWithQtree {
 
+	public Integer getId();
+	
 	public boolean getAdminOverride();
 
 	public Timestamp getCreateTime();
 
-	public Date getDeleteDate();
+	public Date getDecommissionDate();
 
 	public Integer getMailCount();
 
@@ -44,9 +46,11 @@ public interface ActivityWithQtree {
 
 	public Timestamp getUpdateTime();
 
-	public boolean getWillDelete();
+	public boolean getWillDecommission();
 
 	public boolean getWillMigrate();
+	
+	public String getUnidentifiedReason();
 
 	
 	public Qtree getQtree();

@@ -28,6 +28,7 @@ import com.netapp.ads.repos.ApplicationRepository;
 import com.netapp.ads.repos.HostRepository;
 import com.netapp.ads.repos.QtreeDispositionRepository;
 import com.netapp.ads.repos.UserCorporateRepository;
+import com.netapp.ads.repos.UserRoleRepository;
 
 @Service
 public class OwnerIdentificationService {
@@ -56,7 +57,10 @@ public class OwnerIdentificationService {
 	public ApplicationRepository applicationRepository;
 	
 	@Autowired
-	public UserCorporateRepository userCorporateRepository;	
+	public UserCorporateRepository userCorporateRepository;
+	
+	@Autowired
+	public UserRoleRepository userRoleRepository;	
 	
 	/**
 	 * Finds activities where owner needs to be discovered
@@ -196,6 +200,7 @@ public class OwnerIdentificationService {
 					manager.setFirstName(managerEmployee.getFirstName());
 					manager.setLastName(managerEmployee.getLastName());
 					manager.setMiddleName(managerEmployee.getMiddle());
+					manager.setUserRole(userRoleRepository.findOneByUserRole("ROLE_USER"));
 					manager.setEmail(managerEmployee.getIAddress());
 					manager.setBestPhone(managerEmployee.getPhoneNo());
 					manager.setMobilePhone(managerEmployee.getCellPhoneNo());
@@ -220,6 +225,7 @@ public class OwnerIdentificationService {
 					corporateUser.setFirstName(employee.getFirstName());
 					corporateUser.setLastName(employee.getLastName());
 					corporateUser.setMiddleName(employee.getMiddle());
+					corporateUser.setUserRole(userRoleRepository.findOneByUserRole("ROLE_USER"));
 					corporateUser.setEmail(employee.getIAddress());
 					corporateUser.setBestPhone(employee.getPhoneNo());
 					corporateUser.setMobilePhone(employee.getCellPhoneNo());

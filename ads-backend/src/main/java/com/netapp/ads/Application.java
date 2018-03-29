@@ -1,5 +1,6 @@
 package com.netapp.ads;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
@@ -8,7 +9,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.bouncycastle.openpgp.PGPException;
+import org.jfree.util.Log;
+import org.kie.internal.builder.conf.DumpDirOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +31,20 @@ import com.javax0.license3j.licensor.License;
 public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
     public static HashMap<String, Boolean> ACTIVE_MODULES; 
-    
+
+    // FIXME:  THIS IS ONLY A TEMPORANY SOLUTION SO WE CAN LOGIN AS MANY CORP USERS
+    public static String ssoWorkAroundId = "";
     
     public static void main(String[] args) throws Exception {
-
+    	
+    	//TO BE REMOVED. Just for Talend testing
+    	File dumpDir = new File("target/drools-dump-dir");
+    	if (dumpDir.exists()) {
+            FileUtils.deleteQuietly(dumpDir);
+        }
+        dumpDir.mkdirs();
+    	System.setProperty(DumpDirOption.PROPERTY_NAME, "target/drools-dump-dir");
+    	
 		HashMap<String, HashMap> completeLicenseInfo = checkLicense();
 
 		// Store the active modules in memory. Each time a user logs in to ADS, a REST call will need to provide modules available.

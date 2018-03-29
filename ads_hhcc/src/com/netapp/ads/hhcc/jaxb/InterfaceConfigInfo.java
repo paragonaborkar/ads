@@ -15,5 +15,4 @@ public class InterfaceConfigInfo {
 		this.interfaceConfigInfoChild = interfaceConfigInfoChild;
 	}
 
-	
 }

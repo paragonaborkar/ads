@@ -37,6 +37,7 @@ public class AdsUser extends User {
 		this.lastName = userCorporate.getLastName();
 		this.email = userCorporate.getEmail();
 		this.corpUserId = userCorporate.getId();
+		this.userRole = userCorporate.getUserRole().getUserRole();
 	}
 
 	public String getFirstName() {

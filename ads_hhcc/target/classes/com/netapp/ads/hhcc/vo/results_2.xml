@@ -41,6 +41,13 @@
 						<interface>e0a</interface>
 					</vfnet-info>
 				</vfnets>
+				<vfstores>
+					<vfstore-info>
+						<path>/</path>
+						<status>online</status>
+						<is-etc>true</is-etc>
+					</vfstore-info>
+				</vfstores
 			</vfiler-info>
 		</vfilers>
 		<interface-config-info>
@@ -77,5 +84,31 @@
 				<readdir-ops>1</readdir-ops>
 			</nfs-top-info>
 		</nfs-top>
+		<licenses>
+			<license-v2-info>
+				<package>nfs</package>
+				<serial-number>1-81-0000000000000001810000050</serial-number>
+				<owner>ads-dev-7dot1</owner>
+				<type>site</type>
+				<description>NFS License</description>
+				<expiration-time>0</expiration-time>
+				<legacy>false</legacy>
+				<customer-id>1-82-0000000000000000000000050</customer-id>
+				<is-in-grace-period>false</is-in-grace-period>
+				<grace-period-expiration>0</grace-period-expiration>
+			</license-v2-info>
+			<license-v2-info>
+				<package>cifs</package>
+				<serial-number>1-81-0000000000000001810000050</serial-number>
+				<owner>ads-dev-7dot1</owner>
+				<type>site</type>
+				<description>CIFS License</description>
+				<expiration-time>0</expiration-time>
+				<legacy>false</legacy>
+				<customer-id>1-82-0000000000000000000000050</customer-id>
+				<is-in-grace-period>false</is-in-grace-period>
+				<grace-period-expiration>0</grace-period-expiration>
+			</license-v2-info>
+		</licenses>
 </results>
 

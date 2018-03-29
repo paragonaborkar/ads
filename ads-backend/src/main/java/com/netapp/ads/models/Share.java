@@ -15,14 +15,13 @@ public class Share implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
 	private Integer id;
 
 	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
-	@Column(name="owner_user_corporate_id", nullable=false)
+	@Column(name="owner_user_corporate_id", nullable=true)
 	private Integer ownerUserCorporateId;
 
 	@Column(name="share_name", nullable=false, length=255)

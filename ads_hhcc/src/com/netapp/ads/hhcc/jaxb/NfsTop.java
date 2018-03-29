@@ -14,5 +14,5 @@ public class NfsTop {
 	public void setNfsTopInfo(NfsTopInfo[] nfsTopInfo) {
 		this.nfsTopInfo = nfsTopInfo;
 	}
-	
+
 }

@@ -48,16 +48,25 @@ public class JasperReportServiceImpl implements JasperReportService {
 	@Autowired
 	private AdsReportRepository adsReportRepository;
 
+
 	/**
 	 * This method is called to generate Report
 	 */
+//	@SuppressWarnings("deprecation")
 	@Override
-	public Report generateReport(Integer pageNo, String reportName, String adsModule) {
+	public Report generateReport(Integer pageNo, Integer recordsPerPage, String reportName, String adsModule) {
 		DynamicJasper dj = new DynamicJasper();
 
 		AdsReport adsReport = adsReportRepository.findByReportNameAndAdsModule(reportName, adsModule);
 
-		List<Map<String, Object>> list = jdbcTemplate.queryForList("select * from " + adsReport.getViewOrTableName());
+		double count = jdbcTemplate.queryForObject("select count(*) from " + adsReport.getViewOrTableName(),
+				Double.class);
+
+		int totalPages = (int) Math.ceil(count / Double.valueOf(recordsPerPage));
+		int offset = (pageNo - 1) * recordsPerPage;
+
+		List<Map<String, Object>> list = jdbcTemplate.queryForList(
+				"select * from " + adsReport.getViewOrTableName() + " LIMIT " + offset + "," + recordsPerPage);
 
 		Report reportOut = new Report();
 		try {
@@ -66,14 +75,13 @@ public class JasperReportServiceImpl implements JasperReportService {
 
 			Map<String, Object> params = new HashMap<>();
 
-			JasperReport jr = DynamicJasperHelper.generateJasperReport(dr, getLayoutManager(), params);
+			JasperReport jr = DynamicJasperHelper.generateJasperReport(dr, getLayoutManager(), null);
 
 			JasperPrint jp;
 
 			jp = JasperFillManager.fillReport(jr, params, ds);
 
 			HtmlExporter exporter = new HtmlExporter();
-			exporter.setParameter(JRExporterParameter.PAGE_INDEX, pageNo - 1);
 			exporter.setParameter(JRHtmlExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
 			exporter.setParameter(JRHtmlExporterParameter.IS_WRAP_BREAK_WORD, Boolean.TRUE);
 			exporter.setParameter(JRXlsExporterParameter.IS_IGNORE_GRAPHICS, Boolean.TRUE);
@@ -82,9 +90,10 @@ public class JasperReportServiceImpl implements JasperReportService {
 			exporter.setParameter(JRHtmlExporterParameter.SIZE_UNIT, JRHtmlExporterParameter.SIZE_UNIT_POINT);
 			exporter.setParameter(JRExporterParameter.OUTPUT_STRING_BUFFER, sb);
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jp);
+
 			exporter.exportReport();
 			reportOut.setReport(sb.toString());
-			reportOut.setTotalPages(jp.getPages().size());
+			reportOut.setTotalPages(totalPages);
 		} catch (JRException e) {
 			throw new NetAppAdsException("Error in Generating Report");
 		} catch (Exception e) {
@@ -126,11 +135,10 @@ public class JasperReportServiceImpl implements JasperReportService {
 			xlsExporter.setExporterOutput(new SimpleOutputStreamExporterOutput(file));
 			SimpleXlsReportConfiguration xlsReportConfiguration = new SimpleXlsReportConfiguration();
 			xlsReportConfiguration.setOnePagePerSheet(false);
-			xlsReportConfiguration.setRemoveEmptySpaceBetweenRows(true);
-			xlsReportConfiguration.setDetectCellType(true);
 			xlsReportConfiguration.setWhitePageBackground(false);
 			xlsReportConfiguration.setIgnoreGraphics(true);
 			xlsReportConfiguration.setIgnorePageMargins(true);
+			xlsReportConfiguration.setWrapText(false);
 
 			xlsExporter.setConfiguration(xlsReportConfiguration);
 			xlsExporter.exportReport();

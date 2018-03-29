@@ -39,4 +39,47 @@ export class OperationalOverrideService {
   }
 
 
+  getDropDown(fieldName, fieldCascadeName): Observable<any> {
+
+    // let urlParms = "projection=activityWithQtree";  
+    let urlParms = "";
+    if (fieldCascadeName != null)
+      urlParms = "search/findByFieldNameAndFieldCascadeName?fieldName="+ fieldName + "&fieldCascadeName=" + fieldCascadeName;  
+    else 
+      urlParms = "search/findByFieldName?fieldName="+ fieldName;
+
+    return this.http.get(this.global.apiUrl + "/sysFieldValues/" + urlParms)
+      .map((res: Response) => res)
+    // .catch(
+    // Handle error in Subscribe() using the AdsErrorService  
+    // You can optionally handle it here, if needed    
+    //   );
+  }
+
+  getRequestedByPerson(search): Observable<any> {
+
+    let params = "?firstContains=" + search + "&lastContains=" + search + "&projection=UserCorporate";
+    console.log("getRequestedByPerson params " + params);
+    return this.http
+      .get(this.global.apiUrl + "/userCorporates/search/findByFirstNameContainingOrLastNameContaining" + params)
+      .map((res: Response) => res["_embedded"]["userCorporates"]);
+    // .catch(
+    // Handle error in Subscribe() using the AdsErrorService      
+    // You can optionally handle it here, if needed
+    //   );
+
+  }
+
+  resetUnidentified(info): Observable<any> {
+
+      return this.http
+      .post(this.global.apiUrl + "/resubmitUnidentified", info)
+      .map((res: Response) => res);
+    // .catch(
+    // Handle error in Subscribe() using the AdsErrorService      
+    // You can optionally handle it here, if needed
+    //   );
+
+  }
+
 }

@@ -85,5 +85,10 @@
         "GET": {
             "DEFAULT": "Sorry, could not get potential owner details."
         }
+    },
+    "unidentifiedOverride": {
+        "POST": {
+            "DEFAULT": "Sorry, could not get potential owner details."
+        }
     }
 }
