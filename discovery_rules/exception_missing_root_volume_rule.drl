@@ -1,0 +1,21 @@
+package rules;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+
+import com.netapp.ads.models.Qtree;
+
+global Logger logger;
+
+rule "Exception - Missing Root Volume Rule" salience -1
+lock-on-active
+when
+	$droolsHelper: DroolsHelper();
+	$qtree: Qtree(nasVolume.volumeName not contains("vol0"), $droolsHelper.dispositionExists($qtree, "NetApp") == false)
+then
+	logger.debug("Exception - Missing Root Volume Rule: Qtree: {}", $qtree.getId());
+	
+	logger.warn("Exception - Missing ROOT Volume for Controller: " + $qtree.getNasVolume().getController().getId());
+	
+end

@@ -1,0 +1,52 @@
+package rules;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+
+import com.netapp.ads.models.Qtree;
+import com.netapp.ads.models.QtreeDisposition;
+import com.netapp.ads.models.Share;
+import com.netapp.ads.repos.QtreeDispositionRepository;
+import com.netapp.ads.services.DroolsHelper;
+
+global Logger logger;
+
+rule "Discovery - Access Control Rule" salience 10
+lock-on-active
+when
+	$qtreeDispositionRepository: QtreeDispositionRepository();
+	$droolsHelper: DroolsHelper();
+	$qtree: Qtree(nasVolume.volumeName not contains("vol0"), $droolsHelper.isQtreeAssociatedWithAtleastOneHost($qtree) == false, $droolsHelper.qtreeAnyShareIsOfType($qtree, "CIFS") == false, $droolsHelper.qtreeAnyHostNameIs($qtree, "*") == false, $droolsHelper.qtreeAnyHostIsReacheable($qtree) == false)
+then
+	logger.debug("Discovery - Access Control Rule: THEN: " + $qtree.getId());
+	int cifsCount = 0;
+	int nfsCount = 0;
+	
+	List<Share> shares = $qtree.getShares();
+	for(Share share : shares) {
+		if(share.getShareType().equals("CIFS"))
+			cifsCount++;
+		else if(share.getShareType().equals("NFS"))
+			nfsCount++;
+	}
+	
+	logger.debug("Action: cifsCount: {}, nfsCount: {}", cifsCount, nfsCount);
+
+	QtreeDisposition $qtreeDisposition = new QtreeDisposition();
+	$qtreeDisposition.setQtree($qtree);
+	if(cifsCount == 0) {
+		$qtreeDisposition.setDisposition("NFS-Orphan");
+		$qtreeDisposition.setJustification("ACL- Meets customer's NFS ACL Orphan rule");
+	} else if (cifsCount > 0 && nfsCount > 0) {
+		$qtreeDisposition.setDisposition("NFS-Orphan w/CIFS");
+		$qtreeDisposition.setJustification("ACL- Meets customer's NFS ACL Orphan rule and no host connection to CIFS shares");
+	} else {
+		$qtreeDisposition.setDisposition("CIFS-Orphan");
+		$qtreeDisposition.setJustification("CIFS Orphan- No hosts connected");
+	}
+
+	$qtreeDispositionRepository.save($qtreeDisposition);
+	logger.debug("Discovery - Access Control Rule: Created Qtree Disposition: {}", $qtreeDisposition.getId());
+	update( $qtree );
+end
