@@ -1,0 +1,31 @@
+package rules;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+
+import com.netapp.ads.models.Qtree;
+import com.netapp.ads.models.QtreeDisposition;
+import com.netapp.ads.repos.QtreeDispositionRepository;
+import com.netapp.ads.services.DroolsHelper;
+
+global Logger logger;
+
+rule "Discovery - Discovery Rule" salience 1
+lock-on-active
+when
+	$qtreeDispositionRepository: QtreeDispositionRepository();
+	$droolsHelper: DroolsHelper();
+	$qtree: Qtree($droolsHelper.getCountOfDispositions($qtree) < 1);
+then
+	logger.debug("Discovery - Discovery Rule: THEN: Qtree: {}", $qtree.getId());
+	logger.debug("Qtree Disposition: {}", $qtree.getQtreeDisposition().isEmpty());
+	logger.debug("Qtree Disposition: {}", $qtree.getQtreeDisposition().size());
+	QtreeDisposition $qtreeDisposition = new QtreeDisposition();
+	$qtreeDisposition.setQtree($qtree);
+	$qtreeDisposition.setDisposition("DiscoverOwner");
+	$qtreeDisposition.setJustification("No Rules Matched");
+	$qtreeDispositionRepository.save($qtreeDisposition);
+	logger.debug("Discovery - Discovery Rule: Created Qtree Disposition: {}", $qtreeDisposition.getId());
+	update( $qtree );
+end
