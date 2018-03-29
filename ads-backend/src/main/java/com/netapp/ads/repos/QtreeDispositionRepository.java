@@ -19,4 +19,6 @@ public interface QtreeDispositionRepository extends JpaRepository<QtreeDispositi
 	List<QtreeDisposition> findByDisposition(@Param("disposition") String disposition);
 	
 	QtreeDisposition findOneByDispositionAndQtree(@Param("disposition") String disposition, @Param("qtree") Qtree qtree);
+	
+	List<QtreeDisposition> findByQtree(@Param("qtree") Qtree qtree);
 }
