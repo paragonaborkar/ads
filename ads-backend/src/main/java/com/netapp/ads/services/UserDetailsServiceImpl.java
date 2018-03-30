@@ -45,11 +45,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-		
+		// Check if the username has SSO, to confirm for SSO Login
 		if (username.indexOf("SSO") != -1) {
 			String split[] = username.split("-");
+			// Add Granted Authority for Corporate User.
 			grantedAuthorities.add(new SimpleGrantedAuthority("CORP_USER"));
-
+			// Check if the Corporate user is authenticated and issue JWT Token
 			if (SecurityConfig.authAssertionIdUserNameCache.get(split[1]) == null) {
 				throw new UsernameNotFoundException(String.format("The user is not enabled", username));
 			} else {
@@ -69,6 +70,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		UserApi userApi = userApiRepository.findByClientId(username);
 		if(userApi != null) {
+			// Check if Api User is Authenticated and issue JWT token.
 			if (userApi.getEnabled()) {
 				grantedAuthorities.add(new SimpleGrantedAuthority("CLIENT"));
 				return  new AdsUser(userApi.getClientId(), userApi.getClientSecret(), grantedAuthorities, userApi);
@@ -76,6 +78,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				throw new UsernameNotFoundException(String.format("The user is not enabled", username));
 			}
 		} else {
+			// Check if Native User is Authenticated and issue JWT token.
 			UserNative userNative = userNativeRepository.findFirstByEmail(username);
 			if (userNative == null || !userNative.getEnabled()) {
 				throw new UsernameNotFoundException(String.format("The username %s doesn't exist", username));

@@ -51,7 +51,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	private AuthenticationManager authenticationManager;
 	
 	/**
-	 * Setting Client Id and Client Secret in URL
+	 * Set Client Id, Client Secret, Grant Type, Scope and Resource ID from application.properties file. 
 	 */
 	@Override
 	public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
@@ -64,6 +64,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		        .resourceIds(resourceIds);
 	}
 
+	/**
+	 * Configure the properties and enhanced functionality of the Authorization Server endpoints.
+	 */
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
@@ -76,6 +79,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		        .authenticationManager(authenticationManager);
 	}
 	
+	/**
+	 * Create an access token associated with the specified credentials.
+	 * @return
+	 */
 	@Bean
     @Primary
     public AuthorizationServerTokenServices tokenServices() {

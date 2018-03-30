@@ -36,6 +36,11 @@ import com.netapp.ads.util.DateUtils;
 @Component
 public class AuditInterceptor extends EmptyInterceptor {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = LoggerFactory.getLogger(AuditInterceptor.class);
 
 	boolean isMainEntity = false;
@@ -101,11 +106,11 @@ public class AuditInterceptor extends EmptyInterceptor {
 			} else {
 				currentObject = null;
 			}
-			
+			// Used ApplicationContext as Autowiring isn't working.
 			ApplicationContext ctx = AppContext.getApplicationContext();
 			AuditEventRepository auditEventRepositories = ctx.getBean(AuditEventRepository.class);
 
-			// Finding Audit Event
+			// Finding Audit Event based on method and resource pattern.
 			AuditEvent auditEvent = auditEventRepositories.findByHttpMethodAndResourcePattern(method, resourcePattern);
 
 			if (auditEvent != null) {
@@ -113,18 +118,23 @@ public class AuditInterceptor extends EmptyInterceptor {
 				UserNativeRepository userNativeRepo = ctx.getBean(UserNativeRepository.class);
 				UserApiRepository userApiRepo = ctx.getBean(UserApiRepository.class);
 				UserNative userNative = userNativeRepo.findByUserName(userName);
+				// Check if which user has performed the action.
 				if (userNative != null) {
 					AuditTrailNativeUser auditTrailNativeUser = new AuditTrailNativeUser();
 					auditTrailNativeUser.setAuditEvent(auditEventRepositories.findOne(auditId));
+					// Convert time to UTC.
 					auditTrailNativeUser.setCreateTime((Timestamp) dateUtils.convertToUtc());
 					auditTrailNativeUser.setUserNativeId(userNative.getId());
 					if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method)) {
+						// Add new value after adding or updating.
 						auditTrailNativeUser.setAuditComment(convertObjectToString(currentObject));
 					}
 					if ("DELETE".equalsIgnoreCase(method)) {
+						// Add deleted value.
 						auditTrailNativeUser.setOldValues(convertObjectToString(deleteObj));
 					}
 					if ("PUT".equalsIgnoreCase(method)) {
+						// Add old value after updating.
 						auditTrailNativeUser.setOldValues(convertObjectToString(oldUpdate));
 					}
 
@@ -135,16 +145,19 @@ public class AuditInterceptor extends EmptyInterceptor {
 					UserApi userApi = userApiRepo.findByClientId(userName);
 					AuditTrailApi auditTrailApi = new AuditTrailApi();
 					auditTrailApi.setAuditEvent(auditEventRepositories.findOne(auditId));
+					// Convert time to UTC.
 					auditTrailApi.setCreateTime((Timestamp) dateUtils.convertToUtc());
 					auditTrailApi.setUserApiId(userApi.getId());
-
 					if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method)) {
+						// Add new value after adding or updating.
 						auditTrailApi.setAuditComment(convertObjectToString(currentObject));
 					}
 					if ("DELETE".equalsIgnoreCase(method)) {
+						// Add deleted value.
 						auditTrailApi.setOldValues(convertObjectToString(deleteObj));
 					}
 					if ("PUT".equalsIgnoreCase(method)) {
+						// Add old value after updating.
 						auditTrailApi.setOldValues(convertObjectToString(oldUpdate));
 					}
 					auditTrailApi.setAuditedResource(url);
@@ -156,6 +169,12 @@ public class AuditInterceptor extends EmptyInterceptor {
 		}
 	}
 
+	/**
+	 * Convert Object to String.
+	 * 
+	 * @param object
+	 * @return
+	 */
 	public String convertObjectToString(Object object) {
 		ObjectMapper mapper = new ObjectMapper();
 		Hibernate5Module hibernate5Module = new Hibernate5Module();

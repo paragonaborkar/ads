@@ -1,6 +1,5 @@
 package com.netapp.ads.controllers;
 
-import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,14 +27,18 @@ public class JasperReportControllers {
 	private JasperReportService jasperReportService;
 
 	/**
-	 * Get html report by page index
+	 * Generate HTML Report based on Page Number, Records per page
+	 * Report Name and Report Module
 	 * 
 	 * @param request
 	 * @param response
 	 * @param map
-	 * @param num
-	 * @return {@link Report}
-	 * @throws IOException
+	 * @param pageNo
+	 * @param recordsPerPage
+	 * @param reportName
+	 * @param adsModule
+	 * @return
+	 * @throws Exception
 	 */
 	@PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER') or hasAuthority('USER') or hasAuthority('USER_TYPE') or hasAuthority('CLIENT')")
 	@RequestMapping(value = "/generateReport", method = RequestMethod.GET)
@@ -50,11 +53,13 @@ public class JasperReportControllers {
 	}
 
 	/**
-	 * Download a report of excel sheet
+	 * Download Excel Report based on Report Name and Report Module.
 	 * 
 	 * @param request
 	 * @param response
 	 * @param model
+	 * @param reportName
+	 * @param adsModule
 	 * @throws Exception
 	 */
 	@PreAuthorize("hasAuthority('ADMIN_USER') or hasAuthority('STANDARD_USER') or hasAuthority('USER') or hasAuthority('USER_TYPE') or hasAuthority('CLIENT')")

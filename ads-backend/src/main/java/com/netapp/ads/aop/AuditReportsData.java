@@ -64,10 +64,11 @@ public class AuditReportsData {
 		String method = requestUtils.currentMethod(httpRequest);
 		String userName, url;
 
+		// Check whether the URL has token end point.
+		// If the URL has token end point, we have User's email otherwise User's username.
 		if (!isLogin(urlInfo)) {
 			userName = requestUtils.currentUserName(httpRequest);
 			url = urlInfo.substring(1).split("/")[0];
-
 		} else {
 			userName = (String) jp.getArgs()[0];
 			url = urlInfo.substring(1);
@@ -76,10 +77,10 @@ public class AuditReportsData {
 		AuditEvent auditEvent = auditEventRepository.findByHttpMethodAndResourcePattern(method, url);
 		if (auditEvent != null) {
 			int auditId = auditEvent.getId();
-
 			UserNative userNative;
 			UserApi userApi = userApiRepository.findByClientId(userName);
 
+			// Check the URL and find the User based on email or username.
 			if (!isLogin(urlInfo)) {
 				userNative = userNativeRepository.findByUserName((userName));
 			} else {
@@ -90,15 +91,20 @@ public class AuditReportsData {
 				AuditTrailApi auditTrailApi = new AuditTrailApi();
 				auditTrailApi.setAuditEvent(auditEventRepository.findOne(auditId));
 				auditTrailApi.setUserApiId(userApi.getId());
+				// Convert time to UTC.
 				auditTrailApi.setCreateTime((Timestamp) dateUtils.convertToUtc());
 				auditTrailApi.setAuditedResource(urlInfo);
-
+				
+				// Check the URL and audit based on URL.
 				if (isLogin(urlInfo)) {
+					// Get the password from parameters.
 					String[] paramValues = httpRequest.getParameterValues("password");
 					String pwd = null;
 					if (paramValues.length > 0) {
 						pwd = paramValues[0];
 					}
+					// Encode the User entered password to BCrypt and check it with the one in database.
+					// To verify successful or failure login.
 					if (bcryptPasswordEncoder.matches(pwd, userApi.getClientSecret())) {
 						auditTrailApi.setAuditComment("Login Success");
 					} else {
@@ -116,14 +122,19 @@ public class AuditReportsData {
 				auditTrailNativeUser.setAuditEvent(auditEventRepository.findOne(auditId));
 				auditTrailNativeUser.setUserNativeId(userNative.getId());
 				auditTrailNativeUser.setAuditedResource(urlInfo);
+				// Convert Time to UTC.
 				auditTrailNativeUser.setCreateTime((Timestamp) dateUtils.convertToUtc());
-
+				
+				// Check the URL and audit based on URL.
 				if (isLogin(urlInfo)) {
+					// Get the password from parameters.
 					String[] paramValues = httpRequest.getParameterValues("password");
 					String pwd = null;
 					if (paramValues.length > 0) {
 						pwd = paramValues[0];
 					}
+					// Encode the User entered password to BCrypt and check it with the one in database.
+					// To verify successful or failure login.
 					if (bcryptPasswordEncoder.matches(pwd, userNative.getPassword())) {
 						auditTrailNativeUser.setAuditComment("Login Success");
 					} else {

@@ -169,15 +169,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	/**
-	 * Encodes password to BCrypt
+	 * Encodes User entered password to BCrypt and verify it with the one in database.
 	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
-
 		auth.authenticationProvider(samlAuthenticationProvider());
 	}
-
+	
+	/**
+	 * Ignore REST API's from security.
+	 */
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
@@ -221,9 +223,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
+	// Making this primary to avoid any accidental duplication with another token
+	// service instance of the same name
 	@Bean
-	@Primary // Making this primary to avoid any accidental duplication with another token
-				// service instance of the same name
+	@Primary 
 	public DefaultTokenServices tokenServices() {
 		DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
 		defaultTokenServices.setTokenStore(tokenStore());
@@ -445,15 +448,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		SavedRequestAwareAuthenticationSuccessHandler successRedirectHandler = new SavedRequestAwareAuthenticationSuccessHandler() {
 			@Override
 			public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth) throws ServletException, IOException {
-				
+				// Check if the user is authenticated.
 				if (auth != null && auth instanceof ExpiringUsernameAuthenticationToken) {
 					String token = null;
+					// Generate JWT token if the user has access or redirect to the URL from application.properties file along with failure message.
 					try {
 						token = generateTokenForSAML(auth);
 					} catch (Exception e) {
 						response.sendRedirect(successRedirectURL + "?error=" + "Error in SSO Login");
 					}
-
+					
+					// Redirect to URL from application.properties if the user has access.
+					// Along with Encoded token and User ID in URL.
 					if (token != null) {
 						final byte[] authBytes = token.getBytes(StandardCharsets.UTF_8);
 						final String encodedToken = Base64.getEncoder().encodeToString(authBytes);
@@ -606,7 +612,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	/**
-	 * Generate JWT Token for SSO Login
+	 * Generate JWT Token for SSO Login.
 	 * 
 	 * @param auth
 	 * @return
@@ -627,9 +633,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		map.add("password", ((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID());
 
 		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
-
+		
+		// POST the request to Token EndPoint URL to generate JWT token. 
 		ResponseEntity<String> response = restTemplate.postForEntity(tokenEndPointURL, request, String.class);
-
+		// Return JWT Token.
 		return response.getBody();
 	}
 

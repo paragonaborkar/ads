@@ -76,7 +76,7 @@ public class DynamicJasper {
 	 * @return
 	 */
 	public DynamicReport downloadReport(List<AdsReportDetail> reportColumns) {
-
+		// Add Font name and size.
 		Font font = new Font(10, "Calibri", false, false, false);
 		Style titleStyle = new StyleBuilder(false).setFont(font).build();
 		Style subTitleStyle = new StyleBuilder(false).setFont(font).build();

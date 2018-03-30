@@ -48,49 +48,45 @@ public class JasperReportServiceImpl implements JasperReportService {
 	@Autowired
 	private AdsReportRepository adsReportRepository;
 
-
 	/**
 	 * This method is called to generate Report
 	 */
-//	@SuppressWarnings("deprecation")
+	// @SuppressWarnings("deprecation")
 	@Override
 	public Report generateReport(Integer pageNo, Integer recordsPerPage, String reportName, String adsModule) {
 		DynamicJasper dj = new DynamicJasper();
-
+		// Get the report details based on Report Name and Report Module.
 		AdsReport adsReport = adsReportRepository.findByReportNameAndAdsModule(reportName, adsModule);
-
+		// Get the count from the view.
 		double count = jdbcTemplate.queryForObject("select count(*) from " + adsReport.getViewOrTableName(),
 				Double.class);
-
 		int totalPages = (int) Math.ceil(count / Double.valueOf(recordsPerPage));
 		int offset = (pageNo - 1) * recordsPerPage;
-
+		// Get the List of Report just for that particular page.
 		List<Map<String, Object>> list = jdbcTemplate.queryForList(
 				"select * from " + adsReport.getViewOrTableName() + " LIMIT " + offset + "," + recordsPerPage);
 
 		Report reportOut = new Report();
 		try {
+			// Add columns and styling for the report.
 			DynamicReport dr = dj.generateColumns(adsReport.getAdsReportDetail(), adsReport.getReportTitle());
 			JRDataSource ds = new JRBeanCollectionDataSource(list);
 
 			Map<String, Object> params = new HashMap<>();
-
+			// Generate Report.
 			JasperReport jr = DynamicJasperHelper.generateJasperReport(dr, getLayoutManager(), null);
-
 			JasperPrint jp;
-
 			jp = JasperFillManager.fillReport(jr, params, ds);
-
+			// Add the configurations.
 			HtmlExporter exporter = new HtmlExporter();
 			exporter.setParameter(JRHtmlExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
 			exporter.setParameter(JRHtmlExporterParameter.IS_WRAP_BREAK_WORD, Boolean.TRUE);
 			exporter.setParameter(JRXlsExporterParameter.IS_IGNORE_GRAPHICS, Boolean.TRUE);
-
+			// Convert Report to String.
 			StringBuffer sb = new StringBuffer();
 			exporter.setParameter(JRHtmlExporterParameter.SIZE_UNIT, JRHtmlExporterParameter.SIZE_UNIT_POINT);
 			exporter.setParameter(JRExporterParameter.OUTPUT_STRING_BUFFER, sb);
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jp);
-
 			exporter.exportReport();
 			reportOut.setReport(sb.toString());
 			reportOut.setTotalPages(totalPages);
@@ -110,17 +106,17 @@ public class JasperReportServiceImpl implements JasperReportService {
 		DynamicJasper dj = new DynamicJasper();
 
 		try {
-
+			// Get the report details based on Report Name and Report Module.
 			AdsReport adsReport = adsReportRepository.findByReportNameAndAdsModule(reportName, adsModule);
-
+			// Get the list of the view.
 			List<Map<String, Object>> list = jdbcTemplate
 					.queryForList("select * from " + adsReport.getViewOrTableName());
-
+			// Add the columns and styling for report.
 			DynamicReport dr = dj.downloadReport(adsReport.getAdsReportDetail());
 			JRDataSource ds = new JRBeanCollectionDataSource(list);
 
 			Map<String, Object> params = new HashMap<>();
-
+			// Generate Report.
 			JasperReport jr = DynamicJasperHelper.generateJasperReport(dr, getLayoutManager(), params);
 
 			JasperPrint jp;
@@ -130,7 +126,7 @@ public class JasperReportServiceImpl implements JasperReportService {
 			JRXlsExporter xlsExporter = new JRXlsExporter();
 
 			File file = new File("Report.xls");
-
+			// Add the configurations.
 			xlsExporter.setExporterInput(new SimpleExporterInput(jp));
 			xlsExporter.setExporterOutput(new SimpleOutputStreamExporterOutput(file));
 			SimpleXlsReportConfiguration xlsReportConfiguration = new SimpleXlsReportConfiguration();
@@ -139,10 +135,9 @@ public class JasperReportServiceImpl implements JasperReportService {
 			xlsReportConfiguration.setIgnoreGraphics(true);
 			xlsReportConfiguration.setIgnorePageMargins(true);
 			xlsReportConfiguration.setWrapText(false);
-
 			xlsExporter.setConfiguration(xlsReportConfiguration);
 			xlsExporter.exportReport();
-
+			// Set content type to Excel.
 			InputStream in = new FileInputStream(file);
 			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 			response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
@@ -153,7 +148,6 @@ public class JasperReportServiceImpl implements JasperReportService {
 		} catch (Exception e) {
 			throw new NetAppAdsException("Error in Downloading Report");
 		}
-
 	}
 
 	public static LayoutManager getLayoutManager() {
