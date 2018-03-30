@@ -1,11 +1,10 @@
 package com.netapp.ads.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -13,55 +12,77 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@NamedQuery(name="Controller.findAll", query="SELECT c FROM Controller c")
+@Table(name="controller")
 public class Controller implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private ControllerPK id;
+	@Id
+	//@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Column(name="controller_name")
+	@Column(name="controller_name", nullable=false, length=255)
 	private String controllerName;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="date_available")
 	private Date dateAvailable;
 
-	@Column(name="exports_id")
-	private int exportsId;
-
-	@Column(name="serial_number")
+	@Column(name="serial_number", length=255)
 	private String serialNumber;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
 	@Column(name="volume_tally")
-	private int volumeTally;
+	private Integer volumeTally;
+
+	//bi-directional many-to-one association to Aggregate
+	@OneToMany(mappedBy="controller")
+	private List<Aggregate> aggregates;
 
 	//bi-directional many-to-one association to DataCenter
-	@JsonManagedReference
 	@ManyToOne
-	@JoinColumn(name="data_center_id", insertable = false, updatable = false)
+	@JoinColumn(name="data_center_id", nullable=false)
 	private DataCenter dataCenter;
 
-	//bi-directional many-to-one association to Storage
-	@JsonManagedReference
+	//bi-directional many-to-one association to Export
 	@ManyToOne
-	@JoinColumn(name="storage_id", insertable = false, updatable = false)
+	@JoinColumn(name="exports_id")
+	private Export export;
+
+	//bi-directional many-to-one association to Storage
+	@ManyToOne
+	@JoinColumn(name="storage_id", nullable=false)
 	private Storage storage;
 
+	//bi-directional many-to-one association to NasVolume
+	@OneToMany(mappedBy="controller")
+	private List<NasVolume> nasVolumes;
+
+	//bi-directional many-to-one association to WfaOcumControllerData
+	@OneToMany(mappedBy="controller")
+	private List<WfaOcumControllerData> wfaOcumControllerData;
+
+	//bi-directional one-to-one association to ControllerRelease
+	@OneToOne(mappedBy="srcController")
+	private ControllerRelease controllerRelease;
+	
+	//bi-directional one-to-one association to ControllerTargetsAvailable
+	@OneToOne(mappedBy="controller")
+	private ControllerWorkPackage controllerWorkPackage;
+	
 	public Controller() {
 	}
 
-	public ControllerPK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(ControllerPK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -89,14 +110,6 @@ public class Controller implements Serializable {
 		this.dateAvailable = dateAvailable;
 	}
 
-	public int getExportsId() {
-		return this.exportsId;
-	}
-
-	public void setExportsId(int exportsId) {
-		this.exportsId = exportsId;
-	}
-
 	public String getSerialNumber() {
 		return this.serialNumber;
 	}
@@ -113,12 +126,34 @@ public class Controller implements Serializable {
 		this.updateTime = updateTime;
 	}
 
-	public int getVolumeTally() {
+	public Integer getVolumeTally() {
 		return this.volumeTally;
 	}
 
-	public void setVolumeTally(int volumeTally) {
+	public void setVolumeTally(Integer volumeTally) {
 		this.volumeTally = volumeTally;
+	}
+
+	public List<Aggregate> getAggregates() {
+		return this.aggregates;
+	}
+
+	public void setAggregates(List<Aggregate> aggregates) {
+		this.aggregates = aggregates;
+	}
+
+	public Aggregate addAggregate(Aggregate aggregate) {
+		getAggregates().add(aggregate);
+		aggregate.setController(this);
+
+		return aggregate;
+	}
+
+	public Aggregate removeAggregate(Aggregate aggregate) {
+		getAggregates().remove(aggregate);
+		aggregate.setController(null);
+
+		return aggregate;
 	}
 
 	public DataCenter getDataCenter() {
@@ -129,6 +164,24 @@ public class Controller implements Serializable {
 		this.dataCenter = dataCenter;
 	}
 
+	// FIXME: There can be multiple exports for 1 controller.
+	public Export getExport() {
+		return this.export;
+	}
+
+	// FIXME: There can be multiple exports for 1 controller.
+	public void setExport(Export export) {
+		this.export = export;
+	}
+
+	public ControllerRelease getControllerRelease() {
+		return this.controllerRelease;
+	}
+
+	public void setControllerRelease(ControllerRelease controllerRelease) {
+		this.controllerRelease = controllerRelease;
+	}
+	
 	public Storage getStorage() {
 		return this.storage;
 	}
@@ -137,11 +190,58 @@ public class Controller implements Serializable {
 		this.storage = storage;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		Controller controller = (Controller) obj;
-		return this.controllerName.equalsIgnoreCase(controller.controllerName);
+	public List<NasVolume> getNasVolumes() {
+		return this.nasVolumes;
 	}
+
+	public void setNasVolumes(List<NasVolume> nasVolumes) {
+		this.nasVolumes = nasVolumes;
+	}
+
+	public NasVolume addNasVolume(NasVolume nasVolume) {
+		getNasVolumes().add(nasVolume);
+		nasVolume.setController(this);
+
+		return nasVolume;
+	}
+
+	public NasVolume removeNasVolume(NasVolume nasVolume) {
+		getNasVolumes().remove(nasVolume);
+		nasVolume.setController(null);
+
+		return nasVolume;
+	}
+
+	public List<WfaOcumControllerData> getWfaOcumControllerData() {
+		return this.wfaOcumControllerData;
+	}
+
+	public void setWfaOcumControllerData(List<WfaOcumControllerData> wfaOcumControllerData) {
+		this.wfaOcumControllerData = wfaOcumControllerData;
+	}
+
+	public WfaOcumControllerData addWfaOcumControllerData(WfaOcumControllerData wfaOcumControllerData) {
+		getWfaOcumControllerData().add(wfaOcumControllerData);
+		wfaOcumControllerData.setController(this);
+
+		return wfaOcumControllerData;
+	}
+
+	public WfaOcumControllerData removeWfaOcumControllerData(WfaOcumControllerData wfaOcumControllerData) {
+		getWfaOcumControllerData().remove(wfaOcumControllerData);
+		wfaOcumControllerData.setController(null);
+
+		return wfaOcumControllerData;
+	}
+	
+	
+	public ControllerWorkPackage getControllerWorkPackage() {
+		return this.controllerWorkPackage;
+	}
+
+	public void setControllerWorkPackage(ControllerWorkPackage controllerWorkPackage) {
+		this.controllerWorkPackage = controllerWorkPackage;
+	}
+	
 
 }

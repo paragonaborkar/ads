@@ -1,0 +1,226 @@
+package com.netapp.ads.storage.pojo;
+
+public class SystemInfo
+{
+    private String boardSpeed;
+
+    private String systemName;
+
+    private String cpuSerialNumber;
+
+    private String systemSerialNumber;
+
+    private String prodType;
+
+    private String numberOf-processors;
+
+    private String memorySize;
+
+    private String system-id;
+
+    private String vendor-id;
+
+    private String maximum-flexible-volumeSize;
+
+    private String system-machine-type;
+
+    private String board-type;
+
+    private String system-model;
+
+    private String maximum-aggregateSize;
+
+    private String maximum-flexible-volume-count;
+
+    private String cpu-processor-id;
+
+    private String supports-raid-array;
+
+    private String cpu-microcode-version;
+
+    public String getBoardSpeed ()
+    {
+        return boardSpeed;
+    }
+
+    public void setBoardSpeed (String boardSpeed)
+    {
+        this.boardSpeed = boardSpeed;
+    }
+
+    public String getSystemName ()
+    {
+        return systemName;
+    }
+
+    public void setSystemName (String systemName)
+    {
+        this.systemName = systemName;
+    }
+
+    public String getCpuSerialNumber ()
+    {
+        return cpuSerialNumber;
+    }
+
+    public void setCpuSerialNumber (String cpuSerialNumber)
+    {
+        this.cpuSerialNumber = cpuSerialNumber;
+    }
+
+    public String getSystemSerialNumber ()
+    {
+        return systemSerialNumber;
+    }
+
+    public void setSystemSerialNumber (String systemSerialNumber)
+    {
+        this.systemSerialNumber = systemSerialNumber;
+    }
+
+    public String getProd-type ()
+    {
+        return prod-type;
+    }
+
+    public void setProd-type (String prod-type)
+    {
+        this.prod-type = prod-type;
+    }
+
+    public String getNumberOf-processors ()
+    {
+        return numberOf-processors;
+    }
+
+    public void setNumberOf-processors (String numberOf-processors)
+    {
+        this.numberOf-processors = numberOf-processors;
+    }
+
+    public String getMemorySize ()
+    {
+        return memorySize;
+    }
+
+    public void setMemorySize (String memorySize)
+    {
+        this.memorySize = memorySize;
+    }
+
+    public String getSystem-id ()
+    {
+        return system-id;
+    }
+
+    public void setSystem-id (String system-id)
+    {
+        this.system-id = system-id;
+    }
+
+    public String getVendor-id ()
+    {
+        return vendor-id;
+    }
+
+    public void setVendor-id (String vendor-id)
+    {
+        this.vendor-id = vendor-id;
+    }
+
+    public String getMaximum-flexible-volumeSize ()
+    {
+        return maximum-flexible-volumeSize;
+    }
+
+    public void setMaximum-flexible-volumeSize (String maximum-flexible-volumeSize)
+    {
+        this.maximum-flexible-volumeSize = maximum-flexible-volumeSize;
+    }
+
+    public String getSystem-machine-type ()
+    {
+        return system-machine-type;
+    }
+
+    public void setSystem-machine-type (String system-machine-type)
+    {
+        this.system-machine-type = system-machine-type;
+    }
+
+    public String getBoard-type ()
+    {
+        return board-type;
+    }
+
+    public void setBoard-type (String board-type)
+    {
+        this.board-type = board-type;
+    }
+
+    public String getSystem-model ()
+    {
+        return system-model;
+    }
+
+    public void setSystem-model (String system-model)
+    {
+        this.system-model = system-model;
+    }
+
+    public String getMaximum-aggregateSize ()
+    {
+        return maximum-aggregateSize;
+    }
+
+    public void setMaximum-aggregateSize (String maximum-aggregateSize)
+    {
+        this.maximum-aggregateSize = maximum-aggregateSize;
+    }
+
+    public String getMaximum-flexible-volume-count ()
+    {
+        return maximum-flexible-volume-count;
+    }
+
+    public void setMaximum-flexible-volume-count (String maximum-flexible-volume-count)
+    {
+        this.maximum-flexible-volume-count = maximum-flexible-volume-count;
+    }
+
+    public String getCpu-processor-id ()
+    {
+        return cpu-processor-id;
+    }
+
+    public void setCpu-processor-id (String cpu-processor-id)
+    {
+        this.cpu-processor-id = cpu-processor-id;
+    }
+
+    public String getSupports-raid-array ()
+    {
+        return supports-raid-array;
+    }
+
+    public void setSupports-raid-array (String supports-raid-array)
+    {
+        this.supports-raid-array = supports-raid-array;
+    }
+
+    public String getCpu-microcode-version ()
+    {
+        return cpu-microcode-version;
+    }
+
+    public void setCpu-microcode-version (String cpu-microcode-version)
+    {
+        this.cpu-microcode-version = cpu-microcode-version;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "ClassPojo [boardSpeed = "+boardSpeed+", systemName = "+systemName+", cpuSerialNumber = "+cpuSerialNumber+", systemSerialNumber = "+systemSerialNumber+", prod-type = "+prod-type+", numberOf-processors = "+numberOf-processors+", memorySize = "+memorySize+", system-id = "+system-id+", vendor-id = "+vendor-id+", maximum-flexible-volumeSize = "+maximum-flexible-volumeSize+", system-machine-type = "+system-machine-type+", board-type = "+board-type+", system-model = "+system-model+", maximum-aggregateSize = "+maximum-aggregateSize+", maximum-flexible-volume-count = "+maximum-flexible-volume-count+", cpu-processor-id = "+cpu-processor-id+", supports-raid-array = "+supports-raid-array+", cpu-microcode-version = "+cpu-microcode-version+"]";
+    }
+}

@@ -1,0 +1,114 @@
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.util.List;
+
+import netapp.manage.NaElement;
+import netapp.manage.NaException;
+import netapp.manage.NaServer;
+
+public class ApiClient {
+
+	public static void main(String[] args) {
+		try {
+			NaServer s = new NaServer("cowboy", 1 , 31);
+			s.setServerType(NaServer.SERVER_TYPE_FILER);
+			s.setTransportType(NaServer.TRANSPORT_TYPE_HTTPS);
+			s.setPort(443);
+			s.setStyle(NaServer.STYLE_LOGIN_PASSWORD);
+			s.setAdminUser("admin", "<password>");
+
+
+			NaElement api = new NaElement("system-node-get");
+
+			NaElement xi = new NaElement("desired-attributes");
+			api.addChildElem(xi);
+
+
+			NaElement xi1 = new NaElement("node-details-info");
+			xi.addChildElem(xi1);
+
+			xi1.addNewChild("cpu-busytime","<cpu-busytime>");
+			xi1.addNewChild("cpu-firmware-release","<cpu-firmware-release>");
+			xi1.addNewChild("env-failed-fan-count","<env-failed-fan-count>");
+			xi1.addNewChild("env-failed-fan-message","<env-failed-fan-message>");
+			xi1.addNewChild("env-failed-power-supply-count","<env-failed-power-supply-count>");
+			xi1.addNewChild("env-failed-power-supply-message","<env-failed-power-supply-message>");
+			xi1.addNewChild("env-over-temperature","<env-over-temperature>");
+			xi1.addNewChild("is-all-flash-optimized","<is-all-flash-optimized>");
+			xi1.addNewChild("is-diff-svcs","<is-diff-svcs>");
+			xi1.addNewChild("is-epsilon-node","<is-epsilon-node>");
+			xi1.addNewChild("is-node-cluster-eligible","<is-node-cluster-eligible>");
+			xi1.addNewChild("is-node-healthy","<is-node-healthy>");
+			xi1.addNewChild("maximum-aggregate-size","<maximum-aggregate-size>");
+			xi1.addNewChild("maximum-number-of-volumes","<maximum-number-of-volumes>");
+			xi1.addNewChild("maximum-volume-size","<maximum-volume-size>");
+			xi1.addNewChild("node","<node>");
+			xi1.addNewChild("node-asset-tag","<node-asset-tag>");
+			xi1.addNewChild("node-location","<node-location>");
+			xi1.addNewChild("node-model","<node-model>");
+			xi1.addNewChild("node-nvram-id","<node-nvram-id>");
+			xi1.addNewChild("node-owner","<node-owner>");
+			xi1.addNewChild("node-serial-number","<node-serial-number>");
+			xi1.addNewChild("node-storage-configuration","<node-storage-configuration>");
+			xi1.addNewChild("node-system-id","<node-system-id>");
+			xi1.addNewChild("node-uptime","<node-uptime>");
+			xi1.addNewChild("node-uuid","<node-uuid>");
+			xi1.addNewChild("node-vendor","<node-vendor>");
+			xi1.addNewChild("nvram-battery-status","<nvram-battery-status>");
+			xi1.addNewChild("product-version","<product-version>");
+
+			NaElement xi2 = new NaElement("vm-system-disks");
+			xi1.addChildElem(xi2);
+
+			xi2.addNewChild("vm-bootdisk-area-name","<vm-bootdisk-area-name>");
+			xi2.addNewChild("vm-bootdisk-file-name","<vm-bootdisk-file-name>");
+			xi2.addNewChild("vm-coredisk-area-name","<vm-coredisk-area-name>");
+			xi2.addNewChild("vm-coredisk-file-name","<vm-coredisk-file-name>");
+			xi2.addNewChild("vm-logdisk-area-name","<vm-logdisk-area-name>");
+			xi2.addNewChild("vm-logdisk-file-name","<vm-logdisk-file-name>");
+
+			NaElement xi3 = new NaElement("vmhost-info");
+			xi1.addChildElem(xi3);
+
+			xi3.addNewChild("vm-custom-max-capacity","<vm-custom-max-capacity>");
+			xi3.addNewChild("vm-uuid","<vm-uuid>");
+			xi3.addNewChild("vmhost-bios-release-date","<vmhost-bios-release-date>");
+			xi3.addNewChild("vmhost-bios-version","<vmhost-bios-version>");
+			xi3.addNewChild("vmhost-boot-time","<vmhost-boot-time>");
+			xi3.addNewChild("vmhost-cpu-clock-rate","<vmhost-cpu-clock-rate>");
+			xi3.addNewChild("vmhost-cpu-core-count","<vmhost-cpu-core-count>");
+			xi3.addNewChild("vmhost-cpu-socket-count","<vmhost-cpu-socket-count>");
+			xi3.addNewChild("vmhost-cpu-thread-count","<vmhost-cpu-thread-count>");
+			xi3.addNewChild("vmhost-error","<vmhost-error>");
+			xi3.addNewChild("vmhost-gateway","<vmhost-gateway>");
+			xi3.addNewChild("vmhost-hardware-vendor","<vmhost-hardware-vendor>");
+			xi3.addNewChild("vmhost-hypervisor","<vmhost-hypervisor>");
+			xi3.addNewChild("vmhost-ip-address","<vmhost-ip-address>");
+			xi3.addNewChild("vmhost-memory","<vmhost-memory>");
+			xi3.addNewChild("vmhost-model","<vmhost-model>");
+			xi3.addNewChild("vmhost-name","<vmhost-name>");
+			xi3.addNewChild("vmhost-netmask","<vmhost-netmask>");
+			xi3.addNewChild("vmhost-processor-id","<vmhost-processor-id>");
+			xi3.addNewChild("vmhost-processor-type","<vmhost-processor-type>");
+			xi3.addNewChild("vmhost-software-vendor","<vmhost-software-vendor>");
+			xi3.addNewChild("vmhost-uuid","<vmhost-uuid>");
+			api.addNewChild("node","cowboy-02");
+
+			NaElement xo = s.invokeElem(api);
+			System.out.println(xo.toPrettyString(""));
+
+
+		} catch (NaException e) {
+			handleException(e);
+		} catch (UnknownHostException e) {
+			handleException(e);
+		} catch (IOException e) {
+			handleException(e);
+		}
+	}
+
+	private static void handleException(Exception e) {
+		System.out.println(e.getMessage());
+		e.printStackTrace();		
+	}
+}

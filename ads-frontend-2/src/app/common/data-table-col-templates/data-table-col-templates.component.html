@@ -1,0 +1,19 @@
+<ng-template #actionHeaderTmpl let-column="column">
+  Actions
+</ng-template>
+
+<ng-template #asIsTmpl let-column="column" let-value="value" let-row="row">
+  {{value}}
+</ng-template>
+
+<ng-template #dateTmpl let-column="column" let-value="value" let-row="row">
+  {{value | date:'shortDate'}}
+</ng-template>
+
+<ng-template #dateTimeTmpl let-column="column" let-value="value" let-row="row">
+  {{value | date:'short'}}
+</ng-template>
+
+<ng-template #yesNoTmpl let-column="column" let-value="value" let-row="row">
+    {{value | yesNo}}
+  </ng-template>

@@ -1,0 +1,26 @@
+package rules;
+
+import java.util.List;
+
+import com.netapp.ads.models.Qtree;
+import com.netapp.ads.models.QtreeDisposition;
+import com.netapp.ads.repos.QtreeDispositionRepository;
+import org.slf4j.Logger;
+
+global Logger logger;
+
+rule "Discovery - Controller Root Rule" salience 100
+lock-on-active
+when
+	$qtreeDispositionRepository: QtreeDispositionRepository();
+	$qtree: Qtree(nasVolume.volumeName.contains("vol0"));
+then
+	logger.debug("Discovery - Controller Root Rule: THEN: Qtree: {}", $qtree.getId());
+	QtreeDisposition $qtreeDisposition = new QtreeDisposition();
+	$qtreeDisposition.setQtree($qtree);
+	$qtreeDisposition.setDisposition("NetApp");
+	$qtreeDisposition.setJustification("Netapp System Volume");
+	$qtreeDispositionRepository.save($qtreeDisposition);
+	logger.debug("Discovery - Controller Root Rule: Created Qtree Disposition: : {}", $qtreeDisposition.getId());
+	update( $qtree );
+end

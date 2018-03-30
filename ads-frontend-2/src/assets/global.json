@@ -1,0 +1,5 @@
+{
+    "apiUrl": "http://localhost:8080",
+    "askAQuestionUrl": "https://support.netapp.com?adsRequest=question",
+    "reportAProblemUrl": "https://support.netapp.com?adsRequest=problem"
+}

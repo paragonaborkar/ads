@@ -12,24 +12,31 @@ public class ActivityPresumedLobXRefPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="activity_id")
-	private int activityId;
+	@Column(name="activity_id", insertable=false, updatable=false, unique=true, nullable=false)
+	private Integer activityId;
 
-	@Column(name="lob_id")
-	private int lobId;
+	@Column(name="lob_id", insertable=false, updatable=false, unique=true, nullable=false)
+	private Integer lobId;
 
 	public ActivityPresumedLobXRefPK() {
 	}
-	public int getActivityId() {
+	
+	public ActivityPresumedLobXRefPK(Integer activityId, Integer lobId) {
+		super();
+		this.activityId = activityId;
+		this.lobId = lobId;
+	}
+
+	public Integer getActivityId() {
 		return this.activityId;
 	}
-	public void setActivityId(int activityId) {
+	public void setActivityId(Integer activityId) {
 		this.activityId = activityId;
 	}
-	public int getLobId() {
+	public Integer getLobId() {
 		return this.lobId;
 	}
-	public void setLobId(int lobId) {
+	public void setLobId(Integer lobId) {
 		this.lobId = lobId;
 	}
 

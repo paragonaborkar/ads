@@ -2,7 +2,7 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 /**
@@ -10,88 +10,105 @@ import java.util.Date;
  * 
  */
 @Entity
-@NamedQuery(name="Replication.findAll", query="SELECT r FROM Replication r")
+@Table(name="replication")
 public class Replication implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private ReplicationPK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_time")
-	private Date createTime;
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
-	@Column(name="src_mirror_aggregate_name")
+	@Column(name="src_mirror_aggregate_name", length=225)
 	private String srcMirrorAggregateName;
 
-	@Column(name="src_mirror_controller_name")
+	@Column(name="src_mirror_controller_name", length=225)
 	private String srcMirrorControllerName;
 
-	@Column(name="src_mirror_data_center_name")
+	@Column(name="src_mirror_data_center_name", length=60)
 	private String srcMirrorDataCenterName;
 
-	@Column(name="src_mirror_qtree_name")
+	@Column(name="src_mirror_qtree_name", length=225)
 	private String srcMirrorQtreeName;
 
-	@Column(name="src_mirror_volume_name")
+	@Column(name="src_mirror_volume_name", length=225)
 	private String srcMirrorVolumeName;
 
-	@Column(name="src_prod_data_center_name")
+	@Column(name="src_prod_data_center_name", length=60)
 	private String srcProdDataCenterName;
 
-	@Column(name="src_vault_aggregate_name")
+	@Column(name="src_vault_aggregate_name", length=225)
 	private String srcVaultAggregateName;
 
-	@Column(name="src_vault_controller_name")
+	@Column(name="src_vault_controller_name", length=225)
 	private String srcVaultControllerName;
 
-	@Column(name="src_vault_data_center_name")
+	@Column(name="src_vault_data_center_name", length=60)
 	private String srcVaultDataCenterName;
 
-	@Column(name="src_vault_qtree_name")
+	@Column(name="src_vault_qtree_name", length=225)
 	private String srcVaultQtreeName;
 
-	@Column(name="src_vault_volume_name")
+	@Column(name="src_vault_volume_name", length=225)
 	private String srcVaultVolumeName;
 
-	@Column(name="tgt_mirror_aggregate_id")
-	private int tgtMirrorAggregateId;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
 
-	@Column(name="tgt_mirror_data_center_id")
-	private int tgtMirrorDataCenterId;
+	//bi-directional many-to-one association to Aggregate
+	@ManyToOne
+	@JoinColumn(name="tgt_vault_aggregate_id")
+	private Aggregate targetVaultAggregate;
 
-	@Column(name="tgt_mirror_storage_id")
-	private int tgtMirrorStorageId;
+	//bi-directional many-to-one association to Aggregate
+	@ManyToOne
+	@JoinColumn(name="tgt_mirror_aggregate_id")
+	private Aggregate targetMirrorAggregate;
 
-	@Column(name="tgt_vault_aggregate_id")
-	private int tgtVaultAggregateId;
+	//bi-directional many-to-one association to DataCenter
+	@ManyToOne
+	@JoinColumn(name="tgt_vault_data_center_id")
+	private DataCenter targetVaultDataCenter;
 
-	@Column(name="tgt_vault_data_center_id")
-	private int tgtVaultDataCenterId;
+	//bi-directional many-to-one association to DataCenter
+	@ManyToOne
+	@JoinColumn(name="tgt_mirror_data_center_id")
+	private DataCenter targetMirroDataCenter;
 
-	@Column(name="tgt_vault_storage_id")
-	private int tgtVaultStorageId;
+	//bi-directional many-to-one association to MigrationCutoverSrcToTgt
+	@ManyToOne
+	@JoinColumn(name="migration_cutover_src_to_tgt_id", nullable=false)
+	private MigrationCutoverSrcToTgt migrationCutoverSrcToTgt;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_time")
-	private Date updateTime;
+	//bi-directional many-to-one association to Storage
+	@ManyToOne
+	@JoinColumn(name="tgt_vault_storage_id")
+	private Storage targetVaultStorage;
+
+	//bi-directional many-to-one association to Storage
+	@ManyToOne
+	@JoinColumn(name="tgt_mirror_storage_id")
+	private Storage targetMirrorStorage;
 
 	public Replication() {
 	}
 
-	public ReplicationPK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(ReplicationPK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
@@ -183,60 +200,68 @@ public class Replication implements Serializable {
 		this.srcVaultVolumeName = srcVaultVolumeName;
 	}
 
-	public int getTgtMirrorAggregateId() {
-		return this.tgtMirrorAggregateId;
-	}
-
-	public void setTgtMirrorAggregateId(int tgtMirrorAggregateId) {
-		this.tgtMirrorAggregateId = tgtMirrorAggregateId;
-	}
-
-	public int getTgtMirrorDataCenterId() {
-		return this.tgtMirrorDataCenterId;
-	}
-
-	public void setTgtMirrorDataCenterId(int tgtMirrorDataCenterId) {
-		this.tgtMirrorDataCenterId = tgtMirrorDataCenterId;
-	}
-
-	public int getTgtMirrorStorageId() {
-		return this.tgtMirrorStorageId;
-	}
-
-	public void setTgtMirrorStorageId(int tgtMirrorStorageId) {
-		this.tgtMirrorStorageId = tgtMirrorStorageId;
-	}
-
-	public int getTgtVaultAggregateId() {
-		return this.tgtVaultAggregateId;
-	}
-
-	public void setTgtVaultAggregateId(int tgtVaultAggregateId) {
-		this.tgtVaultAggregateId = tgtVaultAggregateId;
-	}
-
-	public int getTgtVaultDataCenterId() {
-		return this.tgtVaultDataCenterId;
-	}
-
-	public void setTgtVaultDataCenterId(int tgtVaultDataCenterId) {
-		this.tgtVaultDataCenterId = tgtVaultDataCenterId;
-	}
-
-	public int getTgtVaultStorageId() {
-		return this.tgtVaultStorageId;
-	}
-
-	public void setTgtVaultStorageId(int tgtVaultStorageId) {
-		this.tgtVaultStorageId = tgtVaultStorageId;
-	}
-
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public Aggregate getTargetVaultAggregate() {
+		return this.targetVaultAggregate;
+	}
+
+	public void setTargetVaultAggregate(Aggregate targetVaultAggregate) {
+		this.targetVaultAggregate = targetVaultAggregate;
+	}
+
+	public Aggregate getTargetMirrorAggregate() {
+		return this.targetMirrorAggregate;
+	}
+
+	public void setTargetMirrorAggregate(Aggregate targetMirrorAggregate) {
+		this.targetMirrorAggregate = targetMirrorAggregate;
+	}
+
+	public DataCenter getTargetVaultDataCenter() {
+		return this.targetVaultDataCenter;
+	}
+
+	public void setTargetVaultDataCenter(DataCenter dataCenter) {
+		this.targetVaultDataCenter = dataCenter;
+	}
+
+	public DataCenter getTargetMirrorDataCenter() {
+		return this.targetMirroDataCenter;
+	}
+
+	public void setTargetMirrorDataCenter(DataCenter dataCenter) {
+		this.targetMirroDataCenter = dataCenter;
+	}
+
+	public MigrationCutoverSrcToTgt getMigrationCutoverSrcToTgt() {
+		return this.migrationCutoverSrcToTgt;
+	}
+
+	public void setMigrationCutoverSrcToTgt(MigrationCutoverSrcToTgt migrationCutoverSrcToTgt) {
+		this.migrationCutoverSrcToTgt = migrationCutoverSrcToTgt;
+	}
+
+	public Storage getTargetVaultStorage() {
+		return this.targetVaultStorage;
+	}
+
+	public void setTargetVaultStorage(Storage targetVaultStorage) {
+		this.targetVaultStorage = targetVaultStorage;
+	}
+
+	public Storage getTargetMirrorStorage() {
+		return this.targetMirrorStorage;
+	}
+
+	public void setTargetMirrorStorage(Storage targetMirrorStorage) {
+		this.targetMirrorStorage = targetMirrorStorage;
 	}
 
 }
