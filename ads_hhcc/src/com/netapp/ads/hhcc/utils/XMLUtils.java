@@ -18,7 +18,7 @@ public class XMLUtils {
 
 	DocumentBuilderFactory docFactory;
 	DocumentBuilder docBuilder;
-	
+
 	public Document newXML() {
 
 		Document xmlDocument = null;
@@ -32,26 +32,27 @@ public class XMLUtils {
 		}
 		return xmlDocument;
 	}
-	
-	public Element addRootElement(Document xmlDocument,String strRootElementName) {
+
+	public Element addRootElement(Document xmlDocument, String strRootElementName) {
 
 		Element rootElement = xmlDocument.createElement(strRootElementName);
 		xmlDocument.appendChild(rootElement);
 		return rootElement;
-		
+
 	}
 
-	public Element addChildElement(Document xmlDocument,Element parentElement,String strChildElementName,String strChildElementValue) {
+	public Element addChildElement(Document xmlDocument, Element parentElement, String strChildElementName,
+			String strChildElementValue) {
 
 		Element childElement = xmlDocument.createElement(strChildElementName);
 		parentElement.appendChild(childElement);
-		if(strChildElementValue!=null) {
+		if (strChildElementValue != null) {
 			childElement.appendChild(xmlDocument.createTextNode(strChildElementValue));
 		}
 		return childElement;
 	}
 
-	public void saveXMLToFile(Document xmlDocument,String strFileLoc) {
+	public void saveXMLToFile(Document xmlDocument, String strFileLoc) {
 
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		try {
@@ -64,16 +65,15 @@ public class XMLUtils {
 		}
 
 	}
-	
+
 	public static void main(String[] args) {
-		
-		XMLUtils xmlUtils=new XMLUtils();
-		Document xmlDocument=xmlUtils.newXML();
-		Element rootElement=xmlUtils.addRootElement(xmlDocument,"nfs-stats-top-clients-list-iter-start");
+
+		XMLUtils xmlUtils = new XMLUtils();
+		Document xmlDocument = xmlUtils.newXML();
+		Element rootElement = xmlUtils.addRootElement(xmlDocument, "nfs-stats-top-clients-list-iter-start");
 		xmlUtils.addChildElement(xmlDocument, rootElement, "maxClient", "1000000");
 
 		xmlUtils.saveXMLToFile(xmlDocument, "C:\\temp\\file.xml");
-		
-		
+
 	}
 }

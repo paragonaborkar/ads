@@ -14,10 +14,8 @@ import com.netapp.ads.hhcc.vo.Controller;
 import com.netapp.ads.hhcc.vo.DataSource;
 import com.netapp.ads.hhcc.vo.DataSourceAttribute;
 import com.netapp.ads.hhcc.vo.DataSourcePackage;
-import com.netapp.ads.hhcc.vo.NADataSource;
 import com.netapp.ads.hhcc.vo.NaLicense;
 import com.netapp.ads.hhcc.vo.NaSystemInfo;
-import com.netapp.hhcc.utils.ADSRestUtils;
 
 /***
  * Gathers a list of current CIFS sessions on all NetApp controllers present as
@@ -30,7 +28,7 @@ import com.netapp.hhcc.utils.ADSRestUtils;
  *
  */
 
-public class CIFSSessionCollector {
+public class CIFSSessionCollector2 {
 
 	/*
 	 * 1) what is OCI Server? 2) what is CIFS Session? 3) what is NetApp Controller?
@@ -40,7 +38,6 @@ public class CIFSSessionCollector {
 	 */
 
 	NetAppAPIUtils netAppAPIUtils = new NetAppAPIUtils("10.216.15.31", 443, "root", "P@ssw0rd");
-	ADSRestUtils adsRestUtils=new ADSRestUtils();
 
 	public static void main(String[] args) {
 
@@ -50,117 +47,133 @@ public class CIFSSessionCollector {
 		boolean disableSrvrCertiCheck = false;
 		boolean disablePingCheck = false;
 
-		new CIFSSessionCollector().collectCFSSessions(oCIServerName, dataSrcModelName, forceHttps,
+		new CIFSSessionCollector2().collectCFSSessions(oCIServerName, dataSrcModelName, forceHttps,
 				disableSrvrCertiCheck, disablePingCheck);
 	}
 
 	public void collectCFSSessions(String oCIServerName, String dataSrcModelName, boolean forceHttps,
 			boolean disableSrvrCertiCheck, boolean disablePingCheck) {
 
-		//List<DataSource> dataSources = netAppAPIUtils.getOciNtapDataSources(dataSrcModelName);
-			
-		NADataSource[] dataSources=adsRestUtils.getNetAppDataSources();
-		
+		List<DataSource> dataSources = netAppAPIUtils.getOciNtapDataSources(dataSrcModelName);
 		List<CIFSSessionsDataTableRow> cIFSSessionsDataTable = new ArrayList<>();
 
-		for (NADataSource dataSource : dataSources) {
+		for (DataSource dataSource : dataSources) {
 
 			List<Controller> dsControllers = new ArrayList<>();
-			//List<DataSourcePackage> packages = dataSource.getPackages();
-			
-			String foundationIp=dataSource.getFoundationIp();
-			Controller dsController=new Controller();
-			dsController.setName(foundationIp);
-			
-			dsControllers.add(dsController);
-			
-			for (Controller dsController1 : dsControllers) {
+			List<DataSourcePackage> packages = dataSource.getPackages();
+			for (DataSourcePackage dataSourcePackage : packages) {
 
-				System.out.println("Gathering data from controller:" + dsController1.getName());
-				Controller controller = netAppAPIUtils.connectNaController(dsController1.getName(),
-						dsController.getCredential());
+				if ("Foundation".equalsIgnoreCase(dataSourcePackage.getId())) {
 
-				NaSystemInfo systemInfo = netAppAPIUtils.getNASystemInfo(controller);
-				long timestamp = netAppAPIUtils.getNATimeStamp(controller);
-				List<NaLicense> license = netAppAPIUtils.getNALicense(controller);
+					List<DataSourceAttribute> attributes = dataSourcePackage.getAttributes();
+					for (DataSourceAttribute attribute : attributes) {
 
-				// TODO:: is vFiler anme and controller name both are same?
-				VfilerInfo[] vfilers = netAppAPIUtils.getVFilerListByController(controller);
+						String name = attribute.getName();
+						if ("ip".equalsIgnoreCase(attribute.getName())) {
+							Controller dsController = new Controller();
+							dsController.setName(attribute.getValue());
 
-				if (vfilers == null && vfilers.length == 0) {
+							// Credential = Get-OciDataSourceCredential -DataSource $dataSource -HaPartner
+							dsController.setCredential(netAppAPIUtils.getOciDataSourceCredential(dataSource, null));
+						}
 
-					VfilerInfo vFilerInfo = new VfilerInfo();
-					vFilerInfo.setName("vfiler0");
-					vFilerInfo.setStatus("running");
-					vFilerInfo.setUuid("00000000-0000-0000-0000-000000000000");
-					vfilers = new VfilerInfo[1];
-					vfilers[0] = vFilerInfo;
-				}
+						if ("partner.ip".equalsIgnoreCase(attribute.getName())) {
+							Controller dsController = new Controller();
+							dsController.setName(attribute.getValue());
 
-				for (VfilerInfo vfilerInfo : vfilers) {
-
-					if (!"DR backup".equalsIgnoreCase(vfilerInfo.getStatus())) {
-
-						controller.setvFilerName(vfilerInfo.getName());
-
-						// TODO This logic and data manipulation has to be double verified
-						for (NaLicense licenseObj : license) {
-							if ("cifs".equalsIgnoreCase(licenseObj.getService()) && licenseObj.isLicensed()
-									&& "started".equalsIgnoreCase(netAppAPIUtils.testNaCifs(controller))) {
-
-								System.out
-										.println("Gathering CIFS information from vFiler: " + vfilerInfo.getName());
-								System.out.println("Calling Get-NaCifsShare");
-								List<CIFShareInfo> cifsShares = netAppAPIUtils.getNaCifsShares(controller);
-								List<CIFSSession> cifsSessions = netAppAPIUtils.getNaCifsSessions(controller);
-
-								for (CIFShareInfo cifsShare : cifsShares) {
-									for (CIFSSession cifsSession : cifsSessions) {
-										String shareMount = cifsShare.getMountPoint().replace("/vol/", "");
-										shareMount = shareMount.replace("[/].*$", "");
-
-										if (cifsSession.getVolumeList().contains(shareMount)) {
-											CIFSSessionsDataTableRow row = new CIFSSessionsDataTableRow();
-
-											// $unixUserName = [regex]::Matches($sessionUser,
-											// '\((.+?)\s+[-]\s+(.+?)\)').Groups[1, 2].Value
-											Timestamp dateTime = new Timestamp(timestamp);
-											row.setControllerName(systemInfo.getSystemName());
-											row.setSerialNumber(systemInfo.getSystemSerialNumber());
-											row.setvFileName(vfilerInfo.getName());
-											row.setvFilerUuid(vfilerInfo.getUuid());
-											row.setVolumeName(shareMount);
-											row.setShareName(cifsShare.getShareName());
-											row.setMountPoint(cifsShare.getMountPoint());
-											row.setHostIp(""); // TODO
-											row.setHostName("");// TODO
-											row.setWindowUser("");// TODO
-											row.setUnixUser("");// TODO
-
-											/*
-											 * String controllerName=systemInfo.getSystemName(); String
-											 * serialNumber=systemInfo.getSystemSerialNumber(); String
-											 * vFileName=vfilerInfo.getName(); String
-											 * vFilerUuid=vfilerInfo.getUuid(); String volumeName=shareMount; String
-											 * shareName=cifsShare.getShareName(); String
-											 * mountPoint=cifsShare.getMountPoint(); String
-											 * hostIp="";//$sessionHostIp TODO String hostName="";//sessionHostName
-											 * TODO String windowsUser="";//$($windowsUser -replace '\\', '\\') TODO
-											 * String unixUser="";//$unixUserName TODO
-											 */
-											cIFSSessionsDataTable.add(row);
-										}
-									}
-								}
-
-								break;
-							}
+							// Credential = Get-OciDataSourceCredential -DataSource $dataSource -HaPartner
+							dsController
+									.setCredential(netAppAPIUtils.getOciDataSourceCredential(dataSource, "-HaPartner"));
 						}
 					}
-					controller.setvFilerName(null);
+				}
+				for (Controller dsController : dsControllers) {
+
+					System.out.println("Gathering data from controller:" + dsController.getName());
+					Controller controller = netAppAPIUtils.connectNaController(dsController.getName(),
+							dsController.getCredential());
+
+					NaSystemInfo systemInfo = netAppAPIUtils.getNASystemInfo(controller);
+					long timestamp = netAppAPIUtils.getNATimeStamp(controller);
+					List<NaLicense> license = netAppAPIUtils.getNALicense(controller);
+
+					// TODO:: is vFiler anme and controller name both are same?
+					VfilerInfo[] vfilers = netAppAPIUtils.getVFilerListByController(controller);
+
+					if (vfilers == null && vfilers.length == 0) {
+
+						VfilerInfo vFilerInfo = new VfilerInfo();
+						vFilerInfo.setName("vfiler0");
+						vFilerInfo.setStatus("running");
+						vFilerInfo.setUuid("00000000-0000-0000-0000-000000000000");
+						vfilers = new VfilerInfo[1];
+						vfilers[0] = vFilerInfo;
+					}
+
+					for (VfilerInfo vfilerInfo : vfilers) {
+
+						if (!"DR backup".equalsIgnoreCase(vfilerInfo.getStatus())) {
+
+							controller.setvFilerName(vfilerInfo.getName());
+
+							// TODO This logic and data manipulation has to be double verified
+							for (NaLicense licenseObj : license) {
+								if ("cifs".equalsIgnoreCase(licenseObj.getService()) && licenseObj.isLicensed()
+										&& "started".equalsIgnoreCase(netAppAPIUtils.testNaCifs(controller))) {
+
+									System.out
+											.println("Gathering CIFS information from vFiler: " + vfilerInfo.getName());
+									System.out.println("Calling Get-NaCifsShare");
+									List<CIFShareInfo> cifsShares = netAppAPIUtils.getNaCifsShares(controller);
+									List<CIFSSession> cifsSessions = netAppAPIUtils.getNaCifsSessions(controller);
+
+									for (CIFShareInfo cifsShare : cifsShares) {
+										for (CIFSSession cifsSession : cifsSessions) {
+											String shareMount = cifsShare.getMountPoint().replace("/vol/", "");
+											shareMount = shareMount.replace("[/].*$", "");
+
+											if (cifsSession.getVolumeList().contains(shareMount)) {
+												CIFSSessionsDataTableRow row = new CIFSSessionsDataTableRow();
+
+												// $unixUserName = [regex]::Matches($sessionUser,
+												// '\((.+?)\s+[-]\s+(.+?)\)').Groups[1, 2].Value
+												Timestamp dateTime = new Timestamp(timestamp);
+												row.setControllerName(systemInfo.getSystemName());
+												row.setSerialNumber(systemInfo.getSystemSerialNumber());
+												row.setvFileName(vfilerInfo.getName());
+												row.setvFilerUuid(vfilerInfo.getUuid());
+												row.setVolumeName(shareMount);
+												row.setShareName(cifsShare.getShareName());
+												row.setMountPoint(cifsShare.getMountPoint());
+												row.setHostIp(""); // TODO
+												row.setHostName("");// TODO
+												row.setWindowUser("");// TODO
+												row.setUnixUser("");// TODO
+
+												/*
+												 * String controllerName=systemInfo.getSystemName(); String
+												 * serialNumber=systemInfo.getSystemSerialNumber(); String
+												 * vFileName=vfilerInfo.getName(); String
+												 * vFilerUuid=vfilerInfo.getUuid(); String volumeName=shareMount; String
+												 * shareName=cifsShare.getShareName(); String
+												 * mountPoint=cifsShare.getMountPoint(); String
+												 * hostIp="";//$sessionHostIp TODO String hostName="";//sessionHostName
+												 * TODO String windowsUser="";//$($windowsUser -replace '\\', '\\') TODO
+												 * String unixUser="";//$unixUserName TODO
+												 */
+												cIFSSessionsDataTable.add(row);
+											}
+										}
+									}
+
+									break;
+								}
+							}
+						}
+						controller.setvFilerName(null);
+					}
 				}
 			}
-		
 
 			if (cIFSSessionsDataTable.size() == 0) {
 				System.out.println("No DataTable entries found to upload");

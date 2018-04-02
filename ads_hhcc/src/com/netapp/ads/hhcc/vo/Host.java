@@ -1,9 +1,9 @@
 package com.netapp.ads.hhcc.vo;
 
-public class DataSourceAttribute {
+public class Host {
 
 	String name;
-	String value;
+	String ipAddress;
 
 	public String getName() {
 		return name;
@@ -13,12 +13,12 @@ public class DataSourceAttribute {
 		this.name = name;
 	}
 
-	public String getValue() {
-		return value;
+	public String getIpAddress() {
+		return ipAddress;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
 	}
 
 }
