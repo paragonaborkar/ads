@@ -36,7 +36,7 @@ public class NFSDataImporterToDWH {
 	public void importData(String filePath) {
 
 		
-		Timestamp currentTimeStamp=NaDBUtils.getCurrentTimeStamp();
+		String currentTimeStamp=NaDBUtils.getCurrentTimeStamp();
 
 		CombinedActiveExports combinedActiveExports = (CombinedActiveExports) jsonUtils.readFile(filePath,
 				CombinedActiveExports.class);

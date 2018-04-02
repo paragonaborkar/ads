@@ -2,7 +2,7 @@ package com.netapp.ads.hhcc.vo;
 
 public class HostExportData {
 
-	String hostname;
+	String host;
 	String ip;
 	String export;
 	String operations;
@@ -12,18 +12,18 @@ public class HostExportData {
 
 	public HostExportData(String hostname, String ip, String export, String operations) {
 		super();
-		this.hostname = hostname;
+		this.host = hostname;
 		this.ip = ip;
 		this.export = export;
 		this.operations = operations;
 	}
 
-	public String getHostname() {
-		return hostname;
+	public String getHost() {
+		return host;
 	}
 
-	public void setHostname(String hostname) {
-		this.hostname = hostname;
+	public void setHost(String hostname) {
+		this.host = hostname;
 	}
 
 	public String getIp() {

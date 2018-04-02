@@ -6,42 +6,42 @@ import java.util.List;
 
 public class CurrentNFSMountedHosts {
 
-	String systemName;
-	String systemId;
-	String systemSerialNumber;
-	Timestamp lastSeen;
+	String netAppSystemName;
+	String netAppSystemId;
+	String netAppSystemSerialNumber;
+	String lastSeen;
 
 	List<HostExportData> exportList = new ArrayList<>();
 
-	public String getSystemName() {
-		return systemName;
+	public String getNetAppSystemName() {
+		return netAppSystemName;
 	}
 
-	public void setSystemName(String systemName) {
-		this.systemName = systemName;
+	public void setNetAppSystemName(String systemName) {
+		this.netAppSystemName = systemName;
 	}
 
-	public String getSystemId() {
-		return systemId;
+	public String getNetAppSystemId() {
+		return netAppSystemId;
 	}
 
-	public void setSystemId(String systemId) {
-		this.systemId = systemId;
+	public void setNetAppSystemId(String systemId) {
+		this.netAppSystemId = systemId;
 	}
 
-	public String getSystemSerialNumber() {
-		return systemSerialNumber;
+	public String getNetAppSystemSerialNumber() {
+		return netAppSystemSerialNumber;
 	}
 
-	public void setSystemSerialNumber(String systemSerialNumber) {
-		this.systemSerialNumber = systemSerialNumber;
+	public void setNetAppSystemSerialNumber(String systemSerialNumber) {
+		this.netAppSystemSerialNumber = systemSerialNumber;
 	}
 
-	public Timestamp getLastSeen() {
+	public String getLastSeen() {
 		return lastSeen;
 	}
 
-	public void setLastSeen(Timestamp lastSeen) {
+	public void setLastSeen(String lastSeen) {
 		this.lastSeen = lastSeen;
 	}
 

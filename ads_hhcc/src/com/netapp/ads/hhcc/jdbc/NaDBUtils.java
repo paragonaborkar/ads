@@ -1,15 +1,20 @@
 package com.netapp.ads.hhcc.jdbc;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.netapp.ads.hhcc.converters.PowerShellToJavaConstants;
 import com.netapp.ads.hhcc.vo.ActiveHostBulkImport;
 import com.netapp.ads.hhcc.vo.CIFSSessionsDataTableRow;
 import com.netapp.ads.hhcc.vo.DWHNFSShowMount;
@@ -35,6 +40,7 @@ public class NaDBUtils {
 			 * ns.protocol
 			 */
 			String query = getQueryOfControllerByNASystemAndSerNumber(netAppSystemName, netAppSerialNumber);
+			System.out.println("getDWHNFSShowMountsList:"+query);
 			sqlConnection.getConnection();
 			ResultSet resultSet = sqlConnection.executeSelectQuery(query, sqlConnection.getConnection());
 
@@ -84,10 +90,11 @@ public class NaDBUtils {
 		return showmount;
 	}
 
-	public static Timestamp getCurrentTimeStamp() {
+	public static String getCurrentTimeStamp() {
 
-		Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
-		return timeStamp;
+		SimpleDateFormat format=new SimpleDateFormat(PowerShellToJavaConstants.STR_DATE_FORMAT);
+		String strDate=format.format(new java.util.Date());
+		return strDate;
 	}
 
 	public static String getQueryOfControllerByNASystemAndSerNumber(String netAppSystemName,
@@ -107,8 +114,9 @@ public class NaDBUtils {
 				"    join dwh_inventory.storage_node_to_internal_volume" + 
 				"                    ON ns.intVolId = dwh_inventory.storage_node_to_internal_volume.internalVolumeId" + 
 				"       " + 
-				"                    on dwh_inventory.storage_node_to_internal_volume.storageNodeId = dwh_inventory.storage_node.id" + 
+
 				"    join dwh_inventory.storage_node" + 
+				"                    on dwh_inventory.storage_node_to_internal_volume.storageNodeId = dwh_inventory.storage_node.id" + 
 				"       " + 
 				"    WHERE " + 
 				"        dwh_inventory.storage_node.name='" + netAppSystemName + "' " + 
@@ -276,8 +284,7 @@ public class NaDBUtils {
 	 * }
 	 */
 
-	public static void importNFSActiveHostInformation(NFSImportData nfsImportData,Timestamp currentTimeStamp) {
-
+	public static void importNFSActiveHostInformation(NFSImportData nfsImportData,String currentTimeStamp) {
 		String shareId = nfsImportData.getShareId();
 		String internalVolId = nfsImportData.getInternalVolId();
 		String name = nfsImportData.getName();
@@ -299,18 +306,29 @@ public class NaDBUtils {
 			psmt.setString(5, hostId);
 			psmt.setString(6, ip);
 			psmt.setString(7, operation);
-			psmt.setTimestamp(8, currentTimeStamp);
-			psmt.setTimestamp(9, currentTimeStamp);
-
+			Timestamp timeStamp=getSQLDate(currentTimeStamp);
+			psmt.setTimestamp(8, timeStamp);
+			psmt.setTimestamp(9, timeStamp);
 			psmt.execute();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public static Timestamp getSQLDate(String strDate) {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat(PowerShellToJavaConstants.STR_DATE_FORMAT);
+		Timestamp time=null;
+		try {
+			time=new Timestamp(sdf.parse(strDate).getTime());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return time;
+	}
 
-	public static String importInactiveHostInformation(ActiveHostBulkImport activeHostBulkImport,Timestamp currentTimeStamp) {
-
+	public static String importInactiveHostInformation(ActiveHostBulkImport activeHostBulkImport,String currentTimeStamp) {
 		String strStorageId = activeHostBulkImport.getStorageId();
 		String protocol = activeHostBulkImport.getProtocol();
 		String hostId = activeHostBulkImport.getHostId();
@@ -329,7 +347,10 @@ public class NaDBUtils {
 			psmt.setString(3, hostId);
 			psmt.setString(4, hostIp);
 			psmt.setString(5, nfsOps);
-			psmt.setTimestamp(6, currentTimeStamp);
+			Timestamp timeStamp=getSQLDate(currentTimeStamp);
+
+			psmt.setTimestamp(6, timeStamp);
+
 			// psmt.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
 			psmt.execute();
 
@@ -342,6 +363,7 @@ public class NaDBUtils {
 
 	public static void main(String[] args) {
 
+		System.out.println(getSQLDate("2018-04-01 22:14:04"));
 		// getStorageVolumesQuery(null,null); // NO DATA
 		// getCurrentExportsAndHostInformation(null,null);
 
@@ -392,7 +414,7 @@ public class NaDBUtils {
 		}
 	}
 
-	public static void insertIntoHostShowmount(ShowmountImportData showmountRow,Timestamp currentTimeStamp) {
+	public static void insertIntoHostShowmount(ShowmountImportData showmountRow,String currentTimeStamp) {
 
 		String strQuery = "INSERT INTO dwh_inventory.nfs_host_showmount "
 				+ "   (shareId,intVolId,storageId,name,protocol,hostIp,lastSeen) VALUES "
@@ -406,7 +428,8 @@ public class NaDBUtils {
 			psmt.setString(4, showmountRow.getName());
 			psmt.setString(5, showmountRow.getProtocol());
 			psmt.setString(6, showmountRow.getHostIp());
-			psmt.setTimestamp(7, currentTimeStamp);
+			Timestamp timeStamp=getSQLDate(currentTimeStamp);
+			psmt.setTimestamp(7, timeStamp);
 			psmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

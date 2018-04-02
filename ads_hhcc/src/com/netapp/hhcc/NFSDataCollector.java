@@ -55,7 +55,7 @@ public class NFSDataCollector {
 	public void collectCurrentNFSConnectedHostsAndStatistics(String array, String vFilerName, String exportFilePath,String adminUser,String adminPassword,boolean clearNFSStats) {
 
 		netAppAPIUtils = new NetAppAPIUtils(array, 443, adminUser, adminPassword);
-		Timestamp currentTimeStamp=naDBUtils.getCurrentTimeStamp();
+		String currentTimeStamp=naDBUtils.getCurrentTimeStamp();
 		
 		// # Get-NaSystemInfo NetAPP API
 		// get System Info from 7-Mode
@@ -194,10 +194,10 @@ public class NFSDataCollector {
 					HostExportData thisExport = null;
 					for (HostExportData exportDetails : currentActiveNFSExports) {
 
-						if (exportDetails.getHostname().equalsIgnoreCase(currentHost.getIp())
+						if (exportDetails.getHost().equalsIgnoreCase(currentHost.getIp())
 								|| exportDetails.getIp().equalsIgnoreCase(currentHost.getIp())) {
 
-							thisExport.setHostname(exportDetails.getHostname());
+							thisExport.setHost(exportDetails.getHost());
 							thisExport.setIp(exportDetails.getIp());
 							thisExport.setExport(currentHost.getExport());
 							thisExport.setOperations(exportDetails.getOperations());
@@ -223,7 +223,7 @@ public class NFSDataCollector {
 					}
 					if(!clientIdentifiedAsActive) {
 						HostExportData thisExport=new HostExportData();
-						thisExport.setHostname(activeClientNFS.getHostname());
+						thisExport.setHost(activeClientNFS.getHost());
 						thisExport.setIp(activeClientNFS.getIp());
 						thisExport.setExport("-1");
 						thisExport.setOperations(activeClientNFS.getOperations());
@@ -283,9 +283,9 @@ public class NFSDataCollector {
 
 			thisExport.setIp(ipAddress);
 			if (hostName != null)
-				thisExport.setHostname(hostName);
+				thisExport.setHost(hostName);
 			else
-				thisExport.setHostname("-1");
+				thisExport.setHost("-1");
 
 			thisExport.setOperations(String.valueOf(nfsStat.getTotalOps()));
 			currentActiveExports.add(thisExport);

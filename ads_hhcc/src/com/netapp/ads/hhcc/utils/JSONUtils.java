@@ -9,10 +9,15 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class JSONUtils {
 
 	private static ObjectMapper jsonMapper = new ObjectMapper();
+
+	public JSONUtils() {
+		jsonMapper.enable(SerializationFeature.INDENT_OUTPUT);
+	}
 
 	public <T> void writeToFile(String strExportFile, Object className) {
 

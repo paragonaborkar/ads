@@ -21,12 +21,12 @@ public class ShowmountDataImporterToDWH {
 	public static void main(String[] args) {
 
 		new ShowmountDataImporterToDWH().importData("", 1,
-				"C:/netapp/host-connections/PowerShell To Java/ShowmountExport.json");
+				"C:/netapp/host-connections/ShowmountExport.json");
 	}
 
 	public void importData(String dataWarehouseHostName, int port, String filePath) {
 
-		Timestamp currentTimeStamp=NaDBUtils.getCurrentTimeStamp();
+		String currentTimeStamp=NaDBUtils.getCurrentTimeStamp();
 		
 		CombinedActiveExports combinedActiveExports = (CombinedActiveExports) jsonUtils.readFile(filePath,
 				CombinedActiveExports.class);

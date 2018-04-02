@@ -22,7 +22,7 @@ public class ShowmountDataCollector {
 	public static void main(String[] args) {
 
 		ShowmountDataCollector dataCollector = new ShowmountDataCollector();
-		String exportFilePath = "C:/netapp/host-connections/PowerShell To Java/ShowmountExport.json";
+		String exportFilePath = "C:/netapp/host-connections/ShowmountExport.json";
 		String array = "10.216.15.31";
 		dataCollector.collectShowmountData(array, "vfiler0", exportFilePath);
 	}
@@ -31,9 +31,9 @@ public class ShowmountDataCollector {
 
 		netAppAPIUtils = new NetAppAPIUtils(array, 443, "root", "P@ssw0rd");
 		
-		Timestamp currentTimeStamp=naDBUtils.getCurrentTimeStamp();
+		String currentTimeStamp=naDBUtils.getCurrentTimeStamp();
+
 		String context=array;
-		
 		List<String> testNetworks = new ArrayList<>();
 		if (vFilerName != null) {
 			context=context+"=>"+vFilerName;
@@ -71,10 +71,10 @@ public class ShowmountDataCollector {
 			}
 
 			if(showMountExportList.size()>0) {
-				currentNFSMountedHosts.setSystemName(netAppSystemInfo.getSystemName());
-				currentNFSMountedHosts.setSystemId(netAppSystemInfo.getSystemId());
-				currentNFSMountedHosts.setSystemSerialNumber(netAppSystemInfo.getSystemSerialNumber());
-				currentNFSMountedHosts.setLastSeen(naDBUtils.getCurrentTimeStamp());
+				currentNFSMountedHosts.setNetAppSystemName(netAppSystemInfo.getSystemName());
+				currentNFSMountedHosts.setNetAppSystemId(netAppSystemInfo.getSystemId());
+				currentNFSMountedHosts.setNetAppSystemSerialNumber(netAppSystemInfo.getSystemSerialNumber());
+				currentNFSMountedHosts.setLastSeen(currentTimeStamp);
 				currentNFSMountedHosts.setExportList(showMountExportList);
 				
 		        System.out.println("Found a total of " + currentNFSMountedHosts.getExportList().size() + " active exports for ("+context+")");
@@ -98,7 +98,7 @@ public class ShowmountDataCollector {
 
 		List<String> mountedHosts = netAppAPIUtils.getShowMounts(nfsServer);
 
-		if (mountedHosts.size()==0 && PowerShellToJavaConstants.TESTING == true) {
+		/*if (mountedHosts.size()==0 && PowerShellToJavaConstants.TESTING == true) {
 
 			mountedHosts.add("All mount points on 10.216.15.31:");
 			mountedHosts.add("10.216.15.106                      : /vol/uat_nfs1_multiqtree");
@@ -106,7 +106,7 @@ public class ShowmountDataCollector {
 			mountedHosts.add("10.216.49.26                       : /vol/uat_nfs1_multiqtree/nfs1q2");
 			mountedHosts.add("10.216.49.38                       : /vol/uat_nfs1_multiqtree/nfs1q1");
 			mountedHosts.add("");
-		}
+		}*/
 		for (String mountedHostLine : mountedHosts) {
 
 			String mounted_host_array[] = mountedHostLine.trim().split(":");
@@ -118,7 +118,7 @@ public class ShowmountDataCollector {
 				Host host = netAppAPIUtils.getHostByAddress(address);
 
 				HostExportData thisHost = new HostExportData();
-				thisHost.setHostname(host.getName());
+				thisHost.setHost(host.getName());
 				thisHost.setIp(host.getIpAddress());
 				thisHost.setExport(mounted_host_array[1]);
 

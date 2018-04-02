@@ -132,9 +132,8 @@ public class NetAppAPIUtils {
 		} catch (NaAuthenticationException | NaAPIFailedException| NaProtocolException | IOException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-		} finally {
-			System.out.println("Error Occured During execution of NetApp System API");
-		}
+		} 
+
 
 		return netAppResults;
 	}
@@ -185,19 +184,15 @@ public class NetAppAPIUtils {
 		NaElement api = new NaElement(PowerShellToJavaConstants.NA_API_NET_IFCONFIG_GET);
 		Results netAppResults = executeNaApi(api);
 		List<String> lstIpAddress = new ArrayList<>();
-
 		InterfaceConfigInfo interfaceConfigInfo = netAppResults.getInterfaceConfigInfo();
 		if (interfaceConfigInfo != null) {
-
 			InterfaceConfigInfoChild[] interfaceConfigInfoChild = interfaceConfigInfo.getInterfaceConfigInfoChild();
 			for (InterfaceConfigInfoChild interfaceConfigInfo2 : interfaceConfigInfoChild) {
 
 				V4PrimaryAddress v4PrimaryAddress = interfaceConfigInfo2.getV4PrimaryAddress();
 				if (v4PrimaryAddress != null) {
-
 					IpAddressInfo ipAddressInfo = v4PrimaryAddress.getIpAddressInfo();
 					if (ipAddressInfo != null) {
-
 						String ipAddress = ipAddressInfo.getAddress();
 						lstIpAddress.add(ipAddress);
 					}
@@ -313,12 +308,21 @@ public class NetAppAPIUtils {
 
 	public Host getHostByAddress(String hostAddress) {
 
+		hostAddress=hostAddress.trim();
+
 		Host host = new Host();
 
 		try {
 			InetAddress ip = InetAddress.getByName(hostAddress);
-			host.setIpAddress(ip.getHostAddress());
-			host.setName(ip.getHostName());
+			String ipAddress=ip.getHostAddress();
+			String hostName=ip.getHostName();
+			host.setIpAddress(ipAddress);
+
+			if(ipAddress.equalsIgnoreCase(hostName)) {
+				host.setName("not resolved");
+			} else {
+				host.setName(hostName);
+			}
 			
 		} catch (UnknownHostException e1) {
 			host.setIpAddress(hostAddress);

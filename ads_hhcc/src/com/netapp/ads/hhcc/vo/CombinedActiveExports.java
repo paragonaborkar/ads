@@ -9,7 +9,8 @@ public class CombinedActiveExports {
 	String systemName;
 	String systemId;
 	String systemSerialNumber;
-	Timestamp lastSeen;
+	String lastSeen;
+
 
 	List<HostExportData> exportList = new ArrayList<>();
 	List<HostExportData> inactiveHosts = new ArrayList<>();
@@ -38,11 +39,11 @@ public class CombinedActiveExports {
 		this.systemSerialNumber = systemSerialNumber;
 	}
 
-	public Timestamp getLastSeen() {
+	public String getLastSeen() {
 		return lastSeen;
 	}
 
-	public void setLastSeen(Timestamp lastSeen) {
+	public void setLastSeen(String lastSeen) {
 		this.lastSeen = lastSeen;
 	}
 
