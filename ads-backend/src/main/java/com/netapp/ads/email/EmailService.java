@@ -18,6 +18,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.context.WebContext;
 
 @Service
 public class EmailService {
@@ -49,7 +50,7 @@ public class EmailService {
         emailSender.send(message);
     }
 
-    public void sendTemplatedMail(String to, String subject, String emailTemplateName, Context context, Map<String, Resource> inlineResources) throws MessagingException, UnsupportedEncodingException {
+    public void sendTemplatedMail(String to, String subject, String emailTemplateName, WebContext context, Map<String, Resource> inlineResources) throws MessagingException, UnsupportedEncodingException {
         final MimeMessage mimeMessage = this.emailSender.createMimeMessage();
         final MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8"); //true for multipart
         messageHelper.setSubject(subject);
@@ -61,6 +62,7 @@ public class EmailService {
         final String htmlContent = this.templateEngine.process(emailTemplateName, context);
         //setText has to come before addInline otherwise it wont work
         messageHelper.setText(htmlContent, true); //true for isHtml
+        
         if(inlineResources != null && !inlineResources.isEmpty()) {
         	for (Entry<String, Resource> pair : inlineResources.entrySet()){
                 messageHelper.addInline(pair.getKey(), pair.getValue());

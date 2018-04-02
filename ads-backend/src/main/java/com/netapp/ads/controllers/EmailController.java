@@ -35,32 +35,32 @@ public class EmailController {
         return "Email sent!";
     }
 
-    @RequestMapping(value="sendTemplateMail", method=RequestMethod.GET)
-    public String sendTemplateMail(@RequestParam String emailTo, @RequestParam String subject, @RequestParam String templateName) {
-    	final Context context = new Context(Locale.ENGLISH);
-    	try {
-    		if(templateName != null) {
-				Map<String, Resource> inlineResources = new HashMap<String, Resource>();
-				String emailTemplate = null;
-    			if(templateName.equals("newsletter")) {
-    				emailTemplate = "Newsletter/newsletter";
-    				inlineResources.put("imageLogo1", new ClassPathResource("templates/Newsletter/logo-1.jpg"));
-    				inlineResources.put("imageHero1", new ClassPathResource("templates/Newsletter/hero-1.jpg"));
-    				inlineResources.put("imageNews1", new ClassPathResource("templates/Newsletter/news-1.jpg"));
-    				inlineResources.put("imageNews2", new ClassPathResource("templates/Newsletter/news-2.jpg"));
-    				inlineResources.put("imageNews3", new ClassPathResource("templates/Newsletter/news-3.jpg"));
-    				inlineResources.put("imageNews4", new ClassPathResource("templates/Newsletter/news-4.jpg"));
-    				inlineResources.put("imageCalendar", new ClassPathResource("templates/Newsletter/calendar.png"));
-    			}
-				emailService.sendTemplatedMail(emailTo, subject, emailTemplate, context, inlineResources);
-    		}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		}
-    	//emailService.sendTemplatedMail("ADS - Controllers Details", "simple-announcement.html", context);
-        return "Email sent!";
-    }
+//    @RequestMapping(value="sendTemplateMail", method=RequestMethod.GET)
+//    public String sendTemplateMail(@RequestParam String emailTo, @RequestParam String subject, @RequestParam String templateName) {
+//    	final Context context = new Context(Locale.ENGLISH);
+//    	try {
+//    		if(templateName != null) {
+//				Map<String, Resource> inlineResources = new HashMap<String, Resource>();
+//				String emailTemplate = null;
+//    			if(templateName.equals("newsletter")) {
+//    				emailTemplate = "Newsletter/newsletter";
+//    				inlineResources.put("imageLogo1", new ClassPathResource("templates/Newsletter/logo-1.jpg"));
+//    				inlineResources.put("imageHero1", new ClassPathResource("templates/Newsletter/hero-1.jpg"));
+//    				inlineResources.put("imageNews1", new ClassPathResource("templates/Newsletter/news-1.jpg"));
+//    				inlineResources.put("imageNews2", new ClassPathResource("templates/Newsletter/news-2.jpg"));
+//    				inlineResources.put("imageNews3", new ClassPathResource("templates/Newsletter/news-3.jpg"));
+//    				inlineResources.put("imageNews4", new ClassPathResource("templates/Newsletter/news-4.jpg"));
+//    				inlineResources.put("imageCalendar", new ClassPathResource("templates/Newsletter/calendar.png"));
+//    			}
+//				emailService.sendTemplatedMail(emailTo, subject, emailTemplate, context, inlineResources);
+//    		}
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		} catch (MessagingException e) {
+//			e.printStackTrace();
+//		}
+//    	//emailService.sendTemplatedMail("ADS - Controllers Details", "simple-announcement.html", context);
+//        return "Email sent!";
+//    }
 
 }
