@@ -2,6 +2,8 @@ package com.netapp.ads.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import com.netapp.ads.Application;
 public class RemoteLogController {
     
 	private static final Logger log = LoggerFactory.getLogger(RemoteLogController.class);
+	
 	
     @RequestMapping(value = "/remoteLog", method = RequestMethod.POST)
     public void getControllersWithControllerPK(@RequestBody Object obj) {
