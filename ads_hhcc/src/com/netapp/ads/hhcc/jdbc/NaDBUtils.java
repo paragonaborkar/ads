@@ -114,6 +114,7 @@ public class NaDBUtils {
 				"    join dwh_inventory.storage_node_to_internal_volume" + 
 				"                    ON ns.intVolId = dwh_inventory.storage_node_to_internal_volume.internalVolumeId" + 
 				"       " + 
+
 				"    join dwh_inventory.storage_node" + 
 				"                    on dwh_inventory.storage_node_to_internal_volume.storageNodeId = dwh_inventory.storage_node.id" + 
 				"       " + 
@@ -284,7 +285,6 @@ public class NaDBUtils {
 	 */
 
 	public static void importNFSActiveHostInformation(NFSImportData nfsImportData,String currentTimeStamp) {
-
 		String shareId = nfsImportData.getShareId();
 		String internalVolId = nfsImportData.getInternalVolId();
 		String name = nfsImportData.getName();
@@ -309,7 +309,6 @@ public class NaDBUtils {
 			Timestamp timeStamp=getSQLDate(currentTimeStamp);
 			psmt.setTimestamp(8, timeStamp);
 			psmt.setTimestamp(9, timeStamp);
-
 			psmt.execute();
 
 		} catch (SQLException e) {
@@ -330,7 +329,6 @@ public class NaDBUtils {
 	}
 
 	public static String importInactiveHostInformation(ActiveHostBulkImport activeHostBulkImport,String currentTimeStamp) {
-
 		String strStorageId = activeHostBulkImport.getStorageId();
 		String protocol = activeHostBulkImport.getProtocol();
 		String hostId = activeHostBulkImport.getHostId();
@@ -352,6 +350,7 @@ public class NaDBUtils {
 			Timestamp timeStamp=getSQLDate(currentTimeStamp);
 
 			psmt.setTimestamp(6, timeStamp);
+
 			// psmt.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
 			psmt.execute();
 

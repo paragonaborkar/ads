@@ -11,6 +11,7 @@ public class CombinedActiveExports {
 	String systemSerialNumber;
 	String lastSeen;
 
+
 	List<HostExportData> exportList = new ArrayList<>();
 	List<HostExportData> inactiveHosts = new ArrayList<>();
 

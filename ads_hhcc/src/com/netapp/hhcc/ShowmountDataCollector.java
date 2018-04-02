@@ -34,7 +34,6 @@ public class ShowmountDataCollector {
 		String currentTimeStamp=naDBUtils.getCurrentTimeStamp();
 
 		String context=array;
-		
 		List<String> testNetworks = new ArrayList<>();
 		if (vFilerName != null) {
 			context=context+"=>"+vFilerName;

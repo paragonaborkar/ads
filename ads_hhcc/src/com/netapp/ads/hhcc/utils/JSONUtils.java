@@ -18,6 +18,7 @@ public class JSONUtils {
 	public JSONUtils() {
 		jsonMapper.enable(SerializationFeature.INDENT_OUTPUT);
 	}
+
 	public <T> void writeToFile(String strExportFile, Object className) {
 
 		File exportFile = new File(strExportFile);

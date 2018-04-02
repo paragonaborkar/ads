@@ -13,6 +13,8 @@ import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.PumpStreamHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +27,12 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-
 
 @RestController
 @RequestMapping("/talendJobs")
 public class TalendController {
 
+	private static final Logger log = LoggerFactory.getLogger(TalendController.class);
 
 	@Value("${talendjobs.loc}") 
 	public String batchScriptsLoc;  
@@ -184,8 +185,7 @@ public class TalendController {
 	
 	
 	public String getTempLocation() {
-
-		System.out.println("Temp Location***********" + System.getProperty("java.io.tmpdir"));
+		log.info("getTempLocation: java.io.tmpdir: {}", System.getProperty(TalendConstants.TEMP_ATTR_NAME));	
 		String tempLocation = System.getProperty(TalendConstants.TEMP_ATTR_NAME);
 		return tempLocation;
 	}
@@ -195,7 +195,7 @@ public class TalendController {
 		long currentTimeMillis = System.currentTimeMillis();
 		String batchScript = getBatchScript(jobId);
 
-		System.out.println("batchScript**" + batchScript);
+		log.info("runADSJob: batchScript: {}", batchScript);
 
 		if (inputFile!=null && !inputFile.isEmpty()) {
 
@@ -213,8 +213,8 @@ public class TalendController {
 			}
 
 			String jobName = runTalendJob(newFileName, batchScript, TalendConstants.JOB_TYPE_ADS_SETUP,inputFileParamName);
-			System.out.println("DESTINATION FILE Exists:" + destinationFile.getAbsolutePath());
-			System.out.println("jobName:" + jobName);
+			log.info("runADSJob: DESTINATION FILE Exists: {}", destinationFile.getAbsolutePath());
+			log.info("runADSJob: jobName: {}", jobName);
 			return jobName;
 		}
 		
@@ -235,7 +235,7 @@ public class TalendController {
 		String batchScript = getBatchScript(jobId);
 		String jobName = getJobInstanceName(jobId, currentTimeMillis);
 		
-		System.out.println("jobName:" + jobName);
+		log.info("runTalendJob: jobName: {}", jobName);
 		
 		CommandLine command = null;
 		if (TalendConstants.JOB_TYPE_ADS_SETUP.equalsIgnoreCase(jobType)) {
@@ -274,7 +274,7 @@ public class TalendController {
 
 		CommandLine commandLine = createBatchScript(batchScript,commandString.toString(),jobName);
 
-		System.out.println("COMMAND:"+commandLine.toString());
+		log.info("runTalendJob: COMMAND: {}", commandLine.toString());
 		return commandLine;
 	}
 
@@ -287,7 +287,7 @@ public class TalendController {
 		token=token.replace(TalendConstants.STR_BEARER, "");
 
 		token=token.replaceAll(" ", "");
-		System.out.println("TOKEN******"+token);	
+		log.info("getAuthorizationToken: TOKEN: {}", token);
 		return token;
 	}
 
@@ -339,7 +339,7 @@ public class TalendController {
 			finalTalendJobCommand=finalTalendJobCommand.replace('\\', '/');
 
 			String parentFldr=originalBatchScript.getParent();
-			System.out.println("Parent Folder"+parentFldr);
+			log.info("createWindowsBatchScript: parentFldr: {}", parentFldr);
 
 			String strNewBatchFile=parentFldr+File.separator+jobName+TalendConstants.STR_BAT_EXT;
 
@@ -371,11 +371,13 @@ public class TalendController {
 			finalTalendJobCommand=finalTalendJobCommand.replace('\\', '/');
 
 			String parentFldr=originalBatchScript.getParent();
-			System.out.println("Parent Folder"+parentFldr);
-
+			log.info("createLinuxBatchScript: parentFldr: {}", parentFldr);
+			
 			String strNewBatchFile=parentFldr+File.separator+jobName+TalendConstants.STR_SH_EXT;
 
-			File newBatchFile=new File(strNewBatchFile ); 
+			File newBatchFile=new File(strNewBatchFile );
+			boolean isExecutable = newBatchFile.setExecutable(true, false);
+			log.debug("createLinuxBatchScript: isExecutable: {}", isExecutable);
 
 			BufferedWriter bw=new BufferedWriter(new FileWriter(newBatchFile));
 			bw.write(TalendConstants.STR_CD+parentFldr);

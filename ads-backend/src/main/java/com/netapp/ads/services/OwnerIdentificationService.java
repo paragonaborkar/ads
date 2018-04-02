@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.netapp.ads.models.Activity;
 import com.netapp.ads.models.ActivityResponse;
 import com.netapp.ads.models.Host;
+import com.netapp.ads.models.LineOfBusiness;
 import com.netapp.ads.models.Qtree;
 import com.netapp.ads.models.QtreeDisposition;
 import com.netapp.ads.models.Share;
@@ -26,6 +27,7 @@ import com.netapp.ads.repos.ActivityRepository;
 import com.netapp.ads.repos.ActivityResponseRepository;
 import com.netapp.ads.repos.ApplicationRepository;
 import com.netapp.ads.repos.HostRepository;
+import com.netapp.ads.repos.LineOfBusinessRepository;
 import com.netapp.ads.repos.QtreeDispositionRepository;
 import com.netapp.ads.repos.UserCorporateRepository;
 import com.netapp.ads.repos.UserRoleRepository;
@@ -61,6 +63,9 @@ public class OwnerIdentificationService {
 	
 	@Autowired
 	public UserRoleRepository userRoleRepository;	
+	
+	@Autowired
+	public LineOfBusinessRepository lineOfBusinessRepository;	
 	
 	/**
 	 * Finds activities where owner needs to be discovered
@@ -120,7 +125,6 @@ public class OwnerIdentificationService {
 					activity.setNote(QtreeOwnerStatus.Single.name());
 				}
 			} else {
-//				createActivityResponse(activity, activityResponses, host.getHostOwnerUserCorporateId());
 				createActivityResponse(activity, activityResponses, host.getHostOwnerUserCorporate());
 			} // else
 		} //main else for host
@@ -137,41 +141,33 @@ public class OwnerIdentificationService {
 				List<com.netapp.ads.models.verum.application.Application> verumApplications = verumObjectList.getApplication();
 				for(com.netapp.ads.models.verum.application.Application verumApplication : verumApplications) {
 					com.netapp.ads.models.Application application = applicationRepository.findByApplicationCode(verumApplication.getAppID());
+					List<Contact> contacts = verumApplication.getContact();
+					//if application is null - create ar, user, application
+					//if application is not null and admin override - create ar, user
 					if(application == null) {
+						checkActivityResponses(activity, contacts);
+						LineOfBusiness lob = getOrCreateLob(verumApplication.getOwningLOB());
 						log.debug("createApplicationAndUsers(): Application DOES NOT exist. Creating.." );
-						List<ActivityResponse> activityResponses = activity.getActivityResponses();
-						//THERE ARE MULTIPLE CONTACTS. LOOKS LIKE OLD CODE IS PICKING ONLY THE LAST ONE. SO DID WE
-						//CAN AN APPLICATION NOT HAVE MORE THAN 1 CONTACT?
-						Integer corpOwnerId = 0;
-						List<Contact> contacts = verumApplication.getContact();
-						for(Contact contact: contacts) {
-							UserCorporate corporateUser = getOrCreateCorporateUser(contact.getSid());
-							if(corporateUser != null) {
-								log.error("User to add to activity response!:" + corporateUser.getLastName());
-								//application.setOwnerUserCorporateId(corporateUser.getId()); //WHAT IF CORPORATE USER DOES NOT EXIST IN SYSTEM? SHOULD WE CREATE? VERUM IS SENDING MULTIPLE CONTACTS
-//								createActivityResponse(activity, activityResponses, corporateUser.getId());
-								createActivityResponse(activity, activityResponses, corporateUser);
-								corpOwnerId = corporateUser.getId();
-							} else {
-								log.error("No User to add to activity response!");
-							}
-						}
-
 						application = new com.netapp.ads.models.Application();
 						if(!application.getHosts().contains(host)) {
 							application.addHost(host);
 						}
 						application.setApplicationName(verumApplication.getApplicationName());
 						application.setApplicationCode(verumApplication.getAppID());
-						application.setOwnerUserCorporateId(corpOwnerId);
-						//application.setArchtype(verumApplication.get); WHERE TO GET THIS FROM?
-						//application.setHosts(hosts); DO WE NEED TO SET THIS?
+						//FIXME: THERE ARE MULTIPLE CONTACTS. But application has only 1 owner
+						application.setOwnerUserCorporateId(getOrCreateCorporateUser(contacts.get(0).getSid()).getId());
+						//FIXME: application.setArchtype(verumApplication.get); WHERE TO GET THIS FROM?
 						application.setInformationOwner(verumApplication.getTechGroupOwner()); //IS THIS CORRECT?
-						//application.setLineOfBusinesses(new ListverumApplication.getOwningLOB()); //DO WE NEED TO SET THIS?
+						application.addLineOfBusinesses(lob);
 						application = applicationRepository.save(application);
 						
+						activity.addLineOfBusinesses(lob);
+						activityRepository.save(activity);
 						log.debug("createApplicationAndUsers(): Application Created/Updated: " + application.getId());
 					} else {
+						if(activity.getAdminOverride()) {
+							checkActivityResponses(activity, contacts);
+						}
 						log.debug("createApplicationAndUsers(): Application already exists: " + application.getId());
 					}
 					applications.add(application);
@@ -180,6 +176,35 @@ public class OwnerIdentificationService {
 		}
 		log.debug("createApplicationAndUsers(): [EXIT]");
 		return applications;
+	}
+	
+	public void checkActivityResponses(Activity activity, List<Contact> contacts) {
+		List<ActivityResponse> activityResponses = activity.getActivityResponses();
+		for(Contact contact: contacts) {
+			UserCorporate corporateUser = getOrCreateCorporateUser(contact.getSid());
+			if(corporateUser != null) {
+				log.error("User to add to activity response!:" + corporateUser.getLastName());
+				createActivityResponse(activity, activityResponses, corporateUser);
+			} else {
+				log.error("No User to add to activity response!");
+			}
+		}
+	}
+	
+	public LineOfBusiness getOrCreateLob(String lobName) {
+		LineOfBusiness lob = lineOfBusinessRepository.findByLobName(lobName);
+		if(lob == null) {
+			lob = new LineOfBusiness();
+			lob.setLobName(lobName);
+			//FIXME: Where do we get these other lob details from? MMS did not use it
+			lob.setLiasonFirstName("DUMMY");
+			lob.setLiasonContactNumber("DUMMY");
+			lob.setLiasonEmail("DUMMY");
+			lob.setLiasonLastName("DUMMY");
+			lob.setLiasonUserName("DUMMY");
+			lineOfBusinessRepository.save(lob);
+		}
+		return lob;
 	}
 	
 	public UserCorporate getOrCreateCorporateUser(String sid) {
@@ -247,9 +272,7 @@ public class OwnerIdentificationService {
 		return false;
 	}
 	
-//	public Activity createActivityResponse(Activity activity, List<ActivityResponse> activityResponses, Integer ownerUserCorporateId) {
 	public Activity createActivityResponse(Activity activity, List<ActivityResponse> activityResponses, UserCorporate ownerUserCorporate) {
-//		if(shouldCreateActivityResponseForThisApplication(activity, activityResponses, ownerUserCorporateId)) {
 		if(shouldCreateActivityResponseForThisApplication(activity, activityResponses, ownerUserCorporate)) {
 			if(activityResponses.isEmpty())
 				activity.setNote(QtreeOwnerStatus.Single.name());
@@ -262,14 +285,16 @@ public class OwnerIdentificationService {
 			activityResponse.setActivity(activity);
 			activityResponseRepository.save(activityResponse);
 			activity.addActivityResponse(activityResponse);
+			if(activity.getAdminOverride()) {
+				activity.setAdminOverride(false);
+			}
 			activity = activityRepository.save(activity);
 			return activity;
 		}
 		return activity;
 	}
 	
-//	public boolean shouldCreateActivityResponseForThisApplication(Activity activity, List<ActivityResponse> activityResponses, Integer ownerUserCorporateId) {
-		public boolean shouldCreateActivityResponseForThisApplication(Activity activity, List<ActivityResponse> activityResponses, UserCorporate ownerUserCorporate) {
+	public boolean shouldCreateActivityResponseForThisApplication(Activity activity, List<ActivityResponse> activityResponses, UserCorporate ownerUserCorporate) {
 		boolean createActivityResponse = false;
 		//Activity Response is empty so create one for this user
 		if(activityResponses.isEmpty()) {
@@ -281,15 +306,13 @@ public class OwnerIdentificationService {
 			boolean ownerAlreadyAdded = false;
 			for(ActivityResponse activityResponse: activityResponses) {
 				if(activityResponse.getOwnerUserCorporate() == ownerUserCorporate) {
-//					if(activityResponse.getOwnerUserCorporateId().intValue() == ownerUserCorporateId.intValue()) {
 					ownerAlreadyAdded = true;
 					break;
 				}
 			}
 			createActivityResponse = ownerAlreadyAdded ? false : true;
 			log.debug("identifyOwner(): Owner added: {}. So create activity response: {}", ownerAlreadyAdded, createActivityResponse);
-		} //end if(activityResponses.isEmpty())
-		
+		} 
 		return createActivityResponse;
 	}
 	
