@@ -7,7 +7,9 @@ import { Observable } from 'rxjs/Observable';
 export class Globals implements OnInit {
 	appModulesAvailable: any = {};
 
-	apiUrl: string="http://localhost:8080";
+	// apiUrl: string="http://localhost:8080";
+	apiUrl: string="/api";
+
 	askAQuestionUrl: string = "https://support.netapp.com?adsRequest=question";
 	reportAProblemUrl: string = "https://support.netapp.com?adsRequest=problem";
 
@@ -18,10 +20,10 @@ export class Globals implements OnInit {
 	constructor(private http: HttpClient) {
 		this.http.get('assets/global.json')
 			.subscribe(data => {
-				this.apiUrl = data["apiUrl"];
+				// this.apiUrl = data["apiUrl"];
 				this.askAQuestionUrl = data["askAQuestionUrl"];
 				this.reportAProblemUrl = data["reportAProblemUrl"];
-				console.log("this.apiUrl:" + this.apiUrl);
+				//console.log("this.apiUrl:" + this.apiUrl);
 			});
 	}
 

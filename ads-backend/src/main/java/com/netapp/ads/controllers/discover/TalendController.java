@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.netapp.ads.pojo.ApplicationPojo;
+import com.netapp.ads.pojo.ApplicationsPojo;
 
 
 @RestController
@@ -38,6 +42,19 @@ public class TalendController {
 	public String batchScriptsLoc;  
 
 
+	// This is the URL that Talend will call once it gets the CMDB information.
+	@RequestMapping(value = "/test", method = RequestMethod.POST)
+	public ResponseEntity<?> test(@RequestBody ApplicationsPojo data) {
+		
+		ApplicationPojo[] apps = data.getApps();
+		System.out.println("Apps length:" +apps.length);
+		for (int i=0; i< apps.length; i++) {
+			System.out.println("App getAppName:" +apps[i].getAppName());
+		}		
+		
+		return new ResponseEntity("OK", HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "userRoles", method = RequestMethod.POST, headers = ("content-type=multipart/*"))
 	public @ResponseBody ResponseEntity<?>  loadUserRoles(@RequestParam("file") MultipartFile inputFile) {
 		String jobName = runADSJob(TalendConstants.JOB_NAME_USER_ROLES, inputFile, TalendConstants.ADS_SETUP_LOADSHEET_USER_ROLES_XLSX);

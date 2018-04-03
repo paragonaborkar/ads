@@ -1,18 +1,29 @@
 package com.netapp.ads.controllers.discover;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.context.WebContext;
 
 import com.netapp.ads.batch.MigrationKeyService;
 import com.netapp.ads.email.EmailService;
@@ -42,6 +53,20 @@ public class DiscoverProcessingController {
 	@Value("${ads.rule.discovery_rule.disposition}")
 	public String discoveryDisposition;
 	
+	
+	@Value("${ads.email.logoUrl}")
+	public String logoUrl;
+	
+	@Value("${ads.email.viewAllTasks}")
+	public String viewAllTasks;
+	
+	@Value("${ads.email.adsQtreeOwnerUrl}")
+	public String adsQtreeOwnerUrl;
+	
+	@Value("${ads.email.adsSupportUrl}")
+	public String adsSupportUrl;
+
+				
 	@Autowired
 	EmailService emailService;
 
@@ -234,6 +259,73 @@ public class DiscoverProcessingController {
 			//FIXME: bad error handeling
 			e.printStackTrace();
 		}*/
+
+		return "Email sent!";
+	}
+	
+	@RequestMapping(value="/sendTestEmail", method=RequestMethod.POST)
+	public String testEe(HttpServletRequest request,  HttpServletResponse response) {
+
+		String emailFolderAndTemplateFileName = "QtreeOwnerReminderNoSchedule/email";
+		
+		String emailTo = "szemanick@consultparagon.com";
+		String subject = "Heres the test";
+		
+		final WebContext context = new WebContext(request, response, request.getServletContext());
+		
+		try {
+			Map<String, Resource> inlineResources = new HashMap<String, Resource>();
+			
+			if(emailFolderAndTemplateFileName == "QtreeMultiOwnerNoSchedule/email") {
+				inlineResources.put("imageLogo1", new ClassPathResource("templates/QtreeMultiOwnerNoSchedule/na_logo_hrz_1c-rev_rgb_lrg.png"));
+				
+				context.setVariable("logoFullUrl", logoUrl);  				
+				context.setVariable("viewAllTasksFullUrl", viewAllTasks); 
+				context.setVariable("adsQtreeOwnerFullUrl", adsQtreeOwnerUrl);
+				context.setVariable("adsSupportFullUrl", adsSupportUrl);  
+				context.setVariable("migKey", "RANDOM_REPLACE");
+							
+				context.setVariable("firstName", "Steve");
+				
+				emailService.sendTemplatedMail(emailTo, subject, emailFolderAndTemplateFileName, context, inlineResources);
+			}
+			
+			if(emailFolderAndTemplateFileName == "QtreeSingleOwnerNoSchedule/email") {
+				inlineResources.put("imageLogo1", new ClassPathResource("templates/QtreeSingleOwnerNoSchedule/na_logo_hrz_1c-rev_rgb_lrg.png"));
+				
+				context.setVariable("logoFullUrl", logoUrl);  					
+				context.setVariable("viewAllTasksFullUrl", viewAllTasks); 
+				context.setVariable("adsQtreeOwnerFullUrl", adsQtreeOwnerUrl);  
+				context.setVariable("adsSupportFullUrl", adsSupportUrl);  		
+				context.setVariable("migKey", "RANDOM_REPLACE");
+							
+				context.setVariable("firstName", "Steve");
+				
+				emailService.sendTemplatedMail(emailTo, subject, emailFolderAndTemplateFileName, context, inlineResources);
+			}
+			
+			if(emailFolderAndTemplateFileName == "QtreeOwnerReminderNoSchedule/email") {
+				inlineResources.put("imageLogo1", new ClassPathResource("templates/QtreeOwnerReminderNoSchedule/na_logo_hrz_1c-rev_rgb_lrg.png"));
+				
+				context.setVariable("logoFullUrl", logoUrl);  					
+				context.setVariable("viewAllTasksFullUrl", viewAllTasks); 
+				context.setVariable("adsQtreeOwnerFullUrl", adsQtreeOwnerUrl);  
+				context.setVariable("adsSupportFullUrl", adsSupportUrl);  		
+				context.setVariable("migKey", "RANDOM_REPLACE");
+							
+				context.setVariable("firstName", "Steve");
+				
+				emailService.sendTemplatedMail(emailTo, subject, emailFolderAndTemplateFileName, context, inlineResources);
+			}
+				
+			
+		} catch (UnsupportedEncodingException e) {
+			//FIXME: bad error handeling
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			//FIXME: bad error handeling
+			e.printStackTrace();
+		}
 
 		return "Email sent!";
 	}
