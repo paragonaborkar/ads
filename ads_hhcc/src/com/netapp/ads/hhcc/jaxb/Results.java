@@ -16,6 +16,17 @@ public class Results {
 	private long localTime;
 	private long utcTime;
 	private CIFSShares cIFSShares;
+	private CIFSessions cIFSSessions;
+	
+
+	public CIFSessions getcIFSSessions() {
+		return cIFSSessions;
+	}
+
+	@XmlElement(name = "cifs-sessions")
+	public void setcIFSSessions(CIFSessions cIFSSessions) {
+		this.cIFSSessions = cIFSSessions;
+	}
 
 	public CIFSShares getcIFSShares() {
 		return cIFSShares;

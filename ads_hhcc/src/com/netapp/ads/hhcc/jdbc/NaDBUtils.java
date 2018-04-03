@@ -40,7 +40,7 @@ public class NaDBUtils {
 			 * ns.protocol
 			 */
 			String query = getQueryOfControllerByNASystemAndSerNumber(netAppSystemName, netAppSerialNumber);
-			System.out.println("getDWHNFSShowMountsList:"+query);
+			System.out.println("getDWHNFSShowMountsList:" + query);
 			sqlConnection.getConnection();
 			ResultSet resultSet = sqlConnection.executeSelectQuery(query, sqlConnection.getConnection());
 
@@ -92,55 +92,44 @@ public class NaDBUtils {
 
 	public static String getCurrentTimeStamp() {
 
-		SimpleDateFormat format=new SimpleDateFormat(PowerShellToJavaConstants.STR_DATE_FORMAT);
-		String strDate=format.format(new java.util.Date());
+		SimpleDateFormat format = new SimpleDateFormat(PowerShellToJavaConstants.STR_DATE_FORMAT);
+		String strDate = format.format(new java.util.Date());
 		return strDate;
 	}
 
 	public static String getQueryOfControllerByNASystemAndSerNumber(String netAppSystemName,
 			String netAppSerialNumber) {
 
-		String query="SELECT dwh_inventory.storage_node.name AS 'Storage Node Name'," + 
-				"                        ns.shareId," + 
-				"                        ns.intVolId," + 
-				"                        ns.storageid," + 
-				"                        ns.name AS 'export'," + 
-				"                        ns.hostIp AS 'ip'," + 
-				"                        ns.protocol" + 
-				"                       " + 
-				"    FROM dwh_inventory.nfs_host_showmount ns" + 
-				"     " + 
-				"     " + 
-				"    join dwh_inventory.storage_node_to_internal_volume" + 
-				"                    ON ns.intVolId = dwh_inventory.storage_node_to_internal_volume.internalVolumeId" + 
-				"       " + 
+		String query = "SELECT dwh_inventory.storage_node.name AS 'Storage Node Name',"
+				+ "                        ns.shareId," + "                        ns.intVolId,"
+				+ "                        ns.storageid," + "                        ns.name AS 'export',"
+				+ "                        ns.hostIp AS 'ip'," + "                        ns.protocol"
+				+ "                       " + "    FROM dwh_inventory.nfs_host_showmount ns" + "     " + "     "
+				+ "    join dwh_inventory.storage_node_to_internal_volume"
+				+ "                    ON ns.intVolId = dwh_inventory.storage_node_to_internal_volume.internalVolumeId"
+				+ "       " +
 
-				"    join dwh_inventory.storage_node" + 
-				"                    on dwh_inventory.storage_node_to_internal_volume.storageNodeId = dwh_inventory.storage_node.id" + 
-				"       " + 
-				"    WHERE " + 
-				"        dwh_inventory.storage_node.name='" + netAppSystemName + "' " + 
-				"        AND dwh_inventory.storage_node.serialNumber='" + netAppSerialNumber + "'"+ 
-				"        AND dwh_inventory.ns.protocol = 'NFS'";
-		
+				"    join dwh_inventory.storage_node"
+				+ "                    on dwh_inventory.storage_node_to_internal_volume.storageNodeId = dwh_inventory.storage_node.id"
+				+ "       " + "    WHERE " + "        dwh_inventory.storage_node.name='" + netAppSystemName + "' "
+				+ "        AND dwh_inventory.storage_node.serialNumber='" + netAppSerialNumber + "'"
+				+ "        AND dwh_inventory.ns.protocol = 'NFS'";
+
 		System.out.println("getQueryControllerByNASystemAndSerNumber:Query" + query);
 		return query;
 	}
 
-		public static String getQueryStorageVolumes(String netAppSystemName, String netAppSerialNumber) {
+	public static String getQueryStorageVolumes(String netAppSystemName, String netAppSerialNumber) {
 
-		String query="SELECT " + 
-				"              dwh_inventory.storage_node.id AS 'id'," + 
-				"                substring_index(internal_volume.name, ':', -1) AS 'volumeName'," + 
-				"                internal_volume.id AS 'intVolId'" + 
-				"            FROM dwh_inventory.storage_node" + 
-				"            JOIN dwh_inventory.storage_node_to_internal_volume" + 
-				"                on dwh_inventory.storage_node_to_internal_volume.storageNodeId = dwh_inventory.storage_node.id" + 
-				"                join dwh_inventory.internal_volume on internal_volume.id = storage_node_to_internal_volume.internalVolumeId" + 
-				"            WHERE " + 
-				"                dwh_inventory.storage_node.name='"+netAppSystemName+"' " + 
-				"                AND dwh_inventory.storage_node.serialNumber='"+netAppSerialNumber+"'";
-		
+		String query = "SELECT " + "              dwh_inventory.storage_node.id AS 'id',"
+				+ "                substring_index(internal_volume.name, ':', -1) AS 'volumeName',"
+				+ "                internal_volume.id AS 'intVolId'" + "            FROM dwh_inventory.storage_node"
+				+ "            JOIN dwh_inventory.storage_node_to_internal_volume"
+				+ "                on dwh_inventory.storage_node_to_internal_volume.storageNodeId = dwh_inventory.storage_node.id"
+				+ "                join dwh_inventory.internal_volume on internal_volume.id = storage_node_to_internal_volume.internalVolumeId"
+				+ "            WHERE " + "                dwh_inventory.storage_node.name='" + netAppSystemName + "' "
+				+ "                AND dwh_inventory.storage_node.serialNumber='" + netAppSerialNumber + "'";
+
 		System.out.println("getStorageVolumes:Query:\n" + query);
 		return query;
 	}
@@ -203,35 +192,21 @@ public class NaDBUtils {
 
 	public static String getQueryCurrentExportsAndHostInformation(String netAppSystemName, String netAppSerialNumber) {
 
-		String strQuery="SELECT dwh_inventory.storage_node.name AS 'Storage Node Name'," + 
-				"                dwh_inventory.qtree.internalVolumeId," + 
-				"                ns.id," + 
-				"                ns.fileshareId," + 
-				"                ns.storageid," + 
-				"                ns.identifier," + 
-				"                ns.name," + 
-				"                ns.protocol," + 
-				"                ns.ipinterfaces" + 
-				"" + 
-				"            FROM dwh_inventory.nas_share ns" + 
-				"" + 
-				"            Join dwh_inventory.nas_file_share" + 
-				"                on ns.fileshareId = dwh_inventory.nas_file_share.id" + 
-				"" + 
-				"            join dwh_inventory.qtree" + 
-				"                on dwh_inventory.nas_file_share.qtreeid = dwh_inventory.qtree.id" + 
-				"" + 
-				"            join dwh_inventory.storage_node_to_internal_volume" + 
-				"                ON dwh_inventory.qtree.internalVolumeId = dwh_inventory.storage_node_to_internal_volume.internalVolumeId" + 
-				"" + 
-				"            join dwh_inventory.storage_node" + 
-				"                on dwh_inventory.storage_node_to_internal_volume.storageNodeId = dwh_inventory.storage_node.id" + 
-				"" + 
-				"            WHERE " + 
-				"                dwh_inventory.storage_node.name='"+netAppSystemName+"' " + 
-				"                AND dwh_inventory.storage_node.serialNumber='"+netAppSerialNumber+"'" + 
-				"                AND dwh_inventory.ns.protocol = 'NFS' ";
-		
+		String strQuery = "SELECT dwh_inventory.storage_node.name AS 'Storage Node Name',"
+				+ "                dwh_inventory.qtree.internalVolumeId," + "                ns.id,"
+				+ "                ns.fileshareId," + "                ns.storageid," + "                ns.identifier,"
+				+ "                ns.name," + "                ns.protocol," + "                ns.ipinterfaces" + ""
+				+ "            FROM dwh_inventory.nas_share ns" + "" + "            Join dwh_inventory.nas_file_share"
+				+ "                on ns.fileshareId = dwh_inventory.nas_file_share.id" + ""
+				+ "            join dwh_inventory.qtree"
+				+ "                on dwh_inventory.nas_file_share.qtreeid = dwh_inventory.qtree.id" + ""
+				+ "            join dwh_inventory.storage_node_to_internal_volume"
+				+ "                ON dwh_inventory.qtree.internalVolumeId = dwh_inventory.storage_node_to_internal_volume.internalVolumeId"
+				+ "" + "            join dwh_inventory.storage_node"
+				+ "                on dwh_inventory.storage_node_to_internal_volume.storageNodeId = dwh_inventory.storage_node.id"
+				+ "" + "            WHERE " + "                dwh_inventory.storage_node.name='" + netAppSystemName
+				+ "' " + "                AND dwh_inventory.storage_node.serialNumber='" + netAppSerialNumber + "'"
+				+ "                AND dwh_inventory.ns.protocol = 'NFS' ";
 
 		System.out.println("getCurrentExportsAndHostInformation: Query:\n" + strQuery);
 
@@ -284,7 +259,7 @@ public class NaDBUtils {
 	 * }
 	 */
 
-	public static void importNFSActiveHostInformation(NFSImportData nfsImportData,String currentTimeStamp) {
+	public static void importNFSActiveHostInformation(NFSImportData nfsImportData, String currentTimeStamp) {
 		String shareId = nfsImportData.getShareId();
 		String internalVolId = nfsImportData.getInternalVolId();
 		String name = nfsImportData.getName();
@@ -295,7 +270,7 @@ public class NaDBUtils {
 
 		String query = "INSERT INTO dwh_inventory.nfs_host_conn "
 				+ "(shareId,intVolId,name,protocol,hostId,hostIp,nfsOps,lastSeen,firstSeen)  " + "VALUES  " + "("
-				+ "?,?,?,?,?,?,?,?,?,?)  " + "ON DUPLICATE KEY UPDATE lastSeen=now()";
+				+ "?,?,?,?,?,?,?,?,?)  " + "ON DUPLICATE KEY UPDATE lastSeen=now()";
 		Connection conn = sqlConnection.getConnection();
 		try {
 			PreparedStatement psmt = conn.prepareStatement(query);
@@ -306,7 +281,7 @@ public class NaDBUtils {
 			psmt.setString(5, hostId);
 			psmt.setString(6, ip);
 			psmt.setString(7, operation);
-			Timestamp timeStamp=getSQLDate(currentTimeStamp);
+			Timestamp timeStamp = getSQLDate(currentTimeStamp);
 			psmt.setTimestamp(8, timeStamp);
 			psmt.setTimestamp(9, timeStamp);
 			psmt.execute();
@@ -315,20 +290,21 @@ public class NaDBUtils {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static Timestamp getSQLDate(String strDate) {
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat(PowerShellToJavaConstants.STR_DATE_FORMAT);
-		Timestamp time=null;
+		Timestamp time = null;
 		try {
-			time=new Timestamp(sdf.parse(strDate).getTime());
+			time = new Timestamp(sdf.parse(strDate).getTime());
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return time;
 	}
 
-	public static String importInactiveHostInformation(ActiveHostBulkImport activeHostBulkImport,String currentTimeStamp) {
+	public static String importInactiveHostInformation(ActiveHostBulkImport activeHostBulkImport,
+			String currentTimeStamp) {
 		String strStorageId = activeHostBulkImport.getStorageId();
 		String protocol = activeHostBulkImport.getProtocol();
 		String hostId = activeHostBulkImport.getHostId();
@@ -347,7 +323,7 @@ public class NaDBUtils {
 			psmt.setString(3, hostId);
 			psmt.setString(4, hostIp);
 			psmt.setString(5, nfsOps);
-			Timestamp timeStamp=getSQLDate(currentTimeStamp);
+			Timestamp timeStamp = getSQLDate(currentTimeStamp);
 
 			psmt.setTimestamp(6, timeStamp);
 
@@ -363,7 +339,7 @@ public class NaDBUtils {
 
 	public static void main(String[] args) {
 
-		System.out.println(getSQLDate("2018-04-01 22:14:04"));
+		System.out.println(getSQLDate("1522729957"));
 		// getStorageVolumesQuery(null,null); // NO DATA
 		// getCurrentExportsAndHostInformation(null,null);
 
@@ -390,23 +366,30 @@ public class NaDBUtils {
 
 	public static void insertIntoWCRCifsTemp(CIFSSessionsDataTableRow cIFSDataRow) {
 
-		String strQuery = "insert into table wcr_cifs_temp(DateTime,ControllerName,SerialNumber,VfilerName,VfilerUuid,VolumeName,ShareName,MountPoint,HostIp,HostName,WindowsUser,UnixUser) "
-				+ "		Values " + "(?,?,?,?,?,?,?,?,?,?,?,?)";
+		String strQuery = "insert into  dwh_inventory.wcr_cifs_temp(DateTime,ControllerName,SerialNumber,VfilerName,VfilerUuid,VolumeName,ShareName,MountPoint,HostIp,HostName,WindowsUser,UnixUser) "
+				+ "		Values " + "(?,?,?,?,?,?,?,?,?,?,?,?)  ON DUPLICATE KEY UPDATE DateTime=NOW()";
+
+		System.out.println("Insert QUERY:" + strQuery);
 		Connection conn = sqlConnection.getConnection();
 		try {
 			PreparedStatement psmt = conn.prepareStatement(strQuery);
+			
 			psmt.setTimestamp(1, cIFSDataRow.getDateTime());
 			psmt.setString(2, cIFSDataRow.getControllerName());
 			psmt.setString(3, cIFSDataRow.getSerialNumber());
 			psmt.setString(4, cIFSDataRow.getvFileName());
 			psmt.setString(5, cIFSDataRow.getvFilerUuid());
+			System.out.println("VolumeName" + cIFSDataRow.getVolumeName());
 			psmt.setString(6, cIFSDataRow.getVolumeName());
+
+			System.out.println("ShareName" + cIFSDataRow.getShareName());
 			psmt.setString(7, cIFSDataRow.getShareName());
 			psmt.setString(8, cIFSDataRow.getMountPoint());
 			psmt.setString(9, cIFSDataRow.getHostIp());
 			psmt.setString(10, cIFSDataRow.getHostName());
 			psmt.setString(11, cIFSDataRow.getWindowUser());
 			psmt.setString(12, cIFSDataRow.getUnixUser());
+
 			psmt.execute();
 
 		} catch (SQLException e) {
@@ -414,11 +397,11 @@ public class NaDBUtils {
 		}
 	}
 
-	public static void insertIntoHostShowmount(ShowmountImportData showmountRow,String currentTimeStamp) {
+	public static void insertIntoHostShowmount(ShowmountImportData showmountRow, String currentTimeStamp) {
 
 		String strQuery = "INSERT INTO dwh_inventory.nfs_host_showmount "
-				+ "   (shareId,intVolId,storageId,name,protocol,hostIp,lastSeen) VALUES "
-				+ "	(?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE lastSeen=now()";
+				+ "   (shareId,intVolId,storageId,name,protocol,hostIp,lastSeen,firstSeen) VALUES "
+				+ "	(?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE lastSeen=now()";
 		Connection conn = sqlConnection.getConnection();
 		try {
 			PreparedStatement psmt = conn.prepareStatement(strQuery);
@@ -428,8 +411,10 @@ public class NaDBUtils {
 			psmt.setString(4, showmountRow.getName());
 			psmt.setString(5, showmountRow.getProtocol());
 			psmt.setString(6, showmountRow.getHostIp());
-			Timestamp timeStamp=getSQLDate(currentTimeStamp);
+			Timestamp timeStamp = getSQLDate(currentTimeStamp);
 			psmt.setTimestamp(7, timeStamp);
+			psmt.setTimestamp(8, timeStamp);
+
 			psmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
