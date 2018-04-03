@@ -46,11 +46,17 @@ public class TalendController {
 	@RequestMapping(value = "/test", method = RequestMethod.POST)
 	public ResponseEntity<?> test(@RequestBody ApplicationsPojo data) {
 		
+		// Step 1. Validate entire JSON file and every field. If anything is invalid or missing. Fail for all applications and do not process any.
+		
+		// Step 2. Save the Applications and Owners
+		
 		ApplicationPojo[] apps = data.getApps();
 		System.out.println("Apps length:" +apps.length);
 		for (int i=0; i< apps.length; i++) {
 			System.out.println("App getAppName:" +apps[i].getAppName());
 		}		
+		
+		// Step 3. If #2 was successful Run Mig Key if needed... Could be a parameter or different REST call?
 		
 		return new ResponseEntity("OK", HttpStatus.OK);
 	}
