@@ -1,11 +1,13 @@
-
 package com.netapp.ads.services;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.jfree.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,6 +31,8 @@ import com.netapp.ads.repos.UserNativeRepository;
 @Transactional(readOnly=false)
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+	private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+	
 	@Autowired
 	private UserNativeRepository userNativeRepository;
 
@@ -37,6 +41,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired
 	private UserCorporateRepository userCorporateRepository;
+	
+	@Value("${sso.bypass_mode_on}")
+	private boolean ssoBypassModeOn;
+	
+	private static final String SSO_BYPASS_MODE_PREFIX = "sso-";
 
 	/**
 	 * Checks Credentials in API and Native Table for Authentication
@@ -46,9 +55,26 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		
-		if (username.indexOf("SSO") != -1) {
+		log.debug("userName: " + username);
+		if (username.startsWith(SSO_BYPASS_MODE_PREFIX)) {
+			log.debug("This is a bypass SSO user");
+			if(ssoBypassModeOn) {
+				String split[] = username.split("-");
+				if(split.length > 1) {
+					UserCorporate userCorporate = userCorporateRepository.findFirstByEmail(split[1]);
+					log.debug("userCorporate: " + userCorporate);
+					if(userCorporate == null) {
+						throw new UsernameNotFoundException(String.format("The user is not enabled", username));
+					}
+					grantedAuthorities.add(new SimpleGrantedAuthority(userCorporate.getUserRole().getUserRole()));
+					return new AdsUser(split[1],new BCryptPasswordEncoder().encode("123"), grantedAuthorities, userCorporate);
+				}
+			} else {
+				log.info("SSO Bypass mode is disabled. Try with normal login");
+			}
+		} else if (username.indexOf("SSO") != -1) {
 			String split[] = username.split("-");
-			grantedAuthorities.add(new SimpleGrantedAuthority("CORP_USER"));
+			
 
 			if (SecurityConfig.authAssertionIdUserNameCache.get(split[1]) == null) {
 				throw new UsernameNotFoundException(String.format("The user is not enabled", username));
@@ -62,6 +88,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				} else {
 					userCorporate = userCorporateRepository.findFirstByEmail(split[2]);
 				}
+				grantedAuthorities.add(new SimpleGrantedAuthority(userCorporate.getUserRole().getUserRole()));
 				
 				return new AdsUser(split[2],new BCryptPasswordEncoder().encode(split[1]), grantedAuthorities, userCorporate);
 			}
@@ -70,7 +97,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		UserApi userApi = userApiRepository.findByClientId(username);
 		if(userApi != null) {
 			if (userApi.getEnabled()) {
-				grantedAuthorities.add(new SimpleGrantedAuthority("CLIENT"));
+				grantedAuthorities.add(new SimpleGrantedAuthority("USER_TYPE"));
 				return  new AdsUser(userApi.getClientId(), userApi.getClientSecret(), grantedAuthorities, userApi);
 			} else {
 				throw new UsernameNotFoundException(String.format("The user is not enabled", username));
