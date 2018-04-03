@@ -33,7 +33,7 @@ export class NativeUserCreateComponent implements OnInit {
     // this.user.firstName="asd";
     // this.user.lastName="asd";
     // this.user.password="123";
-    this.user.userRole="http://localhost:8080/userRoles/2";
+    // this.user.userRole="http://localhost:8080/userRoles/2";
     
     
 
