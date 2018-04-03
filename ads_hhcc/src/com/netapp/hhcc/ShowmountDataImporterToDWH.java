@@ -9,6 +9,7 @@ import com.netapp.ads.hhcc.jdbc.NaDBUtils;
 import com.netapp.ads.hhcc.utils.JSONUtils;
 import com.netapp.ads.hhcc.utils.NetAppAPIUtils;
 import com.netapp.ads.hhcc.vo.CombinedActiveExports;
+import com.netapp.ads.hhcc.vo.CurrentNFSMountedHosts;
 import com.netapp.ads.hhcc.vo.ExportsAndHost;
 import com.netapp.ads.hhcc.vo.HostExportData;
 import com.netapp.ads.hhcc.vo.ShowmountImportData;
@@ -28,13 +29,13 @@ public class ShowmountDataImporterToDWH {
 
 		String currentTimeStamp=NaDBUtils.getCurrentTimeStamp();
 		
-		CombinedActiveExports combinedActiveExports = (CombinedActiveExports) jsonUtils.readFile(filePath,
-				CombinedActiveExports.class);
+		CurrentNFSMountedHosts combinedActiveExports = (CurrentNFSMountedHosts) jsonUtils.readFile(filePath,
+				CurrentNFSMountedHosts.class);
 
 		if (combinedActiveExports != null) {
 
-			String netAppSystemName = combinedActiveExports.getSystemName();
-			String netAppSerialNumber = combinedActiveExports.getSystemSerialNumber();
+			String netAppSystemName = combinedActiveExports.getNetAppSystemName();
+			String netAppSerialNumber = combinedActiveExports.getNetAppSystemSerialNumber();
 
 			List<ExportsAndHost> dwhNfsExportList = NaDBUtils
 					.getCurrentExportsAndHostInfoFromWareHouse(netAppSystemName, netAppSerialNumber);

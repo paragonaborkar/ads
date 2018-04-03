@@ -118,7 +118,7 @@ public class ShowmountDataCollector {
 				Host host = netAppAPIUtils.getHostByAddress(address);
 
 				HostExportData thisHost = new HostExportData();
-				thisHost.setHost(host.getName());
+				thisHost.setHostName(host.getName());
 				thisHost.setIp(host.getIpAddress());
 				thisHost.setExport(mounted_host_array[1]);
 

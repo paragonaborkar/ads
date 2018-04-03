@@ -6,37 +6,37 @@ import java.util.List;
 
 public class CombinedActiveExports {
 
-	String systemName;
-	String systemId;
-	String systemSerialNumber;
+	String netAppSystemName;
+	String netAppSystemId;
+	String netAppSystemSerial;
 	String lastSeen;
 
 
 	List<HostExportData> exportList = new ArrayList<>();
 	List<HostExportData> inactiveHosts = new ArrayList<>();
 
-	public String getSystemName() {
-		return systemName;
+	public String getNetAppSystemName() {
+		return netAppSystemName;
 	}
 
-	public void setSystemName(String systemName) {
-		this.systemName = systemName;
+	public void setNetAppSystemName(String netAppSystemName) {
+		this.netAppSystemName = netAppSystemName;
 	}
 
-	public String getSystemId() {
-		return systemId;
+	public String getNetAppSystemId() {
+		return netAppSystemId;
 	}
 
-	public void setSystemId(String systemId) {
-		this.systemId = systemId;
+	public void setNetAppSystemId(String netAppSystemId) {
+		this.netAppSystemId = netAppSystemId;
 	}
 
-	public String getSystemSerialNumber() {
-		return systemSerialNumber;
+	public String getNetAppSystemSerial() {
+		return netAppSystemSerial;
 	}
 
-	public void setSystemSerialNumber(String systemSerialNumber) {
-		this.systemSerialNumber = systemSerialNumber;
+	public void setNetAppSystemSerial(String netAppSystemSerial) {
+		this.netAppSystemSerial = netAppSystemSerial;
 	}
 
 	public String getLastSeen() {

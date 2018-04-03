@@ -61,11 +61,13 @@ public class ADSRestUtils {
 
 			
 			List<String> founadationIpsList = new ArrayList<String>();
-			for (NADataSource datasourceObj : naDataSourceArray) {					
-			
-				founadationIpsList.add(datasourceObj.getFoundationIp());					
+		
+			if(naDataSourceArray!=null) {
+				for (NADataSource datasourceObj : naDataSourceArray) {					
+				
+					founadationIpsList.add(datasourceObj.getFoundationIp());					
+				}
 			}
-			
 			System.out.println("founadationIpsList from util class is-->"+founadationIpsList);			
 			
 			

@@ -30,7 +30,7 @@ public class NFSDataImporterToDWH {
 	
 	public static void main(String[] args) {
 
-		new NFSDataImporterToDWH().importData("C:/netapp/host-connections/PowerShell To Java/NFSExports.json");
+		new NFSDataImporterToDWH().importData("C:/netapp/host-connections/NFSExports.json");
 	}
 
 	public void importData(String filePath) {
@@ -43,8 +43,8 @@ public class NFSDataImporterToDWH {
 
 		if (combinedActiveExports != null) {
 			// read csv file
-			String netAppSystemName = combinedActiveExports.getSystemName();
-			String netAppSerialNumber = combinedActiveExports.getSystemSerialNumber();
+			String netAppSystemName = combinedActiveExports.getNetAppSystemName();
+			String netAppSerialNumber = combinedActiveExports.getNetAppSystemSerial();
 
 			List<ExportsAndHost> dwhNfsExportList = NaDBUtils
 					.getCurrentExportsAndHostInfoFromWareHouse(netAppSystemName, netAppSerialNumber);
@@ -97,6 +97,9 @@ public class NFSDataImporterToDWH {
 				}
 				String thisHostId = hostIpIdMap.get(exportEntry.getIp());
 
+				if(thisHostId==null)
+					thisHostId="-1";
+				
 				// ExportsAndHost
 				// exportDataForCurrentHost=getExportDataForGivenQtreeOrVolume(dwhNfsExportList,qTreePath,volumePath);
 				if (thisExportDetail != null) {

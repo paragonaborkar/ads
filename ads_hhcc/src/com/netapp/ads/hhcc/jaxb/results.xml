@@ -86,4 +86,40 @@
 		</cifs-share-info>
 	</cifs-shares>
 	</results>
+	
+	<results status='passed'>
+	<records>2</records>
+	<cifs-sessions>
+		<cifs-session-info>
+			<host-name>WINWORK2</host-name>
+			<host-ip>10.216.15.112</host-ip>
+			<user> (ADS-DEV-7DOT1\administrator - root)</user>
+			<shares>1</shares>
+			<files>0</files>
+			<dirs>2</dirs>
+			<change-notifies>1</change-notifies>
+			<volumes-list>
+				<volumes-list-info>
+					<volume>qtree_cifs_multi_owner3</volume>
+				</volumes-list-info>
+			</volumes-list>
+		</cifs-session-info>
+		<cifs-session-info>
+			<host-name>WINWORK1</host-name>
+			<host-ip>10.216.15.111</host-ip>
+			<user> (ADS-DEV-7DOT1\administrator - root)</user>
+			<shares>1</shares>
+			<files>0</files>
+			<dirs>2</dirs>
+			<change-notifies>1</change-notifies>
+			<volumes-list>
+				<volumes-list-info>
+					<volume>qtree_cifs_single_owner</volume>
+				</volumes-list-info>
+			</volumes-list>
+		</cifs-session-info>
+	</cifs-sessions>
+</results>
+	
+	
 </netapp>

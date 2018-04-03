@@ -117,9 +117,9 @@ public class NFSDataCollector {
 
 			if(combinedActiveExports.getExportList().size()>0 || combinedActiveExports.getInactiveHosts().size()>0) {
 
-				combinedActiveExports.setSystemName(netAppSystemInfo.getSystemName());
-				combinedActiveExports.setSystemSerialNumber(netAppSystemInfo.getSystemSerialNumber());
-				combinedActiveExports.setSystemId(netAppSystemInfo.getSystemId());
+				combinedActiveExports.setNetAppSystemName(netAppSystemInfo.getSystemName());
+				combinedActiveExports.setNetAppSystemSerial(netAppSystemInfo.getSystemSerialNumber());
+				combinedActiveExports.setNetAppSystemId(netAppSystemInfo.getSystemId());
 				combinedActiveExports.setLastSeen(currentTimeStamp);
 
 				jsonUtils.writeToFile(exportFilePath, combinedActiveExports);
@@ -140,7 +140,7 @@ public class NFSDataCollector {
 	public static void main(String[] args) {
 
 		NFSDataCollector dataCollector = new NFSDataCollector();
-		String exportFile = "C:/netapp/host-connections/PowerShell To Java/NFSExports.json";
+		String exportFile = "C:/netapp/host-connections/NFSExports.json";
 		String array = "10.216.15.31";
 		String adminUser = "root";
 		String adminPassword = "P@ssw0rd";
@@ -191,13 +191,13 @@ public class NFSDataCollector {
 
 				for (DWHNFSShowMount currentHost : currentMountedHosts) {
 
-					HostExportData thisExport = null;
+					HostExportData thisExport = new HostExportData();
 					for (HostExportData exportDetails : currentActiveNFSExports) {
 
-						if (exportDetails.getHost().equalsIgnoreCase(currentHost.getIp())
+						if (exportDetails.getHostName().equalsIgnoreCase(currentHost.getIp())
 								|| exportDetails.getIp().equalsIgnoreCase(currentHost.getIp())) {
 
-							thisExport.setHost(exportDetails.getHost());
+							thisExport.setHostName(exportDetails.getHostName());
 							thisExport.setIp(exportDetails.getIp());
 							thisExport.setExport(currentHost.getExport());
 							thisExport.setOperations(exportDetails.getOperations());
@@ -206,7 +206,9 @@ public class NFSDataCollector {
 					}
 
 					if (thisExport != null) {
-						combinedActiveExports.getExportList().add(thisExport);
+						if (thisExport.getHostName().length()>0|| thisExport.getIp().length()>0) {
+							combinedActiveExports.getExportList().add(thisExport);
+						}
 					} else {
 						System.out.println("No match found for host: " + currentHost.getIp());
 					}
@@ -223,7 +225,7 @@ public class NFSDataCollector {
 					}
 					if(!clientIdentifiedAsActive) {
 						HostExportData thisExport=new HostExportData();
-						thisExport.setHost(activeClientNFS.getHost());
+						thisExport.setHostName(activeClientNFS.getHostName());
 						thisExport.setIp(activeClientNFS.getIp());
 						thisExport.setExport("-1");
 						thisExport.setOperations(activeClientNFS.getOperations());
@@ -283,9 +285,9 @@ public class NFSDataCollector {
 
 			thisExport.setIp(ipAddress);
 			if (hostName != null)
-				thisExport.setHost(hostName);
+				thisExport.setHostName(hostName);
 			else
-				thisExport.setHost("-1");
+				thisExport.setHostName("-1");
 
 			thisExport.setOperations(String.valueOf(nfsStat.getTotalOps()));
 			currentActiveExports.add(thisExport);

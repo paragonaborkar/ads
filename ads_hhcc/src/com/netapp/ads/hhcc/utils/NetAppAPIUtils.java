@@ -9,8 +9,11 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.netapp.ads.hhcc.converters.PowerShellToJavaConstants;
+import com.netapp.ads.hhcc.jaxb.CIFSSessionInfo;
 import com.netapp.ads.hhcc.jaxb.CIFShareInfo;
 import com.netapp.ads.hhcc.jaxb.InterfaceConfigInfo;
 import com.netapp.ads.hhcc.jaxb.InterfaceConfigInfoChild;
@@ -24,8 +27,8 @@ import com.netapp.ads.hhcc.jaxb.VfilerInfo;
 import com.netapp.ads.hhcc.jaxb.Vfilers;
 import com.netapp.ads.hhcc.jaxb.VfnetInfo;
 import com.netapp.ads.hhcc.jaxb.Vfnets;
+import com.netapp.ads.hhcc.jaxb.VolumeListInfo;
 import com.netapp.ads.hhcc.vo.ADSNfsStat;
-import com.netapp.ads.hhcc.vo.CIFSSession;
 import com.netapp.ads.hhcc.vo.Controller;
 import com.netapp.ads.hhcc.vo.Credential;
 import com.netapp.ads.hhcc.vo.DataSource;
@@ -76,6 +79,7 @@ public class NetAppAPIUtils {
 
 		// new NetAppAPIUtils().getNaCifsShares(controller);
 		new NetAppAPIUtils().getNaCifsSessions(controller);*/
+		
 
 	}
 
@@ -152,9 +156,7 @@ public class NetAppAPIUtils {
 		} catch (NaAuthenticationException | NaAPIFailedException| NaProtocolException | IOException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-		} finally {
-			System.out.println("Error Occured During execution of NetApp System API");
-		}
+		} 
 
 		return netAppResults;
 	}
@@ -430,17 +432,17 @@ public class NetAppAPIUtils {
 
 	// TODO implementation pending. This would be implemented as JDBC Calls to OCI
 	// Database
-	public List<DataSource> getOciNtapDataSources(String dataSourceModelName) {
+/*	public List<DataSource> getOciNtapDataSources(String dataSourceModelName) {
 
 		List<DataSource> dataSources = new ArrayList<>();
 		
 		
 		return dataSources;
-	}
+	}*/
 
 	// TODO implementation pending. This would be implemented as JDBC Calls to OCI
 	// Database
-	public Credential getOciDataSourceCredential(DataSource dataSource, String haPartner) {
+/*	public Credential getOciDataSourceCredential(DataSource dataSource, String haPartner) {
 
 		Credential credential = new Credential();
 		return credential;
@@ -451,7 +453,7 @@ public class NetAppAPIUtils {
 		Controller controller = new Controller();
 		return controller;
 	}
-
+*/
 	public List<CIFShareInfo> getNaCifsShares(Controller controller) {
 
 		List<CIFShareInfo> lstCIFShares = new ArrayList<>();
@@ -519,9 +521,9 @@ public class NetAppAPIUtils {
 
 	// TODO No cifs-session-list-iter-next not returning any data, so CIFSSession
 	// Fetching logic and its jaxb implementation still pending
-	public List<CIFSSession> getNaCifsSessions(Controller controller) {
+	public List<CIFSSessionInfo> getNaCifsSessions(Controller controller) {
 
-		List<CIFSSession> cifsSessions = null;
+		List<CIFSSessionInfo> cifsSessions = new ArrayList<>();
 		NaServer naServer = getNaServerForAControler(controller);
 		NaElement api = new NaElement("cifs-session-list-iter-start");
 
@@ -534,16 +536,20 @@ public class NetAppAPIUtils {
 		apiNext.addNewChild(PowerShellToJavaConstants.MAXIMUM, String.valueOf(recordCount));
 		netAppResults = executeNaApi(apiNext, naServer);
 
-		// Fetch Sessions from Results object
-		/*
-		 * CIFShareInfo[] cifsShares=netAppResults.getcIFSShares().getcIFShareInfo();
-		 * for (CIFShareInfo cifShareInfo : cifsShares) {
-		 * lstCIFShares.add(cifShareInfo); }
-		 * System.out.println("ShareName:"+netAppResults.getcIFSShares().getcIFShareInfo
-		 * ()[0].getShareName());
-		 * System.out.println("Mount:"+netAppResults.getcIFSShares().getcIFShareInfo()[0
-		 * ].getMountPoint());
-		 */
+		CIFSSessionInfo arrayCIFSessionInfo[]=netAppResults.getcIFSSessions().getCifsSessionInfo();
+		for (CIFSSessionInfo cifsSessionInfo : arrayCIFSessionInfo) {
+			cifsSessions.add(cifsSessionInfo);
+		}
+		
+/*		// Fetch Sessions from Results object
+		
+		CIFShareInfo[] cifsShares=netAppResults.getcIFSShares().getcIFShareInfo();
+		for (CIFShareInfo cifShareInfo : cifsShares) {
+			lstCIFShares.add(cifShareInfo); 
+		}
+		System.out.println("ShareName:"+netAppResults.getcIFSShares().getcIFShareInfo		()[0].getShareName());
+		System.out.println("Mount:"+netAppResults.getcIFSShares().getcIFShareInfo()[0].getMountPoint());
+*/		 
 
 		return cifsSessions;
 	}
@@ -581,6 +587,37 @@ public class NetAppAPIUtils {
 		}
 
 		return showMountData;
+	}
+
+	public List<String> getVolumes(CIFSSessionInfo cifsSession) {
+		
+		List<String> volumes=new ArrayList<>();
+		VolumeListInfo[] volumeList = cifsSession.getVolumeList().getVolumesListInfo();
+		for (VolumeListInfo volumeListInfo : volumeList) {
+			volumes.add(volumeListInfo.getVolume());
+		}
+	
+		return volumes;
+	}
+	
+	public List<String> getUsers(String sessionUser) {
+		
+		Pattern regex = Pattern.compile("\\((.+?)\\s+[-]\\s+(.+?)\\)");
+		Matcher m = regex.matcher(sessionUser);
+		
+		List<String> users=new ArrayList<>();
+		String windowsUser = "";
+		String unixUser = "";
+		while(m.find()) {
+			
+			windowsUser=m.group(1);
+			unixUser=m.group(2);
+		}
+		users.add(windowsUser);
+		users.add(unixUser);
+		
+		return users;
+
 	}
 
 	/*
