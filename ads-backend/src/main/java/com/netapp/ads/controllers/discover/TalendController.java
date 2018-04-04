@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecuteResultHandler;
@@ -15,6 +16,7 @@ import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.PumpStreamHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.netapp.ads.pojo.ApplicationPojo;
 import com.netapp.ads.pojo.ApplicationsPojo;
+import com.netapp.ads.services.OwnerIdentificationService;
 
 
 @RestController
@@ -37,24 +40,34 @@ import com.netapp.ads.pojo.ApplicationsPojo;
 public class TalendController {
 
 	private static final Logger log = LoggerFactory.getLogger(TalendController.class);
+	
+	@Autowired
+	private OwnerIdentificationService ownerIdentificationService;
 
 	@Value("${talendjobs.loc}") 
 	public String batchScriptsLoc;  
 
 
 	// This is the URL that Talend will call once it gets the CMDB information.
-	@RequestMapping(value = "/test", method = RequestMethod.POST)
-	public ResponseEntity<?> test(@RequestBody ApplicationsPojo data) {
+	@RequestMapping(value = "/owneridentification", method = RequestMethod.POST)
+	public ResponseEntity<?> ownerIdentification(@RequestBody ApplicationsPojo applications) {
 		
+		log.debug("Owner Identification Controller [ENTER]");
+		log.debug("Owner Identification Controller applicationWrapper: " + applications);
+		for(ApplicationPojo applicationPojo: applications.getApplications()) {
+				log.debug("Owner Identification applicationPojo: " + applicationPojo);
+		}
+		ownerIdentificationService.identifyOwner(applications);
+		log.debug("Owner Identification Controller [EXIST]");
 		// Step 1. Validate entire JSON file and every field. If anything is invalid or missing. Fail for all applications and do not process any.
 		
 		// Step 2. Save the Applications and Owners
-		
-		ApplicationPojo[] apps = data.getApps();
-		System.out.println("Apps length:" +apps.length);
-		for (int i=0; i< apps.length; i++) {
-			System.out.println("App getAppName:" +apps[i].getAppName());
-		}		
+/*		
+		List<ApplicationPojo> apps = data.getApps();
+		System.out.println("Apps length:" +apps.size());
+		for (ApplicationPojo application: apps) {
+			System.out.println("App getAppName:" + application.getAppName());
+		}		*/
 		
 		// Step 3. If #2 was successful Run Mig Key if needed... Could be a parameter or different REST call?
 		
@@ -272,9 +285,11 @@ public class TalendController {
 			executor.setStreamHandler(new PumpStreamHandler());
 			executor.execute(command, new DefaultExecuteResultHandler());
 		} catch (ExecuteException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			log.error("Error executing Talend job", e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			log.error("Error executing Talend job", e);
 		}
 		return jobName;
 	}

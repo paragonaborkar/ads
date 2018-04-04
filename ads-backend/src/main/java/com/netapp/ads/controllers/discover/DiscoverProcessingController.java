@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.mail.MessagingException;
@@ -18,11 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.thymeleaf.context.Context;
 import org.thymeleaf.context.WebContext;
 
 import com.netapp.ads.batch.MigrationKeyService;
@@ -33,8 +30,6 @@ import com.netapp.ads.models.ControllerRelease;
 import com.netapp.ads.models.ControllerWorkPackage;
 import com.netapp.ads.models.MigrationKey;
 import com.netapp.ads.models.NasVolume;
-import com.netapp.ads.models.Qtree;
-import com.netapp.ads.models.QtreeDisposition;
 import com.netapp.ads.models.UserCorporate;
 import com.netapp.ads.repos.ActivityRepository;
 import com.netapp.ads.repos.ControllerReleaseRepository;
@@ -43,7 +38,6 @@ import com.netapp.ads.repos.QtreeDispositionRepository;
 import com.netapp.ads.repos.QtreeRepository;
 import com.netapp.ads.rules.engine.ExceptionRuleService;
 import com.netapp.ads.rules.engine.QtreeDispositionService;
-import com.netapp.ads.services.OwnerIdentificationService;
 
 @RestController
 public class DiscoverProcessingController {
@@ -81,9 +75,6 @@ public class DiscoverProcessingController {
 
 	@Autowired
 	ControllerWorkPackageRepository controllerWorkPackageRepository;
-
-	@Autowired
-	OwnerIdentificationService ownerIdentificationService;
 
 	@Autowired
 	MigrationKeyService migrationKeyService;
@@ -156,19 +147,6 @@ public class DiscoverProcessingController {
 		log.debug("populateActivities: COMPLETED");
 		return 0;
 	}
-
-	/**
-	 * HOST IP Address should exist in Verum
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/identifyOwners", method = RequestMethod.POST)
-	public Integer identifyOwners() {
-		log.debug("identifyOwners: [ENTER]");
-		ownerIdentificationService.identifyOwner();
-		log.debug("identifyOwners: [EXIT]");
-		return 0;
-	}	
 
 	/**
 	 * Calls the migration key service to generate migration keys for
