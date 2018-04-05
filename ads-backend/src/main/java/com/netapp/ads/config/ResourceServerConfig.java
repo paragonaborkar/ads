@@ -16,7 +16,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private ResourceServerTokenServices tokenServices;
 
-    @Value("${security.jwt.resource-ids}")
+    @Value("#{sysConfigRepository.findByPropertyName('security.jwt.resource-ids').getPropertyValue()}")
     private String resourceIds;
 
     @Override

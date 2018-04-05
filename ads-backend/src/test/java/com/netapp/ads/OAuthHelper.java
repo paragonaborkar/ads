@@ -31,13 +31,16 @@ import org.springframework.test.web.servlet.request.RequestPostProcessor;
 @EnableAuthorizationServer
 public class OAuthHelper extends AuthorizationServerConfigurerAdapter {
 
-	@Value("${security.jwt.client-id}")
+	@Value("#{sysConfigRepository.findByPropertyName('security.jwt.client-id').getPropertyValue()}")
+	//@Value("${security.jwt.client-id}")
 	private String clientId;
 
-	@Value("${security.jwt.client-secret}")
+	@Value("#{sysConfigRepository.findByPropertyName('security.jwt.client-secret').getPropertyValue()}")
+	//@Value("${security.jwt.client-secret}")
 	private String clientSecret;
 
-	@Value("${security.signing-key}")
+	@Value("#{sysConfigRepository.findByPropertyName('security.signing-key').getPropertyValue()}")
+	//@Value("${security.signing-key}")
 	private String signingKey;
 
     @Autowired

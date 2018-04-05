@@ -26,6 +26,8 @@ import org.opensaml.saml2.metadata.provider.MetadataProvider;
 import org.opensaml.saml2.metadata.provider.MetadataProviderException;
 import org.opensaml.xml.parse.ParserPool;
 import org.opensaml.xml.parse.StaticBasicParserPool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -122,23 +124,25 @@ import com.netapp.ads.services.SAMLUserDetailsServiceImpl;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
 
-	@Value("${sso.sp.entityId}")
+	@Value("#{sysConfigRepository.findByPropertyName('sso.sp.entityId').getPropertyValue()}")
 	private String ssoSpEntityId;
 
-	@Value("${security.signing-key}")
+	@Value("#{sysConfigRepository.findByPropertyName('security.signing-key').getPropertyValue()}")
 	private String signingKey;
 
-	@Value("${security.encoding-strength}")
+	@Value("#{sysConfigRepository.findByPropertyName('security.encoding-strength').getPropertyValue()}")
 	private Integer encodingStrength;
 
-	@Value("${security.security-realm}")
+	@Value("#{sysConfigRepository.findByPropertyName('security.security-realm').getPropertyValue()}")
 	private String securityRealm;
 
-	@Value("${success.redirect.url}")
+	@Value("#{sysConfigRepository.findByPropertyName('sso.success.redirect.url').getPropertyValue()}")
 	private String successRedirectURL;
 
-	@Value("${token.endpoint.url}")
+	@Value("#{sysConfigRepository.findByPropertyName('sso.token.endpoint.url').getPropertyValue()}")
 	private String tokenEndPointURL;
 
 	@Autowired
@@ -458,6 +462,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						} catch (Exception e) {
 							response.sendRedirect(successRedirectURL + "?error=" + "Error in SSO Login");
 						}
+		            	log.debug("successHandler(): token: {}", token);
 		            	if (token != null) {
 							final byte[] authBytes = token.getBytes(StandardCharsets.UTF_8);
 							final String encodedToken = Base64.getEncoder().encodeToString(authBytes);

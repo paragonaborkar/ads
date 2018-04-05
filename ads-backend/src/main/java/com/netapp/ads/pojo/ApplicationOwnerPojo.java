@@ -87,6 +87,14 @@ public class ApplicationOwnerPojo {
 	public void setManager(ApplicationOwnerPojo manager) {
 		this.manager = manager;
 	}
-	
 
+
+	@Override
+	public String toString() {
+		return "ApplicationOwnerPojo [firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
+				+ ", email=" + email + ", phoneNum=" + phoneNum + ", userName=" + userName + ", costCenter="
+				+ costCenter + ", manager=" + manager + "]";
+	}
+	
+	
 }

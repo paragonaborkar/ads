@@ -23,7 +23,7 @@ public class DroolsAutoConfiguration {
 	
 	private static final Logger log = LoggerFactory.getLogger(DroolsAutoConfiguration.class);
 	
-	@Value("${ads.rule.rules_path}")
+	@Value("#{sysConfigRepository.findByPropertyName('ads.rules.rules_path').getPropertyValue()}")
 	private String RULES_PATH;
 	
 	/**
@@ -40,10 +40,7 @@ public class DroolsAutoConfiguration {
 		KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
 	    for (Resource file : getRuleFiles()) {
 	    	log.debug("kieContainer: rules file {} ", file.getFile().getAbsolutePath());
-	    	//String content = FileUtils.readFileToString(file.getFile());
-	    	//kieFileSystem.write("src/main/resources/rules/" + file.getFilename(), ResourceFactory.newFileResource(file.getFile()));
 	    	kieFileSystem.write("src/main/resources/rules/" + file.getFilename(), kieServices.getResources().newFileSystemResource(file.getFile()).setResourceType(ResourceType.DRL));
-	    	//kieFileSystem.write("src/main/resources/rules/" + file.getFilename(), kieServices.getResources().newReaderResource(new StringReader(content)).setResourceType(ResourceType.DRL));
 	    }
 	    log.debug("kieContainer: Finished adding rules files");
 	    KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);

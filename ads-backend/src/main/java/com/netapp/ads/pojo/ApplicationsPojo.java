@@ -1,24 +1,20 @@
 package com.netapp.ads.pojo;
 
-
+import java.util.List;
 
 public class ApplicationsPojo {
-	private static final long serialVersionUID = 1L;
-	
-	
-	private ApplicationPojo[] apps;
-	
+	private List<ApplicationPojo> applications;
 
-	public ApplicationsPojo() {
+	public List<ApplicationPojo> getApplications() {
+		return applications;
 	}
 
-	public ApplicationPojo[] getApps() {
-		return this.apps;
+	public void setApplications(List<ApplicationPojo> applications) {
+		this.applications = applications;
 	}
 
-	public void setApps(ApplicationPojo app) {
-		this.apps[apps.length] = app;
+	@Override
+	public String toString() {
+		return "ApplicationWrapper [applications=" + applications + "]";
 	}
-	
-	
 }

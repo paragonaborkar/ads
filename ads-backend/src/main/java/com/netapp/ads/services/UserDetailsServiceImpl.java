@@ -42,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
 	private UserCorporateRepository userCorporateRepository;
 	
-	@Value("${sso.bypass_mode_on}")
+	@Value("#{sysConfigRepository.findByPropertyName('ads.sso.bypass_mode_on').getPropertyValue()}")
 	private boolean ssoBypassModeOn;
 	
 	private static final String SSO_BYPASS_MODE_PREFIX = "sso-";

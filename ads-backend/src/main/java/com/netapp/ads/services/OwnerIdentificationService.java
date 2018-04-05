@@ -11,18 +11,16 @@ import org.springframework.stereotype.Service;
 
 import com.netapp.ads.models.Activity;
 import com.netapp.ads.models.ActivityResponse;
+import com.netapp.ads.models.Application;
 import com.netapp.ads.models.Host;
 import com.netapp.ads.models.LineOfBusiness;
 import com.netapp.ads.models.Qtree;
 import com.netapp.ads.models.QtreeDisposition;
 import com.netapp.ads.models.Share;
 import com.netapp.ads.models.UserCorporate;
-import com.netapp.ads.models.verum.application.Contact;
-import com.netapp.ads.models.verum.application.OSI;
-import com.netapp.ads.models.verum.application.VerumObjectList;
-import com.netapp.ads.models.verum.esource.EmployeeList;
-import com.netapp.ads.models.verum.esource.EmployeeProfile;
-import com.netapp.ads.models.verum.person.Person;
+import com.netapp.ads.pojo.ApplicationOwnerPojo;
+import com.netapp.ads.pojo.ApplicationPojo;
+import com.netapp.ads.pojo.ApplicationsPojo;
 import com.netapp.ads.repos.ActivityRepository;
 import com.netapp.ads.repos.ActivityResponseRepository;
 import com.netapp.ads.repos.ApplicationRepository;
@@ -37,7 +35,7 @@ public class OwnerIdentificationService {
 	
 	private Logger log = LoggerFactory.getLogger(OwnerIdentificationService.class);
 	
-	@Value("${ads.rule.discovery_rule.disposition}")
+	@Value("#{sysConfigRepository.findByPropertyName('ads.rules.discovery_rule.disposition').getPropertyValue()}")
 	public String discoveryDisposition;
 	
 	@Autowired
@@ -48,9 +46,6 @@ public class OwnerIdentificationService {
 	
 	@Autowired
 	public HostRepository hostRepository;	
-	
-	@Autowired
-	ApplicationService applicationService;
 	
 	@Autowired
 	QtreeDispositionRepository qtreeDispositionRepository;
@@ -77,9 +72,9 @@ public class OwnerIdentificationService {
 	 * multi-owner situation
 	 * 
 	 */
-	public void identifyOwner() {
+	public void identifyOwner(ApplicationsPojo applications) {
 		log.debug("identifyOwner(): [ENTER] ");
-		
+		//FIXME: Remove method argument for ApplicationWrapper and add code to fetch Application Wrapper from Talend.. 
 		List<QtreeDisposition> qtreeDispositions = qtreeDispositionRepository.findByDisposition(discoveryDisposition);
 		log.debug("identifyOwner(): qtreeDispositions: {}", qtreeDispositions.size());
 		for(QtreeDisposition qtreeDisposition: qtreeDispositions) {
@@ -92,20 +87,20 @@ public class OwnerIdentificationService {
 			for(Share share: shares) {
 				Host host = share.getHost();
 				log.debug("identifyOwner(): share: {}, host: {}, host owner: {} ", share.getId(), host.getId(), host.getHostOwnerUserCorporateId());
-				processHost(host, activity);
+				processHost(host, activity, applications);
 			}
 		} //end of for
 			
 		log.debug("identifyOwner(): [EXIT]");
 	}
 	
-	public void processHost(Host host, Activity activity) {
+	private void processHost(Host host, Activity activity, ApplicationsPojo applications) {
 		if( isIdEmpty(host.getHostOwnerUserCorporateId()) ) {
 			log.debug("identifyOwner(): No corporate ID on host so going through applications");
 			
 			//Based on the hosts IP Addresses call CMDB to fetch applications and corresponding corporate owner users
 			//then for each corporate user create an activity response which will assist in owner identification
-			createApplicationUsersAndActivityResponses(host, activity);
+			createApplicationUsersAndActivityResponses(host, activity, applications);
 			
 			updateHostAsPerActivity(host, activity);
 		} //end if for host check 
@@ -125,72 +120,72 @@ public class OwnerIdentificationService {
 					activity.setNote(QtreeOwnerStatus.Single.name());
 				}
 			} else {
-				createActivityResponse(activity, activityResponses, host.getHostOwnerUserCorporate());
+				createActivityResponse(activity, host.getHostOwnerUserCorporate());
 			} // else
 		} //main else for host
 	}
 	
-	public List<com.netapp.ads.models.Application> createApplicationUsersAndActivityResponses(Host host, Activity activity) {
+	
+	
+	/**
+	 * Creates Applications corresponding Corporate Users and Activity Responses for each
+	 * 
+	 * @param host Associated with this application
+	 * @param activity tied to this application
+	 * @param receivedData  Data recieved from CMDB
+	 * @return
+	 */
+	public List<Application> createApplicationUsersAndActivityResponses(Host host, Activity activity, ApplicationsPojo applicationsPojo) {
 		String ipAddress = host.getIpAddr();
 		log.debug("createApplicationAndUsers(): [ENTERED]: ipAddress: " + ipAddress);
-		OSI osi = applicationService.getVerumApp(ipAddress);
-		List<com.netapp.ads.models.Application> applications = new ArrayList<>();
-		if(osi != null) {
-			List<VerumObjectList> verumObjectLists = osi.getVerumObjectList();
-			for (VerumObjectList verumObjectList : verumObjectLists) {
-				List<com.netapp.ads.models.verum.application.Application> verumApplications = verumObjectList.getApplication();
-				for(com.netapp.ads.models.verum.application.Application verumApplication : verumApplications) {
-					com.netapp.ads.models.Application application = applicationRepository.findByApplicationCode(verumApplication.getAppID());
-					List<Contact> contacts = verumApplication.getContact();
-					//if application is null - create ar, user, application
-					//if application is not null and admin override - create ar, user
+		List<Application> applications = new ArrayList<>();
+		if(applicationsPojo != null && !applicationsPojo.getApplications().isEmpty()) {
+				for(ApplicationPojo applicationPojo: applicationsPojo.getApplications()) {
+					Application application = applicationRepository.findByApplicationCode(applicationPojo.getCode());
 					if(application == null) {
-						checkActivityResponses(activity, contacts);
-						LineOfBusiness lob = getOrCreateLob(verumApplication.getOwningLOB());
+						UserCorporate corpUser = getOrCreateCorporateUser(applicationPojo.getOwner());;
+						createActivityResponse(activity, corpUser);
+						
+						LineOfBusiness lob = getOrCreateLob(applicationPojo.getOwningLOB());
 						log.debug("createApplicationAndUsers(): Application DOES NOT exist. Creating.." );
-						application = new com.netapp.ads.models.Application();
+						application = new Application();
 						if(!application.getHosts().contains(host)) {
 							application.addHost(host);
 						}
-						application.setApplicationName(verumApplication.getApplicationName());
-						application.setApplicationCode(verumApplication.getAppID());
-						//FIXME: THERE ARE MULTIPLE CONTACTS. But application has only 1 owner
-						application.setOwnerUserCorporateId(getOrCreateCorporateUser(contacts.get(0).getSid()).getId());
+						application.setApplicationName(applicationPojo.getName());
+						application.setApplicationCode(applicationPojo.getCode());
+						application.setOwnerUserCorporateId(corpUser.getId());
 						//FIXME: application.setArchtype(verumApplication.get); WHERE TO GET THIS FROM?
-						application.setInformationOwner(verumApplication.getTechGroupOwner()); //IS THIS CORRECT?
+						application.setInformationOwner(applicationPojo.getInformationOwner()); //IS THIS CORRECT?
 						application.addLineOfBusinesses(lob);
 						application = applicationRepository.save(application);
 						
-						activity.addLineOfBusinesses(lob);
-						activityRepository.save(activity);
+						if(!activity.getLineOfBusinessesXRefActivities().contains(lob)) {
+							activity.addLineOfBusinesses(lob);
+							activityRepository.save(activity);
+						}
 						log.debug("createApplicationAndUsers(): Application Created/Updated: " + application.getId());
 					} else {
 						if(activity.getAdminOverride()) {
-							checkActivityResponses(activity, contacts);
+							createActivityResponse(activity, getOrCreateCorporateUser(applicationPojo.getOwner()));
 						}
 						log.debug("createApplicationAndUsers(): Application already exists: " + application.getId());
 					}
 					applications.add(application);
 				}
-			}
+		} else {
+			log.info("createApplicationAndUsers(): No application recieved");
 		}
 		log.debug("createApplicationAndUsers(): [EXIT]");
 		return applications;
 	}
 	
-	public void checkActivityResponses(Activity activity, List<Contact> contacts) {
-		List<ActivityResponse> activityResponses = activity.getActivityResponses();
-		for(Contact contact: contacts) {
-			UserCorporate corporateUser = getOrCreateCorporateUser(contact.getSid());
-			if(corporateUser != null) {
-				log.error("User to add to activity response!:" + corporateUser.getLastName());
-				createActivityResponse(activity, activityResponses, corporateUser);
-			} else {
-				log.error("No User to add to activity response!");
-			}
-		}
-	}
-	
+	/**
+	 * Get LOB if exists or create one
+	 * 
+	 * @param lobName Name of the LOB
+	 * @return
+	 */
 	public LineOfBusiness getOrCreateLob(String lobName) {
 		LineOfBusiness lob = lineOfBusinessRepository.findByLobName(lobName);
 		if(lob == null) {
@@ -207,74 +202,70 @@ public class OwnerIdentificationService {
 		return lob;
 	}
 	
-	public UserCorporate getOrCreateCorporateUser(String sid) {
-		log.debug("getOrCreateCorporateUser: sid: " + sid);
+	/**
+	 * Get Corporate User if exists else create one
+	 * 
+	 * @param appOwnerPojo User Details to fetch or create Corporate User
+	 * @return
+	 */
+	public UserCorporate getOrCreateCorporateUser(ApplicationOwnerPojo appOwnerPojo) {
 		UserCorporate corporateUser = null;
-		Person person = applicationService.getVerumPerson(sid);
-		if(person != null && !person.getVerumObjectList().isEmpty()) {
-			List<com.netapp.ads.models.verum.person.VerumObjectList> personVerumObjectLists = person.getVerumObjectList();
-			com.netapp.ads.models.verum.person.VerumObjectList personVerumObjectList = personVerumObjectLists.get(0);
-			UserCorporate manager = userCorporateRepository.findFirstByUserName(personVerumObjectList.getManagerSid());
-			if(manager == null) {
-				log.debug("getOrCreateCorporateUser(): Manager does not exist");
-				EmployeeProfile managerProfile = applicationService.getEmployeeProfile(personVerumObjectList.getManagerSid());
-				if(managerProfile != null && !managerProfile.getEmployeeList().isEmpty()) {
-					EmployeeList managerEmployee = managerProfile.getEmployeeList().get(0);
-					manager = new UserCorporate();
-					manager.setUserName(personVerumObjectList.getManagerSid());
-					manager.setFirstName(managerEmployee.getFirstName());
-					manager.setLastName(managerEmployee.getLastName());
-					manager.setMiddleName(managerEmployee.getMiddle());
-					manager.setUserRole(userRoleRepository.findOneByUserRole("ROLE_USER"));
-					manager.setEmail(managerEmployee.getIAddress());
-					manager.setBestPhone(managerEmployee.getPhoneNo());
-					manager.setMobilePhone(managerEmployee.getCellPhoneNo());
-					manager.setTitle(managerEmployee.getTitle());
-					manager.setLocation(managerEmployee.getBuildStreetAddress() + "," + managerEmployee.getBuildState() + "," + managerEmployee.getBuildZip() + "," + managerEmployee.getBuildCountry());
-					userCorporateRepository.save(manager);
-				}
+		if(appOwnerPojo != null) {
+			UserCorporate managerUser = null;
+			if(appOwnerPojo.getManager() != null) {
+				managerUser = userCorporateRepository.findFirstByEmail(appOwnerPojo.getManager().getEmail());
+				log.debug("getOrCreateCorporateUser: manager email: {}: managerUser", appOwnerPojo.getManager().getEmail(), managerUser);
+				if(managerUser == null) {
+					log.debug("getOrCreateCorporateUser: Manager user does not exist. Creating...");
+					managerUser = getOrCreateCorporateUser(appOwnerPojo.getManager());
+				} else {
+					log.debug("getOrCreateCorporateUser: Manager exists. No need to create");
+				}				
 			}
-
-			corporateUser = userCorporateRepository.findFirstByUserName(sid);
+			corporateUser = userCorporateRepository.findFirstByEmail(appOwnerPojo.getEmail());
+			log.debug("getOrCreateCorporateUser: corp user email: {}: corporateUser", appOwnerPojo.getEmail(), corporateUser);
 			if(corporateUser == null) {
-				log.debug("getOrCreateCorporateUser(): Corporate user DOES NOT exist. Creating....");
+				log.debug("getOrCreateCorporateUser: Corp user does not exist. Creating...");
 				corporateUser = new UserCorporate();
-				corporateUser.setCostCenter(personVerumObjectList.getCostCenter());
-				corporateUser.setUserName(sid);
-				corporateUser.setUserCorporateManager(manager);
-				
-				EmployeeProfile employeeProfile = applicationService.getEmployeeProfile(sid);
-				if(employeeProfile != null && !employeeProfile.getEmployeeList().isEmpty()) {
-					//We are getting a targeted user here based on SID so this list should always have 1 value
-					EmployeeList employee = employeeProfile.getEmployeeList().get(0);
-					corporateUser.setFirstName(employee.getFirstName());
-					corporateUser.setLastName(employee.getLastName());
-					corporateUser.setMiddleName(employee.getMiddle());
-					corporateUser.setUserRole(userRoleRepository.findOneByUserRole("ROLE_USER"));
-					corporateUser.setEmail(employee.getIAddress());
-					corporateUser.setBestPhone(employee.getPhoneNo());
-					corporateUser.setMobilePhone(employee.getCellPhoneNo());
-					corporateUser.setTitle(employee.getTitle());
-					corporateUser.setLocation(employee.getBuildStreetAddress() + "," + employee.getBuildState() + "," + employee.getBuildZip() + "," + employee.getBuildCountry());
-					corporateUser = userCorporateRepository.save(corporateUser);
-					log.debug("getOrCreateCorporateUser(): Created/Updated Corporate User: " + corporateUser.getId());
-				} //end if
+				corporateUser.setBestPhone(appOwnerPojo.getPhoneNum());
+				corporateUser.setCostCenter(appOwnerPojo.getCostCenter());
+				corporateUser.setEmail(appOwnerPojo.getEmail());
+				corporateUser.setFirstName(appOwnerPojo.getFirstName());
+				corporateUser.setLastName(appOwnerPojo.getLastName());
+				corporateUser.setUserName(appOwnerPojo.getUserName());
+				corporateUser.setMiddleName(appOwnerPojo.getMiddleName());
+				corporateUser.setUserRole(userRoleRepository.findOneByUserRole("ROLE_USER"));
+				corporateUser.setUserCorporateManager(managerUser);
+				userCorporateRepository.save(corporateUser);
 			} else {
-				log.debug("getOrCreateCorporateUser(): Corporate user already exists: " + corporateUser.getId());
+				log.debug("getOrCreateCorporateUser: Corp user exists. No need to create");
 			}
 		}
 		return corporateUser;
-	}	
+	}
 	
+	/**
+	 * Check if Integer ID is empty
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public boolean isIdEmpty(Integer id) {
 		if(id == null || id.intValue() == 0)
 			return true;
 		return false;
 	}
 	
-	public Activity createActivityResponse(Activity activity, List<ActivityResponse> activityResponses, UserCorporate ownerUserCorporate) {
-		if(shouldCreateActivityResponseForThisApplication(activity, activityResponses, ownerUserCorporate)) {
-			if(activityResponses.isEmpty())
+	/**
+	 * Create Activity response for an activity and corporate user
+	 * 
+	 * @param activity
+	 * @param ownerUserCorporate
+	 * @return
+	 */
+	public Activity createActivityResponse(Activity activity, UserCorporate ownerUserCorporate) {
+		if(shouldCreateActivityResponseForThisApplication(activity, ownerUserCorporate)) {
+			if(activity.getActivityResponses().isEmpty())
 				activity.setNote(QtreeOwnerStatus.Single.name());
 			else
 				activity.setNote(QtreeOwnerStatus.Multi.name());
@@ -294,17 +285,24 @@ public class OwnerIdentificationService {
 		return activity;
 	}
 	
-	public boolean shouldCreateActivityResponseForThisApplication(Activity activity, List<ActivityResponse> activityResponses, UserCorporate ownerUserCorporate) {
+	/**
+	 * Check if activity response should be created for this application and corporate user
+	 * 
+	 * @param activity
+	 * @param ownerUserCorporate
+	 * @return
+	 */
+	public boolean shouldCreateActivityResponseForThisApplication(Activity activity, UserCorporate ownerUserCorporate) {
 		boolean createActivityResponse = false;
 		//Activity Response is empty so create one for this user
-		if(activityResponses.isEmpty()) {
+		if(activity.getActivityResponses().isEmpty()) {
 			log.debug("identifyOwner(): No activity reponse. So have to create..");
 			createActivityResponse = true;
 		}
 		else {
 			//is this owner already added for this qtree
 			boolean ownerAlreadyAdded = false;
-			for(ActivityResponse activityResponse: activityResponses) {
+			for(ActivityResponse activityResponse: activity.getActivityResponses()) {
 				if(activityResponse.getOwnerUserCorporate() == ownerUserCorporate) {
 					ownerAlreadyAdded = true;
 					break;
@@ -316,6 +314,13 @@ public class OwnerIdentificationService {
 		return createActivityResponse;
 	}
 	
+	/**
+	 * Update host information based on other processing
+	 * 
+	 * @param host
+	 * @param activity
+	 * @return
+	 */
 	public Host updateHostAsPerActivity(Host host, Activity activity) {
 		List<ActivityResponse> activityResponses = activity.getActivityResponses();
 		if(!activityResponses.isEmpty()) {

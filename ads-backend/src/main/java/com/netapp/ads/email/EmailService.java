@@ -25,10 +25,10 @@ public class EmailService {
 	
 	private Logger log = LoggerFactory.getLogger(EmailService.class);
 	
-    @Value("${mail.from}")
+	@Value("#{sysConfigRepository.findByPropertyName('ads.email.from').getPropertyValue()}")
     private String EMAIL_FROM;
     
-    @Value("${mail.from.alias}")
+	@Value("#{sysConfigRepository.findByPropertyName('ads.email.from.alias').getPropertyValue()}")
     private String EMAIL_FROM_ALIAS;
     
     //@Autowired
