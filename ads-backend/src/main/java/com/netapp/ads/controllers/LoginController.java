@@ -18,7 +18,7 @@ import com.netapp.ads.Application;
 @RestController
 public class LoginController {
 
-	@Value("${sso.idp.url}")
+	@Value("#{sysConfigRepository.findByPropertyName('sso.idp.url').getPropertyValue()}")
 	private String ssoIdpURL;
 
 	/**

@@ -22,4 +22,6 @@ public interface SysConfigRepository extends JpaRepository<SysConfig, Integer>, 
 	List<String> findDistinctGroupNames();
 	
 	Page<SysConfig> findByGrouping(@Param("grouping") String grouping, Pageable p);
+	
+	SysConfig findByPropertyName(@Param("propertyName") String propertyName);
 }

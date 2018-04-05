@@ -44,20 +44,19 @@ public class DiscoverProcessingController {
 
 	private static final Logger log = LoggerFactory.getLogger(DiscoverProcessingController.class);
 
-	@Value("${ads.rule.discovery_rule.disposition}")
+	@Value("#{sysConfigRepository.findByPropertyName('ads.rules.discovery_rule.disposition').getPropertyValue()}")
 	public String discoveryDisposition;
 	
-	
-	@Value("${ads.email.logoUrl}")
+	@Value("#{sysConfigRepository.findByPropertyName('ads.email.logoUrl').getPropertyValue()}")
 	public String logoUrl;
 	
-	@Value("${ads.email.viewAllTasks}")
+	@Value("#{sysConfigRepository.findByPropertyName('ads.email.viewAllTasks').getPropertyValue()}")
 	public String viewAllTasks;
 	
-	@Value("${ads.email.adsQtreeOwnerUrl}")
+	@Value("#{sysConfigRepository.findByPropertyName('ads.email.adsQtreeOwnerUrl').getPropertyValue()}")
 	public String adsQtreeOwnerUrl;
 	
-	@Value("${ads.email.adsSupportUrl}")
+	@Value("#{sysConfigRepository.findByPropertyName('ads.email.adsSupportUrl').getPropertyValue()}")
 	public String adsSupportUrl;
 
 				

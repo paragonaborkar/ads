@@ -44,7 +44,7 @@ public class TalendController {
 	@Autowired
 	private OwnerIdentificationService ownerIdentificationService;
 
-	@Value("${talendjobs.loc}") 
+	@Value("#{sysConfigRepository.findByPropertyName('ads.talendjobs.loc').getPropertyValue()}")
 	public String batchScriptsLoc;  
 
 

@@ -35,7 +35,7 @@ public class OwnerIdentificationService {
 	
 	private Logger log = LoggerFactory.getLogger(OwnerIdentificationService.class);
 	
-	@Value("${ads.rule.discovery_rule.disposition}")
+	@Value("#{sysConfigRepository.findByPropertyName('ads.rules.discovery_rule.disposition').getPropertyValue()}")
 	public String discoveryDisposition;
 	
 	@Autowired
