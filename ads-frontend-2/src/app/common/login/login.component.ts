@@ -32,6 +32,11 @@ export class LoginComponent implements OnInit {
 
 	ngOnInit() {
 		let response = (this.activatedRoute.snapshot.queryParams["response"]);
+
+		this.redirectUrl = (this.activatedRoute.snapshot.queryParams["redirectTo"]);
+		console.log("redirectUrl:" + this.redirectUrl);
+		console.log("response:" + response);
+
 		if (response !== null && response !== undefined) {
 			let res = JSON.parse(atob(response));
 			this.userService.login(res);
@@ -89,13 +94,14 @@ export class LoginComponent implements OnInit {
 		// }
 		// else{
 
-		
 		var loginInfo = this._sessionHelper.getToken();
-    	if (loginInfo.corpUserId > 0)
-			this.redirectUrl = '/index';
-		else 
-			this.redirectUrl = '/home';
-			
+		if (this.redirectUrl == '' || this.redirectUrl == undefined) {
+			if (loginInfo.corpUserId > 0)
+				this.redirectUrl = '/index';
+			else
+				this.redirectUrl = '/home';
+		}
+
 		if (this.redirectUrl) {
 			this.router.navigateByUrl(this.redirectUrl);
 		} else {
