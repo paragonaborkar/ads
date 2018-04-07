@@ -48,8 +48,7 @@ export class OwnerComponent implements OnInit {
 
   ngOnInit() {
 
-    var loginInfo = this.sessionHelper.getToken();
-    this.currentUserCorporateId = loginInfo.corpUserId;
+    this.currentUserCorporateId = this.sessionHelper.get("corpUserId");
 
     this.route.params.subscribe(params => {
       this.migkey = params['migKey'];
@@ -57,7 +56,7 @@ export class OwnerComponent implements OnInit {
     
     // FIXME: Complete this when SSO is ready.....
     this.route.params
-      .switchMap((params: ParamMap) => this.ownerService.validateMigKeyExists(params['migKey'], loginInfo.corpUserId))
+      .switchMap((params: ParamMap) => this.ownerService.validateMigKeyExists(params['migKey'], this.currentUserCorporateId))
       .subscribe((validateMigKeyExists) => {
         console.log("validateMigKeyExists:", validateMigKeyExists);
         if (!validateMigKeyExists) {

@@ -21,7 +21,11 @@ export class ControllerWorkPackageCreateComponent implements OnInit {
   showSuccessMsg = '';
 
   newTarget = {
-    controller: ''
+    controller: '',
+    workPackageName: null,
+    assetNumber: null,
+    controllerInstalledDate: null,
+    priority: null
   };
 
   minDate = new Date(1990, 1, 1);

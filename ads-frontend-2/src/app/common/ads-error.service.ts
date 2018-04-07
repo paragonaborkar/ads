@@ -19,18 +19,18 @@ export class AdsErrorService {
 
   getSafe(fn) {
     try {
-        return fn();
+      return fn();
     } catch (e) {
-        return undefined;
+      return undefined;
     }
-}
+  }
 
-processError(error: HttpErrorResponse | any, actionName, method): string {
-  
+  processError(error: HttpErrorResponse | any, actionName, method): string {
+
     this.remoteLogError(error, actionName);
 
     // First - if 401: Unauthorized, sent to the login page.
-    if (this.getSafe(() => error.status)  != undefined){
+    if (this.getSafe(() => error.status) != undefined) {
       console.log("REDIRECT 1", error);
       if (error.status == 401) {
         console.log("REDIRECT 2");
@@ -41,7 +41,7 @@ processError(error: HttpErrorResponse | any, actionName, method): string {
     // Get the friendly error message based on the ADS error message configuration using the HTTP status response code:
     // Using actionName:
     // 1. Try to get the message by exact error code
-    if (this.getSafe(() => this.errorMessages[actionName][method][error.status])  != undefined)
+    if (this.getSafe(() => this.errorMessages[actionName][method][error.status]) != undefined)
       return this.errorMessages[actionName][method][error.status];
     else {
       // 2. Try to get the message by error code based on class. Eg.g 1xx, 2xx, 3xx, etc
@@ -78,18 +78,15 @@ processError(error: HttpErrorResponse | any, actionName, method): string {
   remoteLogError(error: HttpErrorResponse | any, actionName) {
     console.log("remoteLogError");
     console.error(error);
-    
-
-    let tokenInfo = this.sessionHelper.getToken();
 
     let nativeUserId = "";
-    if (typeof tokenInfo.nativeUserId != 'undefined') {
-      nativeUserId = tokenInfo.nativeUserId
+    if (typeof this.sessionHelper.get("nativeUserId") != 'undefined') {
+      nativeUserId = this.sessionHelper.get("nativeUserId");
     }
-    
+
     let corpUserId = "";
-    if (typeof tokenInfo.corpUserId != 'undefined') {
-      corpUserId = tokenInfo.corpUserId
+    if (typeof this.sessionHelper.get("corpUserId") != 'undefined') {
+      corpUserId = this.sessionHelper.get("corpUserId");
     }
 
     this.logger.error(actionName, "corpUserId:" + corpUserId, "nativeUserId:" + nativeUserId, error.status, error.message);

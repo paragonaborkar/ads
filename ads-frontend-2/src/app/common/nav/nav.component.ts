@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-
-import { SessionHelper } from '../../auth/session.helper';
 import { UserService } from '../../common/login/user.service';
 import { Globals } from '../../globals';
-
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-nav',
@@ -19,7 +17,7 @@ export class NavComponent implements OnInit {
   public userRole: String;
 
 
-  constructor(private userService: UserService, private sessionHelper: SessionHelper, private globals: Globals) {
+  constructor(private userService: UserService,  private jwtHelperService: JwtHelperService, private globals: Globals) {
 
   }
 
@@ -28,19 +26,21 @@ export class NavComponent implements OnInit {
   }
 
   ngDoCheck() {
-    if (this.sessionHelper.isAuthenticated()) {
+    if (!this.jwtHelperService.isTokenExpired()) {
       // console.log(this.globals.appModulesAvailable);
-      let tokenInfo = this.sessionHelper.getToken();
 
-      this.firstName = tokenInfo.firstName;
-      this.lastName = tokenInfo.lastName;
-      this.email = tokenInfo.email;
-      this.userRole = tokenInfo.userRole;
+      const myRawToken = localStorage.getItem('access_token');
+      const decodedToken = this.jwtHelperService.decodeToken(myRawToken);
+
+      this.firstName = decodedToken.firstName;
+      this.lastName = decodedToken.lastName;
+      this.email = decodedToken.email;
+      this.userRole = decodedToken.userRole;
     }
   }
 
   isLogedIn() {
-    return this.sessionHelper.isAuthenticated();
+    return !this.jwtHelperService.isTokenExpired();
   }
 
   logout() {

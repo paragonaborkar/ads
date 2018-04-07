@@ -10,7 +10,7 @@
       <label for="selectedPreference" class="col-xs-12 col-md-6 col-lg-2 col-form-label  text-right">Select Page: </label>
       <div class="col-xs-12 col-md-6 col-lg-5">
         <select class="form-control" [(ngModel)]="selectedPreferenceId" id="selectedPreferenceId" name="selectedPreferenceId" (change)="getPreferenceDetails(selectedPreferenceId)">
-          <option [value]="NOT_VALID">Select Page</option>
+          <option [value]="">Select Page</option>
           <option *ngFor="let preference of preferences" [value]="preference._links.preferenceDetails.href">{{preference.pageName | friendlyLabel}} 
           
           </option>

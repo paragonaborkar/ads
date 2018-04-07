@@ -188,6 +188,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
 		web.ignoring().antMatchers("/saml/**");
 		web.ignoring().antMatchers("/sso");
+		web.ignoring().antMatchers("/ssoUrl");
+		web.ignoring().antMatchers("/favicon.ico");
 		web.ignoring().antMatchers("/remoteLog");
 	}
 
@@ -197,7 +199,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.addFilterBefore(corsFilter, ChannelProcessingFilter.class).httpBasic().realmName(securityRealm).and()
 				.csrf().disable().securityContext().securityContextRepository(tokenSecurityContextRepository());
 
-		http.antMatcher("/saml/**").httpBasic().authenticationEntryPoint(samlEntryPoint()).and().csrf().disable()
+		http.antMatcher("/saml/**").httpBasic()
+				.authenticationEntryPoint(samlEntryPoint()).and().csrf().disable()
 				.addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
 				.addFilterAfter(samlFilter(), BasicAuthenticationFilter.class).authorizeRequests().anyRequest()
 				.authenticated();
@@ -460,16 +463,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		            	try {
 							token = generateTokenForSAML(auth);
 						} catch (Exception e) {
-							response.sendRedirect(successRedirectURL + "?error=" + "Error in SSO Login");
+							response.sendRedirect(successRedirectURL + "&error=" + "Error in SSO Login");
 						}
 		            	log.debug("successHandler(): token: {}", token);
 		            	if (token != null) {
 							final byte[] authBytes = token.getBytes(StandardCharsets.UTF_8);
 							final String encodedToken = Base64.getEncoder().encodeToString(authBytes);
 							if(relayStateURL != null) {
-								response.sendRedirect(relayStateURL + "?response=" + encodedToken);
-							}else {
-								response.sendRedirect(successRedirectURL+ "?response=" + encodedToken);
+								String url = relayStateURL + "&response=" + encodedToken;
+								log.debug("relayStateURL:" + url);
+								response.sendRedirect(url);
+							} else {
+								String url = successRedirectURL + "&response=" + encodedToken;
+								log.debug("successRedirectURL:" + url);
+								response.sendRedirect(url);
 							}
 							SecurityContextHolder.clearContext();
 						}
