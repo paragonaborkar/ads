@@ -21,9 +21,7 @@ export class OwnerHomeComponent implements OnInit {
 
   ngOnInit() {
 
-    var loginInfo = this.sessionHelper.getToken();
-
-    this.ownerHomeService.getActivitiesResponsesPending(loginInfo.corpUserId).subscribe(data => {
+    this.ownerHomeService.getActivitiesResponsesPending(this.sessionHelper.get("corpUserId")).subscribe(data => {
       // this.message = data;
       console.log(data);
       this.queueToProcess = data._embedded.migrationKeys;

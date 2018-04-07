@@ -9,6 +9,11 @@ import { HttpModule } from '@angular/http';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { JwtHelperService } from '@auth0/angular-jwt';
+import { JwtModule } from '@auth0/angular-jwt';
+ 
+// import { JwtHelperService } from 'angular2-jwt';
+
 
 // Imports
 import { BrowserModule } from '@angular/platform-browser';
@@ -34,6 +39,10 @@ import { AdsHelperService } from './common/ads-helper.service';
 import { AdsErrorService } from './common/ads-error.service';
 
 import { AuthGuard } from './auth/guards/auth-guard.service';
+
+import { AuthService } from './auth/guards/auth.service';
+import { RoleGuard } from './auth/guards/role-guard.service';
+
 import { SessionHelper } from './auth/session.helper';
 import { UserService } from './common/login/user.service';
 import { LoginService } from './common/login/login.service';
@@ -196,12 +205,19 @@ import { NativeUserChangePwComponent } from './admin/admin-native-user/native-us
     ModalModule.forRoot(), 
     SortableModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    LoggerModule.forRoot({serverLoggingUrl: 'http://localhost:8080/remoteLog', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR})
+    LoggerModule.forRoot({serverLoggingUrl: 'http://localhost:8080/remoteLog', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR}),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:8080'],
+        blacklistedRoutes: ['localhost:8080/auth/']
+      }
+    })
   ],
   // entryComponents:[
   //   OwnerResponseComponent
   // ],
-  providers: [HttpClientModule, Globals, AuthGuard,  SessionHelper, UserService, LoginService, AdsHelperService, AdsErrorService, 
+  providers: [HttpClientModule, Globals, AuthGuard,   AuthService,  RoleGuard, SessionHelper, UserService, LoginService, AdsHelperService, AdsErrorService, 
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     UserAdminService,
     PagerService,
@@ -223,3 +239,7 @@ import { NativeUserChangePwComponent } from './admin/admin-native-user/native-us
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}

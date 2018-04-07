@@ -1,72 +1,37 @@
 import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class SessionHelper {
-    private _storage: Storage;
     private _tokenKey = 'accessTokenInfo';
-    private _migKey = 'migKey';
 
-    constructor() {
-        this._storage = sessionStorage;
-    }
+    myRawToken = '';
+    expirationDate: Date;
+    isExpired = true;
+    decodedToken = '';
 
-    setToken(token: any) {
-        this._storage.setItem(this._tokenKey, JSON.stringify(token));
+    constructor(private jwtHelperService: JwtHelperService) {
+        this.myRawToken = localStorage.getItem('access_token');
+
+        if (this.myRawToken != undefined) {
+            this.isExpired = this.jwtHelperService.isTokenExpired(this.myRawToken);
+
+            this.decodedToken = this.jwtHelperService.decodeToken(this.myRawToken);
+            this.expirationDate = this.jwtHelperService.getTokenExpirationDate(this.myRawToken);
+        }
     }
 
     getToken() {
-        return this.get<any>(this._tokenKey);
+        return this.myRawToken;
     }
 
-    set(key: string, value: any) {
-        this._storage.setItem(key, JSON.stringify(value));
-    }
-
-    get<T>(key: string): T {
-        const item = this._storage.getItem(key);
-        if (!item || item == 'undefined' || item == null) { return null; }
-        return <T>JSON.parse(item);
-    }
-
-    isAuthenticated() {
-        const token = this.getToken();
-        if (!token || token == 'undefined' || token == null) { return false; }
-        return token.expires_in > 0;
+    get(key: string): any {     
+        const item = this.decodedToken[key];
+        if (item == 'undefined' || item == null) { return null; }
+        return item;
     }
 
     removeAll() {
-        this._storage.clear();
         localStorage.clear();
-    }
-
-    public isTokenExpired(token?: string, offsetSeconds?: number) {
-        let expiresIn = 0;
-
-         if (this.get<any>(this._tokenKey) != null) {
-            expiresIn = this.get<any>(this._tokenKey).expires_in;
-
-        }
-        console.log('this._tokenKey:' + this._tokenKey);
-        console.log('expiresIn:' + expiresIn);
-
-
-        // let expiresIn = this.get<any>(this._tokenKey).expires_in;
-        const date = new Date(0); // The 0 here is the key, which sets the date to the epoch
-        date.setUTCSeconds(expiresIn);
-        offsetSeconds = offsetSeconds || 0;
-        if (date === null) {
-            return false;
-        }
-        // Token expired?
-        return !(date.valueOf() > (new Date().valueOf() + (offsetSeconds * 1000)));
-    }
-
-    setMigKey(migKey: any) {
-        this._storage.setItem(this._migKey, migKey);
-    }
-
-    getMigKey() {
-        return this.get<any>(this._migKey);
-    }
-
+    }   
 }

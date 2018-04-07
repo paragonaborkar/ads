@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SessionHelper } from '../../auth/session.helper';
 import { UserService } from './user.service';
 
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
 	selector: 'app-login',
@@ -22,13 +23,7 @@ export class LoginComponent implements OnInit {
 	loginError = false;
 	serverError = false;
 
-
-
-	constructor(private router: Router, private activatedRoute: ActivatedRoute, private authenticationService: LoginService, private userService: UserService, private _sessionHelper: SessionHelper) {
-		if (this._sessionHelper.isAuthenticated()) {
-			this.router.navigate(['/home']);
-		}
-	}
+	constructor(private jwtHelperService: JwtHelperService, private router: Router, private activatedRoute: ActivatedRoute, private authenticationService: LoginService, private userService: UserService, private _sessionHelper: SessionHelper) {}
 
 	ngOnInit() {
 		let response = (this.activatedRoute.snapshot.queryParams["response"]);
@@ -88,15 +83,10 @@ export class LoginComponent implements OnInit {
 	}
 
 	private navigateAfterSuccess() {
-		// var migkey=localStorage.getItem('migKey');
-		// if(migkey!==null && migkey !=undefined){
-		// 	this.router.navigate(['/discover/qtrees-ownership']);
-		// }
-		// else{
 
-		var loginInfo = this._sessionHelper.getToken();
 		if (this.redirectUrl == '' || this.redirectUrl == undefined) {
-			if (loginInfo.corpUserId > 0)
+
+			if (this._sessionHelper.get("userRole") == "ROLE_USER")
 				this.redirectUrl = '/index';
 			else
 				this.redirectUrl = '/home';
@@ -107,6 +97,5 @@ export class LoginComponent implements OnInit {
 		} else {
 			this.router.navigate(['/']);
 		}
-		// }
 	}
 }

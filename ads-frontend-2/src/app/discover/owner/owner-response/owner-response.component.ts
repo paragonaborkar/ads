@@ -47,9 +47,7 @@ export class OwnerResponseComponent implements OnInit {
       observer.next(this.asyncSelected);
     }).mergeMap((token: string) => this.getStatesAsObservable(token));
 
-
-    let loginInfo = this.sessionHelper.getToken();
-    this.corporateUserIdFromJwt = loginInfo.corpUserId;
+    this.corporateUserIdFromJwt = this.sessionHelper.get("corpUserId");
 
     this.activityInfo["activityResponses"].forEach(activtyResponse => {
       // If we have an ActivityResponse for another Owner that hasn't responded yet, it's MultiOwner.

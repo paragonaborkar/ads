@@ -21,7 +21,7 @@ export class TokenInterceptor implements HttpInterceptor {
     if (!request.headers.has("AdsFile")) {
       headers = headers.append('content-type', 'application/json');
       if (this._sessionHelper.getToken() != null)
-        headers = headers.append('authorization', `Bearer ${this._sessionHelper.getToken().access_token}`);   // use ` for Bearer, not '
+        headers = headers.append('authorization', `Bearer ${this._sessionHelper.getToken()}`);   // use ` for Bearer, not '
 
       request = request.clone({ headers: headers });
 
@@ -29,7 +29,7 @@ export class TokenInterceptor implements HttpInterceptor {
       
     } else {
       if (this._sessionHelper.getToken() != null)
-        headers = headers.append('authorization', `Bearer ${this._sessionHelper.getToken().access_token}`);   // use ` for Bearer, not '
+        headers = headers.append('authorization', `Bearer ${this._sessionHelper.getToken()}`);   // use ` for Bearer, not '
 
       request = request.clone({ headers: headers });
 
