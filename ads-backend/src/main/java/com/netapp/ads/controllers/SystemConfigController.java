@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.netapp.ads.beans.SystemProperty;
 import com.netapp.ads.models.SysConfig;
+import com.netapp.ads.pojo.SystemProperty;
 import com.netapp.ads.services.SystemPropertiesService;
 import com.netapp.ads.util.ConverterUtil;
 

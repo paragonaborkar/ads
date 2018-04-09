@@ -63,7 +63,8 @@ public class OwnerController {
 	 * @param userCorporateId
 	 * @return
 	 */
-	@PreAuthorize("hasAuthority('CORP_USER')")
+//	@PreAuthorize("hasAuthority('CORP_USER')")
+	@PreAuthorize("hasAuthority('ROLE_USER')")
 	@RequestMapping(value = "/validateMigrationKey/{migrationKey}/{userCorporateId}", method = RequestMethod.GET)
 	public boolean validateMigKey(@PathVariable(name = "migrationKey") String migrationKey,
 			@PathVariable(name = "userCorporateId") int userCorporateId) {
