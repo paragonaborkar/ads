@@ -74,8 +74,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			}
 		} else if (username.indexOf("SSO") != -1) {
 			String split[] = username.split("-");
-			
-
+			log.debug("split: {}", split);
 			if (SecurityConfig.authAssertionIdUserNameCache.get(split[1]) == null) {
 				throw new UsernameNotFoundException(String.format("The user is not enabled", username));
 			} else {
@@ -88,8 +87,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				} else {
 					userCorporate = userCorporateRepository.findFirstByEmail(split[2]);
 				}
+				log.debug("userCorporate: {}", userCorporate);
 				grantedAuthorities.add(new SimpleGrantedAuthority(userCorporate.getUserRole().getUserRole()));
-				
 				return new AdsUser(split[2],new BCryptPasswordEncoder().encode(split[1]), grantedAuthorities, userCorporate);
 			}
 		}

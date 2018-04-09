@@ -158,6 +158,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private RestTemplate restTemplate;
 
 	private Timer backgroundTaskTimer;
+	
+	//Connection pool for HTTP client
 	private MultiThreadedHttpConnectionManager multiThreadedHttpConnectionManager;
 	public static Map<String, String> authAssertionIdUserNameCache = new HashMap<>();
 
@@ -264,18 +266,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new StaticBasicParserPool();
 	}
 
+	// Holder for the parser pool
 	@Bean(name = "parserPoolHolder")
 	public ParserPoolHolder parserPoolHolder() {
 		return new ParserPoolHolder();
 	}
 
 	// Bindings, encoders and decoders used for creating and parsing messages
+	// The HTTP Client used to communicate with the IDP.
 	@Bean
 	public HttpClient httpClient() {
 		return new HttpClient(this.multiThreadedHttpConnectionManager);
 	}
 
-	// SAML Authentication Provider responsible for validating of received SAML
+	// SAML Authentication Provider responsible for parsing and validating of received SAML response
 	// messages
 	@Bean
 	public SAMLAuthenticationProvider samlAuthenticationProvider() {
@@ -327,6 +331,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new WebSSOProfileECPImpl();
 	}
 
+	// The logout profile for SAML single logout.
 	@Bean
 	public SingleLogoutProfile logoutprofile() {
 		return new SingleLogoutProfileImpl();
@@ -369,7 +374,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		methodInvokingFactoryBean.setArguments(args);
 		return methodInvokingFactoryBean;
 	}
-
+	
+	// The Web SSO profile options.
 	@Bean
 	public WebSSOProfileOptions defaultWebSSOProfileOptions() {
 		WebSSOProfileOptions webSSOProfileOptions = new WebSSOProfileOptions();
@@ -381,16 +387,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// properties file
 	@Bean
 	public SAMLEntryPoint samlEntryPoint() {
-		SAMLEntryPoint samlEntryPoint = new SAMLEntryPoint();
+		AdsSAMLEntryPoint samlEntryPoint = new AdsSAMLEntryPoint();
 		samlEntryPoint.setDefaultProfileOptions(defaultWebSSOProfileOptions());
 		return samlEntryPoint;
 	}
 
-	// Setup advanced info about metadata
+	// Setup advanced info about metadata for SAML request
 	@Bean
 	public ExtendedMetadata extendedMetadata() {
 		ExtendedMetadata extendedMetadata = new ExtendedMetadata();
-		extendedMetadata.setIdpDiscoveryEnabled(true);
+		extendedMetadata.setIdpDiscoveryEnabled(false);
 		extendedMetadata.setSignMetadata(false);
 		return extendedMetadata;
 	}
@@ -399,12 +405,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public SAMLDiscovery samlIDPDiscovery() {
 		SAMLDiscovery idpDiscovery = new SAMLDiscovery();
-		idpDiscovery.setIdpSelectionPath("/saml/idpSelection");
+		//idpDiscovery.setIdpSelectionPath("/saml/idpSelection");
+		idpDiscovery.setIdpSelectionPath("");
 		return idpDiscovery;
 	}
 
+	// Setup the extended metadata delegate for the IDP.
 	@Bean
-	@Qualifier("idp-ssocircle")
+	@Qualifier("idp-ext-metadata")
 	public ExtendedMetadataDelegate ssoCircleExtendedMetadataProvider() throws MetadataProviderException {
 		String idpSSOCircleMetadataURL = "http://idp.ssocircle.com/idp-meta.xml";
 		HTTPMetadataProvider httpMetadataProvider = new HTTPMetadataProvider(this.backgroundTaskTimer, httpClient(),
@@ -435,7 +443,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		MetadataGenerator metadataGenerator = new MetadataGenerator();
 		metadataGenerator.setEntityId(ssoSpEntityId);
 		metadataGenerator.setExtendedMetadata(extendedMetadata());
-		metadataGenerator.setIncludeDiscoveryExtension(true);
+		metadataGenerator.setIncludeDiscoveryExtension(false);
 		metadataGenerator.setKeyManager(keyManager());
 		return metadataGenerator;
 	}
@@ -459,6 +467,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		        if (credentials instanceof SAMLCredential) {
 		            SAMLCredential samlCredential = (SAMLCredential) credentials;
 		            String relayStateURL = getTargetURL(samlCredential.getRelayState());
+		            log.debug("relayStateURL: {}", relayStateURL);
 		            String token = null;
 		            	try {
 							token = generateTokenForSAML(auth);
