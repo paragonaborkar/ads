@@ -3,8 +3,8 @@ package com.netapp.ads.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.netapp.ads.beans.SystemProperty;
 import com.netapp.ads.models.SysConfig;
+import com.netapp.ads.pojo.SystemProperty;
 
 public class ConverterUtil {
 

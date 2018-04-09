@@ -652,6 +652,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		ResponseEntity<String> response = restTemplate.postForEntity(tokenEndPointURL, request, String.class);
 
+		
+		
 		return response.getBody();
 	}
 

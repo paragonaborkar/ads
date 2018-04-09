@@ -1,4 +1,4 @@
-package com.netapp.ads.beans;
+package com.netapp.ads.pojo;
 
 import java.sql.Timestamp;
 
