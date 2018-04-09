@@ -11,6 +11,8 @@ Servers/
 RemoteSystemsTempFiles/
 ads-backend/.factorypath
 package-lock.json
+**/target
+MANIFEST.MF
 
 # ---- SonarQube
 .sonar
