@@ -8,10 +8,10 @@ export class Globals implements OnInit {
 	appModulesAvailable: any = {};
 
 	// apiUrl: string="http://localhost:8080";
-	apiUrl: string="/api";
+	apiUrl="/api";
 
-	askAQuestionUrl: string = "https://support.netapp.com?adsRequest=question";
-	reportAProblemUrl: string = "https://support.netapp.com?adsRequest=problem";
+	askAQuestionUrl = "https://support.netapp.com?adsRequest=question";
+	reportAProblemUrl = "https://support.netapp.com?adsRequest=problem";
 
 	readonly TOKEN_AUTH_USERNAME = 'testjwtclientid'; // FIXME: Comment - why and how used in Login Service
 	readonly TOKEN_AUTH_PASSWORD = 'XY7kmzoNzl100';  // FIXME: Comment - why and how used in Login Service
@@ -28,7 +28,7 @@ export class Globals implements OnInit {
 	}
 
 	ngOnInit() {
-      
+
     }
 
 }

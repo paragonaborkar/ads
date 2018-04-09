@@ -53,11 +53,11 @@ export class PropPreferencesModalComponent implements OnInit {
     if (pageName !== '' && pageName !== undefined) {
 
       console.log("applyPreferences Start");
-      var loginInfo = this.sessionHelper.getToken();
-
+      
       // Since this modal allows users to modify and save their column preferences for a page, 
       // We will request that this service creates Preferences and Preference Details for this User by copying from the existing SYSTEM preference info.
-      this.applicationConfigService.getPreferencesForUser(pageName, loginInfo.nativeUserId, loginInfo.corpUserId, true)
+
+      this.applicationConfigService.getPreferencesForUser(pageName, this.sessionHelper.get("nativeUserId"), this.sessionHelper.get("corpUserId"), true)
 
         .subscribe(columnPreferences => {
 

@@ -36,8 +36,7 @@ export class ControllerTypeaheadService {
   findByControllerTargetsAvailableWithControllerNameContaining(criteria: String): Observable<any> {
 
     return this.http.get(this.global.apiUrl + "/controllers/search/findByControllerTargetsAvailableWithControllerNameContaining?controllerNameContains=" + criteria + "&projection=ControllerId")
-      .map((res: Response) => res["_embedded"]["controllers"])
-      .do(x => console.log(x));
+      .map((res: Response) => res["_embedded"]["controllers"]);
     // There were some posts on need to always return an observable, but didn't see this during development
     // .catch((error:any) => Observable.throw(error || 'Server error'));
 

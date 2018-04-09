@@ -28,7 +28,7 @@ export class OpOverrideConfirmComponent implements OnInit {
   potentialOwners = [];
 
   errorMessage = '';
-  
+
   corporateUserIdFromJwt = 0;
   nativeUserIdFromJwt = 0;
 
@@ -38,7 +38,7 @@ export class OpOverrideConfirmComponent implements OnInit {
 
   public formGroup: FormGroup; // our model driven form
 
-  constructor(private operationalOverrideService: OperationalOverrideService, private errorService: AdsErrorService, private sessionHelper: SessionHelper) { 
+  constructor(private operationalOverrideService: OperationalOverrideService, private errorService: AdsErrorService, private sessionHelper: SessionHelper) {
     this.dataSource = Observable.create((observer: any) => {
       // Runs on every search
       observer.next(this.asyncSelected);
@@ -46,9 +46,8 @@ export class OpOverrideConfirmComponent implements OnInit {
   }
 
   ngOnInit() {
-    let loginInfo = this.sessionHelper.getToken();
-    this.corporateUserIdFromJwt = loginInfo.corpUserId;
-    this.nativeUserIdFromJwt = loginInfo.nativeUserId;
+    this.corporateUserIdFromJwt = this.sessionHelper.get("corpUserId");
+    this.nativeUserIdFromJwt = this.sessionHelper.get("nativeUserId");
 
     // This should never happen, but if it does, sent them both to 0. 
     // The service in ADS v1.0 is coded to error out if there's not current ID value in the POST.
@@ -62,7 +61,7 @@ export class OpOverrideConfirmComponent implements OnInit {
       reasonCode: new FormControl(null, Validators.required),
       reason: new FormControl(null, Validators.required),
     });
-     
+
     this.operationalOverrideService.getDropDown("unidentified-audit", null).subscribe(
       data => {
         console.log(data);
@@ -80,28 +79,28 @@ export class OpOverrideConfirmComponent implements OnInit {
 
   save() {
     console.log("Calling save");
-    
-    this.unidentifiedResponse["activityId"] =  this.activityInfo["id"];
-    this.unidentifiedResponse["activityResourceUrl"] =  this.activityInfo["_links"]["self"]["href"];
+
+    this.unidentifiedResponse["activityId"] = this.activityInfo["id"];
+    this.unidentifiedResponse["activityResourceUrl"] = this.activityInfo["_links"]["self"]["href"];
     this.unidentifiedResponse["currentUserCorporateId"] = this.corporateUserIdFromJwt;
     this.unidentifiedResponse["currentUserNativeId"] = this.nativeUserIdFromJwt;
-    
+
     this.unidentifiedResponse["reasonCode"] = this.formGroup.value.reasonCode;
     this.unidentifiedResponse["reason"] = this.formGroup.value.reason;
-    this.unidentifiedResponse["requestedByName"] =  this.requestedByName;
-    this.unidentifiedResponse["requestedByUserCorporateId"] =  this.requestedByUserCorporateId;
+    this.unidentifiedResponse["requestedByName"] = this.requestedByName;
+    this.unidentifiedResponse["requestedByUserCorporateId"] = this.requestedByUserCorporateId;
     this.unidentifiedResponse["requestedByUserCorporateResourceUrl"] = this.requestedByUserCorporateResourceUrl;
-    
+
 
     this.operationalOverrideService.resetUnidentified(this.unidentifiedResponse).subscribe(
       data => {
         console.log("POST response", data);
         this.saved.emit();
-     }, err => {
-      console.log(err);
+      }, err => {
+        console.log(err);
         // Get the ADS configured error message to display.
         this.errorMessage = this.errorService.processError(err, "unidentifiedOverride", "POST");
-     } 
+      }
     );
   }
 

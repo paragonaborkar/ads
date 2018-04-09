@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SessionHelper } from '../../auth/session.helper';
 import { UserService } from './user.service';
 
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
 	selector: 'app-login',
@@ -22,16 +23,15 @@ export class LoginComponent implements OnInit {
 	loginError = false;
 	serverError = false;
 
-
-
-	constructor(private router: Router, private activatedRoute: ActivatedRoute, private authenticationService: LoginService, private userService: UserService, private _sessionHelper: SessionHelper) {
-		if (this._sessionHelper.isAuthenticated()) {
-			this.router.navigate(['/home']);
-		}
-	}
+	constructor(private jwtHelperService: JwtHelperService, private router: Router, private activatedRoute: ActivatedRoute, private authenticationService: LoginService, private userService: UserService, private _sessionHelper: SessionHelper) {}
 
 	ngOnInit() {
 		let response = (this.activatedRoute.snapshot.queryParams["response"]);
+
+		this.redirectUrl = (this.activatedRoute.snapshot.queryParams["redirectTo"]);
+		console.log("redirectUrl:" + this.redirectUrl);
+		console.log("response:" + response);
+
 		if (response !== null && response !== undefined) {
 			let res = JSON.parse(atob(response));
 			this.userService.login(res);
@@ -83,24 +83,19 @@ export class LoginComponent implements OnInit {
 	}
 
 	private navigateAfterSuccess() {
-		// var migkey=localStorage.getItem('migKey');
-		// if(migkey!==null && migkey !=undefined){
-		// 	this.router.navigate(['/discover/qtrees-ownership']);
-		// }
-		// else{
 
-		
-		var loginInfo = this._sessionHelper.getToken();
-    	if (loginInfo.corpUserId > 0)
-			this.redirectUrl = '/index';
-		else 
-			this.redirectUrl = '/home';
-			
+		if (this.redirectUrl == '' || this.redirectUrl == undefined) {
+
+			if (this._sessionHelper.get("userRole") == "ROLE_USER")
+				this.redirectUrl = '/index';
+			else
+				this.redirectUrl = '/home';
+		}
+
 		if (this.redirectUrl) {
 			this.router.navigateByUrl(this.redirectUrl);
 		} else {
 			this.router.navigate(['/']);
 		}
-		// }
 	}
 }

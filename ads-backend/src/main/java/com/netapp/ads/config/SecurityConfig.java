@@ -57,6 +57,7 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.providers.ExpiringUsernameAuthenticationToken;
 import org.springframework.security.saml.SAMLAuthenticationProvider;
 import org.springframework.security.saml.SAMLBootstrap;
 import org.springframework.security.saml.SAMLCredential;
@@ -103,6 +104,7 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -114,6 +116,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.netapp.ads.Application;
 import com.netapp.ads.filter.CORSFilter;
 import com.netapp.ads.services.SAMLUserDetailsServiceImpl;
 
@@ -178,52 +181,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+
 		auth.authenticationProvider(samlAuthenticationProvider());
 	}
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web
-			.ignoring()
-				.antMatchers(HttpMethod.OPTIONS, "/**")
-				.antMatchers("/remoteLog")
-				.antMatchers("/saml/**");
-		
-		//web.ignoring().antMatchers("/saml/**");
+		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+		web.ignoring().antMatchers("/saml/**");
+		web.ignoring().antMatchers("/sso");
+		web.ignoring().antMatchers("/ssoUrl");
+		web.ignoring().antMatchers("/favicon.ico");
+		web.ignoring().antMatchers("/remoteLog");
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-/*		http.addFilterBefore(corsFilter, ChannelProcessingFilter.class).httpBasic().realmName(securityRealm).and()
+		http.addFilterBefore(corsFilter, ChannelProcessingFilter.class).httpBasic().realmName(securityRealm).and()
 				.csrf().disable().securityContext().securityContextRepository(tokenSecurityContextRepository());
 
-		http.antMatcher("/saml/**").httpBasic().authenticationEntryPoint(samlEntryPoint()).and().csrf().disable()
+		http.antMatcher("/saml/**").httpBasic()
+				.authenticationEntryPoint(samlEntryPoint()).and().csrf().disable()
 				.addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
 				.addFilterAfter(samlFilter(), BasicAuthenticationFilter.class).authorizeRequests().anyRequest()
 				.authenticated();
-*/
-		
-		http
-			.addFilterBefore(corsFilter, ChannelProcessingFilter.class);
-		
-		http
-			.csrf().disable();
-		
-		http
-			.exceptionHandling()
-			.authenticationEntryPoint(samlEntryPoint());
-		
-		http
-			.addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
-			.addFilterAfter(samlFilter(), BasicAuthenticationFilter.class);
-		
-		http
-			.authorizeRequests()
-				.antMatchers("/remoteLog/").permitAll()
-				.antMatchers("/saml/**").permitAll()
-				.antMatchers("/error").permitAll()
-				.anyRequest().authenticated();
+
 	}
 
 	@Bean
@@ -489,17 +472,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		            	try {
 							token = generateTokenForSAML(auth);
 						} catch (Exception e) {
-							log.error("Erro generating token: {}", e);
-							response.sendRedirect(successRedirectURL + "?error=" + "Error in SSO Login");
+							response.sendRedirect(successRedirectURL + "&error=" + "Error in SSO Login");
 						}
 		            	log.debug("successHandler(): token: {}", token);
 		            	if (token != null) {
 							final byte[] authBytes = token.getBytes(StandardCharsets.UTF_8);
 							final String encodedToken = Base64.getEncoder().encodeToString(authBytes);
 							if(relayStateURL != null) {
-								response.sendRedirect(relayStateURL + "?response=" + encodedToken);
-							}else {
-								response.sendRedirect(successRedirectURL+ "?response=" + encodedToken);
+								String url = relayStateURL + "&response=" + encodedToken;
+								log.debug("relayStateURL:" + url);
+								response.sendRedirect(url);
+							} else {
+								String url = successRedirectURL + "&response=" + encodedToken;
+								log.debug("successRedirectURL:" + url);
+								response.sendRedirect(url);
 							}
 							SecurityContextHolder.clearContext();
 						}
@@ -667,18 +653,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		authAssertionIdUserNameCache.put(((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID(),
 				((SAMLCredential) auth.getCredentials()).getNameID().getValue());
 		map.add("grant_type", "password");
-		String username = "SSO" + "-" + ((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID() + "-" + ((SAMLCredential) auth.getCredentials()).getNameID().getValue();
-		String password = ((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID();
-		map.add("username", username);
-		map.add("password", password);
+		map.add("username", "SSO" + "-" + ((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID()
+				+ "-" + ((SAMLCredential) auth.getCredentials()).getNameID().getValue());
+		map.add("password", ((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID());
 
 		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 
-		log.debug("tokenEndPointURL: {}", tokenEndPointURL);
-		log.debug("username: {}", username);
-		log.debug("password: {}", password);
 		ResponseEntity<String> response = restTemplate.postForEntity(tokenEndPointURL, request, String.class);
-		log.debug("response: {}", response);
+
 		return response.getBody();
 	}
 
