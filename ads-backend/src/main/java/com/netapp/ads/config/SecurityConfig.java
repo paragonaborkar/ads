@@ -57,7 +57,6 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.security.providers.ExpiringUsernameAuthenticationToken;
 import org.springframework.security.saml.SAMLAuthenticationProvider;
 import org.springframework.security.saml.SAMLBootstrap;
 import org.springframework.security.saml.SAMLCredential;
@@ -104,7 +103,6 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -116,7 +114,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import com.netapp.ads.Application;
 import com.netapp.ads.filter.CORSFilter;
 import com.netapp.ads.services.SAMLUserDetailsServiceImpl;
 
@@ -158,6 +155,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private RestTemplate restTemplate;
 
 	private Timer backgroundTaskTimer;
+	
+	//Connection pool for HTTP client
 	private MultiThreadedHttpConnectionManager multiThreadedHttpConnectionManager;
 	public static Map<String, String> authAssertionIdUserNameCache = new HashMap<>();
 
@@ -179,29 +178,52 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
-
 		auth.authenticationProvider(samlAuthenticationProvider());
 	}
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
-		web.ignoring().antMatchers("/saml/**");
-		web.ignoring().antMatchers("/sso");
-		web.ignoring().antMatchers("/remoteLog");
+		web
+			.ignoring()
+				.antMatchers(HttpMethod.OPTIONS, "/**")
+				.antMatchers("/remoteLog")
+				.antMatchers("/saml/**");
+		
+		//web.ignoring().antMatchers("/saml/**");
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.addFilterBefore(corsFilter, ChannelProcessingFilter.class).httpBasic().realmName(securityRealm).and()
+/*		http.addFilterBefore(corsFilter, ChannelProcessingFilter.class).httpBasic().realmName(securityRealm).and()
 				.csrf().disable().securityContext().securityContextRepository(tokenSecurityContextRepository());
 
 		http.antMatcher("/saml/**").httpBasic().authenticationEntryPoint(samlEntryPoint()).and().csrf().disable()
 				.addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
 				.addFilterAfter(samlFilter(), BasicAuthenticationFilter.class).authorizeRequests().anyRequest()
 				.authenticated();
-
+*/
+		
+		http
+			.addFilterBefore(corsFilter, ChannelProcessingFilter.class);
+		
+		http
+			.csrf().disable();
+		
+		http
+			.exceptionHandling()
+			.authenticationEntryPoint(samlEntryPoint());
+		
+		http
+			.addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
+			.addFilterAfter(samlFilter(), BasicAuthenticationFilter.class);
+		
+		http
+			.authorizeRequests()
+				.antMatchers("/remoteLog/").permitAll()
+				.antMatchers("/saml/**").permitAll()
+				.antMatchers("/error").permitAll()
+				.anyRequest().authenticated();
 	}
 
 	@Bean
@@ -261,18 +283,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new StaticBasicParserPool();
 	}
 
+	// Holder for the parser pool
 	@Bean(name = "parserPoolHolder")
 	public ParserPoolHolder parserPoolHolder() {
 		return new ParserPoolHolder();
 	}
 
 	// Bindings, encoders and decoders used for creating and parsing messages
+	// The HTTP Client used to communicate with the IDP.
 	@Bean
 	public HttpClient httpClient() {
 		return new HttpClient(this.multiThreadedHttpConnectionManager);
 	}
 
-	// SAML Authentication Provider responsible for validating of received SAML
+	// SAML Authentication Provider responsible for parsing and validating of received SAML response
 	// messages
 	@Bean
 	public SAMLAuthenticationProvider samlAuthenticationProvider() {
@@ -324,6 +348,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new WebSSOProfileECPImpl();
 	}
 
+	// The logout profile for SAML single logout.
 	@Bean
 	public SingleLogoutProfile logoutprofile() {
 		return new SingleLogoutProfileImpl();
@@ -366,7 +391,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		methodInvokingFactoryBean.setArguments(args);
 		return methodInvokingFactoryBean;
 	}
-
+	
+	// The Web SSO profile options.
 	@Bean
 	public WebSSOProfileOptions defaultWebSSOProfileOptions() {
 		WebSSOProfileOptions webSSOProfileOptions = new WebSSOProfileOptions();
@@ -378,16 +404,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// properties file
 	@Bean
 	public SAMLEntryPoint samlEntryPoint() {
-		SAMLEntryPoint samlEntryPoint = new SAMLEntryPoint();
+		AdsSAMLEntryPoint samlEntryPoint = new AdsSAMLEntryPoint();
 		samlEntryPoint.setDefaultProfileOptions(defaultWebSSOProfileOptions());
 		return samlEntryPoint;
 	}
 
-	// Setup advanced info about metadata
+	// Setup advanced info about metadata for SAML request
 	@Bean
 	public ExtendedMetadata extendedMetadata() {
 		ExtendedMetadata extendedMetadata = new ExtendedMetadata();
-		extendedMetadata.setIdpDiscoveryEnabled(true);
+		extendedMetadata.setIdpDiscoveryEnabled(false);
 		extendedMetadata.setSignMetadata(false);
 		return extendedMetadata;
 	}
@@ -396,12 +422,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public SAMLDiscovery samlIDPDiscovery() {
 		SAMLDiscovery idpDiscovery = new SAMLDiscovery();
-		idpDiscovery.setIdpSelectionPath("/saml/idpSelection");
+		//idpDiscovery.setIdpSelectionPath("/saml/idpSelection");
+		idpDiscovery.setIdpSelectionPath("");
 		return idpDiscovery;
 	}
 
+	// Setup the extended metadata delegate for the IDP.
 	@Bean
-	@Qualifier("idp-ssocircle")
+	@Qualifier("idp-ext-metadata")
 	public ExtendedMetadataDelegate ssoCircleExtendedMetadataProvider() throws MetadataProviderException {
 		String idpSSOCircleMetadataURL = "http://idp.ssocircle.com/idp-meta.xml";
 		HTTPMetadataProvider httpMetadataProvider = new HTTPMetadataProvider(this.backgroundTaskTimer, httpClient(),
@@ -432,7 +460,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		MetadataGenerator metadataGenerator = new MetadataGenerator();
 		metadataGenerator.setEntityId(ssoSpEntityId);
 		metadataGenerator.setExtendedMetadata(extendedMetadata());
-		metadataGenerator.setIncludeDiscoveryExtension(true);
+		metadataGenerator.setIncludeDiscoveryExtension(false);
 		metadataGenerator.setKeyManager(keyManager());
 		return metadataGenerator;
 	}
@@ -456,10 +484,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		        if (credentials instanceof SAMLCredential) {
 		            SAMLCredential samlCredential = (SAMLCredential) credentials;
 		            String relayStateURL = getTargetURL(samlCredential.getRelayState());
+		            log.debug("relayStateURL: {}", relayStateURL);
 		            String token = null;
 		            	try {
 							token = generateTokenForSAML(auth);
 						} catch (Exception e) {
+							log.error("Erro generating token: {}", e);
 							response.sendRedirect(successRedirectURL + "?error=" + "Error in SSO Login");
 						}
 		            	log.debug("successHandler(): token: {}", token);
@@ -637,14 +667,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		authAssertionIdUserNameCache.put(((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID(),
 				((SAMLCredential) auth.getCredentials()).getNameID().getValue());
 		map.add("grant_type", "password");
-		map.add("username", "SSO" + "-" + ((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID()
-				+ "-" + ((SAMLCredential) auth.getCredentials()).getNameID().getValue());
-		map.add("password", ((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID());
+		String username = "SSO" + "-" + ((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID() + "-" + ((SAMLCredential) auth.getCredentials()).getNameID().getValue();
+		String password = ((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID();
+		map.add("username", username);
+		map.add("password", password);
 
 		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 
+		log.debug("tokenEndPointURL: {}", tokenEndPointURL);
+		log.debug("username: {}", username);
+		log.debug("password: {}", password);
 		ResponseEntity<String> response = restTemplate.postForEntity(tokenEndPointURL, request, String.class);
-
+		log.debug("response: {}", response);
 		return response.getBody();
 	}
 

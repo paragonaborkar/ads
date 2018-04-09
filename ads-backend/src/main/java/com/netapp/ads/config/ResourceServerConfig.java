@@ -30,10 +30,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
                 http
-                .requestMatchers()
+                	.requestMatchers()
                 .and()
-                .authorizeRequests()
-                .antMatchers("/**").authenticated().and().securityContext().securityContextRepository(new TokenSecurityContextRepository());
+                	.authorizeRequests()
+                		.antMatchers("/saml/**").permitAll()
+                		.antMatchers("/**").authenticated().and().securityContext().securityContextRepository(new TokenSecurityContextRepository());
     }
 
 }
