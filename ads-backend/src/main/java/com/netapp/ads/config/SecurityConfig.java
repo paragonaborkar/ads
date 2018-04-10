@@ -144,6 +144,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Value("#{sysConfigRepository.findByPropertyName('sso.token.endpoint.url').getPropertyValue()}")
 	private String tokenEndPointURL;
+	
+	@Value("#{sysConfigRepository.findByPropertyName('ads.sso.idp.metadata.url').getPropertyValue()}")
+	private String idpMetadataURL;
 
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -413,10 +416,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// Setup the extended metadata delegate for the IDP.
 	@Bean
 	@Qualifier("idp-ext-metadata")
-	public ExtendedMetadataDelegate ssoCircleExtendedMetadataProvider() throws MetadataProviderException {
-		String idpSSOCircleMetadataURL = "http://idp.ssocircle.com/idp-meta.xml";
+	public ExtendedMetadataDelegate extendedMetadataProvider() throws MetadataProviderException {
 		HTTPMetadataProvider httpMetadataProvider = new HTTPMetadataProvider(this.backgroundTaskTimer, httpClient(),
-				idpSSOCircleMetadataURL);
+				idpMetadataURL);
 		httpMetadataProvider.setParserPool(parserPool());
 		ExtendedMetadataDelegate extendedMetadataDelegate = new ExtendedMetadataDelegate(httpMetadataProvider,
 				extendedMetadata());
@@ -433,7 +435,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Qualifier("metadata")
 	public CachingMetadataManager metadata() throws MetadataProviderException {
 		List<MetadataProvider> providers = new ArrayList<MetadataProvider>();
-		providers.add(ssoCircleExtendedMetadataProvider());
+		providers.add(extendedMetadataProvider());
 		return new CachingMetadataManager(providers);
 	}
 

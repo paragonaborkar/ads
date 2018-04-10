@@ -7,7 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.netapp.ads.models.Activity;
 import com.netapp.ads.models.ActivityResponse;
@@ -38,6 +41,9 @@ public class OwnerIdentificationService {
 	@Value("#{sysConfigRepository.findByPropertyName('ads.rules.discovery_rule.disposition').getPropertyValue()}")
 	public String discoveryDisposition;
 	
+	@Value("#{sysConfigRepository.findByPropertyName('ads.talend.cmdb.url').getPropertyValue()}")
+	public String talendCMDBUrl;
+	
 	@Autowired
 	public ActivityRepository activityRepository;
 	
@@ -60,8 +66,18 @@ public class OwnerIdentificationService {
 	public UserRoleRepository userRoleRepository;	
 	
 	@Autowired
-	public LineOfBusinessRepository lineOfBusinessRepository;	
+	public LineOfBusinessRepository lineOfBusinessRepository;
 	
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	public ApplicationsPojo getApplications(String hostIp) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		ApplicationsPojo applications = restTemplate.getForObject(talendCMDBUrl, ApplicationsPojo.class);
+		return applications;
+	}
+
 	/**
 	 * Finds activities where owner needs to be discovered
 	 * For each activity creates Applications and corresponding Corporate Users obtained from CMDB based on IP Address of
@@ -72,7 +88,7 @@ public class OwnerIdentificationService {
 	 * multi-owner situation
 	 * 
 	 */
-	public void identifyOwner(ApplicationsPojo applications) {
+	public void identifyOwner() {
 		log.debug("identifyOwner(): [ENTER] ");
 		//FIXME: Remove method argument for ApplicationWrapper and add code to fetch Application Wrapper from Talend.. 
 		List<QtreeDisposition> qtreeDispositions = qtreeDispositionRepository.findByDisposition(discoveryDisposition);
@@ -87,7 +103,7 @@ public class OwnerIdentificationService {
 			for(Share share: shares) {
 				Host host = share.getHost();
 				log.debug("identifyOwner(): share: {}, host: {}, host owner: {} ", share.getId(), host.getId(), host.getHostOwnerUserCorporateId());
-				processHost(host, activity, applications);
+				processHost(host, activity, getApplications(null));
 			}
 		} //end of for
 			
@@ -157,10 +173,12 @@ public class OwnerIdentificationService {
 						application.setOwnerUserCorporateId(corpUser.getId());
 						//FIXME: application.setArchtype(verumApplication.get); WHERE TO GET THIS FROM?
 						application.setInformationOwner(applicationPojo.getInformationOwner()); //IS THIS CORRECT?
-						application.addLineOfBusinesses(lob);
+						if(lob != null) {
+							application.addLineOfBusinesses(lob);
+						}
 						application = applicationRepository.save(application);
 						
-						if(!activity.getLineOfBusinessesXRefActivities().contains(lob)) {
+						if(lob != null && !activity.getLineOfBusinessesXRefActivities().contains(lob)) {
 							activity.addLineOfBusinesses(lob);
 							activityRepository.save(activity);
 						}
@@ -187,16 +205,12 @@ public class OwnerIdentificationService {
 	 * @return
 	 */
 	public LineOfBusiness getOrCreateLob(String lobName) {
+		if(lobName == null)
+			return null;
 		LineOfBusiness lob = lineOfBusinessRepository.findByLobName(lobName);
 		if(lob == null) {
 			lob = new LineOfBusiness();
-			lob.setLobName(lobName);
-			//FIXME: Where do we get these other lob details from? MMS did not use it
-			lob.setLiasonFirstName("DUMMY");
-			lob.setLiasonContactNumber("DUMMY");
-			lob.setLiasonEmail("DUMMY");
-			lob.setLiasonLastName("DUMMY");
-			lob.setLiasonUserName("DUMMY");
+			lob.setLobName(lobName);//this is the only attribute we get from CMDB
 			lineOfBusinessRepository.save(lob);
 		}
 		return lob;
@@ -309,7 +323,7 @@ public class OwnerIdentificationService {
 				}
 			}
 			createActivityResponse = ownerAlreadyAdded ? false : true;
-			log.debug("identifyOwner(): Owner added: {}. So create activity response: {}", ownerAlreadyAdded, createActivityResponse);
+			log.debug("identifyOwner(): AR already exists for this Owner? {}. So create activity response: {}", ownerAlreadyAdded, createActivityResponse);
 		} 
 		return createActivityResponse;
 	}

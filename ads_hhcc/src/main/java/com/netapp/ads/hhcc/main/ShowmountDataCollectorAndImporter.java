@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.netapp.ads.hhcc.jdbc.NaDBUtils;
@@ -51,7 +52,9 @@ public class ShowmountDataCollectorAndImporter {
 	
 	JSONUtils jsonUtils = new JSONUtils();
 
+	@Scheduled(fixedDelayString = "${showmount.schedule}")
 	public void collectShowmountData() {
+		log.info("Show mount job started");
 		String currentTimeStamp=NaDBUtils.getCurrentTimeStamp();
 
 		String context = ociServerName;
@@ -99,6 +102,7 @@ public class ShowmountDataCollectorAndImporter {
 				log.info("No active exports found for  {} ", context);
 			}
 		}
+		log.info("Show mount job completed");
 	}
 
 	// TODO Pending implementation

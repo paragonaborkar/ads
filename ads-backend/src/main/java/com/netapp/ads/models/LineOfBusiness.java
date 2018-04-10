@@ -24,19 +24,19 @@ public class LineOfBusiness implements Serializable {
 	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
-	@Column(name="liason_contact_number", nullable=false, length=255)
+	@Column(name="liason_contact_number", nullable=true, length=255)
 	private String liasonContactNumber;
 
-	@Column(name="liason_email", nullable=false, length=255)
+	@Column(name="liason_email", nullable=true, length=255)
 	private String liasonEmail;
 
-	@Column(name="liason_first_name", nullable=false, length=255)
+	@Column(name="liason_first_name", nullable=true, length=255)
 	private String liasonFirstName;
 
-	@Column(name="liason_last_name", nullable=false, length=255)
+	@Column(name="liason_last_name", nullable=true, length=255)
 	private String liasonLastName;
 
-	@Column(name="liason_user_name", nullable=false, length=255)
+	@Column(name="liason_user_name", nullable=true, length=255)
 	private String liasonUserName;
 
 	@Column(name="lob_name", nullable=false, length=255)

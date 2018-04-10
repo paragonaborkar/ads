@@ -57,7 +57,7 @@ public class TalendController {
 		for(ApplicationPojo applicationPojo: applications.getApplications()) {
 				log.debug("Owner Identification applicationPojo: " + applicationPojo);
 		}
-		ownerIdentificationService.identifyOwner(applications);
+		ownerIdentificationService.identifyOwner();
 		log.debug("Owner Identification Controller [EXIST]");
 		// Step 1. Validate entire JSON file and every field. If anything is invalid or missing. Fail for all applications and do not process any.
 		
