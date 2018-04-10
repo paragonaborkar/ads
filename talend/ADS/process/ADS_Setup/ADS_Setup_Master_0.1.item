@@ -5,7 +5,7 @@
     <contextParameter comment="" name="ADS_EMAIL_AUTHENTICATION_USER" prompt="ADS_EMAIL_AUTHENTICATION_USER?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="ads.sendemail@gmail.com"/>
     <contextParameter comment="" name="ADS_EMAIL_FROM" prompt="ADS_EMAIL_FROM?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="mohan.bondada@gmail.com"/>
     <contextParameter comment="" name="ADS_EMAIL_SMTP_NAME" prompt="ADS_EMAIL_SMTP_NAME?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="smtp.gmail.com"/>
-    <contextParameter comment="" name="ADS_EMAIL_SMTP_PORT" prompt="ADS_EMAIL_SMTP_PORT?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="587"/>
+    <contextParameter comment="" name="ADS_EMAIL_SMTP_PORT" prompt="ADS_EMAIL_SMTP_PORT?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="465"/>
     <contextParameter comment="" name="ADS_EMAIL_TO" prompt="ADS_EMAIL_TO?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
     <contextParameter comment="" name="ADS_LOG_DIRECTORY" prompt="ADS_LOG_DIRECTORY?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_Directory" value="C:/netapp/logs/"/>
     <contextParameter comment="" name="ADS_SETUP_LOADSHEET_APPLICATION_XLSX" prompt="ADS_SETUP_LOADSHEET_APPLICATION_XLSX?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LoadSheet_Application_Template.xlsx"/>
@@ -25,7 +25,7 @@
     <contextParameter comment="Provided by REST service. Stored in DB's status tracking table. Default to nothing so it's auto generated if run directly in Talend." name="JOB_RUN_NAME" prompt="JOB_RUN_NAME?" promptNeeded="false" type="id_String" value=""/>
     <contextParameter comment="" name="JOB_SUBMITTED_BY" prompt="JOB_SUBMITTED_BY?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="talend"/>
     <contextParameter comment="" name="LOAD_FILES_LOC" prompt="LOAD_FILES_LOC?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_Directory" value="C:/netapp/ads_setup_loadsheets/"/>
-    <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6IiIsInVzZXJfbmFtZSI6InRhbGVuZCIsImF1dGhvcml0aWVzIjpbIkNMSUVOVCJdLCJjbGllbnRfaWQiOiJ0ZXN0and0Y2xpZW50aWQiLCJmaXJzdE5hbWUiOiIiLCJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwiY29ycFVzZXJJZCI6MCwiYWRzX21vZHVsZXMiOnsiZGlzY292ZXIiOnRydWUsInJlcG9ydHMiOmZhbHNlLCJzY2hlZHVsZSI6ZmFsc2UsInBsYW5uaW5nIjpmYWxzZSwiZXhlY3V0ZSI6ZmFsc2UsImNvbm5lY3Rpb25zIjp0cnVlfSwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sIm5hdGl2ZVVzZXJJZCI6MCwiZXhwIjoxNTIxODU1MjY2LCJ1c2VyUm9sZSI6IiIsImp0aSI6IjZlOGI5YWYzLTU1NDEtNDQxYy04ZjE4LWIzNjBmYzQ3MTFlMyIsImVtYWlsIjoiIn0.m5Lrs54MzFvk2Px6ssZK452jfHaQMkZLZCyXFsZWLh4"/>
+    <contextParameter comment="" name="OAUTH_BEARER_TOKEN" prompt="OAUTH_BEARER_TOKEN?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsYXN0TmFtZSI6IiIsInVzZXJfbmFtZSI6InRhbGVuZCIsImF1dGhvcml0aWVzIjpbIkNMSUVOVCJdLCJjbGllbnRfaWQiOiJ0ZXN0and0Y2xpZW50aWQiLCJmaXJzdE5hbWUiOiIiLCJhdWQiOlsidGVzdGp3dHJlc291cmNlaWQiXSwiY29ycFVzZXJJZCI6MCwiYWRzX21vZHVsZXMiOnsiZGlzY292ZXIiOnRydWUsInJlcG9ydHMiOmZhbHNlLCJzY2hlZHVsZSI6ZmFsc2UsInBsYW5uaW5nIjpmYWxzZSwiZXhlY3V0ZSI6ZmFsc2UsImNvbm5lY3Rpb25zIjp0cnVlfSwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sIm5hdGl2ZVVzZXJJZCI6MCwiZXhwIjoxNTIzMzI0MzgwLCJ1c2VyUm9sZSI6IiIsImp0aSI6IjdhYzQyZjRlLTczM2ItNDZhMS05OTBjLTA3NmFjMmUxZmM4NCIsImVtYWlsIjoiIn0.zGCT29k_hx5Wgx0HTMRq2gRgbsvgzfLD-CmzRfjXLL8"/>
     <contextParameter comment="" name="RESOURCE_XPATH_USER_NATIVE" prompt="RESOURCE_XPATH_USER_NATIVE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/root/_links/userNative/href"/>
     <contextParameter comment="" name="REST_DATA_RESOURCE_XPATH" prompt="REST_DATA_RESOURCE_XPATH?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/root/_links/self/href"/>
     <contextParameter comment="" name="REST_REQ_JSON" prompt="REST_REQ_JSON?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
@@ -34,7 +34,7 @@
     <contextParameter comment="" name="REST_URL_APPLICATIONS" prompt="REST_URL_APPLICATIONS?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/applications"/>
     <contextParameter comment="" name="REST_URL_AUDIT_EVENTS" prompt="REST_URL_AUDIT_EVENTS?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/auditEvents"/>
     <contextParameter comment="" name="REST_URL_AUDIT_REASON_CODES" prompt="REST_URL_AUDIT_REASON_CODES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/auditReasonCodes"/>
-    <contextParameter comment="" name="REST_URL_BASE" prompt="REST_URL_BASE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="http://localhost:9080/"/>
+    <contextParameter comment="" name="REST_URL_BASE" prompt="REST_URL_BASE?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="http://dv2-ls-cts-1:8090/"/>
     <contextParameter comment="" name="REST_URL_CONTROLLERS" prompt="REST_URL_CONTROLLERS?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/controllers"/>
     <contextParameter comment="" name="REST_URL_DATA_CENTERS" prompt="REST_URL_DATA_CENTERS?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/dataCenters"/>
     <contextParameter comment="" name="REST_URL_EMAIL_TYPES" prompt="REST_URL_EMAIL_TYPES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/mstEmailTypes"/>
@@ -51,7 +51,7 @@
     <contextParameter comment="" name="REST_URL_USER_NATIVES" prompt="REST_URL_USER_NATIVES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/userNatives"/>
     <contextParameter comment="" name="REST_URL_USER_ROLES" prompt="REST_URL_USER_ROLES?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="/userRoles"/>
     <contextParameter comment="" name="ROLE_LOOKUP_CSV" prompt="ROLE_LOOKUP_CSV?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="ADS_User_Roles.csv"/>
-    <contextParameter comment="" name="TEST_ROW_COUNT_LIMIT" prompt="TEST_ROW_COUNT_LIMIT?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="LIMIT 10"/>
+    <contextParameter comment="" name="TEST_ROW_COUNT_LIMIT" prompt="TEST_ROW_COUNT_LIMIT?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value=""/>
   </context>
   <parameters>
     <elementParameter field="TEXT" name="SCREEN_OFFSET_X" value="0" show="false"/>
@@ -108,7 +108,7 @@
     <elementParameter field="CHECK" name="ON_METERCATCHER_FLAG" value="false"/>
     <elementParameter field="CHECK" name="ON_CONSOLE_FLAG" value="false" show="false"/>
     <elementParameter field="CHECK" name="ON_FILES_FLAG" value="false" show="false"/>
-    <elementParameter field="DIRECTORY" name="FILE_PATH" value="&quot;C:/Users/zemastev/Desktop/talend/.metadata&quot;" show="false"/>
+    <elementParameter field="DIRECTORY" name="FILE_PATH" value="&quot;C:/installs/TOS_ESB-6.5.1/Studio/workspace/.metadata&quot;" show="false"/>
     <elementParameter field="TEXT" name="FILENAME_STATS" value="&quot;stats_file.txt&quot;" show="false"/>
     <elementParameter field="TEXT" name="FILENAME_LOGS" value="&quot;logs_file.txt&quot;" show="false"/>
     <elementParameter field="TEXT" name="FILENAME_METTER" value="&quot;meter_file.txt&quot;" show="false"/>
