@@ -20,12 +20,12 @@ INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`,
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.talendjobs.loc', 'C:/netapp/talendjobs/','1',0,'Talend');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.talend.cmdb.url', 'http://localhost:8088/1','1',0,'Talend');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.sso.bypass_mode_on', 'true','1',0,'Security - SSO');
-INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('sso.idp.url', 'http://192.168.1.103:8080/saml/login?disco=true','1',0,'Security - SSO');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('sso.sp.entityId', 'com:paragon:ads:sp','1',0,'Security - SSO');
-INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('sso.success.redirect.url', 'http://192.168.1.103:4200/','1',0,'Security - SSO');
-INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('sso.token.endpoint.url', 'http://192.168.1.103:8080/oauth/token','1',0,'Security - SSO');
-INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('sso.entity.base.url', 'http://192.168.1.103:8080','1',0,'Security - SSO');
-INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.sso.backend.url', 'http://localhost:8080','1',0,'Security - SSO');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('sso.success.redirect.url', 'http://localhost:4200/','1',0,'Security - SSO');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('sso.idp.url', 'http://localhost:8080/saml/login?disco=true','1',0,'Security - SSO');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('sso.token.endpoint.url', 'http://localhost:8080/oauth/token','1',0,'Security - SSO');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('sso.entity.base.url', 'http://localhost:8080','1',0,'Security - SSO');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.sso.backend.url', 'http://localhost:8080/sso','1',0,'Security - SSO');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.sso.idp.metadata.url', 'http://idp.ssocircle.com/idp-meta.xml','1',0,'Security - SSO');
 
 /*!40000 ALTER TABLE `sys_config` ENABLE KEYS */;

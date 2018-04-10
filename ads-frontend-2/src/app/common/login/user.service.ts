@@ -15,7 +15,7 @@ export class UserService {
 
   login(accessInformation: any) {
     // FIXME: Why are we getting token information that is decoded from the backend?
-    console.log("accessInformation:" ,  accessInformation.access_token);
+    console.log("accessInformation.access_token:" ,  accessInformation.access_token);
     localStorage.setItem("access_token", accessInformation.access_token);
 
     this.accessInformation = accessInformation;

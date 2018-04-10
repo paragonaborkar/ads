@@ -2,6 +2,7 @@
 *.class
 .metadata
 **/.recommenders
+**/.settings
 **/ads-backend/target
 **/ads-backend/.apt_generated
 **/ads-backend/.idea
@@ -11,6 +12,8 @@ Servers/
 RemoteSystemsTempFiles/
 ads-backend/.factorypath
 package-lock.json
+**/target/classes/**
+MANIFEST.MF
 
 # ---- SonarQube
 .sonar

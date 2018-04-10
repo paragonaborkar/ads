@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
 
 		if (response !== null && response !== undefined) {
 			let res = JSON.parse(atob(response));
+			// let res = atob(response);
 			this.userService.login(res);
 			this.navigateAfterSuccess();
 		}
