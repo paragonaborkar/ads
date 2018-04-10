@@ -25,11 +25,12 @@ export class ReportListingCommonComponent implements OnInit {
   showJasperReport;
   currentPageNumber;
   report;
-  myVar: boolean;
+  // myVar: boolean;
   reportName = '';
   reportTitle = '';
   rowsPerPage = 10;
 
+  loading = true;
 
   reportColumnHeaders;
 
@@ -37,12 +38,9 @@ export class ReportListingCommonComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.moduleName);
-
     this.currentPageNumber = 1;
 
-    this.myVar = true;
-
+    // this.myVar = true;
 
     // This method is to get all the values from user_native table
     this.reportCommonService.getReportsForModule(this.moduleName).subscribe(
@@ -61,6 +59,8 @@ export class ReportListingCommonComponent implements OnInit {
           }
           this.reportListing[rowCounter].push(item);
         });
+
+        this.loading = false;
       }, err => {
         // Get the ADS configured error message to display.
         this.errorMessage = this.errorService.processError(err, "getControllerReleaseList", "GET");
@@ -78,9 +78,11 @@ export class ReportListingCommonComponent implements OnInit {
   }
 
   openJasperReport(requestedPageNumber, reportName, reportTitle, firstTime): void {
+    this.loading = true;
+
     console.log(reportName);
 
-    this.myVar = false;
+    // this.myVar = false;
 
     if (firstTime) {
       this.reportName = reportName;
@@ -92,12 +94,10 @@ export class ReportListingCommonComponent implements OnInit {
     if (!requestedPageNumber)
       requestedPageNumber = 1;
 
-   
-
     this.reportCommonService.openJasperReport(requestedPageNumber, reportName, this.moduleName, this.rowsPerPage)
       .subscribe(
         res => {
-
+          this.loading = true;
           console.log("res:", res);
 
           this.report = res;
@@ -153,6 +153,8 @@ export class ReportListingCommonComponent implements OnInit {
 
             // ele.innerHTML = "<table class=\"table table-striped mt-3\">" + x.item(0).innerHTML + "</table>";
           }
+
+          this.loading = false;
         });
 
   }

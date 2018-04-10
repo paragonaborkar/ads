@@ -21,7 +21,7 @@
         <div class="form-group row">
           <label for="password" class="col-sm-3 col-form-label">Password</label>
           <div class="col-sm-7">
-            <input type="password" class="form-control" [ngClass]="{'is-invalid':userPassword.errors?.required && userPassword.touched || userPassword.errors?.minlength && userPassword.touched}"
+            <input type="password" class="form-control" adsNoSpaces [ngClass]="{'is-invalid':userPassword.errors?.required && userPassword.touched || userPassword.errors?.minlength && userPassword.touched}"
               [(ngModel)]="User.password" name="password" #userPassword="ngModel" minlength="5" required placeholder="Password">
             <div *ngIf="userPassword.errors?.required && userPassword.touched" class="invalid-feedback">
               Password is required
