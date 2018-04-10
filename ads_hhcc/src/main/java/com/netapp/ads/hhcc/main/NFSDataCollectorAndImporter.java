@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.netapp.ads.hhcc.jdbc.NaDBUtils;
@@ -85,8 +86,9 @@ public class NFSDataCollectorAndImporter {
 	 * -Array netapp1 -DataWarehouseAddress dwh_ip -Port = "3306" -VfilerName
 	 * vfiler1 -ClearStats $True -Debugger $True
 	 */
-
+	@Scheduled(fixedDelayString = "${nfs.schedule}")
 	public void collectCurrentNFSConnectedHostsAndStatistics(boolean clearNFSStats) {
+		log.info("NFS Collector and Importer Job started");
 		String currentTimeStamp = NaDBUtils.getCurrentTimeStamp();
 		
 		// # Get-NaSystemInfo NetAPP API
@@ -140,8 +142,8 @@ public class NFSDataCollectorAndImporter {
 			} else {
 				log.info("No active exports found for {}", netAppSystemInfo.getSystemName());
 			}
-			log.info("== JOB COMPLETE: Collect NFSSTATS ==");
 		}
+		log.info("NFS Collector and Importer Job completed");
 	}
 
 	// Clear-NfsStats

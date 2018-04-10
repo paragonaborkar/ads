@@ -144,6 +144,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Value("#{sysConfigRepository.findByPropertyName('sso.token.endpoint.url').getPropertyValue()}")
 	private String tokenEndPointURL;
+	
+	@Value("#{sysConfigRepository.findByPropertyName('ads.sso.idp.metadata.url').getPropertyValue()}")
+	private String idpMetadataURL;
 
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -404,11 +407,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	@Qualifier("idp-ssocircle")
-	public ExtendedMetadataDelegate ssoCircleExtendedMetadataProvider() throws MetadataProviderException {
-		String idpSSOCircleMetadataURL = "http://idp.ssocircle.com/idp-meta.xml";
+	@Qualifier("idp-extended-metadata")
+	public ExtendedMetadataDelegate extendedMetadataProvider() throws MetadataProviderException {
 		HTTPMetadataProvider httpMetadataProvider = new HTTPMetadataProvider(this.backgroundTaskTimer, httpClient(),
-				idpSSOCircleMetadataURL);
+				idpMetadataURL);
 		httpMetadataProvider.setParserPool(parserPool());
 		ExtendedMetadataDelegate extendedMetadataDelegate = new ExtendedMetadataDelegate(httpMetadataProvider,
 				extendedMetadata());
@@ -656,5 +658,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		return response.getBody();
 	}
-
 }

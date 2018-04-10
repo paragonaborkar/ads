@@ -910,11 +910,11 @@ DROP TABLE IF EXISTS `line_of_business`;
 CREATE TABLE `line_of_business` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Surrogate ID of the Line of Business',
   `lob_name` varchar(255) NOT NULL,
-  `liason_first_name` varchar(255) NOT NULL,
-  `liason_last_name` varchar(255) NOT NULL,
-  `liason_user_name` varchar(255) NOT NULL,
-  `liason_contact_number` varchar(255) NOT NULL,
-  `liason_email` varchar(255) NOT NULL,
+  `liason_first_name` varchar(255) DEFAULT NULL,
+  `liason_last_name` varchar(255) DEFAULT NULL,
+  `liason_user_name` varchar(255) DEFAULT NULL,
+  `liason_contact_number` varchar(255) DEFAULT NULL,
+  `liason_email` varchar(255) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)

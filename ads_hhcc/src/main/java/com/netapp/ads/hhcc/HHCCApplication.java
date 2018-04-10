@@ -5,12 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.netapp.ads.hhcc.main.CIFSSessionCollector;
 import com.netapp.ads.hhcc.main.NFSDataCollectorAndImporter;
 import com.netapp.ads.hhcc.main.ShowmountDataCollectorAndImporter;
 
 @SpringBootApplication
+@EnableScheduling
 public class HHCCApplication {
 	
 	private static final Logger log = LoggerFactory.getLogger(HHCCApplication.class);
@@ -24,7 +26,7 @@ public class HHCCApplication {
 		//ShowmountDataCollectorAndImporter showMountDataCollector = appContext.getBean(ShowmountDataCollectorAndImporter.class);
 		//showMountDataCollector.collectShowmountData();
 		
-		NFSDataCollectorAndImporter nfsDataCollectorAndImporter = appContext.getBean(NFSDataCollectorAndImporter.class);
-		nfsDataCollectorAndImporter.collectCurrentNFSConnectedHostsAndStatistics(false);
+		//NFSDataCollectorAndImporter nfsDataCollectorAndImporter = appContext.getBean(NFSDataCollectorAndImporter.class);
+		//nfsDataCollectorAndImporter.collectCurrentNFSConnectedHostsAndStatistics(false);
 	}
 }
