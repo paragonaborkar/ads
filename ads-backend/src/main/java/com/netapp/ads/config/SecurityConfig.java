@@ -427,7 +427,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Qualifier("metadata")
 	public CachingMetadataManager metadata() throws MetadataProviderException {
 		List<MetadataProvider> providers = new ArrayList<MetadataProvider>();
-		providers.add(ssoCircleExtendedMetadataProvider());
+		providers.add(extendedMetadataProvider());
 		return new CachingMetadataManager(providers);
 	}
 
