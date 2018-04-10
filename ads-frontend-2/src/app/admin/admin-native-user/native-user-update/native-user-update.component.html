@@ -12,7 +12,7 @@
           <div class="form-group row">
               <label for="userName" class="col-sm-3 col-form-label">User Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" [ngClass]="{'is-invalid':userUserName.errors?.required && userUserName.touched || userUserName.errors?.minlength && userUserName.touched}"
+                <input type="text" class="form-control" adsNoSpaces [ngClass]="{'is-invalid':userUserName.errors?.required && userUserName.touched || userUserName.errors?.minlength && userUserName.touched}"
                   [(ngModel)]="User.userName" name="userName" #userUserName="ngModel" minlength="2" required>
                 <div *ngIf="userUserName.errors?.required && userUserName.touched" class="invalid-feedback">
                   User Name is required
@@ -20,12 +20,15 @@
                 <div *ngIf="userUserName.errors?.minlength && userUserName.touched" class="invalid-feedback">
                   Must be at least 2 characters
                 </div>
+                <div *ngIf="!userUserName.errors?.valid && userUserName.touched" class="invalid-feedback">
+                  User Name is not valid
+                </div>
               </div>
             </div>
         <div class="form-group row">
           <label for="firstName" class="col-sm-3 col-form-label">First Name</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" [ngClass]="{'is-invalid':userFirstName.errors?.required && userFirstName.touched || userFirstName.errors?.minlength && userFirstName.touched}"
+            <input type="text" class="form-control" adsNoSpaces [ngClass]="{'is-invalid':userFirstName.errors?.required && userFirstName.touched || userFirstName.errors?.minlength && userFirstName.touched}"
               [(ngModel)]="User.firstName" name="firstName" #userFirstName="ngModel" minlength="2" required>
             <div *ngIf="userFirstName.errors?.required && userFirstName.touched" class="invalid-feedback">
               First Name is required
@@ -38,7 +41,7 @@
         <div class="form-group row">
           <label for="lastName" class="col-sm-3 col-form-label">Last Name</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" [ngClass]="{'is-invalid':userLastName.errors?.required && userLastName.touched || userLastName.errors?.minlength && userLastName.touched}"
+            <input type="text" class="form-control" adsNoSpaces [ngClass]="{'is-invalid':userLastName.errors?.required && userLastName.touched || userLastName.errors?.minlength && userLastName.touched}"
               [(ngModel)]="User.lastName" name="lastName" #userLastName="ngModel" minlength="2" required>
             <div *ngIf="userLastName.errors?.required && userLastName.touched" class="invalid-feedback">
               Last Name is required
@@ -48,21 +51,6 @@
             </div>
           </div>
         </div>
-
-        <!-- <div class="form-group row">
-          <label for="password" class="col-sm-3 col-form-label">Password</label>
-          <div class="col-sm-9">
-            <input type="password" class="form-control" [ngClass]="{'is-invalid':userPassword.errors?.required && userPassword.touched || userPassword.errors?.minlength && userPassword.touched}"
-              [(ngModel)]="User.password" name="password" #userPassword="ngModel" minlength="3" required>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="confirmPassword" class="col-sm-3 col-form-label">Confirm Password</label>
-          <div class="col-sm-9">
-            <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="confirmPassword" required>
-          </div>
-
-        </div> -->
 
         <div class="form-group row">
           <label for="email" class="col-sm-3 col-form-label">Email</label>

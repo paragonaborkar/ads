@@ -4,6 +4,7 @@
 **/.recommenders
 **/.settings
 **/ads-backend/target
+**/ads-backend/bin
 **/ads-backend/.apt_generated
 **/ads-backend/.idea
 **/ads-backend/.settings

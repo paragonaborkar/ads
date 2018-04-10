@@ -22,7 +22,7 @@
     <div class="form-group col-md-4">
       <label for="workPackageName">Work Package Name</label>
 
-      <input type="text" class="form-control" [ngClass]="{'is-invalid':workPackageName.errors?.required && workPackageName.touched || workPackageName.errors?.minlength && workPackageName.touched}"
+      <input type="text" class="form-control" adsNoSpaces [ngClass]="{'is-invalid':workPackageName.errors?.required && workPackageName.touched || workPackageName.errors?.minlength && workPackageName.touched}"
         [(ngModel)]="newTarget.workPackageName" name="workPackageName" #workPackageName="ngModel" required placeholder="Work Package Name">
       <div *ngIf="workPackageName.errors?.required && workPackageName.touched" class="invalid-feedback">
         Work Package Name is required
@@ -43,7 +43,7 @@
     <div class="form-group col-md-4">
       <label for="assetNumber">Asset Tag</label>
 
-      <input type="text" class="form-control" [ngClass]="{'is-invalid':assetNumber.errors?.required && assetNumber.touched || assetNumber.errors?.minlength && assetNumber.touched}"
+      <input type="text" class="form-control" adsNoSpaces [ngClass]="{'is-invalid':assetNumber.errors?.required && assetNumber.touched || assetNumber.errors?.minlength && assetNumber.touched}"
         [(ngModel)]="newTarget.assetNumber" name="assetNumber" #assetNumber="ngModel" required placeholder="Asset Tag">
       <div *ngIf="assetNumber.errors?.required && assetNumber.touched" class="invalid-feedback">
         Asset Tag is required
