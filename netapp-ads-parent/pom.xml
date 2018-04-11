@@ -22,12 +22,6 @@
 		<java.version>1.8</java.version>
 	</properties>
 
-	<modules>
-		<module>netapp-ads-core</module>
-		<module>netapp-ads-integration</module>
-		<module>netapp-ads-backend</module>
-		<module>netapp-ads-hhcc</module>
-	</modules>
 	
 	<dependencyManagement>
 		<dependencies>
@@ -38,4 +32,9 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<modules>
+		<module>../netapp-ads-backend</module>
+		<module>../netapp-ads-core</module>
+		<module>../netapp-ads-integration</module>
+	</modules>
 </project>
