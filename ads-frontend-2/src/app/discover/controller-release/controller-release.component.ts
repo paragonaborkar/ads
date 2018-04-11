@@ -19,7 +19,7 @@ export class ControllerReleaseComponent implements OnInit {
   columnTemplates = {};
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
 
-  public pageName = "ControllerReleaseListing";
+  public pageName = "ControllerReleases";
   errorMessage = "";
 
   // Listing of Controller Release information to display 

@@ -1,9 +1,8 @@
-$blue:    #0067c5;
+@import 'variables';
+@import '../node_modules/bootstrap/scss/bootstrap';
 
-$theme-colors: (
-  "primary": #0067c5,
-  "danger": #ff4136
-);
+
+
 
 html {
   position: relative;
@@ -40,20 +39,6 @@ body {
   .sortable-item { 
     cursor: pointer; 
   }
-// @import '../node_modules/bootstrap/scss/bootstrap.scss';
-
-@import 'styles-icons.scss';
-@import 'styles-material.scss';
-@import 'styles-table-material.scss';
-// @import 'styles-bootstrap.scss';
-
-// @import '~@swimlane/ngx-datatable/release/index.css';
-// @import '~@swimlane/ngx-datatable/release/themes/material.css';
-// @import '~@swimlane/ngx-datatable/release/assets/icons.css';
-
-
-
-
 
 
 .ng-valid[required], .ng-valid.required  {
@@ -64,3 +49,8 @@ body {
 .ng-invalid:not(form)  {
   border-left: 5px solid #dc3545; /* red */
 }
+
+
+@import 'styles-icons.scss';
+@import 'styles-material.scss';
+@import 'styles-table-material.scss';

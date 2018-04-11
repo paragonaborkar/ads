@@ -1,6 +1,6 @@
 <div class="row justify-content-center d-flex ">
   <div class="col-md-8">
-    <div class="h3">QTree Ownership</div>
+    <div class="h3">Qtree Ownership</div>
   </div>
 
   <div class="col-md-1">
@@ -15,13 +15,13 @@
 
 <div class="row d-flex justify-content-center">
   <div class="col-md-9" *ngIf="rows.length > 0 && columns.length > 0">
-    <ngx-datatable class="material card" [rows]="rows" [columns]="columns" [columnMode]="'flex'" [rowHeight]="auto" [externalPaging]="false"
+    <ngx-datatable class="material card" [rows]="rows" [columns]="columns" [columnMode]="'force'" [rowHeight]="auto" [externalPaging]="false"
       [count]="page.totalElements" [offset]="page.number" [limit]="page.size" [headerHeight]="50" [footerHeight]="50" (page)='setPage($event)'>
     </ngx-datatable>
   </div>
   <div class="col-md-9" *ngIf="rows.length == 0  && columns.length > 0">
     <div class="alert alert-secondary" role="alert">
-      There are no QTree's to process.
+      There are no Qtree's to process.
     </div>
   </div>
 </div>

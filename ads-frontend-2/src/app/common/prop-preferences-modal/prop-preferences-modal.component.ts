@@ -5,7 +5,6 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import { SortableModule } from 'ngx-bootstrap/sortable';
 import { ApplicationConfigService } from '../application-config.service';
-import { PropertyPreferenceConstants } from '../prop-preferences/prop-preferences-const';
 import { FriendlyLabelPipePipe } from '../../pipes/friendly-label-pipe.pipe';
 import { SessionHelper } from '../../auth/session.helper';
 import { AdsErrorService } from '../../common/ads-error.service';

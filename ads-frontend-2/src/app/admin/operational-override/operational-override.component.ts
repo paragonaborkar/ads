@@ -18,7 +18,7 @@ import { Page } from "../../common/page";
   styleUrls: ['./operational-override.component.scss']
 })
 export class OperationalOverrideComponent implements OnInit {
-  public pageName = "OperationalOverrideListing";
+  public pageName = "OperationalOverride";
   @ViewChild(DataTableColTemplatesComponent) dataTableColsTemplate: DataTableColTemplatesComponent;
   columnTemplates = {};
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;

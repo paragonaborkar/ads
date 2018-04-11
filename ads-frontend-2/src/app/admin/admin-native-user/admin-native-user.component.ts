@@ -44,7 +44,7 @@ export class AdminNativeUserComponent implements OnInit {
 
   // User to update or delete or change password
   public User = {};
-  public pageName = "UserListing";
+  public pageName = "ManageAdministrativeUsers";
   public isCreateModal = false;
   public isUpdateModal = false;
   public isDeleteModal = false;

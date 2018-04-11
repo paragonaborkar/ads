@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-
+import { NoWhitespaceDirective } from '../../../common/validators/no-whitespace.directive';
 
 import { UserAdminService } from '../user-admin.service';
 

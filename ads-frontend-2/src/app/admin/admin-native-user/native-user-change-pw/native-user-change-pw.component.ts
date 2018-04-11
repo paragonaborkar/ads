@@ -3,6 +3,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UserAdminService } from '../user-admin.service';
 import { AdsErrorService } from '../../../common/ads-error.service';
 
+import { NoWhitespaceDirective } from '../../../common/validators/no-whitespace.directive';
+
 @Component({
   selector: 'app-native-user-change-pw',
   templateUrl: './native-user-change-pw.component.html',
