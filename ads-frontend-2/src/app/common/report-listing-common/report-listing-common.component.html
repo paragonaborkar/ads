@@ -1,4 +1,4 @@
-<div *ngIf="!showJasperReport">
+<div *ngIf="!showJasperReport && !loading">
   <h1 class="text-center">{{moduleDisplayName}} Reports</h1>
 
   <div class="h3 text-center mt-3" *ngIf="reportListing.length == 0">
@@ -19,7 +19,7 @@
   </div>
 </div>
 
-<div class="row " *ngIf="totalPages==0 && showJasperReport">
+<div class="row " *ngIf="totalPages==0 && showJasperReport && !loading">
   <div class="col-md-12 pb-2">
     <h1 class="text-center">
       <strong>{{moduleDisplayName}} Reports:</strong> {{reportTitle}}</h1>
@@ -36,13 +36,20 @@
 </div>
 
 
-
 <div class="row " *ngIf="totalPages && showJasperReport">
 
   <div class="col-md-12 pb-2">
     <h1 class="text-center">
       <strong>{{moduleDisplayName}} Reports:</strong> {{reportTitle}}</h1>
   </div>
+</div>
+
+<div class="row " *ngIf="totalPages && showJasperReport && !loading">
+
+  <!-- <div class="col-md-12 pb-2">
+    <h1 class="text-center">
+      <strong>{{moduleDisplayName}} Reports:</strong> {{reportTitle}}</h1>
+  </div> -->
 
   <div class="col-md-3 ">
     <button class="btn btn-outline-secondary pull-left" (click)="back()">
@@ -84,10 +91,10 @@
 </div>
 
 
-<div innerHtml="{{reportHtml}}" class="" id="reportHtml" *ngIf="totalPages && showJasperReport"></div>
+<div innerHtml="{{reportHtml}}" class="" id="reportHtml" *ngIf="totalPages && showJasperReport && !loading"></div>
 
 
-<div class="row " *ngIf="totalPages && showJasperReport">
+<div class="row " *ngIf="totalPages && showJasperReport && !loading">
   <div class="col-md-3 ">
     <button class="btn btn-outline-secondary pull-left" (click)="back()">
       <span aria-hidden="true">&laquo;</span> Back</button>
@@ -114,7 +121,7 @@
     <button class="btn btn-outline-primary pull-right" (click)="downloadJasperReport()">Export to Excel</button>
   </div>
 </div>
-<div class="row " *ngIf="totalPages && showJasperReport">
+<div class="row " *ngIf="totalPages && showJasperReport && !loading">
   <div class="col-md-3">
     Page: {{currentPageNumber}} of {{totalPages}}
   </div>

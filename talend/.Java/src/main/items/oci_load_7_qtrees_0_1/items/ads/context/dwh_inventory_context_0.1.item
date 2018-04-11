@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<talendfile:ContextType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" xmi:id="_dwzqgC7fEei0ervrhvRn1A" confirmationNeeded="false" name="Default">
-  <contextParameter xmi:id="_dwzqgS7fEei0ervrhvRn1A" comment="" name="DWH_DATABASE_USER_PASSWORD" prompt="DWH_DATABASE_USER_PASSWORD?" promptNeeded="false" type="id_Password" value="HpZ7yaZlQ1y+QznO2dhI3Q=="/>
-  <contextParameter xmi:id="_dwzqgi7fEei0ervrhvRn1A" comment="" name="DWH_DATABASE_SERVER" prompt="DWH_DATABASE_SERVER?" promptNeeded="false" type="id_String" value=""/>
-  <contextParameter xmi:id="_dwzqgy7fEei0ervrhvRn1A" comment="" name="DWH_DATABASE_USER_NAME" prompt="DWH_DATABASE_USER_NAME?" promptNeeded="false" type="id_String" value="root"/>
-  <contextParameter xmi:id="_dwzqhC7fEei0ervrhvRn1A" comment="" name="DWH_DATABASE_NAME" prompt="DWH_DATABASE_NAME?" promptNeeded="false" type="id_String" value="dwh_inventory"/>
-  <contextParameter xmi:id="_dwzqhS7fEei0ervrhvRn1A" comment="" name="DWH_DATABASE_PORT" prompt="DWH_DATABASE_PORT?" promptNeeded="false" type="id_String" value="3308"/>
-  <contextParameter xmi:id="_dwzqhi7fEei0ervrhvRn1A" comment="" name="dwh_inventory_AdditionalParams" prompt="dwh_inventory_AdditionalParams?" promptNeeded="false" type="id_String" value="noDatetimeStringSync=true"/>
-</talendfile:ContextType>

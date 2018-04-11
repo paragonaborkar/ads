@@ -4,6 +4,7 @@ import { EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/
 import { UserAdminService } from '../user-admin.service';
 import { AdsErrorService } from '../../../common/ads-error.service';
 
+import { NoWhitespaceDirective } from '../../../common/validators/no-whitespace.directive';
 
 @Component({
   selector: 'native-user-create',

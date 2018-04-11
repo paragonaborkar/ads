@@ -19,6 +19,11 @@
     <contextParameter comment="" name="ADS_EMAIL_AUTHENTICATION_USER" prompt="ADS_EMAIL_AUTHENTICATION_USER?" promptNeeded="false" type="id_String" value=""/>
     <contextParameter comment="" name="ADS_EMAIL_AUTHENTICATION_PASSWORD" prompt="ADS_EMAIL_AUTHENTICATION_PASSWORD?" promptNeeded="false" type="id_String" value=""/>
     <contextParameter comment="" name="REST_URL_BASE" prompt="REST_URL_BASE?" promptNeeded="false" type="id_String" value=""/>
+    <contextParameter comment="" name="FLAG_OCI_SENDEMAIL" prompt="FLAG_OCI_SENDEMAIL?" promptNeeded="false" type="id_Boolean" value=""/>
+    <contextParameter comment="" name="FLAG_JOBTYPE_OCI" prompt="FLAG_JOBTYPE_OCI?" promptNeeded="false" type="id_Boolean" value=""/>
+    <contextParameter comment="" name="FLAG_DELETE_LOGS" prompt="FLAG_DELETE_LOGS?" promptNeeded="false" type="id_Boolean" value=""/>
+    <contextParameter comment="" name="JOB_ERROR_MESSAGE" prompt="JOB_ERROR_MESSAGE?" promptNeeded="false" type="id_String" value=""/>
+    <contextParameter comment="" name="ERROR_LOG" prompt="ERROR_LOG?" promptNeeded="false" type="id_String" value=""/>
   </context>
   <parameters>
     <elementParameter field="TEXT" name="SCREEN_OFFSET_X" value="0" show="false"/>
@@ -75,7 +80,7 @@
     <elementParameter field="CHECK" name="ON_METERCATCHER_FLAG" value="false"/>
     <elementParameter field="CHECK" name="ON_CONSOLE_FLAG" value="false" show="false"/>
     <elementParameter field="CHECK" name="ON_FILES_FLAG" value="false" show="false"/>
-    <elementParameter field="DIRECTORY" name="FILE_PATH" value="&quot;C:/Users/pathram/Desktop/TOS_DI-20170623_1246-V6.4.1/TOS_DI-20170623_1246-V6.4.1/workspace/.metadata&quot;" show="false"/>
+    <elementParameter field="DIRECTORY" name="FILE_PATH" value="&quot;C:/installs/TOS_ESB-6.5.1/Studio/workspace/.metadata&quot;" show="false"/>
     <elementParameter field="TEXT" name="FILENAME_STATS" value="&quot;stats_file.txt&quot;" show="false"/>
     <elementParameter field="TEXT" name="FILENAME_LOGS" value="&quot;logs_file.txt&quot;" show="false"/>
     <elementParameter field="TEXT" name="FILENAME_METTER" value="&quot;meter_file.txt&quot;" show="false"/>
@@ -126,77 +131,8 @@
     <routinesParameter id="_nrPQkAwzEeiiuqmUHsf0Sw" name="ADSConstants"/>
     <routinesParameter id="_ayyqMP_MEeeuIL132lN64w" name="ADSStringUtils"/>
   </parameters>
-  <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="288" posY="128">
+  <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="384" posY="96">
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_1" show="false"/>
-    <elementParameter field="CHECK" name="USE_DYNAMIC_JOB" value="false"/>
-    <elementParameter field="TEXT" name="CONTEXT_JOB" value="" show="false"/>
-    <elementParameter field="PROCESS_TYPE" name="PROCESS" value="ADSLoad_SubJob_SendEmail"/>
-    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_CONTEXT" value="Default"/>
-    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_PROCESS" value="_1_nMgPvJEee6ltYJbGhRvw"/>
-    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_VERSION" value="Latest"/>
-    <elementParameter field="TEXT" name="CONTEXT_NAME" value="Default" show="false"/>
-    <elementParameter field="CHECK" name="USE_INDEPENDENT_PROCESS" value="false"/>
-    <elementParameter field="CHECK" name="DIE_ON_CHILD_ERROR" value="true"/>
-    <elementParameter field="CHECK" name="TRANSMIT_WHOLE_CONTEXT" value="false"/>
-    <elementParameter field="TABLE" name="CONTEXTPARAMS">
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="SUCCESS_LOG"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.SUCCESS_LOG"/>
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="FAILURE_LOG"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.FAILURE_LOG"/>
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="logEmail"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.logEmail"/>
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_NAME"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.JOB_NAME"/>
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="SRC_LOAD_SHEET"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.SRC_LOAD_SHEET"/>
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_TO"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_TO"/>
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_FROM"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_FROM"/>
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_SMTP_NAME"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_SMTP_NAME"/>
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_SMTP_PORT"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_SMTP_PORT"/>
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_AUTHENTICATION_USER"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_AUTHENTICATION_USER"/>
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="ADS_EMAIL_AUTHENTICATION_PASSWORD"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ADS_EMAIL_AUTHENTICATION_PASSWORD"/>
-    </elementParameter>
-    <elementParameter field="CHECK" name="PROPAGATE_CHILD_RESULT" value="false"/>
-    <elementParameter field="CHECK" name="PRINT_PARAMETER" value="false"/>
-    <elementParameter field="CHECK" name="TRANSMIT_ORIGINAL_CONTEXT" value="true" show="false"/>
-    <elementParameter field="TEXT" name="LABEL" value="SendMail"/>
-    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
-    <metadata connector="FLOW" name="tRunJob_1"/>
-  </node>
-  <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="480" posY="128">
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_2" show="false"/>
-    <elementParameter field="CHECK" name="ACTIVATE" value="false"/>
-    <elementParameter field="CHECK" name="USE_DYNAMIC_JOB" value="false"/>
-    <elementParameter field="TEXT" name="CONTEXT_JOB" value="" show="false"/>
-    <elementParameter field="PROCESS_TYPE" name="PROCESS" value="DeleteTemporaryFiles"/>
-    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_CONTEXT" value="Default"/>
-    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_PROCESS" value="_sb9OoBK3EeiGnZNriZGEXw"/>
-    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_VERSION" value="Latest"/>
-    <elementParameter field="TEXT" name="CONTEXT_NAME" value="Default" show="false"/>
-    <elementParameter field="CHECK" name="USE_INDEPENDENT_PROCESS" value="false"/>
-    <elementParameter field="CHECK" name="DIE_ON_CHILD_ERROR" value="true"/>
-    <elementParameter field="CHECK" name="TRANSMIT_WHOLE_CONTEXT" value="false"/>
-    <elementParameter field="TABLE" name="CONTEXTPARAMS">
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="DELETE_LOG_DIR"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.DELETE_LOG_DIR"/>
-      <elementValue elementRef="PARAM_NAME_COLUMN" value="DELETE_FILE_MASK"/>
-      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.DELETE_FILE_MASK"/>
-    </elementParameter>
-    <elementParameter field="CHECK" name="PROPAGATE_CHILD_RESULT" value="false"/>
-    <elementParameter field="CHECK" name="PRINT_PARAMETER" value="false"/>
-    <elementParameter field="CHECK" name="TRANSMIT_ORIGINAL_CONTEXT" value="true" show="false"/>
-    <elementParameter field="TEXT" name="LABEL" value="__PROCESS__"/>
-    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
-    <metadata connector="FLOW" name="tRunJob_2"/>
-  </node>
-  <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="672" posY="128">
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_3" show="false"/>
     <elementParameter field="CHECK" name="USE_DYNAMIC_JOB" value="false"/>
     <elementParameter field="TEXT" name="CONTEXT_JOB" value="" show="false"/>
     <elementParameter field="PROCESS_TYPE" name="PROCESS" value="logJobDetails"/>
@@ -218,23 +154,49 @@
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.OAUTH_BEARER_TOKEN"/>
       <elementValue elementRef="PARAM_NAME_COLUMN" value="REST_URL_BASE"/>
       <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.REST_URL_BASE"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="JOB_ERROR_MESSAGE"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.JOB_ERROR_MESSAGE"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="ERROR_LOG"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.ERROR_LOG"/>
     </elementParameter>
     <elementParameter field="CHECK" name="PROPAGATE_CHILD_RESULT" value="false"/>
     <elementParameter field="CHECK" name="PRINT_PARAMETER" value="false"/>
     <elementParameter field="CHECK" name="TRANSMIT_ORIGINAL_CONTEXT" value="true" show="false"/>
     <elementParameter field="TEXT" name="LABEL" value="LogPostJobDetails"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
-    <metadata connector="FLOW" name="tRunJob_3">
+    <metadata connector="FLOW" name="tRunJob_1">
       <column comment="" key="false" length="-1" name="resourceId" nullable="true" pattern="" precision="-1" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
     </metadata>
   </node>
+  <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="704" posY="96">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_2" show="false"/>
+    <elementParameter field="CHECK" name="USE_DYNAMIC_JOB" value="false"/>
+    <elementParameter field="TEXT" name="CONTEXT_JOB" value="" show="false"/>
+    <elementParameter field="PROCESS_TYPE" name="PROCESS" value="DeleteTemporaryFiles"/>
+    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_CONTEXT" value="Default"/>
+    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_PROCESS" value="_sb9OoBK3EeiGnZNriZGEXw"/>
+    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_VERSION" value="Latest"/>
+    <elementParameter field="TEXT" name="CONTEXT_NAME" value="Default" show="false"/>
+    <elementParameter field="CHECK" name="USE_INDEPENDENT_PROCESS" value="false"/>
+    <elementParameter field="CHECK" name="DIE_ON_CHILD_ERROR" value="true"/>
+    <elementParameter field="CHECK" name="TRANSMIT_WHOLE_CONTEXT" value="false"/>
+    <elementParameter field="TABLE" name="CONTEXTPARAMS">
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="DELETE_LOG_DIR"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.DELETE_LOG_DIR"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="DELETE_FILE_MASK"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.DELETE_FILE_MASK"/>
+      <elementValue elementRef="PARAM_NAME_COLUMN" value="FLAG_DELETE_LOGS"/>
+      <elementValue elementRef="PARAM_VALUE_COLUMN" value="context.FLAG_DELETE_LOGS"/>
+    </elementParameter>
+    <elementParameter field="CHECK" name="PROPAGATE_CHILD_RESULT" value="false"/>
+    <elementParameter field="CHECK" name="PRINT_PARAMETER" value="false"/>
+    <elementParameter field="CHECK" name="TRANSMIT_ORIGINAL_CONTEXT" value="true" show="false"/>
+    <elementParameter field="TEXT" name="LABEL" value="__PROCESS__"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
+    <metadata connector="FLOW" name="tRunJob_2"/>
+  </node>
   <connection connectorName="SUBJOB_OK" label="OnSubjobOk" lineStyle="1" metaname="tRunJob_1" offsetLabelX="0" offsetLabelY="0" source="tRunJob_1" target="tRunJob_2">
-    <elementParameter field="CHECK" name="ACTIVATE" value="false" show="false"/>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="OnSubjobOk1" show="false"/>
-  </connection>
-  <connection connectorName="SUBJOB_OK" label="OnSubjobOk" lineStyle="1" metaname="tRunJob_2" offsetLabelX="0" offsetLabelY="0" source="tRunJob_2" target="tRunJob_3">
-    <elementParameter field="CHECK" name="ACTIVATE" value="false" show="false"/>
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="OnSubjobOk2" show="false"/>
   </connection>
   <subjob>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_1" show="false"/>
@@ -243,11 +205,6 @@
   </subjob>
   <subjob>
     <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_2" show="false"/>
-    <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="92;131;150" show="false"/>
-    <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
-  </subjob>
-  <subjob>
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_3" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="92;131;150" show="false"/>
     <elementParameter field="COLOR" name="SUBJOB_COLOR" value="207;226;236"/>
   </subjob>

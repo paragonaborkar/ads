@@ -6,6 +6,9 @@ import { AdsErrorService } from '../../../common/ads-error.service';
 import { ControllerWorkPackageService } from '../controller-work-package.service';
 import { SaveMessageTimerComponent } from '../../../common/save-message-timer/save-message-timer.component';
 
+import { NoWhitespaceDirective } from '../../../common/validators/no-whitespace.directive';
+
+
 @Component({
   selector: 'app-controller-work-package-create',
   templateUrl: './controller-work-package-create.component.html',

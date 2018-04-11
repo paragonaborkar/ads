@@ -29,7 +29,7 @@ export class AppPropsComponent implements OnInit {
   @ViewChild('stringEditTmpl') stringEditTmpl: TemplateRef<any>;
   @ViewChild(SaveMessageTimerComponent) saveTimerChild: SaveMessageTimerComponent;
 
-  public pageName = "SysPropListing";
+  public pageName = "SystemProperties";
   configGroups: any[] = [];
   page = new Page();
 
