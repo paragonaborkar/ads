@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { SortableModule } from 'ngx-bootstrap/sortable';
 import { ApplicationConfigService } from '../application-config.service';
-import { PropertyPreferenceConstants } from './prop-preferences-const';
 import { FriendlyLabelPipePipe } from '../../pipes/friendly-label-pipe.pipe';
 
 
@@ -39,10 +38,10 @@ export class PropPreferencesComponent implements OnInit {
       });
   }
 
-  getDisplayNameForPreferencePageName(pageName: String): String {
-    console.log(PropertyPreferenceConstants.PAGES.get(pageName));
-    return PropertyPreferenceConstants.PAGES.get(pageName);
-  }
+  // getDisplayNameForPreferencePageName(pageName: String): String {
+  //   console.log(PropertyPreferenceConstants.PAGES.get(pageName));
+  //   return PropertyPreferenceConstants.PAGES.get(pageName);
+  // }
 
   getPreferenceDetails(selectedPreferenceDetailsResource: String) {
 

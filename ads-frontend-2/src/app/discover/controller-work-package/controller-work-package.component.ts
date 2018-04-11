@@ -15,7 +15,7 @@ export class ControllerWorkPackageComponent implements OnInit {
   columnTemplates = {};
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
 
-  public pageName = "ControllerTargetListing";
+  public pageName = "ControllerWorkPackages";
   errorMessage = "";
 
   controllerProcessed = false;
