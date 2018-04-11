@@ -6,6 +6,7 @@
 		<artifactId>netapp-ads-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<!--<relativePath />  lookup parent from repository -->
+		<relativePath>../netapp-ads-parent</relativePath>
 	</parent>
 
   	<artifactId>netapp-ads-integration</artifactId>
