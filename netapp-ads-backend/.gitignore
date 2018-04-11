@@ -12,7 +12,7 @@
 **/Servers/
 **/RemoteSystemsTempFiles/
 **/.factorypath
-**/public/
+**/public/**
 
 # ---- SonarQube
 .sonar
