@@ -7,13 +7,8 @@ import { Observable } from 'rxjs/Observable';
 export class Globals implements OnInit {
 	appModulesAvailable: any = {};
 
-<<<<<<< HEAD
 	// apiUrl: string="http://localhost:8080";
-	//apiUrl="/api";
-	apiUrl="";
-=======
 	apiUrl="/api";
->>>>>>> 7af948a0a134b536b802c3286a2ccc12da99c282
 
 	askAQuestionUrl = "https://support.netapp.com?adsRequest=question";
 	reportAProblemUrl = "https://support.netapp.com?adsRequest=problem";
