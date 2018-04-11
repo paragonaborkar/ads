@@ -1,0 +1,21 @@
+**/*.log
+**/*.class
+**/.metadata/
+**/.recommenders/
+**/target/
+**/.apt_generated/
+**/.idea/
+**/.settings/
+**/.classpath
+**/.springBeans
+**/.project
+**/Servers/
+**/RemoteSystemsTempFiles/
+**/.factorypath
+**/public/
+
+# ---- SonarQube
+.sonar
+.scannerwork
+
+**/talend/.Java/target/

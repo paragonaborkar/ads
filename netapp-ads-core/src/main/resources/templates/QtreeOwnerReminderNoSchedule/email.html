@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>ADS - Qtree MultiOwner</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <style type="text/css">
+        /* CLIENT-SPECIFIC STYLES */
+
+        body,
+        table,
+        td,
+        a {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        /* Prevent WebKit and Windows mobile changing default text sizes */
+
+        table,
+        td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        /* Remove spacing between tables in Outlook 2007 and up */
+
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+
+        /* Allow smoother rendering of resized image in Internet Explorer */
+
+        /* RESET STYLES */
+
+        img {
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        table {
+            border-collapse: collapse !important;
+        }
+
+        body {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+        }
+
+        /* iOS BLUE LINKS */
+
+        a[x-apple-data-detectors] {
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+
+        /* MOBILE STYLES */
+
+        @media screen and (max-width: 525px) {
+            /* ALLOWS FOR FLUID TABLES */
+            .wrapper {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            /* ADJUSTS LAYOUT OF LOGO IMAGE */
+            .logo img {
+                margin: 0 auto !important;
+            }
+            /* USE THESE CLASSES TO HIDE CONTENT ON MOBILE */
+            .mobile-hide {
+                display: none !important;
+            }
+            .img-max {
+                max-width: 100% !important;
+                width: 100% !important;
+                height: auto !important;
+            }
+            /* FULL-WIDTH TABLES */
+            .responsive-table {
+                width: 100% !important;
+            }
+            /* UTILITY CLASSES FOR ADJUSTING PADDING ON MOBILE */
+            .padding {
+                padding: 10px 5% 15px 5% !important;
+            }
+            .padding-meta {
+                padding: 30px 5% 0px 5% !important;
+                text-align: center;
+            }
+            .no-padding {
+                padding: 0 !important;
+            }
+            .section-padding {
+                padding: 50px 15px 50px 15px !important;
+            }
+            /* ADJUST BUTTONS ON MOBILE */
+            .mobile-button-container {
+                margin: 0 auto;
+                width: 100% !important;
+            }
+            .mobile-button {
+                padding: 15px !important;
+                border: 0 !important;
+                font-size: 16px !important;
+                display: block !important;
+            }
+        }
+
+        /* ANDROID CENTER FIX */
+
+        div[style*="margin: 16px 0;"] {
+            margin: 0 !important;
+        }
+    </style>
+</head>
+
+<body style="margin: 0px !important; padding: 0px !important;"   th:inline="text">
+    <!-- HIDDEN PREHEADER TEXT -->
+    <div style="display: none; font-size: 1px; color: rgb(254, 254, 254); line-height: 1px; font-family: Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
+        Do you own this Qtree?
+    </div>
+    <!-- HEADER -->
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+        <tbody>
+            <tr>
+
+                <td bgcolor="#0067c5" align="center">
+                    <!--[if (gte mso 9)|(IE)]>
+            <table align="center" border="0" cellspacing="0" cellpadding="0" width="500">
+            <tr>
+            <td align="center" valign="top" width="500">
+            <![endif]-->
+
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px;" class="wrapper">
+
+                        <tbody>
+                            <tr>
+                                <td align="center" valign="top" style="padding: 15px 0px;" class="logo">
+                                    <a th:href="@{${logoFullUrl}}" target="_blank">
+                                        <img alt="Logo" src="cid:imageLogo1" width="165" height="29" style="display: block; font-family: Helvetica, Arial, sans-serif; color: rgb(255, 255, 255); font-size: 16px;"
+                                            border="0" />
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+                </td>
+            </tr>
+
+            <tr>
+
+                <td bgcolor="#ffffff" align="center" style="padding: 25px 15px;" class="section-padding">
+                    <!--[if (gte mso 9)|(IE)]>
+            <table align="center" border="0" cellspacing="0" cellpadding="0" width="500">
+            <tr>
+            <td align="center" valign="top" width="500">
+            <![endif]-->
+
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px;" class="responsive-table">
+
+                        <tbody>
+                            <tr>
+
+                                <td>
+                                    <!-- HERO IMAGE -->
+
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                                        <tbody>
+
+
+                                            <td>
+                                                <!-- COPY -->
+
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                                                    <tbody>
+                                                        <tr>
+
+                                                            <td align="center" style="font-size: 25px; font-family: Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); padding-top: 30px;"
+                                                                class="padding">Qtree Ownership Request - Reminder</td>
+                                                        </tr>
+
+                                                        <tr>
+
+                                                            <td align="left" style="padding: 20px 0px 0px; font-size: 16px; line-height: 25px; font-family: Helvetica, Arial, sans-serif; color: rgb(102, 102, 102);"
+                                                                class="padding">
+
+                                                                Hello [[${firstName}]],
+                                                                <br/>
+                                                                <br>You are receiving this message as you have been identified
+                                                                as a possible Application Owner for the Application(s) using
+                                                                the Qtrees that are connected to NAS storage that is scheduled
+                                                                for migration or decommissioning. These Qtrees indicate you
+                                                                might be the owner and we will need you to indicate that
+                                                                you are the owner or that you are not the owner. Resolution
+                                                                will allow us to coordinate with the appropriate person in
+                                                                establishing an outage window between all the applications
+                                                                connected to the volume(s).</br>
+
+
+
+                                                                <br/>
+                                                                <br>The link below will take you to the application to identify
+                                                                the disposition for your Qtrees.</br>
+                                                                <br/>
+
+                                                                <br>Please complete this ASAP.</br>
+
+
+                                                                <!-- THE TABLE IS THE BUTTON! -->
+                                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                                                                    <tbody>
+                                                                        <tr>
+
+                                                                            <td align="center" style="padding-top: 25px;" class="padding">
+
+                                                                                <table border="0" cellspacing="0" cellpadding="0" class="mobile-button-container">
+
+                                                                                    <tbody>
+                                                                                        <tr>
+
+                                                                                            <td align="center" style="border-radius: 3px;" bgcolor="#0067c5">
+                                                                                                <a th:href="@{${adsQtreeOwnerFullUrl}}" target="_blank" style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: rgb(255, 255, 255); text-decoration: none; border-radius: 3px; padding: 15px 25px; border: 1px solid rgb(37, 111, 156); display: inline-block;"
+                                                                                                    class="mobile-button">Respond Now →</a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+
+                                                                <br/>
+                                                                <br>You will need to go to this link to provide the information
+                                                                or to indicate you are not the owner of the volume.</br>
+
+                                                                <br/>
+                                                                <br>You will be asked to confirm ownership or provide a reference
+                                                                to the owner if you know them. Please action this within
+                                                                3 business days. Detailed instructions are provided on the
+                                                                portal sign in page and help is available on the portal page.
+                                                                You will be asked to confirm ownership and schedule the migration.</br>
+
+                                                                <br/>
+                                                                <br>If you have questions, please contact “~~THIS GROUP~~”. We
+                                                                will be happy to confirm this email and answer your questions.
+                                                                If you would like to speak to a migration specialist on the
+                                                                Data Lifecycle Management team, please check the Call Me
+                                                                box.
+                                                                </br>
+                                                                <br/>
+                                                                <br>Thank you for your assistance and prompt attention,</br>
+
+                                                                <br>Migration Planning and Execution Team</br>
+
+                                                                <br/>
+                                                                <br>Regards,</br>
+                                                                <br>Your Data Lifecycle Management Team</br>
+
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                            </tr>
+                            </tbody>
+                            </table>
+                            </td>
+            </tr>
+            </tbody>
+            </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+            </td>
+            </tr>
+
+            <tr>
+
+                <td bgcolor="#F5F7FA" align="center" style="padding: 70px 15px;" class="section-padding">
+                    <!--[if (gte mso 9)|(IE)]>
+            <table align="center" border="0" cellspacing="0" cellpadding="0" width="500">
+            <tr>
+            <td align="center" valign="top" width="500">
+            <![endif]-->
+
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px;" class="responsive-table">
+
+                        <tbody>
+                            <tr>
+
+                                <td>
+                                    <!-- TITLE SECTION AND COPY -->
+
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                                        <tbody>
+                                            <tr>
+                                                <td align="center" style="font-size: 25px; font-family: Helvetica, Arial, sans-serif; color: rgb(51, 51, 51);" class="padding">View All Tasks</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td align="center" style="padding: 20px 0px; font-size: 16px; line-height: 25px; font-family: Helvetica, Arial, sans-serif; color: rgb(102, 102, 102);"
+                                                    class="padding">Want to see all pending Qtree requests?</td>
+                                            </tr>
+
+                                            <tr>
+
+                                                <td align="center" style="padding: 0px 0px; font-size: 16px; line-height: 25px; font-family: Helvetica, Arial, sans-serif; color: rgb(102, 102, 102);"
+                                                    class="padding">
+
+                                                    <!-- THE TABLE IS THE BUTTON! -->
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+                                                        <tbody>
+                                                            <tr>
+
+                                                                <td align="center" style="padding-top: 25px;" class="padding">
+
+                                                                    <table border="0" cellspacing="0" cellpadding="0" class="mobile-button-container">
+
+                                                                        <tbody>
+                                                                            <tr>
+
+                                                                                <td align="center" style="border-radius: 3px;" bgcolor="#0067c5">
+                                                                                    <a th:href="@{${viewAllTasksFullUrl}}" target="_blank" style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: rgb(255, 255, 255); text-decoration: none; border-radius: 3px; padding: 15px 25px; border: 1px solid rgb(37, 111, 156); display: inline-block;"
+                                                                                        class="mobile-button">View All Now →</a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+                </td>
+            </tr>
+            <tr>
+
+                <td bgcolor="#ffffff" align="center" style="padding: 20px 0px;">
+                    <!--[if (gte mso 9)|(IE)]>
+            <table align="center" border="0" cellspacing="0" cellpadding="0" width="500">
+            <tr>
+            <td align="center" valign="top" width="500">
+            <![endif]-->
+                    <!-- UNSUBSCRIBE COPY -->
+
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width: 500px;" class="responsive-table">
+
+                        <tbody>
+                            <tr>
+
+                                <td align="center" style="font-size: 12px; line-height: 18px; font-family: Helvetica, Arial, sans-serif; color: rgb(102, 102, 102);">
+                                    1234 Main Street, Anywhere, NC 01234, USA
+                                    <br />
+                                    <a th:href="@{${adsSupportFullUrl}}" target="_blank" style="color: rgb(102, 102, 102); text-decoration: none;">Questions?</a>
+                                    <span style="font-family: Arial, sans-serif; font-size: 12px; color: rgb(68, 68, 68);">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                                    <a th:href="@{${viewAllTasksFullUrl}}" target="_blank" style="color: rgb(102, 102, 102); text-decoration: none;">View your ADS Task List</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

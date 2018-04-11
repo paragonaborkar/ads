@@ -1,23 +1,20 @@
-*.log
-*.class
-.metadata
-**/.recommenders
-**/.settings
-**/ads-backend/target
-**/ads-backend/.apt_generated
-**/ads-backend/.idea
-**/ads-backend/.settings
-**/ads-backend/.classpath
-Servers/
-RemoteSystemsTempFiles/
-ads-backend/.factorypath
-package-lock.json
-**/target/classes/**
-MANIFEST.MF
+**/*.log
+**/*.class
+**/.metadata/
+**/.recommenders/
+**/target/
+**/.apt_generated/
+**/.idea/
+**/.settings/
+**/.classpath
+**/.springBeans
+**/.project
+**/Servers/
+**/RemoteSystemsTempFiles/
+**/.factorypath
 
 # ---- SonarQube
 .sonar
 .scannerwork
 
-talend/.Java/target
-.gitignore
+**/talend/.Java/target/
