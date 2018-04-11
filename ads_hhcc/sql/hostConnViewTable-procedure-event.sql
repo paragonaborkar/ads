@@ -1,5 +1,6 @@
 USE dwh_inventory;
 
+DROP TABLE IF EXISTS dwh_inventory.wcr_cifs_host_conn_view;
 CREATE TABLE IF NOT EXISTS dwh_inventory.wcr_cifs_host_conn_view (
 	`clusterName` VARCHAR(100) DEFAULT 'N/A',
 	`clusterId` INT(11),
@@ -31,6 +32,7 @@ CREATE TABLE IF NOT EXISTS dwh_inventory.wcr_cifs_host_conn_view (
 	INDEX idx_hostName (hostName)
 ) ENGINE=INNODB DEFAULT CHARSET=UTF8;
 
+DROP TABLE IF EXISTS dwh_inventory.wcr_host_conn_view;
 CREATE TABLE IF NOT EXISTS dwh_inventory.wcr_host_conn_view (
 	`clusterName` VARCHAR(100) DEFAULT 'N/A',
 	`clusterId` INT(11),
@@ -64,7 +66,8 @@ CREATE TABLE IF NOT EXISTS dwh_inventory.wcr_host_conn_view (
 
 DELIMITER $$
 
-CREATE PROCEDURE cifshostConnectionTable ()
+DROP PROCEDURE IF EXISTS cifshostConnectionTable;
+CREATE  PROCEDURE cifshostConnectionTable ()
 BEGIN
 
 INSERT INTO dwh_inventory.wcr_cifs_host_conn_view 
@@ -94,7 +97,7 @@ INSERT INTO dwh_inventory.wcr_cifs_host_conn_view
 		'',
 		wcr_cifs_host_conn.hostName,
 		wcr_cifs_host_conn.ip,
-		'' ,
+		0,
 		wcr_cifs_host_conn.windowsUser,
 		wcr_cifs_host_conn.firstSeen,
 		wcr_cifs_host_conn.lastSeen,
@@ -134,6 +137,7 @@ ON DUPLICATE KEY UPDATE
 ;
 END $$
 
+DROP PROCEDURE IF EXISTS hostConnectionTable;
 CREATE PROCEDURE hostConnectionTable ()
 BEGIN
 
@@ -173,8 +177,8 @@ INSERT INTO dwh_inventory.wcr_host_conn_view
         END,
         nfs_host_conn.hostip,
         CASE nfs_host_conn.hostId
-            WHEN -1 THEN 'Host ID not identified'
-            WHEN 0 THEN 'Host ID not identified'
+            WHEN -1 THEN 0
+            WHEN 0 THEN 0
             ELSE host.id
         END,
         '' ,
@@ -250,7 +254,7 @@ INSERT INTO dwh_inventory.wcr_host_conn_view
     '',
     wcr_cifs_host_conn.hostName,
     wcr_cifs_host_conn.ip,
-    '' ,
+    0,
     wcr_cifs_host_conn.windowsUser,
     wcr_cifs_host_conn.firstSeen,
     wcr_cifs_host_conn.lastSeen,
