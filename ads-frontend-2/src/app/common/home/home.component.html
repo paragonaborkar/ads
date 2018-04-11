@@ -4,7 +4,7 @@
   </div>
   <div class="col-xl-12 col-md-10 col-sm-12">
     <div class="card-deck">
-      <div class="card card-with-link" routerLink="/discover/owner" *ngIf="modulesAvailable.connections">
+      <div class="card card-with-link" routerLink="/connections/dashboard" *ngIf="modulesAvailable.connections">
         <div class="card-header text-white bg-warning">
           <i class="fa fa-share-alt fa-lg  fa-fw" aria-hidden="true"></i>&nbsp; Connections </div>
         <div class="card-body">
@@ -16,10 +16,11 @@
           </ul>
         </div>
         <div class="card-footer">
-          <a class="btn btn-warning pull-right" href="#" role="button">View Connections Dashboard »</a>
+          <a class="btn btn-warning pull-right" routerLink="/connections/dashboard" role="button">View Connections Dashboard »</a>
         </div>
       </div>
-      <div class="card card-with-link" routerLink="/discover/owner"  *ngIf="modulesAvailable.discover">
+
+      <div class="card card-with-link" routerLink="/discover/dashboard"  *ngIf="modulesAvailable.discover">
 
         <div class="card-header text-white bg-success ">
           <i class="fa fa-search fa-lg  fa-fw" aria-hidden="true"></i>&nbsp; Discover </div>
@@ -33,10 +34,10 @@
           </ul>
         </div>
         <div class="card-footer">
-          <a class="btn btn-success  pull-right" href="#" role="button">View Discover Dashboard »</a>
+          <a class="btn btn-success  pull-right" routerLink="/discover/dashboard"  role="button">View Discover Dashboard »</a>
         </div>
       </div>
-      <div class="card card-with-link" routerLink="/discover/owner"  *ngIf="modulesAvailable.reports">
+      <div class="card card-with-link"   *ngIf="modulesAvailable.reports">
         <div class="card-header text-white bg-success ">
           <i class="fa fa-line-chart fa-lg  fa-fw" aria-hidden="true"></i>&nbsp; Metrics</div>
         <div class="card-body">

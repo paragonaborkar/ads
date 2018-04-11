@@ -91,6 +91,8 @@ import { OpOverrideConfirmComponent } from './admin/operational-override/op-over
 import { OwnerHomeComponent } from './common/owner-home/owner-home.component';
 import { NativeUserChangePwComponent } from './admin/admin-native-user/native-user-change-pw/native-user-change-pw.component';
 import { NoWhitespaceDirective } from './common/validators/no-whitespace.directive';
+import { ConnectionDashboardComponent } from './connections/connection-dashboard/connection-dashboard.component';
+import { DiscoverDashboardComponent } from './discover/discover-dashboard/discover-dashboard.component';
 
 
 @NgModule({
@@ -130,6 +132,7 @@ import { NoWhitespaceDirective } from './common/validators/no-whitespace.directi
     // Host Connections
     ConnectionsManualFunctionsComponent,
     ReportListingConnComponent,
+    ConnectionDashboardComponent,
 
     // Discovery
     DiscoverManualFunctionsComponent,
@@ -145,7 +148,8 @@ import { NoWhitespaceDirective } from './common/validators/no-whitespace.directi
     ControllerReleaseDeleteComponent,
     OperationalOverrideComponent,
     OpOverrideConfirmComponent,
-    OwnerHomeComponent
+    OwnerHomeComponent,
+    DiscoverDashboardComponent
 
   ],
   imports: [
