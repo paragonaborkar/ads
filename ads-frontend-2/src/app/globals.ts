@@ -8,7 +8,8 @@ export class Globals implements OnInit {
 	appModulesAvailable: any = {};
 
 	// apiUrl: string="http://localhost:8080";
-	apiUrl="/api";
+	//apiUrl="/api";
+	apiUrl="";
 
 	askAQuestionUrl = "https://support.netapp.com?adsRequest=question";
 	reportAProblemUrl = "https://support.netapp.com?adsRequest=problem";
