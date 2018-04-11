@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.120' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of system-node-get [Execution Time: 140 ms] -->
+	<results status='passed'>
+		<attributes>
+			<node-details-info>
+				<cpu-busytime>1548</cpu-busytime>
+				<env-failed-fan-count>0</env-failed-fan-count>
+				<env-failed-fan-message>There are no failed fans.</env-failed-fan-message>
+				<env-failed-power-supply-count>0</env-failed-power-supply-count>
+				<env-failed-power-supply-message>There are no failed power supplies.</env-failed-power-supply-message>
+				<env-over-temperature>false</env-over-temperature>
+				<is-all-flash-optimized>false</is-all-flash-optimized>
+				<is-diff-svcs>false</is-diff-svcs>
+				<is-epsilon-node>false</is-epsilon-node>
+				<is-node-cluster-eligible>true</is-node-cluster-eligible>
+				<is-node-healthy>true</is-node-healthy>
+				<maximum-aggregate-size>879609302220800</maximum-aggregate-size>
+				<maximum-number-of-volumes>500</maximum-number-of-volumes>
+				<maximum-volume-size>17592186044416</maximum-volume-size>
+				<node>cowboy-02</node>
+				<node-location>Home Lab</node-location>
+				<node-model>SIMBOX</node-model>
+				<node-nvram-id>4082368511</node-nvram-id>
+				<node-owner/>
+				<node-serial-number>4082368-51-1</node-serial-number>
+				<node-storage-configuration>unknown</node-storage-configuration>
+				<node-system-id>4082368511</node-system-id>
+				<node-uptime>36051</node-uptime>
+				<node-uuid>79e81736-0f7e-11e8-b761-000c2938af10</node-uuid>
+				<node-vendor>NetApp</node-vendor>
+				<nvram-battery-status>battery_ok</nvram-battery-status>
+				<product-version>NetApp Release 9.2: Mon Jun 19 22:20:04 UTC 2017</product-version>
+			</node-details-info>
+		</attributes>
+	</results>
+</netapp>

@@ -18,7 +18,7 @@ rule "Discovery - Aged Access Rule" salience 20
 lock-on-active
 when
 	$qtreeDispositionRepository: QtreeDispositionRepository();
-	$qtree: Qtree(nasVolume.volumeName not contains("vol0"), ((int) ChronoUnit.MONTHS.between(DateUtils.asLocalDateTime(lastAccessed).toLocalDate(), LocalDateTime.now().toLocalDate())) >= 3)
+	$qtree: Qtree( (nasVolume.volumeName not contains("vol0")) && lastAccessed != null && ((int) ChronoUnit.MONTHS.between(DateUtils.asLocalDateTime(lastAccessed).toLocalDate(), LocalDateTime.now().toLocalDate())) >= 3)
 then
 	logger.debug("Discovery - Aged Access Rule: Qtree: {}", $qtree.getId());
 	
