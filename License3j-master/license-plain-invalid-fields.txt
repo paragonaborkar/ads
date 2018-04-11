@@ -1,0 +1,9 @@
+edition=commercial
+invalid_issued_date=2019.01.17
+invalid_valid_until=2200.12.31
+invalid_module_host_connections=true
+module_discover=true
+module_reports=false
+invalid_module_schedule=false
+module_planning=false
+module_execute=false

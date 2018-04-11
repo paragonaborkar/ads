@@ -1,0 +1,6 @@
+language: java
+install: mvn -X -Dgpg.skip clean install
+jdk:
+ - oraclejdk9
+
+sudo: false # faster builds
