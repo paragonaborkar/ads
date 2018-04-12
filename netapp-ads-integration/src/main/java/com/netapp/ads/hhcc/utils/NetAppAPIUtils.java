@@ -54,19 +54,19 @@ public class NetAppAPIUtils {
 	
 	private static final Logger log = LoggerFactory.getLogger(NetAppAPIUtils.class);
 	
-	@Value("${oci.server.name}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.name').getPropertyValue()}")
 	String ociServerName;
 	
-	@Value("${oci.server.data_model}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.data_model').getPropertyValue()}")
 	String ociServerDataModel;
 	
-	@Value("${oci.server.port}")
-	Integer ociServerPort;
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.port').getPropertyValue()}")
+	int ociServerPort;
 	
-	@Value("${oci.server.user}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.user').getPropertyValue()}")
 	String ociServerUser;
 	
-	@Value("${oci.server.password}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.password').getPropertyValue()}")
 	String ociServerPassword;
 
 	NaServer naServerLocal = null;
