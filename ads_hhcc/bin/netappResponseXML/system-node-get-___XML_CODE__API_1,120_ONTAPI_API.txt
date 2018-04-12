@@ -1,0 +1,79 @@
+system-node-get  API 1.120
+
+
+CODE ==============================================================
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<netapp  xmlns="http://www.netapp.com/filer/admin" version="1.31">
+  <system-node-get>
+    <desired-attributes>
+      <node-details-info>
+        <cpu-busytime></cpu-busytime>
+        <cpu-firmware-release></cpu-firmware-release>
+        <env-failed-fan-count></env-failed-fan-count>
+        <env-failed-fan-message></env-failed-fan-message>
+        <env-failed-power-supply-count></env-failed-power-supply-count>
+        <env-failed-power-supply-message></env-failed-power-supply-message>
+        <env-over-temperature></env-over-temperature>
+        <is-all-flash-optimized></is-all-flash-optimized>
+        <is-diff-svcs></is-diff-svcs>
+        <is-epsilon-node></is-epsilon-node>
+        <is-node-cluster-eligible></is-node-cluster-eligible>
+        <is-node-healthy></is-node-healthy>
+        <maximum-aggregate-size></maximum-aggregate-size>
+        <maximum-number-of-volumes></maximum-number-of-volumes>
+        <maximum-volume-size></maximum-volume-size>
+        <node></node>
+        <node-asset-tag></node-asset-tag>
+        <node-location></node-location>
+        <node-model></node-model>
+        <node-nvram-id></node-nvram-id>
+        <node-owner></node-owner>
+        <node-serial-number></node-serial-number>
+        <node-storage-configuration></node-storage-configuration>
+        <node-system-id></node-system-id>
+        <node-uptime></node-uptime>
+        <node-uuid></node-uuid>
+        <node-vendor></node-vendor>
+        <nvram-battery-status></nvram-battery-status>
+        <product-version></product-version>
+        <vm-system-disks>
+          <vm-bootdisk-area-name></vm-bootdisk-area-name>
+          <vm-bootdisk-file-name></vm-bootdisk-file-name>
+          <vm-coredisk-area-name></vm-coredisk-area-name>
+          <vm-coredisk-file-name></vm-coredisk-file-name>
+          <vm-logdisk-area-name></vm-logdisk-area-name>
+          <vm-logdisk-file-name></vm-logdisk-file-name>
+        </vm-system-disks>
+        <vmhost-info>
+          <vm-custom-max-capacity></vm-custom-max-capacity>
+          <vm-uuid></vm-uuid>
+          <vmhost-bios-release-date></vmhost-bios-release-date>
+          <vmhost-bios-version></vmhost-bios-version>
+          <vmhost-boot-time></vmhost-boot-time>
+          <vmhost-cpu-clock-rate></vmhost-cpu-clock-rate>
+          <vmhost-cpu-core-count></vmhost-cpu-core-count>
+          <vmhost-cpu-socket-count></vmhost-cpu-socket-count>
+          <vmhost-cpu-thread-count></vmhost-cpu-thread-count>
+          <vmhost-error></vmhost-error>
+          <vmhost-gateway></vmhost-gateway>
+          <vmhost-hardware-vendor></vmhost-hardware-vendor>
+          <vmhost-hypervisor></vmhost-hypervisor>
+          <vmhost-ip-address></vmhost-ip-address>
+          <vmhost-memory></vmhost-memory>
+          <vmhost-model></vmhost-model>
+          <vmhost-name></vmhost-name>
+          <vmhost-netmask></vmhost-netmask>
+          <vmhost-processor-id></vmhost-processor-id>
+          <vmhost-processor-type></vmhost-processor-type>
+          <vmhost-software-vendor></vmhost-software-vendor>
+          <vmhost-uuid></vmhost-uuid>
+        </vmhost-info>
+      </node-details-info>
+    </desired-attributes>
+    <node>cowboy-02</node>
+  </system-node-get>
+</netapp>
+
+

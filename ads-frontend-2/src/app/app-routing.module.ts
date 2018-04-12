@@ -54,7 +54,7 @@ const routes: Routes = [
   
   { path: 'discover/controller-release',  component: ControllerReleaseComponent, canActivate: [AuthGuard] },
   { path: 'discover/report-listing',  component: ReportListingDisComponent, canActivate: [AuthGuard] },
-  { path: 'discover/controller-target',  component: ControllerWorkPackageComponent, canActivate: [AuthGuard] },
+  { path: 'discover/controller-workpackage',  component: ControllerWorkPackageComponent, canActivate: [AuthGuard] },
   { path: 'discover/manual-functions',  component: DiscoverManualFunctionsComponent, canActivate: [AuthGuard] },
   { path: 'discover/dashboard',  component: DiscoverDashboardComponent, canActivate: [AuthGuard] },
 

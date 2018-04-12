@@ -1,11 +1,12 @@
 
-INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (2, 'UserListing', 'USER', 0, 1);
-INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (3, 'UserListing', 'SYSTEM', 0, 0);
-INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (4, 'SysPropListing', 'SYSTEM', '0', 0);
+
+INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (2, 'ManageAdministrativeUsers', 'USER', 0, 1);
+INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (3, 'ManageAdministrativeUsers', 'SYSTEM', 0, 0);
+INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (4, 'SystemProperties', 'SYSTEM', '0', 0);
 INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (5, 'OwnerListing', 'SYSTEM', '0', 0);
-INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (6, 'ControllerReleaseListing', 'SYSTEM', 0, 0);
-INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (7, 'ControllerTargetListing', 'SYSTEM', 0, 0);
-INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (8, 'OperationalOverrideListing', 'SYSTEM', '0', 0);
+INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (6, 'ControllerReleases', 'SYSTEM', 0, 0);
+INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (7, 'ControllerWorkPackages', 'SYSTEM', 0, 0);
+INSERT INTO `preference` (`id`, `page_name`, `preference_type`, `corp_user_id`, `native_user_id`) VALUES (8, 'OperationalOverride', 'SYSTEM', '0', 0);
 
 
 INSERT INTO `preference_detail` ( `preference_id`, `field_name`, `field_order`, `field_visible`) VALUES (2,  'firstName', 2, '0');
