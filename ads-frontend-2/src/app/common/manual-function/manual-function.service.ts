@@ -16,7 +16,7 @@ export class ManualFunctionService {
 
   runJob(jobName): Observable<any> {
     return this.http
-      .post(this.global.apiUrl  + "/" + jobName, null)
+      .post(this.global.apiIntegrationServerUrl  + "/" + jobName, null)
       .map((res: Response) => res);
     // .catch(
     // Handle error in Subscribe() using the AdsErrorService      
@@ -37,7 +37,7 @@ export class ManualFunctionService {
     formData.append('file', fileToUpload, fileToUpload.name);
 
     return this.http
-      .post(this.global.apiUrl  + "/" +  jobName, formData, { headers: headers, reportProgress: true })
+      .post(this.global.apiIntegrationServerUrl  + "/" +  jobName, formData, { headers: headers, reportProgress: true })
       .map(() => { return true; });
 
   }
