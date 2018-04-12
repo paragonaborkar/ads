@@ -11,6 +11,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class NaDBUtils {
 	private static final Logger log = LoggerFactory.getLogger(NaDBUtils.class);
 	
 	@Autowired
+	@Qualifier("ociJdbcTemplate")
 	JdbcTemplate jdbcTemplate;
 	
 	public ArrayList<DWHNFSShowMount> getDWHNFSShowMountsList(String netAppSystemName, String netAppSerialNumber) {

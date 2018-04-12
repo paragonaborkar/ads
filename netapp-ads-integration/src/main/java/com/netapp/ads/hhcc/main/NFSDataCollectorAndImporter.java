@@ -55,22 +55,22 @@ public class NFSDataCollectorAndImporter {
 
 	private static final Logger log = LoggerFactory.getLogger(NFSDataCollectorAndImporter.class);
 	
-	@Value("${oci.server.name}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.name').getPropertyValue()}")
 	String ociServerName;
 	
-	@Value("${oci.server.data_model}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.data_model').getPropertyValue()}")
 	String ociServerDataModel;
 	
-	@Value("${oci.server.port}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.port').getPropertyValue()}")
 	int ociServerPort;
 	
-	@Value("${oci.server.user}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.user').getPropertyValue()}")
 	String ociServerUser;
 	
-	@Value("${oci.server.password}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.password').getPropertyValue()}")
 	String ociServerPassword;
 	
-	@Value("${vfiler.default_name}")
+	@Value("#{sysConfigRepository.findByPropertyName('vfiler.default_name').getPropertyValue()}")
 	String vFilerDefaultName;
 	
 	@Autowired
@@ -86,8 +86,9 @@ public class NFSDataCollectorAndImporter {
 	 * -Array netapp1 -DataWarehouseAddress dwh_ip -Port = "3306" -VfilerName
 	 * vfiler1 -ClearStats $True -Debugger $True
 	 */
-	@Scheduled(fixedDelayString = "${nfs.schedule}")
-	public void collectCurrentNFSConnectedHostsAndStatistics(boolean clearNFSStats) {
+	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('nfs.schedule').getPropertyValue()}")
+	public void collectCurrentNFSConnectedHostsAndStatistics() {
+		boolean clearNFSStats = false;
 		log.info("NFS Collector and Importer Job started");
 		String currentTimeStamp = NaDBUtils.getCurrentTimeStamp();
 		

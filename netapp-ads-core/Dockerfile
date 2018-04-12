@@ -2,21 +2,21 @@
 FROM openjdk:8-jdk-alpine
 
 #creates a mount point with the specified name.
-#VOLUME /ads-backend
+#VOLUME /ads-web
 
 RUN apk update && apk upgrade && apk add fontconfig && apk add msttcorefonts-installer && update-ms-fonts && fc-cache -f
 
-ADD talendjobs talendjobs
+#ADD talendjobs talendjobs
 
-ADD discovery_rules discovery_rules
+#ADD discovery_rules discovery_rules
 
-RUN chmod -R 755 talendjobs
+#RUN chmod -R 755 talendjobs
 
 #Adds a file or directory to the image,
-ADD ads-0.0.1-SNAPSHOT.jar ads-backend.jar
+ADD netapp-ads-backend-0.0.1-SNAPSHOT.jar netapp-ads-backend-0.0.1-SNAPSHOT.jar
 	
 #ENTRYPOINT ["java", "-Dspring.datasource.url=jdbc:mysql://<container_name from --name>/ads_dev","-Djava.security.egd=file:/dev/./urandom","-jar","/ads-backend.jar"], "--spring.profiles.active=dev"]
-ENTRYPOINT ["java", "-Dspring.datasource.url=jdbc:mysql://10.216.15.30:3308/ads_dev","-Dsso.idp.url=http://10.216.15.34:8080/saml/login?disco=true","-Dsuccess.redirect.url=http://10.216.15.34:4200","-Dtoken.endpoint.url=http://10.216.15.34:8080/oauth/token","-Dverum.rest.rootUri=http://10.216.15.35:8090","-Dtalendjobs.loc=/talendjobs/","-Dads.rule.rules_path=file:/discovery_rules/","-Djava.security.egd=file:/dev/./urandom","-jar","/ads-backend.jar"]]
+ENTRYPOINT ["java", "-Dspring.datasource.url=jdbc:mysql://10.216.15.30:3308/ads_dev","-Djava.security.egd=file:/dev/./urandom","-jar","/netapp-ads-backend-0.0.1-SNAPSHOT.jar"]]
 
 EXPOSE 8080
 

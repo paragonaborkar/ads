@@ -7,8 +7,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.netapp.ads.hhcc.jaxb.CIFSSessionInfo;
@@ -37,30 +39,31 @@ public class CIFSSessionCollector {
 	private static final Logger log = LoggerFactory.getLogger(CIFSSessionCollector.class);
 	
 	@Autowired
+	@Qualifier("ociJdbcTemplate")
 	JdbcTemplate jdbcTemplate;
 	
-	@Value("${oci.server.name}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.name').getPropertyValue()}")
 	String ociServerName;
 	
-	@Value("${oci.server.data_model")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.data_model').getPropertyValue()}")
 	String ociServerDataModel;
 	
-	@Value("${oci.server.port}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.port').getPropertyValue()}")
 	int ociServerPort;
 	
-	@Value("${oci.server.user}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.user').getPropertyValue()}")
 	String ociServerUser;
 	
-	@Value("${oci.server.password}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.password').getPropertyValue()}")
 	String ociServerPassword;
 	
-	@Value("${vfiler.default_name}")
+	@Value("#{sysConfigRepository.findByPropertyName('vfiler.default_name').getPropertyValue()}")
 	String vFilerDefaultName;
 	
-	@Value("${vfiler.default_uuid}")
+	@Value("#{sysConfigRepository.findByPropertyName('vfiler.default_uuid').getPropertyValue()}")
 	String vFilerDefaultUUID;
 	
-	@Value("${vfiler.status.dr_backup}")
+	@Value("#{sysConfigRepository.findByPropertyName('vfiler.status.dr_backup').getPropertyValue()}")
 	String vFilerDefaultDRBackup;
 
 	@Autowired
@@ -75,15 +78,8 @@ public class CIFSSessionCollector {
 	private static final String QUERY = "insert into  dwh_inventory.wcr_cifs_temp(DateTime,ControllerName, SerialNumber,VfilerName,VfilerUuid,VolumeName,ShareName,MountPoint,HostIp,HostName,WindowsUser,UnixUser) " + 
 			" Values (?,?,?,?,?,?,?,?,?,?,?,?)  ON DUPLICATE KEY UPDATE DateTime=NOW()";
 
-	public static void main(String[] args) {
-		boolean forceHttps = false;
-		boolean disableSrvrCertiCheck = false;
-		boolean disablePingCheck = false;
-		new CIFSSessionCollector().collectCFSSessions(forceHttps, disableSrvrCertiCheck, disablePingCheck);
-	}
-
-	//@Scheduled(fixedDelayString = "${cifs.schedule}")
-	public void collectCFSSessions(boolean forceHttps, boolean disableSrvrCertiCheck, boolean disablePingCheck) {
+	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('cifs.schedule').getPropertyValue()}")
+	public void collectCFSSessions() {
 		log.info("CIFS Session Collector and Importer Job started");
 		log.info("Connecting to OCI server: {}", ociServerName);
 		NADataSource[] dataSources = adsRestUtils.getNetAppDataSources();

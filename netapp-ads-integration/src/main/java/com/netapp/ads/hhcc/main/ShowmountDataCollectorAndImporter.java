@@ -24,22 +24,22 @@ import com.netapp.ads.hhcc.vo.StorageVolume;
 @Service
 public class ShowmountDataCollectorAndImporter {
 
-	@Value("${oci.server.name}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.name').getPropertyValue()}")
 	String ociServerName;
 	
-	@Value("${oci.server.data_model}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.data_model').getPropertyValue()}")
 	String ociServerDataModel;
 	
-	@Value("${oci.server.port}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.port').getPropertyValue()}")
 	int ociServerPort;
 	
-	@Value("${oci.server.user}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.user').getPropertyValue()}")
 	String ociServerUser;
 	
-	@Value("${oci.server.password}")
+	@Value("#{sysConfigRepository.findByPropertyName('oci.server.password').getPropertyValue()}")
 	String ociServerPassword;
 	
-	@Value("${vfiler.default_name}")
+	@Value("#{sysConfigRepository.findByPropertyName('vfiler.default_name').getPropertyValue()}")
 	String vFilerDefaultName;
 	
 	private static final Logger log = LoggerFactory.getLogger(ShowmountDataCollectorAndImporter.class);
@@ -52,7 +52,7 @@ public class ShowmountDataCollectorAndImporter {
 	
 	JSONUtils jsonUtils = new JSONUtils();
 
-	@Scheduled(fixedDelayString = "${showmount.schedule}")
+	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('showmount.schedule').getPropertyValue()}")
 	public void collectShowmountData() {
 		log.info("Show mount job started");
 		String currentTimeStamp=NaDBUtils.getCurrentTimeStamp();

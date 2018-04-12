@@ -30,13 +30,13 @@ public class ADSRestUtils {
 
 	private static final Logger log = LoggerFactory.getLogger(ADSRestUtils.class);
 	
-	@Value("${wfa.rest.url}")
+	@Value("#{sysConfigRepository.findByPropertyName('wfa.rest.url').getPropertyValue()}")
 	String wfaRestUrl;
 	
-	@Value("${wfa.rest.user}")
+	@Value("#{sysConfigRepository.findByPropertyName('wfa.rest.user').getPropertyValue()}")
 	String wfaRestUser;
 
-	@Value("${wfa.rest.password}")
+	@Value("#{sysConfigRepository.findByPropertyName('wfa.rest.password').getPropertyValue()}")
 	String wfaRestPassword;
 	
 	public static void main(String[] args) {
