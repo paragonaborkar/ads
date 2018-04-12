@@ -48,6 +48,13 @@
 			<artifactId>bcpg-jdk15on</artifactId>
 			<version>1.57</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
+		<dependency>
+		    <groupId>org.bouncycastle</groupId>
+		    <artifactId>bcprov-jdk15on</artifactId>
+		    <version>1.57</version>
+		</dependency>
+		
 		<!-- <dependency> <groupId>org.bouncycastle</groupId> <artifactId>bcprov-ext-jdk15on</artifactId> 
 			<version>1.57</version> </dependency> -->
 
@@ -72,6 +79,7 @@
 
 	<build>
 		<plugins>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -88,6 +96,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -97,7 +106,8 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			<plugin>
+			
+<!-- 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.6</version>
@@ -109,10 +119,13 @@
 						<manifest>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+							<addClasspath>true</addClasspath>
+
 						</manifest>
 					</archive>
 				</configuration>
-			</plugin>
+			</plugin> -->
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
@@ -127,6 +140,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.7</version>
@@ -134,7 +148,8 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			<plugin>
+			
+<!-- 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
 					<descriptors>
@@ -144,6 +159,37 @@
 					</descriptors>
 				</configuration>
 			</plugin>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-dependency-plugin</artifactId>
+			    <version>2.3</version>
+			    <executions>
+			        <execution>
+			            <id>copy</id>
+			            <phase>package</phase>
+			            <goals>
+			                <goal>copy</goal>
+			            </goals>
+			            <configuration>
+			                <artifactItems>
+			                    <artifactItem>
+									<groupId>org.bouncycastle</groupId>
+									<artifactId>bcpg-jdk15on</artifactId>
+									<version>1.57</version>
+			                        <outputDirectory>${project.build.directory}</outputDirectory>
+			                    </artifactItem>
+			                    <artifactItem>
+			                    	<groupId>org.bouncycastle</groupId>
+					    			<artifactId>bcprov-jdk15on</artifactId>
+					    			<version>1.57</version>
+			                        <outputDirectory>${project.build.directory}</outputDirectory>		    			
+					    		</artifactItem>
+			                </artifactItems>
+			                <stripVersion>true</stripVersion>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
@@ -157,6 +203,7 @@
 							<exclude>META-INF/*.SF</exclude>
 							<exclude>META-INF/*.DSA</exclude>
 							<exclude>META-INF/*.RSA</exclude>
+							<exclude>org.bouncycastle:bcprov-jdk15on</exclude>
 						</excludes>
 					</artifactSet>
 					<transformers>
@@ -164,7 +211,8 @@
 							implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 							<manifestEntries>
 								<Main-Class>com.javax0.license3j.License3j</Main-Class>
-								<Class-Path>lib/bcprov-ext-jdk15on-159.jar</Class-Path>
+								<Class-Path>./bcpg-jdk15on-1.57.jar</Class-Path>
+								<Class-Path>./bcprov-jdk15on-1.57.jar</Class-Path>
 							</manifestEntries>
 						</transformer>
 					</transformers>
@@ -179,7 +227,24 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
+			
+			<plugin>
+			    <groupId>de.ntcomputer</groupId>
+			    <artifactId>executable-packer-maven-plugin</artifactId>
+			    <version>1.0.1</version>
+			    <configuration>
+			        <mainClass>com.javax0.license3j.License3j</mainClass>
+			    </configuration>
+			    <executions>
+			        <execution>
+			            <goals>
+			                <goal>pack-executable-jar</goal>
+			            </goals>
+			        </execution>
+			    </executions>
+			</plugin>	
+			
 		</plugins>
 	</build>
 </project>
