@@ -159,8 +159,12 @@ public class OwnerIdentificationService {
 				for(ApplicationPojo applicationPojo: applicationsPojo.getApplications()) {
 					Application application = applicationRepository.findByApplicationCode(applicationPojo.getCode());
 					if(application == null) {
-						UserCorporate corpUser = getOrCreateCorporateUser(applicationPojo.getOwner());;
-						createActivityResponse(activity, corpUser);
+						
+						UserCorporate corpUser = null;
+						for(ApplicationOwnerPojo owner: applicationPojo.getOwner()) {
+							corpUser = getOrCreateCorporateUser(owner);;
+							createActivityResponse(activity, corpUser);
+						}
 						
 						LineOfBusiness lob = getOrCreateLob(applicationPojo.getOwningLOB());
 						log.debug("createApplicationAndUsers(): Application DOES NOT exist. Creating.." );
@@ -185,7 +189,9 @@ public class OwnerIdentificationService {
 						log.debug("createApplicationAndUsers(): Application Created/Updated: " + application.getId());
 					} else {
 						if(activity.getAdminOverride()) {
-							createActivityResponse(activity, getOrCreateCorporateUser(applicationPojo.getOwner()));
+							for(ApplicationOwnerPojo owner: applicationPojo.getOwner()) {
+								createActivityResponse(activity, getOrCreateCorporateUser(owner));
+							}
 						}
 						log.debug("createApplicationAndUsers(): Application already exists: " + application.getId());
 					}
