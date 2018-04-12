@@ -166,7 +166,13 @@ public class NetAppAPIUtils {
 			InputStream targetStream = new ByteArrayInputStream(xo.toPrettyString("").getBytes());
 			netAppResults = (Results) JAXBUtils.getNetAppObjectForXML(targetStream, Results.class);
 
-		} catch (NaAuthenticationException | NaAPIFailedException| NaProtocolException | IOException e) {
+		} catch (NaAPIFailedException nfe) {
+			if(nfe.getErrno() == 13071) {
+				log.warn("executeNaApi: Vfiler not found (errno=13071)");	
+			} else {
+				log.error("executeNaApi: API Failed: Exception: ", nfe);
+			}
+		} catch (NaAuthenticationException | NaProtocolException | IOException e) {
 			log.error("executeNaApi: Exception: ", e);
 		} 
 
@@ -241,12 +247,16 @@ public class NetAppAPIUtils {
 
 		NaElement api = new NaElement(HHCCConstants.NA_API_VFILER_LIST_INFO);
 		api.addNewChild(HHCCConstants.STR_VFILER, controller.getvFilerName());
-
+		
+		VfilerInfo[] arrVfilerInfo = null;
 		Results netAppResults = executeNaApi(api, naServer);
-
-		Vfilers vFilers = new Vfilers();
-		VfilerInfo[] arrVfilerInfo = vFilers.getVfilerInfo();
-
+		if(netAppResults != null) {
+			arrVfilerInfo = netAppResults.getVfilers().getVfilerInfo();
+		} else { 
+			Vfilers vFilers = new Vfilers();
+			arrVfilerInfo = vFilers.getVfilerInfo();
+		}
+		
 		return arrVfilerInfo;
 	}
 

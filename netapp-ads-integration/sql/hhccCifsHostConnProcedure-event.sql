@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `dwh_inventory`.`hhcc_cifs_temp` (
   `HostName` varchar(255) NOT NULL DEFAULT '',
   `WindowsUser` varchar(255) NOT NULL DEFAULT '',
   `UnixUser` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`DateTime`,`SerialNumber`,`VfilerUuid`,`ShareName`,`HostIp`, `HostName`,`WindowsUser`)
+  PRIMARY KEY (`SerialNumber`,`VfilerUuid`,`ShareName`,`HostIp`, `HostName`,`WindowsUser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 

@@ -26,5 +26,12 @@ public class HHCCConstants {
 	public static final String STR_VFILER = "vfiler";
 
 	public static final String STR_DATE_FORMAT="yyyy-MM-dd HH:mm:ss";
-
+	
+	public static final String DWH_INVENTORY = "dwh_inventory";
+	public static final String TBL_CIFS_TEMP = DWH_INVENTORY + ".hhcc_cifs_temp";
+	public static final String TBL_STORAGE_NODE = DWH_INVENTORY + ".storage_node";
+	public static final String TBL_NFS_HOST_CONN = DWH_INVENTORY + ".nfs_host_conn";
+	public static final String TBL_NFS_HOST_CONN_NO_MOUNT = DWH_INVENTORY + ".nfs_host_conn_nomount";
+	public static final String TBL_NFS_HOST_SHOW_MOUNT = DWH_INVENTORY + ".nfs_host_showmount";
+	public static final String TBL_HOST = DWH_INVENTORY + ".host";
 }
