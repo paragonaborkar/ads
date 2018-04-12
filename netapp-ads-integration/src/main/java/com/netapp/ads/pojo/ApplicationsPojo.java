@@ -1,9 +1,10 @@
 package com.netapp.ads.pojo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ApplicationsPojo {
-	private List<ApplicationPojo> applications;
+	private List<ApplicationPojo> applications = new ArrayList<ApplicationPojo>();
 
 	public List<ApplicationPojo> getApplications() {
 		return applications;
@@ -15,6 +16,6 @@ public class ApplicationsPojo {
 
 	@Override
 	public String toString() {
-		return "ApplicationWrapper [applications=" + applications + "]";
+		return "ApplicationsPojo [applications=" + applications + "]";
 	}
 }
