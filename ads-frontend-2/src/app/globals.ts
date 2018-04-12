@@ -9,6 +9,7 @@ export class Globals implements OnInit {
 
 	// apiUrl: string="http://localhost:8080";
 	apiUrl="/api";
+	apiIntegrationServerUrl="/apiIntegration";
 
 	askAQuestionUrl = "https://support.netapp.com?adsRequest=question";
 	reportAProblemUrl = "https://support.netapp.com?adsRequest=problem";
