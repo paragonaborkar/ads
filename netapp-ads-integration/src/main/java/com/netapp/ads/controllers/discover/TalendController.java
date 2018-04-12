@@ -32,7 +32,7 @@ import com.netapp.ads.services.OwnerIdentificationService;
 
 
 @RestController
-@RequestMapping("/talendJobs")
+@RequestMapping("/api/talendJobs")
 public class TalendController {
 
 	private static final Logger log = LoggerFactory.getLogger(TalendController.class);

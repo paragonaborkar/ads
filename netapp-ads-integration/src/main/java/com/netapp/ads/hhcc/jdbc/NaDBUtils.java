@@ -220,9 +220,7 @@ public class NaDBUtils {
 				+ " (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE lastSeen=now()";
 		log.debug("importInactiveHostInformation(): Query: {}", strQuery);
 		
-		Object[] params = {1, activeHostBulkImport.getProtocol(), activeHostBulkImport.getHostId(), activeHostBulkImport.getHostIp()
-		,activeHostBulkImport.getNfsOps()
-		};
+		Object[] params = {1, activeHostBulkImport.getProtocol(), activeHostBulkImport.getHostId(), activeHostBulkImport.getHostIp() ,activeHostBulkImport.getNfsOps(), currentTimeStamp};
 		jdbcTemplate.update(strQuery, params);
 		return strQuery;
 	}
