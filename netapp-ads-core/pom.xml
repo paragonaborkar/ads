@@ -191,10 +191,10 @@
 			<artifactId>nekohtml</artifactId>
 			</dependency>
 
-		<dependency>
+<!-- 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>

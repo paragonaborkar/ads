@@ -46,6 +46,7 @@ import com.netapp.ads.rules.engine.QtreeDispositionService;
 import com.netapp.ads.services.OwnerIdentificationService;
 
 @RestController
+@RequestMapping("/api")
 public class DiscoverProcessingController {
 
 	private static final Logger log = LoggerFactory.getLogger(DiscoverProcessingController.class);
@@ -317,14 +318,15 @@ public class DiscoverProcessingController {
 	}
 
 	// This is the URL that Talend will call once it gets the CMDB information.
-	@RequestMapping(value = "/owneridentification", method = RequestMethod.POST)
-	public ResponseEntity<?> ownerIdentification(@RequestBody ApplicationsPojo applications) {
+	@RequestMapping(value = "/identifyOwners", method = RequestMethod.POST)
+//	public ResponseEntity<?> identifyOwners(@RequestBody ApplicationsPojo applications) {
+		public ResponseEntity<?> ownerIdentification() {
 		
 		log.debug("Owner Identification Controller [ENTER]");
-		log.debug("Owner Identification Controller applicationWrapper: " + applications);
-		for(ApplicationPojo applicationPojo: applications.getApplications()) {
-				log.debug("Owner Identification applicationPojo: " + applicationPojo);
-		}
+//		log.debug("Owner Identification Controller applicationWrapper: " + applications);
+//		for(ApplicationPojo applicationPojo: applications.getApplications()) {
+//				log.debug("Owner Identification applicationPojo: " + applicationPojo);
+//		}
 		ownerIdentificationService.identifyOwner();
 		log.debug("Owner Identification Controller [EXIST]");
 		// Step 1. Validate entire JSON file and every field. If anything is invalid or missing. Fail for all applications and do not process any.

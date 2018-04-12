@@ -30,7 +30,7 @@ INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`,
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.email.from.alias', 'Automated Data Services','1',0,'Email');
 
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.talendjobs.loc', 'C:/Projects/NetApp/ADS/talendjobs/','1',0,'Talend');
-INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.talend.cmdb.url', 'http://localhost:8088/1','1',0,'Talend');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.talend.cmdb.url', 'http://localhost:8088/','1',0,'Talend');
 
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('oci.server.name', '10.216.15.31','1',0,'HHCC');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('oci.server.user', 'root','1',0,'HHCC');

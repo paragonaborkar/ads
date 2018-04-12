@@ -74,7 +74,8 @@ public class OwnerIdentificationService {
 	public ApplicationsPojo getApplications(String hostIp) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		ApplicationsPojo applications = restTemplate.getForObject(talendCMDBUrl, ApplicationsPojo.class);
+		log.debug("Calling Talend to get application information GET:" + talendCMDBUrl + hostIp);
+		ApplicationsPojo applications = restTemplate.getForObject(talendCMDBUrl + hostIp, ApplicationsPojo.class);
 		return applications;
 	}
 
@@ -103,7 +104,7 @@ public class OwnerIdentificationService {
 			for(Share share: shares) {
 				Host host = share.getHost();
 				log.debug("identifyOwner(): share: {}, host: {}, host owner: {} ", share.getId(), host.getId(), host.getHostOwnerUserCorporateId());
-				processHost(host, activity, getApplications(null));
+				processHost(host, activity, getApplications(host.getIpAddr()));
 			}
 		} //end of for
 			
