@@ -62,7 +62,7 @@ public class NaDBUtils {
 	public static String getQueryOfControllerByNASystemAndSerNumber(String netAppSystemName,
 			String netAppSerialNumber) {
 
-		String query = "SELECT dwh_inventory.storage_node.name AS 'Storage Node Name',"
+		String query = "SELECT " + HHCCConstants.TBL_STORAGE_NODE + ".name AS 'Storage Node Name',"
 				+ " ns.shareId,ns.intVolId,"
 				+ " ns.storageid,ns.name AS 'export',"
 				+ " ns.hostIp AS 'ip',ns.protocol"
@@ -81,7 +81,7 @@ public class NaDBUtils {
 
 	public static String getQueryStorageVolumes(String netAppSystemName, String netAppSerialNumber) {
 
-		String query = "SELECT dwh_inventory.storage_node.id AS 'id',"
+		String query = "SELECT " + HHCCConstants.TBL_STORAGE_NODE + ".id AS 'id',"
 				+ " substring_index(internal_volume.name, ':', -1) AS 'volumeName',"
 				+ " internal_volume.id AS 'intVolId' FROM dwh_inventory.storage_node"
 				+ " JOIN dwh_inventory.storage_node_to_internal_volume"
@@ -136,7 +136,7 @@ public class NaDBUtils {
 
 	public static String getQueryCurrentExportsAndHostInformation(String netAppSystemName, String netAppSerialNumber) {
 
-		String strQuery = "SELECT dwh_inventory.storage_node.name AS 'Storage Node Name',"
+		String strQuery = "SELECT " + HHCCConstants.TBL_STORAGE_NODE + ".name AS 'Storage Node Name',"
 				+ "dwh_inventory.qtree.internalVolumeId,ns.id,"
 				+ " ns.fileshareId,ns.storageid,ns.identifier,"
 				+ " ns.name,ns.protocol,ns.ipinterfaces"
@@ -158,7 +158,7 @@ public class NaDBUtils {
 
 	public static String getQueryCreateNFSHostConnTable() {
 
-		String query = "CREATE TABLE IF NOT EXISTS dwh_inventory.nfs_host_conn ( " + "shareId int(11) NOT NULL, "
+		String query = "CREATE TABLE IF NOT EXISTS " + HHCCConstants.TBL_NFS_HOST_CONN + " ( " + "shareId int(11) NOT NULL, "
 				+ "intVolId int(11) NOT NULL, " + "name varchar(255) NOT NULL, " + "protocol varchar(48) DEFAULT NULL, "
 				+ "hostId int(11) NOT NULL DEFAULT '0', " + "hostIp varchar(255) DEFAULT '0.0.0.0', "
 				+ "nfsOps bigint(255) DEFAULT '0', " + "firstSeen timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, "
@@ -171,7 +171,7 @@ public class NaDBUtils {
 
 	public static String getQueryCreateNFSHostConnNoMountTable() {
 
-		String query = "CREATE TABLE IF NOT EXISTS dwh_inventory.nfs_host_conn_nomount ( "
+		String query = "CREATE TABLE IF NOT EXISTS " + HHCCConstants.TBL_NFS_HOST_CONN_NO_MOUNT + " ( "
 				+ "storageId varchar(255) NOT NULL, " + "protocol varchar(48) DEFAULT NULL, "
 				+ "hostId int(11) NOT NULL DEFAULT '0', " + "hostIp varchar(255) DEFAULT '0.0.0.0', "
 				+ "nfsOps bigint(255) DEFAULT '0', " + "firstSeen timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, "
@@ -191,7 +191,7 @@ public class NaDBUtils {
 		String ip = nfsImportData.getIp();
 		String operation = nfsImportData.getOperation();
 
-		String query = "INSERT INTO dwh_inventory.nfs_host_conn "
+		String query = "INSERT INTO " + HHCCConstants.TBL_NFS_HOST_CONN
 				+ "(shareId,intVolId,name,protocol,hostId,hostIp,nfsOps,lastSeen,firstSeen)  " + "VALUES  " + "("
 				+ "?,?,?,?,?,?,?,?,?)  " + "ON DUPLICATE KEY UPDATE lastSeen=now()";
 		log.debug("importNFSActiveHostInformation(): Query: {}", query);
@@ -215,7 +215,7 @@ public class NaDBUtils {
 	public String importInactiveHostInformation(ActiveHostBulkImport activeHostBulkImport,
 		String currentTimeStamp) {
 
-		String strQuery = "INSERT INTO dwh_inventory.nfs_host_conn_nomount "
+		String strQuery = "INSERT INTO " + HHCCConstants.TBL_NFS_HOST_CONN_NO_MOUNT
 				+ " (storageId,protocol,hostId,hostIp,nfsOps,lastSeen) VALUES "
 				+ " (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE lastSeen=now()";
 		log.debug("importInactiveHostInformation(): Query: {}", strQuery);
@@ -227,7 +227,7 @@ public class NaDBUtils {
 
 	public Map<String, String> getHostIds() {
 		Map<String, String> hostIdIpMap = new HashMap<>();
-		String query = "SELECT ip,id FROM dwh_inventory.host";
+		String query = "SELECT ip,id FROM " + HHCCConstants.TBL_HOST;
 		List<Map<String, Object>> hostIdIps =  jdbcTemplate.queryForList(query);
 		for(Map<String, Object> hostIdIp: hostIdIps) {
 			hostIdIpMap.put(String.valueOf(hostIdIp.get("ip")), String.valueOf(hostIdIp.get("id")));
@@ -237,7 +237,7 @@ public class NaDBUtils {
 
 	public void insertIntoHostShowmount(ShowmountImportData showmountRow, String currentTimeStamp) {
 
-		String strQuery = "INSERT INTO dwh_inventory.nfs_host_showmount"
+		String strQuery = "INSERT INTO " + HHCCConstants.TBL_NFS_HOST_SHOW_MOUNT
 				+ " (shareId,intVolId,storageId,name,protocol,hostIp,lastSeen,firstSeen) VALUES "
 				+ "	(?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE lastSeen=now()";
 		log.debug("insertIntoHostShowmount(): Query: {}", strQuery);
