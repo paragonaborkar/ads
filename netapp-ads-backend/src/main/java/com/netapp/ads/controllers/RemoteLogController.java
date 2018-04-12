@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.netapp.ads.Application;
 
 @RestController
+@RequestMapping(value = "/api")
 public class RemoteLogController {
     
 	private static final Logger log = LoggerFactory.getLogger(RemoteLogController.class);

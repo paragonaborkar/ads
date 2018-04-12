@@ -14,7 +14,7 @@ export class Globals implements OnInit {
 	reportAProblemUrl = "https://support.netapp.com?adsRequest=problem";
 
 	readonly TOKEN_AUTH_USERNAME = 'adsClient'; // FIXME: Comment - why and how used in Login Service
-	readonly TOKEN_AUTH_PASSWORD = 'sdjlh9#$380231funej01382#$';  // FIXME: Comment - why and how used in Login Service
+	readonly TOKEN_AUTH_PASSWORD = 'sdjlh380231funej01382';  // FIXME: Comment - why and how used in Login Service
 
 	constructor(private http: HttpClient) {
 		this.http.get('assets/global.json')

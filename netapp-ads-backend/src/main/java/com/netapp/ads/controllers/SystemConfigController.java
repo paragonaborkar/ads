@@ -14,6 +14,7 @@ import com.netapp.ads.services.SystemPropertiesService;
 import com.netapp.ads.util.ConverterUtil;
 
 @RestController
+@RequestMapping(value = "/api")
 public class SystemConfigController {
 
 	@Autowired

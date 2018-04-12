@@ -25,6 +25,7 @@ import com.netapp.ads.repos.UserCorporateRepository;
 import com.netapp.ads.repos.UserNativeRepository;
 
 @RestController
+@RequestMapping(value = "/api")
 public class UnidentifiedController {
 
 	private static final Logger log = LoggerFactory.getLogger(UnidentifiedController.class);

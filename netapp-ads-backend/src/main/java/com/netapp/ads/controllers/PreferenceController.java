@@ -33,6 +33,7 @@ import com.netapp.ads.repos.PreferenceRepository;
 @RestController
 @RepositoryRestController
 @BasePathAwareController
+@RequestMapping(value = "/api")
 public class PreferenceController { // implements ResourceProcessor<RepositoryLinksResource> {
 
 	private static final Logger log = LoggerFactory.getLogger(PreferenceController.class);

@@ -29,7 +29,7 @@
       <li class="nav-item dropdown" *ngIf="userRole !== 'ROLE_USER'">
         <a class="nav-link dropdown-toggle" href="#" id="discoverDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Discover</a>
         <div class="dropdown-menu" aria-labelledby="discoverDropdown">
-          <a class="dropdown-item" routerLink="discover/controller-target">Controller Work Packages</a>
+          <a class="dropdown-item" routerLink="discover/controller-workpackage">Controller Work Packages</a>
           <a class="dropdown-item" routerLink="discover/controller-release">Controller Release</a>
           <a class="dropdown-item" routerLink="discover/report-listing" *ngIf="userRole == 'ROLE_ADMIN' || userRole == 'ROLE_REPORT_USER'">Reports</a>
           <a class="dropdown-item" routerLink="discover/manual-functions">Manual Functions</a>

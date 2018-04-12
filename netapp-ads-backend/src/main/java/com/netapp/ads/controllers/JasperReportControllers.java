@@ -20,6 +20,7 @@ import com.netapp.ads.services.JasperReportService;
 import com.netapp.ads.util.Report;
 
 @RestController
+@RequestMapping(value = "/api")
 public class JasperReportControllers {
 
 	private static final Logger log = LoggerFactory.getLogger(JasperReportControllers.class);

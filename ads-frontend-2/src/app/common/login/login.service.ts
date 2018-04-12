@@ -19,7 +19,6 @@ export class LoginService {
   private AUTH_TOKEN = '';
    
   constructor(private http: Http, private _sessionHelper: SessionHelper, private globals: Globals) {
-    this.loginServiceUrl = globals.apiUrl;
     this.TOKEN_AUTH_USERNAME = globals.TOKEN_AUTH_USERNAME;
     this.TOKEN_AUTH_PASSWORD = globals.TOKEN_AUTH_PASSWORD;
   }
@@ -32,7 +31,7 @@ export class LoginService {
     headers.append('Accept', 'application/json');
     headers.append('Authorization', 'Basic ' + btoa(this.TOKEN_AUTH_USERNAME + ':' + this.TOKEN_AUTH_PASSWORD));
     
-    return this.http.post(this.loginServiceUrl + LoginService.AUTH_TOKEN, body, {headers})
+    return this.http.post(LoginService.AUTH_TOKEN, body, {headers})
     .map(res => res.json())
     .map((res: any) => {
       if (res.access_token) {

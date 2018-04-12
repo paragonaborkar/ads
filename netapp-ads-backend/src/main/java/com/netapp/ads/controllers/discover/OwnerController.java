@@ -28,6 +28,7 @@ import com.netapp.ads.repos.QtreeRepository;
 import com.netapp.ads.repos.UserCorporateRepository;
 
 @RestController
+@RequestMapping(value = "/api")
 public class OwnerController {
 
 	private static final Logger log = LoggerFactory.getLogger(OwnerController.class);
