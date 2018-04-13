@@ -392,7 +392,7 @@ public class TalendController {
 			try (BufferedWriter bw=new BufferedWriter(new FileWriter(newBatchFile))) {
 				bw.write(TalendConstants.STR_CD+parentFldr);
 				bw.newLine();
-				bw.write(TalendConstants.STR_SET_PWD);
+				bw.write(TalendConstants.STR_SET_ROOT);
 				bw.newLine();
 				bw.write(finalTalendJobCommand);
 			}

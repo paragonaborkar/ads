@@ -57,7 +57,7 @@ public class TalendConstants {
 	public static final String STR_CD="cd ";
 	public static final String STR_BAT_EXT=".bat";
 	public static final String STR_SH_EXT=".sh";
-	public static final String STR_SET_PWD="ROOT_PATH=`pwd`";   
+	public static final String STR_SET_ROOT="ROOT_PATH=`pwd`";   
 	public static final String STR_JAVA="java";
 	
 	// We MUST return a JSON string in our REST Controller!
