@@ -17,6 +17,8 @@ public interface ActivityResponseRepository extends JpaRepository<ActivityRespon
 
 	List<ActivityResponse> findByEmailCount(@Param("emailCount") Integer emailCount);
 	
+	List<ActivityResponse> findByIsOwnerAndIsPresumed(@Param("isOwner") boolean isOwner, @Param("isPresumed") boolean isPresumed);
+	
 	ActivityResponse findByOwnerUserCorporateIdAndActivityId(@Param("ownerUserCorporateId") Integer ownerUserCorporateId, @Param("activityId") Integer activityId);
 	
 }

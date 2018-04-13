@@ -33,13 +33,6 @@ public class Activity implements Serializable {
 	@Column(name="decommission_date")
 	private Date decommissionDate;
 
-	@Column(name="mail_count")
-	private Integer mailCount;
-
-	@Temporal(TemporalType.DATE)
-	@Column(name="mailing_date")
-	private Date mailingDate;
-
 	@Column(name="migrate_day")
 	private Integer migrateDay;
 
@@ -131,21 +124,6 @@ public class Activity implements Serializable {
 		this.decommissionDate = decommissionDate;
 	}
 
-	public Integer getMailCount() {
-		return this.mailCount;
-	}
-
-	public void setMailCount(Integer mailCount) {
-		this.mailCount = mailCount;
-	}
-
-	public Date getMailingDate() {
-		return this.mailingDate;
-	}
-
-	public void setMailingDate(Date mailingDate) {
-		this.mailingDate = mailingDate;
-	}
 
 	public Integer getMigrateDay() {
 		return this.migrateDay;

@@ -18,8 +18,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Integer>, JpaSpecificationExecutor<Activity> {
 
-	List<Activity> findByMailCount(@Param("mailCount") Integer mailCount);
-	
 	// owner_user_corporate_id cannot be null or 0. It's a foreign key to user_corporate
 	// Is it more likely that an ActivityResponse won't be created if we do not have a valid User to set? If so, then I think we will need a mismatch query.
 	@Query("Select a From Activity a  "

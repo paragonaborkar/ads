@@ -93,11 +93,8 @@ public class DroolsQtreeDispositionServiceImpl implements QtreeDispositionServic
 		//Not sure why we iterate through all the qtrees. Can we filter this based on the disposition and justification we set earlier in the rules engine
 		Activity activity = new Activity();
 		activity.setQtree(qtree);
-		// activity.setMailingDate(new Date()); //What should this be? Should be set to NULL
-		activity.setMailCount(0);
 		activity.setWillDecommission(false);  // This is set when QTree Owners confirm ownership
 		activity.setWillMigrate(false); // This is set when QTree Owners confirm ownership
-		//activity.setCallMe(true);
 		activity.setAdminOverride(false);
 		activityRepository.save(activity);
 		logger.info("populateActivity: Created Activity: " + activity.getId());

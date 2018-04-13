@@ -170,20 +170,22 @@ public class DiscoverProcessingController {
 		HashMap<UserCorporate, ArrayList<MigrationKey>> emailsToSend = new HashMap<UserCorporate, ArrayList<MigrationKey>>();
 
 		// We cannot assume a previous set of emails was sent out. It could have failed. So search for Activities where emails have not been sent for it.
-		//		List<Activity> activities = activityRepository.findByMailCount(0);
 		List<ActivityResponse> activityResponses = activityResponseRepository.findByEmailCount(0);
 
 		for(ActivityResponse activityResponse : activityResponses) {
 			Activity activity = activityResponse.getActivity();
 			//			for(Activity activity : response.getActivity()) {
 			// Get the activity to mig key x_ref mapping... a list of migration_key_id's...
-			List<MigrationKey> migKeys = activity.getMigrationKeys();
-			for(MigrationKey migKey : migKeys) {
 
+			List<MigrationKey> migKeys = activity.getMigrationKeys();
+
+			for(MigrationKey migKey : migKeys) {
 				if (emailsToSend.containsKey(migKey.getUserCorporate())) {
 					ArrayList<MigrationKey> migKeysForUser = emailsToSend.get(migKey.getUserCorporate());
-					migKeysForUser.add(migKey);
-					emailsToSend.put(migKey.getUserCorporate(), migKeysForUser);
+					if (!migKeysForUser.contains(migKey)) {
+						migKeysForUser.add(migKey);
+						emailsToSend.put(migKey.getUserCorporate(), migKeysForUser);
+					}
 				} else {
 					ArrayList<MigrationKey> migKeysForUser = new ArrayList<>();
 					migKeysForUser.add(migKey);
@@ -199,24 +201,25 @@ public class DiscoverProcessingController {
 			UserCorporate corpUser = (UserCorporate) pair.getKey();
 			ArrayList<MigrationKey> migKeys = (ArrayList<MigrationKey>) pair.getValue();	        
 
-			log.debug("Sending email to:" + corpUser.getEmail());
+			log.debug("Sending email to:"  + corpUser.getEmail());
+			log.debug("migKeys.size() for "+ corpUser.getEmail() + " " + migKeys.size());
 
 			boolean resultOfSend = sendEmail(request,  response, "QtreeMultiOwnerNoSchedule/email", corpUser, migKeys);
 			if (resultOfSend) {
 				for(MigrationKey migKey : migKeys) {
-					log.debug("Getting activities for key:" + migKey.getMigrationKey());
-					
-						for(Activity activity : migKey.getActivities()) {
-							log.debug("Activity ID :" + activity.getId());
-							ActivityResponse activityResponse = activityResponseRepository.findByOwnerUserCorporateIdAndActivityId(corpUser.getId(), activity.getId());
-							if (activityResponse != null) {
-								log.debug("Setting email count for ActivityResponse ID :" + activityResponse.getId());
-								activityResponse.setEmailCount(activityResponse.getEmailCount() + 1);
-								activityResponse.setEmailDate((Timestamp) dateUtils.convertToUtc()); 	// Only update the emailDate for the first time sending the email.
-								activityResponseRepository.save(activityResponse);
-							}
+					log.debug("Getting activities for key:" + migKey.getMigrationKey() + " for "+ corpUser.getEmail());
+					log.debug("Activity Size:" + migKey.getActivities().size());
+					for(Activity activity : migKey.getActivities()) {
+						log.debug("Activity ID :" + activity.getId());
+						ActivityResponse activityResponse = activityResponseRepository.findByOwnerUserCorporateIdAndActivityId(corpUser.getId(), activity.getId());
+						if (activityResponse != null) {
+							log.debug("Setting email count for ActivityResponse ID :" + activityResponse.getId());
+							activityResponse.setEmailCount(activityResponse.getEmailCount() + 1);
+							activityResponse.setEmailDate((Timestamp) dateUtils.convertToUtc()); 	// Only update the emailDate for the first time sending the email.
+							activityResponseRepository.save(activityResponse);
 						}
-					
+					}
+
 				}
 			}
 		}
@@ -229,6 +232,65 @@ public class DiscoverProcessingController {
 	@RequestMapping(value="/sendOwnerReminderEmail", method=RequestMethod.POST)
 	public ResponseEntity<?> sendOwnerReminderEmail(HttpServletRequest request,  HttpServletResponse response) {
 
+		// FIXME: Allow this it called by REST
+
+		// FIXME: But also convert this it a servive that runs once a day. Configuration in the application properties, if possible. 
+		HashMap<UserCorporate, ArrayList<MigrationKey>> emailsToSend = new HashMap<UserCorporate, ArrayList<MigrationKey>>();
+
+		// We cannot assume a previous set of emails was sent out. It could have failed. So search for Activities where emails have not been sent for it.
+		List<ActivityResponse> activityResponses = activityResponseRepository.findByIsOwnerAndIsPresumed(false, true);  				// ***************** THIS LINE IS DIFFERENT FROM THE FIRST EMAIL
+
+		for(ActivityResponse activityResponse : activityResponses) {
+			Activity activity = activityResponse.getActivity();
+			//			for(Activity activity : response.getActivity()) {
+			// Get the activity to mig key x_ref mapping... a list of migration_key_id's...
+
+			List<MigrationKey> migKeys = activity.getMigrationKeys();
+
+			for(MigrationKey migKey : migKeys) {
+				if (emailsToSend.containsKey(migKey.getUserCorporate())) {
+					ArrayList<MigrationKey> migKeysForUser = emailsToSend.get(migKey.getUserCorporate());
+					if (!migKeysForUser.contains(migKey)) {
+						migKeysForUser.add(migKey);
+						emailsToSend.put(migKey.getUserCorporate(), migKeysForUser);
+					}
+				} else {
+					ArrayList<MigrationKey> migKeysForUser = new ArrayList<>();
+					migKeysForUser.add(migKey);
+					emailsToSend.put(migKey.getUserCorporate(), migKeysForUser);
+				}
+			}
+			//			}
+		}
+
+		Iterator<Map.Entry<UserCorporate, ArrayList<MigrationKey>>> it = emailsToSend.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<UserCorporate, ArrayList<MigrationKey>> pair = (Map.Entry<UserCorporate, ArrayList<MigrationKey>>) it.next();
+			UserCorporate corpUser = (UserCorporate) pair.getKey();
+			ArrayList<MigrationKey> migKeys = (ArrayList<MigrationKey>) pair.getValue();	        
+
+			log.debug("Sending email to:"  + corpUser.getEmail());
+			log.debug("migKeys.size() for "+ corpUser.getEmail() + " " + migKeys.size());
+
+			boolean resultOfSend = sendEmail(request,  response, "QtreeOwnerReminderNoSchedule/email", corpUser, migKeys); 				// ***************** THIS LINE IS DIFFERENT FROM THE FIRST EMAIL
+			if (resultOfSend) {
+				for(MigrationKey migKey : migKeys) {
+					log.debug("Getting activities for key:" + migKey.getMigrationKey() + " for "+ corpUser.getEmail());
+					log.debug("Activity Size:" + migKey.getActivities().size());
+					for(Activity activity : migKey.getActivities()) {
+						log.debug("Activity ID :" + activity.getId());
+						ActivityResponse activityResponse = activityResponseRepository.findByOwnerUserCorporateIdAndActivityId(corpUser.getId(), activity.getId());
+						if (activityResponse != null) {
+							log.debug("Setting email count for ActivityResponse ID :" + activityResponse.getId());
+							activityResponse.setEmailCount(activityResponse.getEmailCount() + 1);
+							// activityResponse.setEmailDate((Timestamp) dateUtils.convertToUtc());// ***************** THIS LINE IS DIFFERENT FROM THE FIRST EMAIL - COMMENTED OUT
+							activityResponseRepository.save(activityResponse);
+						}
+					}
+
+				}
+			}
+		}
 
 		return new ResponseEntity(TalendConstants.STR_JOB_SUBMITTED.replaceFirst("PLACEHOLDER", "Email sent!"), HttpStatus.OK);
 	}
@@ -246,6 +308,8 @@ public class DiscoverProcessingController {
 		context.setVariable("viewAllTasksFullUrl", viewAllTasks); 
 		context.setVariable("adsQtreeOwnerFullUrl", adsQtreeOwnerUrl);  
 		context.setVariable("adsSupportFullUrl", adsSupportUrl);  		
+
+		//FIXME: Need to generate links for each of the migKeys. There could be more than 1.
 		context.setVariable("migKey", "RANDOM_REPLACE");
 
 		try {
@@ -254,16 +318,20 @@ public class DiscoverProcessingController {
 			Map<String, Resource> inlineResources = new HashMap<String, Resource>();
 			if(emailFolderAndTemplateFileName == "QtreeMultiOwnerNoSchedule/email") {
 				inlineResources.put("imageLogo1", new ClassPathResource("templates/QtreeMultiOwnerNoSchedule/na_logo_hrz_1c-rev_rgb_lrg.png"));
+				
+				//FIXME: Make subject configurable using a Application Property from the DB
 				emailService.sendTemplatedMail(emailTo, "Muti", emailFolderAndTemplateFileName, context, inlineResources);
 			}
 
 			if(emailFolderAndTemplateFileName == "QtreeSingleOwnerNoSchedule/email") {
 				inlineResources.put("imageLogo1", new ClassPathResource("templates/QtreeSingleOwnerNoSchedule/na_logo_hrz_1c-rev_rgb_lrg.png"));
+				//FIXME: Make subject configurable using a Application Property from the DB
 				emailService.sendTemplatedMail(emailTo, "Single", emailFolderAndTemplateFileName, context, inlineResources);
 			}
 
 			if(emailFolderAndTemplateFileName == "QtreeOwnerReminderNoSchedule/email") {
 				inlineResources.put("imageLogo1", new ClassPathResource("templates/QtreeOwnerReminderNoSchedule/na_logo_hrz_1c-rev_rgb_lrg.png"));
+				//FIXME: Make subject configurable using a Application Property from the DB
 				emailService.sendTemplatedMail(emailTo, "Reminder", emailFolderAndTemplateFileName, context, inlineResources);
 			}
 
