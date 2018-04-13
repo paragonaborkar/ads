@@ -74,12 +74,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			}
 		} else if (username.indexOf("SSO") != -1) {
 			String split[] = username.split("-");
-			log.debug("split: {}", split);
+			log.debug("username split: {}", split);
 			if (SecurityConfig.authAssertionIdUserNameCache.get(split[1]) == null) {
 				throw new UsernameNotFoundException(String.format("The user is not enabled", username));
 			} else {
 				SecurityConfig.authAssertionIdUserNameCache.remove(split[1]);
 				UserCorporate userCorporate;
+				log.debug("Application.ssoWorkAroundId:" + Application.ssoWorkAroundId);
 				if (Application.ssoWorkAroundId != "") {
 					// FIXME:  THIS IS ONLY A TEMPORANY SOLUTION SO WE CAN LOGIN AS MANY CORP USERS
 					Log.error("THIS IS ONLY A TEMPORANY SOLUTION SO WE CAN LOGIN AS MANY CORP USERS");

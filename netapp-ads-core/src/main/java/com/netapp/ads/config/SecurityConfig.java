@@ -148,6 +148,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Value("#{sysConfigRepository.findByPropertyName('ads.sso.idp.metadata.url').getPropertyValue()}")
 	private String idpMetadataURL;
 
+	@Value("#{sysConfigRepository.findByPropertyName('security.jwt.client-secret').getPropertyValue()}")
+	private String clientSecret;
+
+	@Value("#{sysConfigRepository.findByPropertyName('security.jwt.client-id').getPropertyValue()}")
+	private String clientId;
+
+	
 	@Autowired
 	private UserDetailsService userDetailsService;
 
@@ -193,8 +200,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers("/sso");
 		web.ignoring().antMatchers("/ssoUrl");
 		web.ignoring().antMatchers("/favicon.ico");
-		web.ignoring().antMatchers("/api/remoteLog");
-		//web.ignoring().antMatchers("/**");
+		web.ignoring().antMatchers("/remoteLog");
 	}
 
 	@Override
@@ -202,13 +208,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.addFilterBefore(corsFilter, ChannelProcessingFilter.class).httpBasic().realmName(securityRealm).and()
 				.csrf().disable().securityContext().securityContextRepository(tokenSecurityContextRepository());
-		
+
 		http.antMatcher("/saml/**").httpBasic()
 				.authenticationEntryPoint(samlEntryPoint()).and().csrf().disable()
 				.addFilterBefore(metadataGeneratorFilter(), ChannelProcessingFilter.class)
 				.addFilterAfter(samlFilter(), BasicAuthenticationFilter.class).authorizeRequests().anyRequest()
 				.authenticated();
-		//http.formLogin().loginPage("/index.html").permitAll();
+
 	}
 
 	@Bean
@@ -466,7 +472,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		            	try {
 							token = generateTokenForSAML(auth);
 						} catch (Exception e) {
-							response.sendRedirect(successRedirectURL + "&error=" + "Error in SSO Login");
+							log.warn("generateTokenForSAML Exception", e.getMessage());
+							response.sendRedirect(successRedirectURL + "sso-login-error");
 						}
 		            	log.debug("successHandler(): token: {}", token);
 		            	if (token != null) {
@@ -477,7 +484,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 								log.debug("relayStateURL:" + url);
 								response.sendRedirect(url);
 							} else {
-								String url = successRedirectURL + "&response=" + encodedToken;
+								String url = successRedirectURL + "?response=" + encodedToken;
 								log.debug("successRedirectURL:" + url);
 								response.sendRedirect(url);
 							}
@@ -640,22 +647,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		// This value is similar/same as the client id and secret in the application.properties file.
-		// FIX ME: make this configurable
-		headers.add("Authorization", "Basic dGVzdGp3dGNsaWVudGlkOlhZN2ttem9OemwxMDA=");
+		
+		String basicAuth = "Basic " + Base64.getEncoder().encodeToString((clientId + ":" + clientSecret).getBytes());
+		log.debug("Authorization:" + basicAuth);
+		headers.add("Authorization", basicAuth);		
+		
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-		authAssertionIdUserNameCache.put(((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID(),
-				((SAMLCredential) auth.getCredentials()).getNameID().getValue());
+		authAssertionIdUserNameCache.put(((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID(), ((SAMLCredential) auth.getCredentials()).getNameID().getValue());
+		
 		map.add("grant_type", "password");
-		map.add("username", "SSO" + "-" + ((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID()
-				+ "-" + ((SAMLCredential) auth.getCredentials()).getNameID().getValue());
+		map.add("username", "SSO" + "-" + ((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID() + "-" + ((SAMLCredential) auth.getCredentials()).getNameID().getValue());
 		map.add("password", ((SAMLCredential) auth.getCredentials()).getAuthenticationAssertion().getID());
 
 		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 
 		ResponseEntity<String> response = restTemplate.postForEntity(tokenEndPointURL, request, String.class);
 
-		
+		log.debug("response:" + response);
 		
 		return response.getBody();
 	}

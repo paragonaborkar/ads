@@ -24,7 +24,11 @@ export class RoleGuard implements CanActivate {
     if (!this.auth.isAuthenticated() || this.sessionHelper.get("userRole") !== expectedRole) {
       // When using SSO Circle, here we are passing the corpUserId because we only login as 1 user in SSO Circle.
       // If enterprise service is available, this should be updated.
-      return this.http.get("/ssoUrl?redirectTo=" + state.url + "&userId=" +  this.sessionHelper.get("corpUserId"))
+      // return this.http.get(this.global.apiUrl + "/ssoUrl?redirectTo=" + state.url + "&userId=" +  this.sessionHelper.get("corpUserId"))
+      
+      console.log("state.url:" + state.url);
+      // return this.http.get(this.global.apiUrl + "/ssoUrl?redirectTo=" + state.url)
+      return this.http.get(this.global.apiUrl + "/ssoUrl?redirectTo=" + state.url + "&userId=" +  this.sessionHelper.get("corpUserId"))
         .map((res: Response) => {
           window.location.href = res["ssoRedirectUrl"];
           return false;

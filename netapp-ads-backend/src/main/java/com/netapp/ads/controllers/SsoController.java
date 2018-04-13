@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api")
+//@RequestMapping(value = "/api") // DO NOT ADD API HERE!
 public class SsoController {
 	private static final Logger log = LoggerFactory.getLogger(SsoController.class);
 	

@@ -297,7 +297,7 @@ public class DiscoverProcessingController {
 
 
 
-
+	// FIXME: Move to service....
 	public boolean sendEmail(HttpServletRequest request,  HttpServletResponse response, String emailFolderAndTemplateFileName, UserCorporate corpUser, ArrayList<MigrationKey> migKeys) {
 
 		final WebContext context = new WebContext(request, response, request.getServletContext());
@@ -349,72 +349,7 @@ public class DiscoverProcessingController {
 
 	}
 
-	@RequestMapping(value="/sendTestEmail", method=RequestMethod.POST)
-	public String testEe(HttpServletRequest request,  HttpServletResponse response) {
 
-		String emailFolderAndTemplateFileName = "QtreeOwnerReminderNoSchedule/email";
-
-		String emailTo = "szemanick@consultparagon.com";
-		String subject = "Heres the test";
-
-		final WebContext context = new WebContext(request, response, request.getServletContext());
-
-		try {
-			Map<String, Resource> inlineResources = new HashMap<String, Resource>();
-
-			if(emailFolderAndTemplateFileName == "QtreeMultiOwnerNoSchedule/email") {
-				inlineResources.put("imageLogo1", new ClassPathResource("templates/QtreeMultiOwnerNoSchedule/na_logo_hrz_1c-rev_rgb_lrg.png"));
-
-				context.setVariable("logoFullUrl", logoUrl);  				
-				context.setVariable("viewAllTasksFullUrl", viewAllTasks); 
-				context.setVariable("adsQtreeOwnerFullUrl", adsQtreeOwnerUrl);
-				context.setVariable("adsSupportFullUrl", adsSupportUrl);  
-				context.setVariable("migKey", "RANDOM_REPLACE");
-
-				context.setVariable("firstName", "Steve");
-
-				emailService.sendTemplatedMail(emailTo, subject, emailFolderAndTemplateFileName, context, inlineResources);
-			}
-
-			if(emailFolderAndTemplateFileName == "QtreeSingleOwnerNoSchedule/email") {
-				inlineResources.put("imageLogo1", new ClassPathResource("templates/QtreeSingleOwnerNoSchedule/na_logo_hrz_1c-rev_rgb_lrg.png"));
-
-				context.setVariable("logoFullUrl", logoUrl);  					
-				context.setVariable("viewAllTasksFullUrl", viewAllTasks); 
-				context.setVariable("adsQtreeOwnerFullUrl", adsQtreeOwnerUrl);  
-				context.setVariable("adsSupportFullUrl", adsSupportUrl);  		
-				context.setVariable("migKey", "RANDOM_REPLACE");
-
-				context.setVariable("firstName", "Steve");
-
-				emailService.sendTemplatedMail(emailTo, subject, emailFolderAndTemplateFileName, context, inlineResources);
-			}
-
-			if(emailFolderAndTemplateFileName == "QtreeOwnerReminderNoSchedule/email") {
-				inlineResources.put("imageLogo1", new ClassPathResource("templates/QtreeOwnerReminderNoSchedule/na_logo_hrz_1c-rev_rgb_lrg.png"));
-
-				context.setVariable("logoFullUrl", logoUrl);  					
-				context.setVariable("viewAllTasksFullUrl", viewAllTasks); 
-				context.setVariable("adsQtreeOwnerFullUrl", adsQtreeOwnerUrl);  
-				context.setVariable("adsSupportFullUrl", adsSupportUrl);  		
-				context.setVariable("migKey", "RANDOM_REPLACE");
-
-				context.setVariable("firstName", "Steve");
-
-				emailService.sendTemplatedMail(emailTo, subject, emailFolderAndTemplateFileName, context, inlineResources);
-			}
-
-
-		} catch (UnsupportedEncodingException e) {
-			//FIXME: bad error handeling
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			//FIXME: bad error handeling
-			e.printStackTrace();
-		}
-
-		return "Email sent!";
-	}
 
 
 	// This is the URL that Talend will call once it gets the CMDB information.

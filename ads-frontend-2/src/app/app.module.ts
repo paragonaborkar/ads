@@ -93,6 +93,7 @@ import { NativeUserChangePwComponent } from './admin/admin-native-user/native-us
 import { NoWhitespaceDirective } from './common/validators/no-whitespace.directive';
 import { ConnectionDashboardComponent } from './connections/connection-dashboard/connection-dashboard.component';
 import { DiscoverDashboardComponent } from './discover/discover-dashboard/discover-dashboard.component';
+import { SsoLoginErrorComponent } from './common/sso-login-error/sso-login-error.component';
 
 
 @NgModule({
@@ -149,7 +150,8 @@ import { DiscoverDashboardComponent } from './discover/discover-dashboard/discov
     OperationalOverrideComponent,
     OpOverrideConfirmComponent,
     OwnerHomeComponent,
-    DiscoverDashboardComponent
+    DiscoverDashboardComponent,
+    SsoLoginErrorComponent
 
   ],
   imports: [

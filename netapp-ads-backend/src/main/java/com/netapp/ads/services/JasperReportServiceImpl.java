@@ -52,7 +52,7 @@ public class JasperReportServiceImpl implements JasperReportService {
 	/**
 	 * This method is called to generate Report
 	 */
-//	@SuppressWarnings("deprecation")
+	//	@SuppressWarnings("deprecation")
 	@Override
 	public Report generateReport(Integer pageNo, Integer recordsPerPage, String reportName, String adsModule) {
 		DynamicJasper dj = new DynamicJasper();
@@ -142,6 +142,18 @@ public class JasperReportServiceImpl implements JasperReportService {
 
 			xlsExporter.setConfiguration(xlsReportConfiguration);
 			xlsExporter.exportReport();
+
+			// Java 7 introduced the try-with-resources statement, which implicitly closes Closeables. 
+			try (InputStream in = new FileInputStream(file)) {
+				response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+				response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+				FileCopyUtils.copy(in, response.getOutputStream());
+				response.getOutputStream().flush();
+				response.getOutputStream().close();
+				response.flushBuffer();
+			} catch (Exception e1) {
+				throw new NetAppAdsException("Error in Downloading Report");
+			}
 
 			InputStream in = new FileInputStream(file);
 			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");

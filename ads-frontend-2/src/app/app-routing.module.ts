@@ -3,6 +3,8 @@ import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
 import { AuthGuard } from './auth/guards/auth-guard.service';
 import { RoleGuard } from './auth/guards/role-guard.service';
+import { SsoLoginErrorComponent } from './common/sso-login-error/sso-login-error.component';
+
 
 import { HomeComponent } from './common/home/home.component';
 import { LoginComponent } from './common/login/login.component';
@@ -62,7 +64,9 @@ const routes: Routes = [
   { path: 'home',  component: HomeComponent, canActivate: [AuthGuard], data: {expectedRole: 'ROLE_USER'}  },
   { path: 'owner',  component: OwnerNotFoundComponent, canActivate: [RoleGuard], data: {expectedRole: 'ROLE_USER'}  },
   { path: 'owner/:migKey',  component: OwnerComponent, canActivate:  [RoleGuard], data: {expectedRole: 'ROLE_USER'}  },
+  { path: 'sso-login-error',  component: SsoLoginErrorComponent },
 
+  
   // Error paths
   { path: '404', component:Error404Component},
   { path: '**', redirectTo: '/404'}

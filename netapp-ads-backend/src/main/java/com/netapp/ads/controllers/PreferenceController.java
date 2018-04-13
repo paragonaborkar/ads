@@ -66,14 +66,21 @@ public class PreferenceController { // implements ResourceProcessor<RepositoryLi
 		Preference pref = null;
 		List<PreferenceDetail> userPrefDetails = null; 
 
+		int iNativeUserId = 0;
+		int iCorpUserId = 0;
 		// Get the User's existing Preference based on the information provided.
 		// Since native and corp user is optional, make sure we are always getting the right type of user.
 		if (nativeUserId.isPresent() && corpUserId.isPresent()) {
-			pref= preferenceRepo.findByPreferenceTypeAndPageNameAndNativeUserIdAndCorpUserId(preferenceType, pageName, Integer.parseInt(nativeUserId.get()), Integer.parseInt(corpUserId.get()));			
+			iNativeUserId =  Integer.parseInt(nativeUserId.get());
+			iCorpUserId = Integer.parseInt(corpUserId.get());
+			
+			pref= preferenceRepo.findByPreferenceTypeAndPageNameAndNativeUserIdAndCorpUserId(preferenceType, pageName, iNativeUserId, iCorpUserId);			
 		} else if (nativeUserId.isPresent()) {
-			pref = preferenceRepo.findByPreferenceTypeAndPageNameAndNativeUserIdAndCorpUserId(preferenceType, pageName, Integer.parseInt(nativeUserId.get()), 0);
+			iNativeUserId =  Integer.parseInt(nativeUserId.get());
+			pref = preferenceRepo.findByPreferenceTypeAndPageNameAndNativeUserIdAndCorpUserId(preferenceType, pageName, iNativeUserId, 0);
 		} else if (corpUserId.isPresent()) {
-			pref = preferenceRepo.findByPreferenceTypeAndPageNameAndNativeUserIdAndCorpUserId(preferenceType, pageName, 0, Integer.parseInt(corpUserId.get()));
+			iCorpUserId = Integer.parseInt(corpUserId.get());
+			pref = preferenceRepo.findByPreferenceTypeAndPageNameAndNativeUserIdAndCorpUserId(preferenceType, pageName, 0, iCorpUserId);
 		} else {
 			//FIXME: Throw a proper REST error and error code.
 			throw new Exception("Missing Paramaters");
@@ -94,9 +101,10 @@ public class PreferenceController { // implements ResourceProcessor<RepositoryLi
 				// 2. Copy Preference to the current user.
 				Preference newPref = new Preference();
 				// FIXME: Do we need to validate the user?
-				newPref.setCorpUserId(Integer.parseInt(corpUserId.get()));
+				
+				newPref.setCorpUserId(iCorpUserId);
 				// FIXME: Do we need to validate the user?
-				newPref.setNativeUserId(Integer.parseInt(nativeUserId.get()));
+				newPref.setNativeUserId(iNativeUserId);
 				newPref.setPageName(pageName);
 				newPref.setPreferenceType(USER_PREF_TYPE);
 				preferenceRepo.save(newPref);

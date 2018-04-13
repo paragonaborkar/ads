@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jfree.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,8 @@ import com.netapp.ads.Application;
 
 @RestController
 public class LoginController {
+
+	private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
 	@Value("#{sysConfigRepository.findByPropertyName('sso.idp.url').getPropertyValue()}")
 	private String ssoIdpURL;
@@ -30,18 +34,19 @@ public class LoginController {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	
+
 	@RequestMapping(value = "/sso", method = RequestMethod.GET)
 	public void loginRedirect(HttpServletRequest request, HttpServletResponse response, Authentication auth)
 			throws ServletException, IOException {
-		
-		System.out.println(request.getParameter("userId"));
+
+		log.debug("User ID to use for SSO:" + request.getParameter("userId"));
+
 		if (request.getParameter("userId") != null) {
 			// FIXME:  THIS IS ONLY A TEMPORANY SOLUTION SO WE CAN LOGIN AS MANY CORP USERS
-			Log.error("THIS IS ONLY A TEMPORANY SOLUTION SO WE CAN LOGIN AS MANY CORP USERS");
+			log.error("THIS IS ONLY A TEMPORANY SOLUTION SO WE CAN LOGIN AS MANY CORP USERS");
 			Application.ssoWorkAroundId = request.getParameter("userId");
 		}
-		
-			response.sendRedirect(ssoIdpURL);
+		log.debug("Redirecting to:" + ssoIdpURL);
+		response.sendRedirect(ssoIdpURL);
 	}
 }

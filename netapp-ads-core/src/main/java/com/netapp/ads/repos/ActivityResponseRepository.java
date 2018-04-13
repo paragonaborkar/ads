@@ -1,7 +1,6 @@
 package com.netapp.ads.repos;
 
 
-import com.netapp.ads.models.Activity;
 import com.netapp.ads.models.ActivityResponse;
 
 import java.util.List;
