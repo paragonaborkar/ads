@@ -52,7 +52,7 @@ public class ShowmountDataCollectorAndImporter {
 	
 	JSONUtils jsonUtils = new JSONUtils();
 
-	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('showmount.schedule').getPropertyValue()}")
+	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('showmount.schedule').getPropertyValue()}", initialDelayString = "#{sysConfigRepository.findByPropertyName('showmount.schedule.initial_delay').getPropertyValue()}")
 	public void collectShowmountData() {
 		log.info("Show mount job started");
 		String currentTimeStamp=NaDBUtils.getCurrentTimeStamp();

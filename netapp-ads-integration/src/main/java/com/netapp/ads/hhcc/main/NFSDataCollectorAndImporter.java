@@ -86,7 +86,7 @@ public class NFSDataCollectorAndImporter {
 	 * -Array netapp1 -DataWarehouseAddress dwh_ip -Port = "3306" -VfilerName
 	 * vfiler1 -ClearStats $True -Debugger $True
 	 */
-	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('nfs.schedule').getPropertyValue()}")
+	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('nfs.schedule').getPropertyValue()}", initialDelayString = "#{sysConfigRepository.findByPropertyName('nfs.schedule.initial_delay').getPropertyValue()}")
 	public void collectCurrentNFSConnectedHostsAndStatistics() {
 		boolean clearNFSStats = false;
 		log.info("NFS Collector and Importer Job started");
