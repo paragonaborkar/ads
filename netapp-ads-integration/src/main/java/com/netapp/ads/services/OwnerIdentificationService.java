@@ -74,8 +74,7 @@ public class OwnerIdentificationService {
 	public ApplicationsPojo getApplications(String hostIp) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		log.debug("Calling Talend to get application information GET:" + talendCMDBUrl + hostIp);
-		ApplicationsPojo applications = restTemplate.getForObject(talendCMDBUrl + hostIp, ApplicationsPojo.class);
+		ApplicationsPojo applications = restTemplate.getForObject(talendCMDBUrl, ApplicationsPojo.class);
 		return applications;
 	}
 
@@ -104,7 +103,7 @@ public class OwnerIdentificationService {
 			for(Share share: shares) {
 				Host host = share.getHost();
 				log.debug("identifyOwner(): share: {}, host: {}, host owner: {} ", share.getId(), host.getId(), host.getHostOwnerUserCorporateId());
-				processHost(host, activity, getApplications(host.getIpAddr()));
+				processHost(host, activity, getApplications(null));
 			}
 		} //end of for
 			
@@ -160,8 +159,12 @@ public class OwnerIdentificationService {
 				for(ApplicationPojo applicationPojo: applicationsPojo.getApplications()) {
 					Application application = applicationRepository.findByApplicationCode(applicationPojo.getCode());
 					if(application == null) {
-						UserCorporate corpUser = getOrCreateCorporateUser(applicationPojo.getOwner());;
-						createActivityResponse(activity, corpUser);
+						
+						UserCorporate corpUser = null;
+						for(ApplicationOwnerPojo owner: applicationPojo.getOwner()) {
+							corpUser = getOrCreateCorporateUser(owner);;
+							createActivityResponse(activity, corpUser);
+						}
 						
 						LineOfBusiness lob = getOrCreateLob(applicationPojo.getOwningLOB());
 						log.debug("createApplicationAndUsers(): Application DOES NOT exist. Creating.." );
@@ -186,7 +189,9 @@ public class OwnerIdentificationService {
 						log.debug("createApplicationAndUsers(): Application Created/Updated: " + application.getId());
 					} else {
 						if(activity.getAdminOverride()) {
-							createActivityResponse(activity, getOrCreateCorporateUser(applicationPojo.getOwner()));
+							for(ApplicationOwnerPojo owner: applicationPojo.getOwner()) {
+								createActivityResponse(activity, getOrCreateCorporateUser(owner));
+							}
 						}
 						log.debug("createApplicationAndUsers(): Application already exists: " + application.getId());
 					}
@@ -353,3 +358,4 @@ public class OwnerIdentificationService {
 		return host;
 	}
 }
+

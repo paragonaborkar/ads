@@ -34,6 +34,7 @@ import com.netapp.ads.models.ControllerWorkPackage;
 import com.netapp.ads.models.MigrationKey;
 import com.netapp.ads.models.NasVolume;
 import com.netapp.ads.models.UserCorporate;
+import com.netapp.ads.pojo.ApplicationOwnerPojo;
 import com.netapp.ads.pojo.ApplicationPojo;
 import com.netapp.ads.pojo.ApplicationsPojo;
 import com.netapp.ads.repos.ActivityRepository;
@@ -46,7 +47,6 @@ import com.netapp.ads.rules.engine.QtreeDispositionService;
 import com.netapp.ads.services.OwnerIdentificationService;
 
 @RestController
-@RequestMapping("/api")
 public class DiscoverProcessingController {
 
 	private static final Logger log = LoggerFactory.getLogger(DiscoverProcessingController.class);
@@ -319,14 +319,18 @@ public class DiscoverProcessingController {
 
 	// This is the URL that Talend will call once it gets the CMDB information.
 	@RequestMapping(value = "/identifyOwners", method = RequestMethod.POST)
-//	public ResponseEntity<?> identifyOwners(@RequestBody ApplicationsPojo applications) {
-		public ResponseEntity<?> ownerIdentification() {
+	// public ResponseEntity<?> identifyOwners(@RequestBody ApplicationsPojo applications) {
+	public ResponseEntity<?> identifyOwners(@RequestBody ApplicationsPojo applications) {
 		
-		log.debug("Owner Identification Controller [ENTER]");
-//		log.debug("Owner Identification Controller applicationWrapper: " + applications);
-//		for(ApplicationPojo applicationPojo: applications.getApplications()) {
-//				log.debug("Owner Identification applicationPojo: " + applicationPojo);
-//		}
+		// log.debug("Owner Identification Controller [ENTER]");
+		// log.debug("Owner Identification Controller applicationWrapper: " + applications);
+		// for(ApplicationPojo applicationPojo: applications.getApplications()) {
+		// 		log.debug("Owner Identification applicationPojo: " + applicationPojo);
+		// 		for(ApplicationOwnerPojo owner : applicationPojo.getOwner()) {
+		// 			log.debug("Owner Identification owner: " + owner.getUserName());
+		// 		}
+		// }
+
 		ownerIdentificationService.identifyOwner();
 		log.debug("Owner Identification Controller [EXIST]");
 		// Step 1. Validate entire JSON file and every field. If anything is invalid or missing. Fail for all applications and do not process any.

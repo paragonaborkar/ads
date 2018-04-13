@@ -1,12 +1,15 @@
 package com.netapp.ads.pojo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ApplicationPojo {
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private String code;
 	private String informationOwner;
 	private String owningLOB;
-	private ApplicationOwnerPojo owner;
+	private List<ApplicationOwnerPojo> owner = new ArrayList<ApplicationOwnerPojo>();
 	
 
 	public ApplicationPojo() {
@@ -46,11 +49,11 @@ public class ApplicationPojo {
 		this.informationOwner = informationOwner;
 	}
 	
-	public ApplicationOwnerPojo getOwner() {
+	public List<ApplicationOwnerPojo> getOwner() {
 		return this.owner;
 	}
 
-	public void setOwner(ApplicationOwnerPojo owner) {
+	public void setOwner(List<ApplicationOwnerPojo> owner) {
 		this.owner = owner;
 	}
 

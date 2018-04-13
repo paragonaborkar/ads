@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.netapp.ads.hhcc.converters.HHCCConstants;
 import com.netapp.ads.hhcc.jaxb.CIFSSessionInfo;
 import com.netapp.ads.hhcc.jaxb.CIFShareInfo;
 import com.netapp.ads.hhcc.jaxb.VfilerInfo;
@@ -75,7 +76,7 @@ public class CIFSSessionCollector {
 	//private static final String QUERY = "insert into  dwh_inventory.wcr_cifs_temp(DateTime,ControllerName, SerialNumber,VfilerName,VfilerUuid,VolumeName,ShareName,MountPoint,HostIp,HostName,WindowsUser,UnixUser) " + 
 	//		" Values (:dateTime,:controllerName,:serialNumber,:vFilerName,:vFilerUUID,:volumeName,:shareName,:mountPoint,:hostIP,:hostName,:windowsUser,:unixUser)  ON DUPLICATE KEY UPDATE DateTime=NOW()";
 
-	private static final String QUERY = "insert into  dwh_inventory.wcr_cifs_temp(DateTime,ControllerName, SerialNumber,VfilerName,VfilerUuid,VolumeName,ShareName,MountPoint,HostIp,HostName,WindowsUser,UnixUser) " + 
+	private static final String QUERY = "insert into  " + HHCCConstants.TBL_CIFS_TEMP + "(DateTime,ControllerName, SerialNumber,VfilerName,VfilerUuid,VolumeName,ShareName,MountPoint,HostIp,HostName,WindowsUser,UnixUser) " + 
 			" Values (?,?,?,?,?,?,?,?,?,?,?,?)  ON DUPLICATE KEY UPDATE DateTime=NOW()";
 
 	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('cifs.schedule').getPropertyValue()}")
