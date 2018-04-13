@@ -34,7 +34,7 @@ import com.netapp.ads.repos.PreferenceRepository;
 @RepositoryRestController
 @BasePathAwareController
 @RequestMapping(value = "/api")
-public class PreferenceController { // implements ResourceProcessor<RepositoryLinksResource> {
+public class PreferenceController {
 
 	private static final Logger log = LoggerFactory.getLogger(PreferenceController.class);
 
@@ -63,6 +63,8 @@ public class PreferenceController { // implements ResourceProcessor<RepositoryLi
 			@RequestParam("preferenceType")   String preferenceType,
 			@RequestParam(value="copySystemToUser", required = false, defaultValue = "false")   boolean copySystemToUser) throws Exception {
 
+		log.debug("Preferences for page:" + pageName);
+		
 		Preference pref = null;
 		List<PreferenceDetail> userPrefDetails = null; 
 
@@ -73,7 +75,7 @@ public class PreferenceController { // implements ResourceProcessor<RepositoryLi
 		if (nativeUserId.isPresent() && corpUserId.isPresent()) {
 			iNativeUserId =  Integer.parseInt(nativeUserId.get());
 			iCorpUserId = Integer.parseInt(corpUserId.get());
-			
+
 			pref= preferenceRepo.findByPreferenceTypeAndPageNameAndNativeUserIdAndCorpUserId(preferenceType, pageName, iNativeUserId, iCorpUserId);			
 		} else if (nativeUserId.isPresent()) {
 			iNativeUserId =  Integer.parseInt(nativeUserId.get());
@@ -101,14 +103,14 @@ public class PreferenceController { // implements ResourceProcessor<RepositoryLi
 				// 2. Copy Preference to the current user.
 				Preference newPref = new Preference();
 				// FIXME: Do we need to validate the user?
-				
+
 				newPref.setCorpUserId(iCorpUserId);
 				// FIXME: Do we need to validate the user?
 				newPref.setNativeUserId(iNativeUserId);
 				newPref.setPageName(pageName);
 				newPref.setPreferenceType(USER_PREF_TYPE);
 				preferenceRepo.save(newPref);
-				
+
 				// 3. Copy Preference Details to the current user.
 				List<Resource<PreferenceDetail>> al = new ArrayList<Resource<PreferenceDetail>>();
 				userPrefDetails = pref.getPreferenceDetails();
@@ -120,19 +122,18 @@ public class PreferenceController { // implements ResourceProcessor<RepositoryLi
 					newPrefDetail.setFieldTemplate(prefDetail.getFieldTemplate());					
 					newPrefDetail.setFieldOrder(prefDetail.getFieldOrder());
 					newPrefDetail.setFieldVisible(prefDetail.getFieldVisible());
-					
+
 					preferenceDetailRepo.save(newPrefDetail);
-					
+
 					Link link = entityLinks.linkToSingleResource(PreferenceDetailRepository.class, newPrefDetail.getId());
 					Resource<PreferenceDetail> res = new Resource<PreferenceDetail>(newPrefDetail, link);
 					al.add(res);
 				}
 
-				// If we have a Preference, then return the Preference Details.
-				if (newPref != null) {
-					Resources<PreferenceDetail> resources2 = new Resources(al);
-					return new ResponseEntity(resources2, HttpStatus.OK);
-				}
+				// Return the Preference Details.
+				Resources<PreferenceDetail> resources2 = new Resources(al);
+				return new ResponseEntity(resources2, HttpStatus.OK);
+
 
 			}
 		}
@@ -140,7 +141,7 @@ public class PreferenceController { // implements ResourceProcessor<RepositoryLi
 		// If we have a Preference, then return the Preference Details.
 		if (pref != null) {
 			List<Resource<PreferenceDetail>> al = new ArrayList<Resource<PreferenceDetail>>();
-			Resources<PreferenceDetail> resources;
+
 			for (PreferenceDetail prefDetail : pref.getPreferenceDetails()) {
 				// We need links for each of the PreferenceDetail's show we can update the order and visibility, etc.
 				// https://docs.spring.io/spring-hateoas/docs/current/reference/html/#fundamentals.obtaining-links.builder

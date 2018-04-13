@@ -1,5 +1,6 @@
 package com.netapp.ads.services;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,7 @@ public class SystemPropertiesServiceImpl implements SystemPropertiesService {
 		try {
 			return sysConfigRepository.findDistinctGroupNames();
 		} catch (Exception e) {
-
+			return Collections.emptyList();
 		}
-		return null;
 	}
-
-
-
 }

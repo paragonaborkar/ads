@@ -33,9 +33,6 @@ public class UnidentifiedController {
 	@Autowired
 	ActivityRepository activityRepository;
 
-	//	@Autowired
-	//	AuditTrailCorporateUserRepository auditTrailCorpUserRepository;
-
 	@Autowired
 	AuditTrailNativeUserRepository auditTrailNativeUserRepository;
 
@@ -55,9 +52,9 @@ public class UnidentifiedController {
 	@Autowired
 	AuditEventRepository  auditEventRepository;
 
-	public final static String OK = "{\"message\":\"OK\"}";
-	public final static String NO_ACTIVITY_FOUND = "{\"message\":\"The activity was not found.\"}";
-	public final static String NO_USER_FOUND = "{\"message\":\"The current User was not found.\"}";
+	public static final  String OK = "{\"message\":\"OK\"}";
+	public static final  String NO_ACTIVITY_FOUND = "{\"message\":\"The activity was not found.\"}";
+	public static final  String NO_USER_FOUND = "{\"message\":\"The current User was not found.\"}";
 
 	@RequestMapping(value = "/resubmitUnidentified", method = RequestMethod.POST)
 	public ResponseEntity<?> resubmitUnidentified(@RequestBody UnidentifiedPojo unidentifiedResponse) {

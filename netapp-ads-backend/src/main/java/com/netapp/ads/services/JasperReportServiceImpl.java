@@ -86,7 +86,7 @@ public class JasperReportServiceImpl implements JasperReportService {
 			exporter.setParameter(JRHtmlExporterParameter.IS_WRAP_BREAK_WORD, Boolean.TRUE);
 			exporter.setParameter(JRXlsExporterParameter.IS_IGNORE_GRAPHICS, Boolean.TRUE);
 
-			StringBuffer sb = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			exporter.setParameter(JRHtmlExporterParameter.SIZE_UNIT, JRHtmlExporterParameter.SIZE_UNIT_POINT);
 			exporter.setParameter(JRExporterParameter.OUTPUT_STRING_BUFFER, sb);
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jp);

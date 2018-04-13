@@ -34,18 +34,18 @@ public class LoginController {
 	 * @throws IOException
 	 */
 
-	private static final String userIdParam = "userId";
+	private static final String USER_ID_PARAM = "userId";
 	
 	@RequestMapping(value = "/sso", method = RequestMethod.GET)
 	public void loginRedirect(HttpServletRequest request, HttpServletResponse response, Authentication auth)
 			throws ServletException, IOException {
 
-		log.debug("User ID to use for SSO:" + request.getParameter(userIdParam));
+		log.debug("User ID to use for SSO:" + request.getParameter(USER_ID_PARAM));
 
-		if (request.getParameter(userIdParam) != null) {
+		if (request.getParameter(USER_ID_PARAM) != null) {
 			// FIXME:  THIS IS ONLY A TEMPORANY SOLUTION SO WE CAN LOGIN AS MANY CORP USERS
 			log.error("THIS IS ONLY A TEMPORANY SOLUTION SO WE CAN LOGIN AS MANY CORP USERS");
-			Application.ssoWorkAroundId = request.getParameter(userIdParam);
+			Application.ssoWorkAroundId = request.getParameter(USER_ID_PARAM);
 		}
 		log.debug("Redirecting to:" + ssoIdpURL);
 		response.sendRedirect(ssoIdpURL);

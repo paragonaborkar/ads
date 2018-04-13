@@ -38,7 +38,6 @@ public class SsoController {
 		http://localhost:4200/index
 	 */
 
-	// INSERT INTO `ads_dev`.`sys_config` (`property_name`, `property_value`, `property_type_id`, `grouping`) VALUES ('ads.sso.backend.url', 'http://localhost:8080/saml/sso', '1', 'Security - SSO');
 	@Value("#{sysConfigRepository.findByPropertyName('ads.sso.backend.url').getPropertyValue()}")
 	private String adsSsoBackendUrl;
 
