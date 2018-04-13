@@ -88,7 +88,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 				} else {
 					userCorporate = userCorporateRepository.findFirstByEmail(split[2]);
 				}
-				log.debug("userCorporate: {}", userCorporate);
+				log.debug("userCorporate: {}", userCorporate.getEmail());
 				grantedAuthorities.add(new SimpleGrantedAuthority(userCorporate.getUserRole().getUserRole()));
 				return new AdsUser(split[2],new BCryptPasswordEncoder().encode(split[1]), grantedAuthorities, userCorporate);
 			}

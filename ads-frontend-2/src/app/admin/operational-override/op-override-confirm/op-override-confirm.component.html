@@ -24,7 +24,32 @@
         <div class="col-sm-4 h5">
           <strong>NAS Volume:</strong>
         </div>
-        <div class="col-sm-8 h5"> {{activityInfo["nasVolume"]["volumeName"]}}</div>
+        <div class="col-sm-8 h5"> {{activityInfo["qtree"]["nasVolume"]["volumeName"]}}</div>
+      </div>
+
+      <div class="row" >
+          <div class="col-sm-12 ">
+              <table class="table table-bordered table-hover table-sm ">
+                  <tbody>
+                      <tr>
+                          <td><strong>Apps</strong></td>
+                          <td>
+                              <div *ngFor="let app of activityInfo['qtree']['appNames']">
+                                  {{app}}
+                              </div>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td><strong>Hosts</strong></td>
+                          <td>
+                              <div *ngFor="let host of activityInfo['qtree']['hostNames']">
+                                  {{host}}
+                              </div>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
       </div>
 
       <!-- <label>

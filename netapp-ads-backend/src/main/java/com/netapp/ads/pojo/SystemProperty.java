@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class SystemProperty {
 
 	private Integer id;
+	
 	private Timestamp createTime;
 
 	private boolean encrypted;
@@ -21,6 +22,7 @@ public class SystemProperty {
 
 	public SystemProperty(Integer id, Timestamp createTime, boolean encrypted, String propertyName,
 			String propertyValue, Timestamp updateTime, String grouping, String sysConfigPropertyType) {
+		
 		super();
 		this.id = id;
 		this.createTime = createTime;

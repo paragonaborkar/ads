@@ -22,7 +22,7 @@ export class OperationalOverrideComponent implements OnInit {
   @ViewChild(DataTableColTemplatesComponent) dataTableColsTemplate: DataTableColTemplatesComponent;
   columnTemplates = {};
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
-  
+
   public isPropPreferenceModal = false;
   public isConfirmModal = false;
   public activityInfo: any = {};
@@ -38,7 +38,7 @@ export class OperationalOverrideComponent implements OnInit {
     this.page.number = 1;
     this.page.pageNumber = 1;
     this.page.size = 1000;
-   }
+  }
 
   ngOnInit() {
   }
@@ -57,7 +57,7 @@ export class OperationalOverrideComponent implements OnInit {
  * @param page The page to select
  */
   setPage(pageInfo) {
-   
+
     this.page.number = pageInfo.pageNumber;
     this.page.pageNumber = pageInfo.pageNumber;
 
@@ -69,16 +69,37 @@ export class OperationalOverrideComponent implements OnInit {
         this.page.pageNumber = this.page.number;
         // Don't set rows to undefined, it'll break the listing!    
         if (data._embedded.activities) {
-          this.rows = data._embedded.activities;
+          
+          data._embedded.activities.forEach(activity => {
 
-          // this.rows.forEach(activity => {
-          //   activity["activityResponses"].forEach(activtyResponse => {
-          //     if (activtyResponse["ownerUserCorporateId"] != this.currentUserCorporateId) {
-          //       // Keep other owners in a multi owner scenerio and display on the Owner modal.
-          //       // console.log("DEBUG AND TEST: Deleting:", this.rows["activityResponses"].activtyResponse);              
-          //     }
-          //   }); 
-          // });
+            let appCount = 0;
+          let appNames = [];
+
+          let hostCount = 0;
+          let hostNames = [];
+          
+            // Count of unique app amd unique hosts
+            activity["qtree"]["shares"].forEach(share => {
+              if (!hostNames.includes(share["host"]["hostName"])) {
+                hostNames.push(share["host"]["hostName"]);
+                hostCount = hostCount + 1;
+
+                share["host"]["applications"].forEach(app => {
+                  if (!appNames.includes(app["applicationName"])) {
+                    appNames.push(app["applicationName"]);
+                    appCount = appCount + share["host"]["applications"].length;
+                  }
+                });
+              }
+            });
+
+            activity["qtree"]["appCount"] = appCount;
+            activity["qtree"]["appNames"] = appNames;
+
+            activity["qtree"]["hostCount"] = hostCount;
+            activity["qtree"]["hostNames"] = hostNames;
+            this.rows = data._embedded.activities;
+          });
         }
         // this.rows = this.adsHelper.ungroupJson(usersNativeResponse._embedded.userNatives, "userRole", ["createTime", "updateTime"]);
         console.log("******************");
@@ -106,12 +127,12 @@ export class OperationalOverrideComponent implements OnInit {
   }
 
   showConfirmModal(row) {
-   
+
     this.activityInfo = row;
     this.isConfirmModal = true;
 
   }
-  
+
   hideConfirmModal() {
     this.isConfirmModal = false;
     this.setPage(this.page);
@@ -128,7 +149,7 @@ export class OperationalOverrideComponent implements OnInit {
     this.isPropPreferenceModal = false;
     this.rows = [];
     this.columns = [];
-  
+
     this.setPage(this.page);
     this.applyPreferences();
   }

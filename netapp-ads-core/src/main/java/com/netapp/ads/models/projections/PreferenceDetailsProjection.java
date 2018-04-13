@@ -1,7 +1,5 @@
 package com.netapp.ads.models.projections;
 
-import java.util.Date;
-
 import org.springframework.data.rest.core.config.Projection;
 
 import com.netapp.ads.models.Preference;

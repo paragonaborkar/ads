@@ -36,7 +36,7 @@ import com.netapp.ads.services.OwnerIdentificationService;
 public class TalendController {
 
 	private static final Logger log = LoggerFactory.getLogger(TalendController.class);
-	
+
 	@Autowired
 	private OwnerIdentificationService ownerIdentificationService;
 
@@ -45,7 +45,7 @@ public class TalendController {
 
 
 
-	
+
 	@RequestMapping(value = "userRoles", method = RequestMethod.POST, headers = ("content-type=multipart/*"))
 	public @ResponseBody ResponseEntity<?>  loadUserRoles(@RequestParam("file") MultipartFile inputFile) {
 		String jobName = runADSJob(TalendConstants.JOB_NAME_USER_ROLES, inputFile, TalendConstants.ADS_SETUP_LOADSHEET_USER_ROLES_XLSX);
@@ -108,7 +108,7 @@ public class TalendController {
 	public ResponseEntity<?> loadHosts() {
 
 		String jobName = runTalendJob(TalendConstants.JOB_NAME_HOSTS, null, TalendConstants.JOB_TYPE_OCI_LOAD, null);
-		
+
 		return new ResponseEntity(TalendConstants.STR_JOB_SUBMITTED.replaceFirst("PLACEHOLDER", jobName), HttpStatus.OK);	
 	}
 
@@ -190,8 +190,8 @@ public class TalendController {
 
 		return jobName + TalendConstants.UNDERSCORE + currentTimeMillis;
 	}
-	
-	
+
+
 	public String getTempLocation() {
 		log.info("getTempLocation: java.io.tmpdir: {}", System.getProperty(TalendConstants.TEMP_ATTR_NAME));	
 		String tempLocation = System.getProperty(TalendConstants.TEMP_ATTR_NAME);
@@ -225,7 +225,7 @@ public class TalendController {
 			log.info("runADSJob: jobName: {}", jobName);
 			return jobName;
 		}
-		
+
 		return "No Job Name";
 
 	}
@@ -242,9 +242,9 @@ public class TalendController {
 		long currentTimeMillis = System.currentTimeMillis(); // Keep
 		String batchScript = getBatchScript(jobId);
 		String jobName = getJobInstanceName(jobId, currentTimeMillis);
-		
+
 		log.info("runTalendJob: jobName: {}", jobName);
-		
+
 		CommandLine command = null;
 		if (TalendConstants.JOB_TYPE_ADS_SETUP.equalsIgnoreCase(jobType)) {
 			command = getCommandLine(batchScript, inputFileName, jobType,inputFileParamName,jobName);
@@ -355,11 +355,11 @@ public class TalendController {
 
 			File newBatchFile=new File(strNewBatchFile ); 
 
-			BufferedWriter bw=new BufferedWriter(new FileWriter(newBatchFile));
-			bw.write(TalendConstants.STR_CD+parentFldr);
-			bw.newLine();
-			bw.write(finalTalendJobCommand);
-			bw.close();
+			try (BufferedWriter bw=new BufferedWriter(new FileWriter(newBatchFile))) {
+				bw.write(TalendConstants.STR_CD+parentFldr);
+				bw.newLine();
+				bw.write(finalTalendJobCommand);
+			}
 
 			command = CommandLine.parse(newBatchFile.getAbsolutePath());
 		} catch (IOException e) {
@@ -382,20 +382,20 @@ public class TalendController {
 
 			String parentFldr=originalBatchScript.getParent();
 			log.info("createLinuxBatchScript: parentFldr: {}", parentFldr);
-			
+
 			String strNewBatchFile=parentFldr+File.separator+jobName+TalendConstants.STR_SH_EXT;
 
 			File newBatchFile=new File(strNewBatchFile );
 			boolean isExecutable = newBatchFile.setExecutable(true, false);
 			log.debug("createLinuxBatchScript: isExecutable: {}", isExecutable);
 
-			BufferedWriter bw=new BufferedWriter(new FileWriter(newBatchFile));
-			bw.write(TalendConstants.STR_CD+parentFldr);
-			bw.newLine();
-			bw.write(TalendConstants.STR_SET_PWD);
-			bw.newLine();
-			bw.write(finalTalendJobCommand);
-			bw.close();
+			try (BufferedWriter bw=new BufferedWriter(new FileWriter(newBatchFile))) {
+				bw.write(TalendConstants.STR_CD+parentFldr);
+				bw.newLine();
+				bw.write(TalendConstants.STR_SET_ROOT);
+				bw.newLine();
+				bw.write(finalTalendJobCommand);
+			}
 
 			command = CommandLine.parse(newBatchFile.getAbsolutePath());
 		} catch (IOException e) {
@@ -409,17 +409,20 @@ public class TalendController {
 
 		String line = null;
 		try {
-			BufferedReader br=new BufferedReader(new FileReader(originalBatchScript));
-			while((line=br.readLine())!=null) {
+			try (BufferedReader br=new BufferedReader(new FileReader(originalBatchScript))) {
+				while((line=br.readLine())!=null) {
 
-				if(line.trim().startsWith(TalendConstants.STR_JAVA)) {
-					break;
+					if(line.trim().startsWith(TalendConstants.STR_JAVA)) {
+						break;
+					}
 				}
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			log.error("File not found!");
+			log.error(e.getMessage());
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("IO expection");
+			log.error(e.getMessage());
 		}
 		return line;
 	}

@@ -1,16 +1,16 @@
 package com.netapp.ads.models;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.support.RepositoryEntityLinks;
-import org.springframework.hateoas.Link;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.sql.Timestamp;
-import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 
 /**

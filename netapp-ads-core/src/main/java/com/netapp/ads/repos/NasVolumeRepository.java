@@ -1,14 +1,10 @@
 package com.netapp.ads.repos;
 
-import com.netapp.ads.models.NasVolume;
-import com.netapp.ads.models.projections.NasVolumeProjection;
-
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+import com.netapp.ads.models.NasVolume;
 
 @RepositoryRestResource
 public interface NasVolumeRepository extends JpaRepository<NasVolume, Integer> {

@@ -7,9 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-
 import com.netapp.ads.models.Preference;
-import com.netapp.ads.models.projections.PreferenceProjections;
 
 
 

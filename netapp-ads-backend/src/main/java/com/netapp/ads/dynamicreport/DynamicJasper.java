@@ -64,9 +64,7 @@ public class DynamicJasper {
 		 */
 		drb.setUseFullPageWidth(true);
 
-		DynamicReport dr = drb.build();
-
-		return dr;
+		return drb.build();
 	}
 
 	/**
@@ -106,9 +104,7 @@ public class DynamicJasper {
 
 		}
 
-		DynamicReport dr = drb.build();
-
-		return dr;
+		return drb.build();
 	}
 
 }

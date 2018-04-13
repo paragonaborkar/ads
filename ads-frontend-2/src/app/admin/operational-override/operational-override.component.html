@@ -16,7 +16,7 @@
 
 <div class="row d-flex justify-content-center">
   <div class="col-md-9" *ngIf="rows.length > 0 && columns.length > 0">
-    <ngx-datatable class="material card" [rows]="rows" [columns]="columns" [columnMode]="'force'" [rowHeight]="auto" [externalPaging]="true"
+    <ngx-datatable class="material card" [rows]="rows" [columns]="columns" [columnMode]="'force'" [rowHeight]="'auto'" [externalPaging]="true"
       [count]="page.totalElements" [offset]="page.number" [limit]="page.size" [headerHeight]="50" [footerHeight]="50" (page)='setPage($event)'>
     </ngx-datatable>
   </div>

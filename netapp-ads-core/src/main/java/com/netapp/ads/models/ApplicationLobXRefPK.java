@@ -1,7 +1,9 @@
 package com.netapp.ads.models;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
  * The primary key class for the application_lob_x_ref database table.

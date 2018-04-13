@@ -64,7 +64,7 @@ public class OwnerController {
 	 * @param userCorporateId
 	 * @return
 	 */
-//	@PreAuthorize("hasAuthority('CORP_USER')")
+	//	@PreAuthorize("hasAuthority('CORP_USER')")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	@RequestMapping(value = "/validateMigrationKey/{migrationKey}/{userCorporateId}", method = RequestMethod.GET)
 	public boolean validateMigKey(@PathVariable(name = "migrationKey") String migrationKey,
@@ -90,10 +90,10 @@ public class OwnerController {
 
 		if (presumedCount > 0) // Pending Owner responses!
 			return false;
-		
+
 		if (ownerCount > 1)	// Too many Owners!
 			return false;
-		
+
 		return true;
 	}
 
@@ -113,14 +113,14 @@ public class OwnerController {
 			Qtree qtree = activity.getQtree();
 			QtreeDisposition qtreeDisposition = qtreeDispositionRepository.findOneByDispositionAndQtree("DiscoverOwner", qtree);
 
-			System.out.println("qtreeDisposition.getDisposition():"+qtreeDisposition.getDisposition() + "-" + qtreeDisposition.getId());
-			System.out.println("activity id:"+activity.getId());
+			log.debug("qtreeDisposition.getDisposition():"+qtreeDisposition.getDisposition() + "-" + qtreeDisposition.getId());
+			log.debug("activity id:"+activity.getId());
 
 			if (qtreeDisposition.getDisposition() != "OwnerDiscover") {
 
-				System.out.println("ar.getCallMe():" + ownerResponse.getCallMe());
-				System.out.println("ar.getIsOwner():" + ownerResponse.getIsOwner());
-				System.out.println("ar.getIsPresumed():" + ownerResponse.getIsPresumed());
+				log.debug("ar.getCallMe():" + ownerResponse.getCallMe());
+				log.debug("ar.getIsOwner():" + ownerResponse.getIsOwner());
+				log.debug("ar.getIsPresumed():" + ownerResponse.getIsPresumed());
 
 				// We will always have information for these fields:
 				arToUpdate.setCallMe(ownerResponse.getCallMe());
@@ -132,13 +132,11 @@ public class OwnerController {
 						// FAIL SAFE Check - Ensures we don't set the QTree to be deleted if there are multiple people claiming they are the owners.
 						// Go through all actvitiyResponses and ensure that no owner already said they want to delete this qtree or if they didn't want to delete the qtree.
 						for(ActivityResponse ar : allResponses) {
-							if (arToUpdate != ar) {
-								if (ar.getIsOwner()) {
-									if (activity.getWillDecommission())
-										return new ResponseEntity(OWNER_ALREADY_DISCOVERED_DECOMMISSION, HttpStatus.CONFLICT);
-									else
-										return new ResponseEntity(OWNER_ALREADY_DISCOVERED_NO_DECOMMISSION, HttpStatus.CONFLICT);
-								}
+							if (arToUpdate != ar && ar.getIsOwner()) {
+								if (activity.getWillDecommission())
+									return new ResponseEntity(OWNER_ALREADY_DISCOVERED_DECOMMISSION, HttpStatus.CONFLICT);
+								else
+									return new ResponseEntity(OWNER_ALREADY_DISCOVERED_NO_DECOMMISSION, HttpStatus.CONFLICT);
 							}
 						}
 
@@ -161,7 +159,7 @@ public class OwnerController {
 
 				if (activityHasOneOwner(allResponses, arToUpdate)) {
 					// DiscoverOwner to "Discovered"
-					System.out.println("qtreeDisposition:" + qtreeDisposition.getDisposition() + qtreeDisposition.getId());
+					log.debug("qtreeDisposition:" + qtreeDisposition.getDisposition() + qtreeDisposition.getId());
 					qtreeDisposition.setDisposition("Discovered");
 					qtreeDispositionRepository.save(qtreeDisposition);
 				}
