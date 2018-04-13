@@ -88,7 +88,7 @@ public class NFSDataCollectorAndImporter {
 	 */
 	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('nfs.schedule').getPropertyValue()}")
 	public void collectCurrentNFSConnectedHostsAndStatistics() {
-		boolean clearNFSStats = false;
+	
 		log.info("NFS Collector and Importer Job started");
 		String currentTimeStamp = NaDBUtils.getCurrentTimeStamp();
 		
@@ -137,9 +137,7 @@ public class NFSDataCollectorAndImporter {
 				combinedActiveExports.setLastSeen(currentTimeStamp);
 				//jsonUtils.writeToFile(exportFilePath, combinedActiveExports);
 				importData(combinedActiveExports);
-				if(clearNFSStats) {
-					netAppAPIUtils.clearNfsStats();
-				}
+				
 			} else {
 				log.info("No active exports found for {}", netAppSystemInfo.getSystemName());
 			}

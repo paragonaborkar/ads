@@ -26,30 +26,30 @@ public class ShowmountDataCollectorAndImporter {
 
 	@Value("#{sysConfigRepository.findByPropertyName('oci.server.name').getPropertyValue()}")
 	String ociServerName;
-	
+
 	@Value("#{sysConfigRepository.findByPropertyName('oci.server.data_model').getPropertyValue()}")
 	String ociServerDataModel;
-	
+
 	@Value("#{sysConfigRepository.findByPropertyName('oci.server.port').getPropertyValue()}")
 	int ociServerPort;
-	
+
 	@Value("#{sysConfigRepository.findByPropertyName('oci.server.user').getPropertyValue()}")
 	String ociServerUser;
-	
+
 	@Value("#{sysConfigRepository.findByPropertyName('oci.server.password').getPropertyValue()}")
 	String ociServerPassword;
-	
+
 	@Value("#{sysConfigRepository.findByPropertyName('vfiler.default_name').getPropertyValue()}")
 	String vFilerDefaultName;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ShowmountDataCollectorAndImporter.class);
-	
+
 	@Autowired
 	NetAppAPIUtils netAppAPIUtils;
-	
+
 	@Autowired
 	NaDBUtils naDBUtils;
-	
+
 	JSONUtils jsonUtils = new JSONUtils();
 
 	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('showmount.schedule').getPropertyValue()}")
@@ -181,11 +181,13 @@ public class ShowmountDataCollectorAndImporter {
 					bulkImport.add(showmountImportData);
 				} else {
 					StorageVolume storageObject = null;
-					for (int i = 0; i < storageVolumes.size(); i++) {
-						StorageVolume dwhStorageVolume = storageVolumes.get(i);
-						if (dwhStorageVolume.getVolumeName().equalsIgnoreCase(volumeName)) {
-							storageObject = dwhStorageVolume;
-							break;
+					if (storageVolumes != null) {
+						for (int i = 0; i < storageVolumes.size(); i++) {
+							StorageVolume dwhStorageVolume = storageVolumes.get(i);
+							if (dwhStorageVolume.getVolumeName().equalsIgnoreCase(volumeName)) {
+								storageObject = dwhStorageVolume;
+								break;
+							}
 						}
 					}
 
@@ -209,5 +211,5 @@ public class ShowmountDataCollectorAndImporter {
 
 		log.info("== JOB COMPLETE: Showmount Import ==");
 	}
-	
+
 }
