@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router,  CanActivate,  ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { AuthService } from './auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -17,27 +17,32 @@ import { Globals } from '../../globals';
 export class RoleGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router, private jwtHelper: JwtHelperService, private global: Globals, private http: HttpClient, private sessionHelper: SessionHelper) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>  {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     // this will be passed from the route config on the data property
-    const expectedRole = route.data.expectedRole;   
-    
+    const expectedRole = route.data.expectedRole;
+
     if (!this.auth.isAuthenticated() || this.sessionHelper.get("userRole") !== expectedRole) {
-      // When using SSO Circle, here we are passing the corpUserId because we only login as 1 user in SSO Circle.
-      // If enterprise service is available, this should be updated.
-      // return this.http.get(this.global.apiUrl + "/ssoUrl?redirectTo=" + state.url + "&userId=" +  this.sessionHelper.get("corpUserId"))
-      
-      console.log("route:", route);
-      console.log("state:", state);
-      console.log("state.url:", state.url);
-      // return this.http.get(this.global.apiUrl + "/ssoUrl?redirectTo=" + state.url)
-      return this.http.get("/ssoUrl?redirectTo=" + state.url + "&userId=" +  route.queryParams["userId"])
-        .map((res: Response) => {
-          window.location.href = res["ssoRedirectUrl"];
-          return false;
-        });
-     
+
+      // If we need more than a standard role, then go to login.
+      if (expectedRole != "ROLE_USER") {
+        this.router.navigate(['/404']);
+        return Observable.of(false);
+      } else {
+        console.log("route:", route);
+        console.log("state:", state);
+        console.log("state.url:", state.url);
+
+        // When using SSO Circle, here we are passing the corpUserId because we only login as 1 user in SSO Circle.
+        // If enterprise service is available, this should be updated.
+        return this.http.get("/ssoUrl?redirectTo=" + state.url + "&userId=" + route.queryParams["userId"])
+          .map((res: Response) => {
+            window.location.href = res["ssoRedirectUrl"];
+            return false;
+          });
+
+      }
     }
-    return  Observable.of(true);
+    return Observable.of(true);
   }
 
 }

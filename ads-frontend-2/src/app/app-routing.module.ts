@@ -41,15 +41,17 @@ const routes: Routes = [
   { path: '',   component: LoginComponent},
   { path: 'login',  component: LoginComponent },
    
-  { path: 'admin/admin-user-mgmt', component: AdminNativeUserComponent, canActivate: [AuthGuard] },
-  { path: 'index',  component: OwnerHomeComponent, canActivate: [AuthGuard] },
- 
+  { path: 'home',  component: HomeComponent, canActivate: [AuthGuard] },
+  
   { path: 'admin/report-listing',  component: ReportListingComponent, canActivate: [AuthGuard] },
-  { path: 'admin/property-preferences',  component: PropPreferencesComponent, canActivate: [AuthGuard] },
-  { path: 'admin/application-properties',  component: AppPropsComponent, canActivate: [AuthGuard] },
   { path: 'admin/manual-functions',  component: AdminManualFunctionsComponent, canActivate: [AuthGuard] },
   { path: 'admin/operational-override',  component: OperationalOverrideComponent, canActivate: [AuthGuard] },
 
+  { path: 'admin/admin-user-mgmt', component: AdminNativeUserComponent, canActivate: [RoleGuard], data: {expectedRole: 'ROLE_ADMIN'}  },
+  { path: 'admin/property-preferences',  component: PropPreferencesComponent, canActivate: [RoleGuard], data: {expectedRole: 'ROLE_ADMIN'}  },
+  { path: 'admin/application-properties',  component: AppPropsComponent, canActivate: [RoleGuard], data: {expectedRole: 'ROLE_ADMIN'}  },
+
+  
   { path: 'connections/manual-functions',  component: ConnectionsManualFunctionsComponent, canActivate: [AuthGuard] },
   { path: 'connections/report-listing',  component: ReportListingConnComponent, canActivate: [AuthGuard] },
   { path: 'connections/dashboard',  component: ConnectionDashboardComponent, canActivate: [AuthGuard] },
@@ -61,7 +63,7 @@ const routes: Routes = [
   { path: 'discover/dashboard',  component: DiscoverDashboardComponent, canActivate: [AuthGuard] },
 
   // For Qtree Owners
-  { path: 'home',  component: HomeComponent, canActivate: [AuthGuard], data: {expectedRole: 'ROLE_USER'}  },
+  { path: 'index',  component: OwnerHomeComponent, canActivate: [RoleGuard], data: {expectedRole: 'ROLE_USER'}  },
   { path: 'owner',  component: OwnerNotFoundComponent, canActivate: [RoleGuard], data: {expectedRole: 'ROLE_USER'}  },
   { path: 'owner/:migKey',  component: OwnerComponent, canActivate:  [RoleGuard], data: {expectedRole: 'ROLE_USER'}  },
   { path: 'sso-login-error',  component: SsoLoginErrorComponent },

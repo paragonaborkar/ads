@@ -34,10 +34,6 @@ export class SessionHelper {
         if (this.decodedToken == null)
             this.init();
 
-        console.log( "decodedToken:",  this.decodedToken);
-        console.log( "key", key );
-        console.log( "this.decodedToken[key]", this.decodedToken[key]);
-
         const item = this.decodedToken[key];
         if (item == 'undefined' || item == null) {
              return null; 

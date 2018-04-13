@@ -69,15 +69,15 @@ export class OperationalOverrideComponent implements OnInit {
         this.page.pageNumber = this.page.number;
         // Don't set rows to undefined, it'll break the listing!    
         if (data._embedded.activities) {
-          
+
           data._embedded.activities.forEach(activity => {
 
             let appCount = 0;
-          let appNames = [];
+            let appNames = [];
 
-          let hostCount = 0;
-          let hostNames = [];
-          
+            let hostCount = 0;
+            let hostNames = [];
+
             // Count of unique app amd unique hosts
             activity["qtree"]["shares"].forEach(share => {
               if (!hostNames.includes(share["host"]["hostName"])) {

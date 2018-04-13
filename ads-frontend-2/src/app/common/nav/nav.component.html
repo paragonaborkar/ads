@@ -40,9 +40,9 @@
         <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
         <div class="dropdown-menu" aria-labelledby="adminDropdown">
           <a class="dropdown-item" routerLink="admin/operational-override">Operational Override</a>
-          <a class="dropdown-item" routerLink="admin/admin-user-mgmt">Admin User Management</a>
-          <a class="dropdown-item" routerLink="admin/property-preferences">Display Preferences</a>
-          <a class="dropdown-item" routerLink="admin/application-properties">Application Properties</a>
+          <a class="dropdown-item" routerLink="admin/admin-user-mgmt"  *ngIf="userRole == 'ROLE_ADMIN'">Admin User Management</a>
+          <a class="dropdown-item" routerLink="admin/property-preferences" *ngIf="userRole == 'ROLE_ADMIN'">Display Preferences</a>
+          <a class="dropdown-item" routerLink="admin/application-properties" *ngIf="userRole == 'ROLE_ADMIN'">Application Properties</a>
           <a class="dropdown-item" routerLink="admin/report-listing" *ngIf="userRole == 'ROLE_ADMIN' || userRole == 'ROLE_REPORT_USER'">Reports</a>
           <a class="dropdown-item" routerLink="admin/manual-functions">Manual Functions </a>
         </div>
