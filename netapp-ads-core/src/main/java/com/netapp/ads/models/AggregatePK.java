@@ -1,10 +1,11 @@
 package com.netapp.ads.models;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Id;
-import java.io.Serializable;
-import java.util.Objects;
 @Embeddable
 public class AggregatePK implements Serializable {
     private Integer id;

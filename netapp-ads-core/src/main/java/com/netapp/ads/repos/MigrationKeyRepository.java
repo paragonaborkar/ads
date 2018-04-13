@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.netapp.ads.models.Activity;
 import com.netapp.ads.models.MigrationKey;
-import com.netapp.ads.models.UserNative;
 
 @Repository
 public interface MigrationKeyRepository extends JpaRepository<MigrationKey, Integer>, JpaSpecificationExecutor<MigrationKey> {

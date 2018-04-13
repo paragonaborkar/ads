@@ -1,9 +1,10 @@
 package com.netapp.ads.repos;
 
-import com.netapp.ads.models.ActivityPresumedLobXRef;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
+
+import com.netapp.ads.models.ActivityPresumedLobXRef;
 import com.netapp.ads.models.ActivityPresumedLobXRefPK;
 
 /**

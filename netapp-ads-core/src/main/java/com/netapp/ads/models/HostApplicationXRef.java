@@ -1,7 +1,10 @@
 package com.netapp.ads.models;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 
 /**
