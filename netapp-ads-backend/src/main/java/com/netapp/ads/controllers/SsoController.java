@@ -45,13 +45,14 @@ public class SsoController {
 	public final static String STR_SSO_REDIRECT_URL = "{\"ssoRedirectUrl\":\"PLACEHOLDER\"}"; 
 		
 	@RequestMapping(value="/ssoUrl", method=RequestMethod.GET)
-	public  ResponseEntity<?>  ssoUrl(HttpServletRequest request,  HttpServletResponse response,
-			@RequestParam(name = "redirectTo", required = true) String redirectTo) {
-
+	public  ResponseEntity<?>  ssoUrl(HttpServletRequest request,  HttpServletResponse response, 
+			@RequestParam(name = "redirectTo", required = true) String redirectTo, @RequestParam(name = "userId", required = false) String userId) {
 
 		String referrer = request.getHeader(HttpHeaders.REFERER); 
 
-		String url = adsSsoBackendUrl + "?relayState=" + referrer + "?redirectTo=" + redirectTo;
+		String url = adsSsoBackendUrl + "?relayState=" + referrer + "?redirectTo=" + redirectTo + "&userId=" + userId;
+		
+		log.debug("url:" + url);
 		
 		return new ResponseEntity(STR_SSO_REDIRECT_URL.replaceFirst("PLACEHOLDER", url), HttpStatus.OK);	
 

@@ -26,9 +26,11 @@ export class RoleGuard implements CanActivate {
       // If enterprise service is available, this should be updated.
       // return this.http.get(this.global.apiUrl + "/ssoUrl?redirectTo=" + state.url + "&userId=" +  this.sessionHelper.get("corpUserId"))
       
-      console.log("state.url:" + state.url);
+      console.log("route:", route);
+      console.log("state:", state);
+      console.log("state.url:", state.url);
       // return this.http.get(this.global.apiUrl + "/ssoUrl?redirectTo=" + state.url)
-      return this.http.get(this.global.apiUrl + "/ssoUrl?redirectTo=" + state.url + "&userId=" +  this.sessionHelper.get("corpUserId"))
+      return this.http.get("/ssoUrl?redirectTo=" + state.url + "&userId=" +  route.queryParams["userId"])
         .map((res: Response) => {
           window.location.href = res["ssoRedirectUrl"];
           return false;

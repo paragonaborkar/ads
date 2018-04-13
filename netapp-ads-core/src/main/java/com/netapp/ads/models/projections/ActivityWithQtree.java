@@ -22,10 +22,6 @@ public interface ActivityWithQtree {
 
 	public Date getDecommissionDate();
 
-	public Integer getMailCount();
-
-	public Date getMailingDate();
-
 	public Integer getMigrateDay();
 
 	public Date getMigrateWeek();
