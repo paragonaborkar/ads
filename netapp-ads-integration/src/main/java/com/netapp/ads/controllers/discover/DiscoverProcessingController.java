@@ -3,6 +3,7 @@ package com.netapp.ads.controllers.discover;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -20,6 +21,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +37,9 @@ import com.netapp.ads.models.ControllerWorkPackage;
 import com.netapp.ads.models.MigrationKey;
 import com.netapp.ads.models.NasVolume;
 import com.netapp.ads.models.UserCorporate;
+import com.netapp.ads.pojo.ApplicationOwnerPojo;
+import com.netapp.ads.pojo.ApplicationPojo;
+import com.netapp.ads.pojo.ApplicationsPojo;
 import com.netapp.ads.repos.ActivityRepository;
 import com.netapp.ads.repos.ActivityResponseRepository;
 import com.netapp.ads.repos.ControllerReleaseRepository;
@@ -54,19 +59,6 @@ public class DiscoverProcessingController {
 
 	@Value("#{sysConfigRepository.findByPropertyName('ads.rules.discovery_rule.disposition').getPropertyValue()}")
 	public String discoveryDisposition;
-
-	@Value("#{sysConfigRepository.findByPropertyName('ads.email.logoUrl').getPropertyValue()}")
-	public String logoUrl;
-
-	@Value("#{sysConfigRepository.findByPropertyName('ads.email.viewAllTasks').getPropertyValue()}")
-	public String viewAllTasks;
-
-	@Value("#{sysConfigRepository.findByPropertyName('ads.email.adsQtreeOwnerUrl').getPropertyValue()}")
-	public String adsQtreeOwnerUrl;
-
-	@Value("#{sysConfigRepository.findByPropertyName('ads.email.adsSupportUrl').getPropertyValue()}")
-	public String adsSupportUrl;
-
 
 	@Autowired
 	EmailService emailService;
@@ -160,65 +152,9 @@ public class DiscoverProcessingController {
 	@RequestMapping(value="/sendOwnerFirstEmail", method=RequestMethod.POST)
 	public ResponseEntity<?> sendOwnerFirstEmail(HttpServletRequest request,  HttpServletResponse response) {
 		// FIXME: Allow this it called by REST
-
-		// FIXME: But also convert this it a servive that runs once a day. Configuration in the application properties, if possible. 
-		HashMap<UserCorporate, ArrayList<MigrationKey>> emailsToSend = new HashMap<UserCorporate, ArrayList<MigrationKey>>();
-
 		// We cannot assume a previous set of emails was sent out. It could have failed. So search for Activities where emails have not been sent for it.
-		List<ActivityResponse> activityResponses = activityResponseRepository.findByEmailCount(0);
-
-		for(ActivityResponse activityResponse : activityResponses) {
-			Activity activity = activityResponse.getActivity();
-			//			for(Activity activity : response.getActivity()) {
-			// Get the activity to mig key x_ref mapping... a list of migration_key_id's...
-
-			List<MigrationKey> migKeys = activity.getMigrationKeys();
-
-			for(MigrationKey migKey : migKeys) {
-				if (emailsToSend.containsKey(migKey.getUserCorporate())) {
-					ArrayList<MigrationKey> migKeysForUser = emailsToSend.get(migKey.getUserCorporate());
-					if (!migKeysForUser.contains(migKey)) {
-						migKeysForUser.add(migKey);
-						emailsToSend.put(migKey.getUserCorporate(), migKeysForUser);
-					}
-				} else {
-					ArrayList<MigrationKey> migKeysForUser = new ArrayList<>();
-					migKeysForUser.add(migKey);
-					emailsToSend.put(migKey.getUserCorporate(), migKeysForUser);
-				}
-			}
-			//			}
-		}
-
-		Iterator<Map.Entry<UserCorporate, ArrayList<MigrationKey>>> it = emailsToSend.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry<UserCorporate, ArrayList<MigrationKey>> pair = (Map.Entry<UserCorporate, ArrayList<MigrationKey>>) it.next();
-			UserCorporate corpUser = (UserCorporate) pair.getKey();
-			ArrayList<MigrationKey> migKeys = (ArrayList<MigrationKey>) pair.getValue();	        
-
-			log.debug("Sending email to:"  + corpUser.getEmail());
-			log.debug("migKeys.size() for "+ corpUser.getEmail() + " " + migKeys.size());
-
-			boolean resultOfSend = sendEmail(request,  response, "QtreeMultiOwnerNoSchedule/email", corpUser, migKeys);
-			if (resultOfSend) {
-				for(MigrationKey migKey : migKeys) {
-					log.debug("Getting activities for key:" + migKey.getMigrationKey() + " for "+ corpUser.getEmail());
-					log.debug("Activity Size:" + migKey.getActivities().size());
-					for(Activity activity : migKey.getActivities()) {
-						log.debug("Activity ID :" + activity.getId());
-						ActivityResponse activityResponse = activityResponseRepository.findByOwnerUserCorporateIdAndActivityId(corpUser.getId(), activity.getId());
-						if (activityResponse != null) {
-							log.debug("Setting email count for ActivityResponse ID :" + activityResponse.getId());
-							activityResponse.setEmailCount(activityResponse.getEmailCount() + 1);
-							activityResponse.setEmailDate((Timestamp) dateUtils.convertToUtc()); 	// Only update the emailDate for the first time sending the email.
-							activityResponseRepository.save(activityResponse);
-						}
-					}
-
-				}
-			}
-		}
-
+		// FIXME: But also convert this it a servive that runs once a day. Configuration in the application properties, if possible. 
+		emailService.sendOwnerFirstEmail();
 		return new ResponseEntity(TalendConstants.STR_JOB_SUBMITTED.replaceFirst("PLACEHOLDER", "Email sent!"), HttpStatus.OK);
 	}
 
@@ -228,124 +164,11 @@ public class DiscoverProcessingController {
 	public ResponseEntity<?> sendOwnerReminderEmail(HttpServletRequest request,  HttpServletResponse response) {
 
 		// FIXME: Allow this it called by REST
-
 		// FIXME: But also convert this it a servive that runs once a day. Configuration in the application properties, if possible. 
-		HashMap<UserCorporate, ArrayList<MigrationKey>> emailsToSend = new HashMap<UserCorporate, ArrayList<MigrationKey>>();
-
 		// We cannot assume a previous set of emails was sent out. It could have failed. So search for Activities where emails have not been sent for it.
-		List<ActivityResponse> activityResponses = activityResponseRepository.findByIsOwnerAndIsPresumed(false, true);  				// ***************** THIS LINE IS DIFFERENT FROM THE FIRST EMAIL
-
-		for(ActivityResponse activityResponse : activityResponses) {
-			Activity activity = activityResponse.getActivity();
-			//			for(Activity activity : response.getActivity()) {
-			// Get the activity to mig key x_ref mapping... a list of migration_key_id's...
-
-			List<MigrationKey> migKeys = activity.getMigrationKeys();
-
-			for(MigrationKey migKey : migKeys) {
-				if (emailsToSend.containsKey(migKey.getUserCorporate())) {
-					ArrayList<MigrationKey> migKeysForUser = emailsToSend.get(migKey.getUserCorporate());
-					if (!migKeysForUser.contains(migKey)) {
-						migKeysForUser.add(migKey);
-						emailsToSend.put(migKey.getUserCorporate(), migKeysForUser);
-					}
-				} else {
-					ArrayList<MigrationKey> migKeysForUser = new ArrayList<>();
-					migKeysForUser.add(migKey);
-					emailsToSend.put(migKey.getUserCorporate(), migKeysForUser);
-				}
-			}
-			//			}
-		}
-
-		Iterator<Map.Entry<UserCorporate, ArrayList<MigrationKey>>> it = emailsToSend.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry<UserCorporate, ArrayList<MigrationKey>> pair = (Map.Entry<UserCorporate, ArrayList<MigrationKey>>) it.next();
-			UserCorporate corpUser = (UserCorporate) pair.getKey();
-			ArrayList<MigrationKey> migKeys = (ArrayList<MigrationKey>) pair.getValue();	        
-
-			log.debug("Sending email to:"  + corpUser.getEmail());
-			log.debug("migKeys.size() for "+ corpUser.getEmail() + " " + migKeys.size());
-
-			boolean resultOfSend = sendEmail(request,  response, "QtreeOwnerReminderNoSchedule/email", corpUser, migKeys); 				// ***************** THIS LINE IS DIFFERENT FROM THE FIRST EMAIL
-			if (resultOfSend) {
-				for(MigrationKey migKey : migKeys) {
-					log.debug("Getting activities for key:" + migKey.getMigrationKey() + " for "+ corpUser.getEmail());
-					log.debug("Activity Size:" + migKey.getActivities().size());
-					for(Activity activity : migKey.getActivities()) {
-						log.debug("Activity ID :" + activity.getId());
-						ActivityResponse activityResponse = activityResponseRepository.findByOwnerUserCorporateIdAndActivityId(corpUser.getId(), activity.getId());
-						if (activityResponse != null) {
-							log.debug("Setting email count for ActivityResponse ID :" + activityResponse.getId());
-							activityResponse.setEmailCount(activityResponse.getEmailCount() + 1);
-							// activityResponse.setEmailDate((Timestamp) dateUtils.convertToUtc());// ***************** THIS LINE IS DIFFERENT FROM THE FIRST EMAIL - COMMENTED OUT
-							activityResponseRepository.save(activityResponse);
-						}
-					}
-
-				}
-			}
-		}
-
+		emailService.sendOwnerReminderEmail();
 		return new ResponseEntity(TalendConstants.STR_JOB_SUBMITTED.replaceFirst("PLACEHOLDER", "Email sent!"), HttpStatus.OK);
 	}
-
-
-
-	// FIXME: Move to service....
-	public boolean sendEmail(HttpServletRequest request,  HttpServletResponse response, String emailFolderAndTemplateFileName, UserCorporate corpUser, ArrayList<MigrationKey> migKeys) {
-
-		final WebContext context = new WebContext(request, response, request.getServletContext());
-
-		context.setVariable("firstName", corpUser.getFirstName());
-
-		context.setVariable("logoFullUrl", logoUrl);  					
-		context.setVariable("viewAllTasksFullUrl", viewAllTasks); 
-		context.setVariable("adsQtreeOwnerFullUrl", adsQtreeOwnerUrl);  
-		context.setVariable("adsSupportFullUrl", adsSupportUrl);  		
-
-		//FIXME: Need to generate links for each of the migKeys. There could be more than 1.
-		context.setVariable("migKey", "RANDOM_REPLACE");
-
-		try {
-			String emailTo = corpUser.getEmail();
-
-			Map<String, Resource> inlineResources = new HashMap<String, Resource>();
-			if(emailFolderAndTemplateFileName == "QtreeMultiOwnerNoSchedule/email") {
-				inlineResources.put("imageLogo1", new ClassPathResource("templates/QtreeMultiOwnerNoSchedule/na_logo_hrz_1c-rev_rgb_lrg.png"));
-				
-				//FIXME: Make subject configurable using a Application Property from the DB
-				emailService.sendTemplatedMail(emailTo, "Muti", emailFolderAndTemplateFileName, context, inlineResources);
-			}
-
-			if(emailFolderAndTemplateFileName == "QtreeSingleOwnerNoSchedule/email") {
-				inlineResources.put("imageLogo1", new ClassPathResource("templates/QtreeSingleOwnerNoSchedule/na_logo_hrz_1c-rev_rgb_lrg.png"));
-				//FIXME: Make subject configurable using a Application Property from the DB
-				emailService.sendTemplatedMail(emailTo, "Single", emailFolderAndTemplateFileName, context, inlineResources);
-			}
-
-			if(emailFolderAndTemplateFileName == "QtreeOwnerReminderNoSchedule/email") {
-				inlineResources.put("imageLogo1", new ClassPathResource("templates/QtreeOwnerReminderNoSchedule/na_logo_hrz_1c-rev_rgb_lrg.png"));
-				//FIXME: Make subject configurable using a Application Property from the DB
-				emailService.sendTemplatedMail(emailTo, "Reminder", emailFolderAndTemplateFileName, context, inlineResources);
-			}
-
-			return true;
-
-		} catch (UnsupportedEncodingException e) {
-			//FIXME: bad error handling
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			//FIXME: bad error handling
-			e.printStackTrace();
-		} 
-
-		return false;
-
-	}
-
-
-
 
 	// This is the URL that Talend will call once it gets the CMDB information.
 	@RequestMapping(value = "/identifyOwners", method = RequestMethod.POST)
