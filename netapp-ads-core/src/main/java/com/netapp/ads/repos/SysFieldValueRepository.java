@@ -15,6 +15,7 @@ import com.netapp.ads.models.SysFieldValue;
 public interface SysFieldValueRepository extends JpaRepository<SysFieldValue, Integer>, JpaSpecificationExecutor<SysConfig> {
 	
 	List<SysFieldValue> findByFieldName(@Param("fieldName") String fieldName);
+	
 	List<SysFieldValue> findByFieldNameAndFieldCascadeName(@Param("fieldName") String fieldName, @Param("fieldCascadeName") String fieldCascadeName);
 
 }

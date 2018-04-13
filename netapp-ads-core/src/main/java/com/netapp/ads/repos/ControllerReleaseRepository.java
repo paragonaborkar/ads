@@ -15,13 +15,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ControllerReleaseRepository extends JpaRepository<ControllerRelease, Integer>, JpaSpecificationExecutor<ControllerRelease> {
+
 	List<ControllerRelease> findByProcessedTrue();
+	
 	List<ControllerRelease> findByProcessedFalse();
 	
 	Page findByProcessed(@Param("processed") boolean processed, Pageable p);
 	
-//	Page findBySrcControllerResource(@Param("controllerId") String controllerId, Pageable p);
-	
-//	@Query("SELECT cr FROM controller c, controller_release cr WHERE c.controller_name like :controllerName AND (c.id = cr.src_controller_id OR c.id = cr.tgt_controller_id)")
-//	List<Controller> findByControllerName(@Param("controllerName") String controllerName, Pageable p);
 }

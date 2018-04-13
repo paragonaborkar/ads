@@ -15,6 +15,4 @@ public interface ControllerWorkPackageRepository extends JpaRepository<Controlle
 
 	Page findByProcessed(@Param("processed") boolean processed, Pageable p);
 
-//	List<ControllerTargetsAvailable> findByControllerControllerNameContaining(@Param("controllerNameContains") String controllerNameContains);
-	
 }

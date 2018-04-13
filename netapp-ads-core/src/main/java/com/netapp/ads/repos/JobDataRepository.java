@@ -10,5 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JobDataRepository extends JpaRepository<JobData, Integer>, JpaSpecificationExecutor<JobData> {
+
 	JobData findOneByName(@Param("jobName") String jobName);
+	
 }

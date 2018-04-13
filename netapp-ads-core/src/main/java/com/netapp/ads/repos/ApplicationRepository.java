@@ -13,4 +13,5 @@ import org.springframework.stereotype.Repository;
 public interface ApplicationRepository extends JpaRepository<Application, Integer>, JpaSpecificationExecutor<Application> {
 	
 	Application findByApplicationCode(@Param("applicationCode") String applicationCode);
+
 }

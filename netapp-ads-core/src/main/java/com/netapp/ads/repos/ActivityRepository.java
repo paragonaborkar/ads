@@ -28,15 +28,7 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>, Jp
     		+ "LEFT JOIN a.activityResponses ar WHERE ar.id IS NULL AND a.adminOverride = false")
 	Page<Activity> findUnidentifiedOwners(Pageable p);
 	
-	/*	SIMLIAR TO: 
- 	select * from activity
-	LEFT JOIN activity_migration_key_x_ref
-		ON activity.id = activity_migration_key_x_ref.activity_id
-	LEFT JOIN migration_key
-		ON activity_migration_key_x_ref.migration_key_id = migration_key.id
-	WHERE migration_key.migration_key = 'ABC' 
-	AND migration_key.user_corporate_id = 9 
-	AND activity.disposition = 'DiscoverOwner'*/
+
     @Query("Select a From Activity a  "
     		+ "JOIN a.qtree q " 
     		+ "JOIN q.qtreeDisposition qd ON qd.disposition = :disposition "
@@ -46,11 +38,6 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>, Jp
     List<Activity> getActivitiesFromMigrationKeyAndCorpUserId(@Param("migKey") String migKey, @Param("corpUserId") Integer corpUserId , @Param("disposition") String disposition);
     
 
-	/**
-	 * Find activities for which migration keys have not been generated
-	 * 
-	 * @return List of matching Activities
-	 */
 	@Query("Select a From Activity a  "
     		+ "JOIN a.qtree q "
     		+ "JOIN q.qtreeDisposition qd ON qd.disposition = :disposition "

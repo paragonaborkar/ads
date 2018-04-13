@@ -11,7 +11,9 @@ import com.netapp.ads.models.projections.UserNativeWithUserRole;
 //@Repository
 @RepositoryRestResource(excerptProjection = UserNativeWithUserRole.class)
 public interface UserNativeRepository extends JpaRepository<UserNative, Integer>, JpaSpecificationExecutor<UserNative>  {
+
 	UserNative findFirstByEmail(@Param("email") String email);
+	
 	UserNative findByUserName(@Param("user_name") String username);
-	//List<UserNative> findByEmail(@Param("email") String email);
+
 }

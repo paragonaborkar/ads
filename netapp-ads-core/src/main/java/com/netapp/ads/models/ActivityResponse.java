@@ -10,6 +10,7 @@ import org.springframework.hateoas.Link;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -40,14 +41,19 @@ public class ActivityResponse implements Serializable {
 
 	@Column(name="owner_user_corporate_id", insertable=false, updatable=false)
 	private Integer ownerUserCorporateId;
+		
+	@Column(name="email_count")
+	private Integer emailCount;
+	
+	@Column(name="email_date")
+	private Timestamp emailDate;
+
 	
 	@ManyToOne
 	@JoinColumn(name="owner_user_corporate_id", nullable=true)
 	private UserCorporate ownerUserCorporate;
 
-//	@Column(name="suggested_owner_user_corporate_id")
-//	private Integer suggestedOwnerUserCorporateId;
-	
+
 	@ManyToOne
 	@JoinColumn(name="suggested_owner_user_corporate_id", nullable=true)
 	private UserCorporate suggestedOwnerUserCorporate;
@@ -74,19 +80,6 @@ public class ActivityResponse implements Serializable {
 	public ActivityResponse() {
 	}
 	
-/*	@Transient
-	private String linkToSelf;
-	
-	@Transient
-	public String getLinkToSelf() {
-		return this.linkToSelf.toString();
-	}
-	@Transient
-	public void setLinkToSelf() {
-		this.linkToSelf = entityLinks.linkToSingleResource(ActivityResponse.class, this.getId()).toString();
-	}*/
-	
-
 	public Integer getId() {
 		return this.id;
 	}
@@ -191,4 +184,20 @@ public class ActivityResponse implements Serializable {
 		this.callReason = callReason;
 	}	
 
+	public Integer getEmailCount() {
+		return this.emailCount;
+	}
+
+	public void setEmailCount(Integer emailCount) {
+		this.emailCount = emailCount;
+	}
+	
+	public Timestamp getEmailDate() {
+		return this.emailDate;
+	}
+
+	public void setEmailDate(Timestamp emailDate) {
+		this.emailDate = emailDate;
+	}
+	
 }

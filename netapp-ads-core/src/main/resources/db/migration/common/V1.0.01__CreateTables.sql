@@ -164,6 +164,8 @@ CREATE TABLE `activity_response` (
   `call_me` TINYINT(1) NOT NULL DEFAULT '0',
   `best_number` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Contact number for the Owner if they want to speak to a Migration Specialist.',
   `call_reason` VARCHAR(2048) NULL DEFAULT NULL COMMENT 'Primary reason why the Owner wants to be contacted by the Migration Specialist',
+	`email_count` INT(11) NULL DEFAULT '0',
+	`email_date` TIMESTAMP NULL DEFAULT NULL COMMENT 'Date email was send to the Owner',
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
