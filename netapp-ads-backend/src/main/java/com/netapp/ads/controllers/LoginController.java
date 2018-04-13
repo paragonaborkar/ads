@@ -6,7 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jfree.util.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,16 +34,18 @@ public class LoginController {
 	 * @throws IOException
 	 */
 
+	private static final String userIdParam = "userId";
+	
 	@RequestMapping(value = "/sso", method = RequestMethod.GET)
 	public void loginRedirect(HttpServletRequest request, HttpServletResponse response, Authentication auth)
 			throws ServletException, IOException {
 
-		log.debug("User ID to use for SSO:" + request.getParameter("userId"));
+		log.debug("User ID to use for SSO:" + request.getParameter(userIdParam));
 
-		if (request.getParameter("userId") != null) {
+		if (request.getParameter(userIdParam) != null) {
 			// FIXME:  THIS IS ONLY A TEMPORANY SOLUTION SO WE CAN LOGIN AS MANY CORP USERS
 			log.error("THIS IS ONLY A TEMPORANY SOLUTION SO WE CAN LOGIN AS MANY CORP USERS");
-			Application.ssoWorkAroundId = request.getParameter("userId");
+			Application.ssoWorkAroundId = request.getParameter(userIdParam);
 		}
 		log.debug("Redirecting to:" + ssoIdpURL);
 		response.sendRedirect(ssoIdpURL);
