@@ -79,7 +79,7 @@ public class CIFSSessionCollector {
 	private static final String QUERY = "insert into  " + HHCCConstants.TBL_CIFS_TEMP + "(DateTime,ControllerName, SerialNumber,VfilerName,VfilerUuid,VolumeName,ShareName,MountPoint,HostIp,HostName,WindowsUser,UnixUser) " + 
 			" Values (?,?,?,?,?,?,?,?,?,?,?,?)  ON DUPLICATE KEY UPDATE DateTime=NOW()";
 
-	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('cifs.schedule').getPropertyValue()}")
+	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('cifs.schedule').getPropertyValue()}", initialDelayString = "#{sysConfigRepository.findByPropertyName('cifs.schedule.initial_delay').getPropertyValue()}")
 	public void collectCFSSessions() {
 		log.info("CIFS Session Collector and Importer Job started");
 		log.info("Connecting to OCI server: {}", ociServerName);

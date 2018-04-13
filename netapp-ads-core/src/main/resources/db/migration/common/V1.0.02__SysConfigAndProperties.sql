@@ -28,6 +28,8 @@ INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`,
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.email.adsSupportUrl', 'http://support.netapp.com','1',0,'Email');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.email.from', 'szemanick@consultparagon.com','1',0,'Email');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.email.from.alias', 'Automated Data Services','1',0,'Email');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.email.sendowner.first', '0 0 10 * * *','1',0,'Email');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.email.sendowner.reminder', '0 0 11 * * *','1',0,'Email');
 
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.talendjobs.loc', 'C:/Projects/NetApp/ADS/talendjobs/','1',0,'Talend');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.talend.cmdb.url', 'http://localhost:8088/','1',0,'Talend');
@@ -44,8 +46,11 @@ INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`,
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('wfa.rest.user', 'admin','1',0,'HHCC');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('wfa.rest.password', 'admin123','1',0,'HHCC');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('cifs.schedule', '900000','1',0,'HHCC');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('cifs.schedule.initial_delay', '300000','1',0,'HHCC');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('nfs.schedule', '900000','1',0,'HHCC');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('nfs.schedule.initial_delay', '300000','1',0,'HHCC');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('showmount.schedule', '900000','1',0,'HHCC');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('showmount.schedule.initial_delay', '300000','1',0,'HHCC');
 
 /*!40000 ALTER TABLE `sys_config` ENABLE KEYS */;
 UNLOCK TABLES;
