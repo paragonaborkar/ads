@@ -112,6 +112,22 @@ public class ADSStringUtils {
     
     public static String getJobInstanceName(String jobName) {  		
    		return (jobName+"_"+System.currentTimeMillis());
+    }
     
+    public static String getTempExcelFilePathName(String dir) {
+    	
+    	String filePath=dir+"/";
+    	
+    	return filePath;
+    }
+    
+    public static StringBuilder addToMQString(StringBuilder sb, String paramName,String paramValue) {
+    	
+    	if(sb.length()==0) {
+    		sb.append(paramName+ADSConstants.PARAM_NAME_VALUE_SEPARATOR+paramValue);
+    	} else {
+    		sb.append(ADSConstants.MQ_DATA_SEPARATOR+paramName+ADSConstants.PARAM_NAME_VALUE_SEPARATOR+paramValue);
+    	}
+    	return sb;
     }
 }

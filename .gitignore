@@ -21,3 +21,4 @@ MANIFEST.MF
 
 talend/.Java/target
 .gitignore
+.project

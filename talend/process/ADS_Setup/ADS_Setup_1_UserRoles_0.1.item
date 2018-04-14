@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <talendfile:ProcessType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendMapper="http://www.talend.org/mapper" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" defaultContext="Default" jobType="Standard">
   <context confirmationNeeded="false" name="Default">
-    <contextParameter comment="Provided by REST service. Stored in DB's status tracking table. Default to nothing so it's auto generated if run directly in Talend." name="JOB_RUN_NAME" prompt="JOB_RUN_NAME?" promptNeeded="false" type="id_String" value=""/>
     <contextParameter comment="" name="ADS_EMAIL_AUTHENTICATION_PASSWORD" prompt="ADS_EMAIL_AUTHENTICATION_PASSWORD?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="Paragon123"/>
     <contextParameter comment="" name="ADS_EMAIL_AUTHENTICATION_USER" prompt="ADS_EMAIL_AUTHENTICATION_USER?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="ads.sendemail@gmail.com"/>
     <contextParameter comment="" name="ADS_EMAIL_FROM" prompt="ADS_EMAIL_FROM?" promptNeeded="false" repositoryContextId="_hSITIPzBEeeuIL132lN64w" type="id_String" value="mohan.bondada@gmail.com"/>

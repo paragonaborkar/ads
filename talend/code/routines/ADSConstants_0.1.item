@@ -29,6 +29,26 @@ public class ADSConstants {
 	public static String NODE_NASVOLUMES="nasVolumes";
 	public static String NODE_ROLES="userRoles";
 	
+	public static String ADS_SETUP_1_USERROLES = "ADS_Setup_1_UserRoles";
+												  
+	public static String ADS_SETUP_2_USERNATIVES = "ADS_Setup_2_UserNatives";
+	public static String ADS_SETUP_3_AUDITEVENTS = "ADS_Setup_3_AuditEvents";
+	public static String ADS_SETUP_4_AUDITREASONCODES = "ADS_Setup_4_AuditReasonCodes";
+	public static String ADS_SETUP_5_APPLICATIONS = "ADS_Setup_5_Applications";
+	public static String ADS_SETUP_6_SYSCONFIGPROPERTYTYPES = "ADS_Setup_6_SysConfigPropertyTypes";
+	public static String ADS_SETUP_7_MIGRATIONTIMES = "ADS_Setup_7_MigrationTimes";
+	public static String ADS_SETUP_8_MSTEMAILTYPE = "ADS_Setup_8_MstEmailType";
+	public static String ADS_SETUP_9_SCHEDULES = "ADS_Setup_9_Schedules";
+	public static String OCI_LOAD_1_HOSTS = "OCI_Load_1_Hosts";
+	public static String OCI_LOAD_2_STORAGE = "OCI_Load_2_Storage";
+	public static String OCI_LOAD_3_DATACENTERS = "OCI_Load_3_DataCenters";
+	public static String OCI_LOAD_4_CONTROLLERS = "OCI_Load_4_Controllers";
+	public static String OCI_LOAD_5_AGGREGATES = "OCI_Load_5_Aggregates";
+	public static String OCI_LOAD_6_NASVOLUMES = "OCI_Load_6_NasVolumes";
+	public static String OCI_LOAD_7_QTREES = "OCI_Load_7_QTrees";
+	public static String OCI_LOAD_8_SHARES = "OCI_Load_8_Shares";
+	public static String OCI_LOAD_MASTER = "OCI_Load_Master";
+
 	
 
 	public static String LOGTYPE_PRE="PreJobLog";
@@ -38,4 +58,27 @@ public class ADSConstants {
 	public static String LOG_JOB_STATUS_INPROGRESS="InProgress";
 	public static String LOG_JOB_STATUS_FINISHED="Finished";
 	
+	
+	public static String TALEND_JOB_NAME = "TALEND_JOB_NAME";
+	public static String JOB_NAME = "JOB_NAME";
+	public static String ENV_CONTEXT_FILE = "ENV_CONTEXT_FILE";
+	public static String OAUTH_BEARER_TOKEN = "OAUTH_BEARER_TOKEN";
+	public static String JOB_SUBMITTED_BY = "JOB_SUBMITTED_BY";
+	public static String FLAG_OCI_SENDEMAIL = "FLAG_OCI_SENDEMAIL";
+	public static String FLAG_DELETE_LOGS = "FLAG_DELETE_LOGS";
+	public static String REST_URL_BASE = "REST_URL_BASE";
+	public static String ADS_EMAIL_TO = "ADS_EMAIL_TO";
+	public static String LOAD_FILE = "LOAD_FILE";
+
+	public static String JOB_TYPE = "JOB_TYPE";
+	public static String JOB_TYPE_OCI = "OCI";
+	public static String JOB_TYPE_ADS = "ADS";
+	
+
+	public static String MQ_URL="http://localhost:8161/api/message/ads?type=queue";
+
+	public static String MQ_DATA_SEPARATOR = ";";
+	public static String PARAM_NAME_VALUE_SEPARATOR = "=";
+	
+
 }
