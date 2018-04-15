@@ -23,7 +23,7 @@ export class OwnerComponent implements OnInit {
   @ViewChild(DataTableColTemplatesComponent) dataTableColsTemplate: DataTableColTemplatesComponent;
   columnTemplates = {};
   @ViewChild('actionTmpl') actionTmpl: TemplateRef<any>;
-  
+
   public isPropPreferenceModal = false;
   public isScheduleModal = false;
   public activityInfo: any = {};
@@ -33,14 +33,14 @@ export class OwnerComponent implements OnInit {
   public currentUserCorporateId = 0;
 
   page = new Page();
-  
+
   migkey = '';
 
   // Listing of actvities/owner information to display 
   rows: any[] = [];
   columns: any = [];
 
-  constructor( private router: Router, private route: ActivatedRoute, private ownerService: OwnerService, private sessionHelper: SessionHelper, private applicationConfigService: ApplicationConfigService) {
+  constructor(private router: Router, private route: ActivatedRoute, private ownerService: OwnerService, private sessionHelper: SessionHelper, private applicationConfigService: ApplicationConfigService) {
     this.page.number = 1;
     this.page.pageNumber = 1;
     this.page.size = 1000;
@@ -53,7 +53,7 @@ export class OwnerComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.migkey = params['migKey'];
     });
-    
+
     // FIXME: Complete this when SSO is ready.....
     this.route.params
       .switchMap((params: ParamMap) => this.ownerService.validateMigKeyExists(params['migKey'], this.currentUserCorporateId))
@@ -62,7 +62,7 @@ export class OwnerComponent implements OnInit {
         if (!validateMigKeyExists) {
           this.router.navigate(['/owner']);
         }
-      },  err => {
+      }, err => {
         this.router.navigate(['/owner']);
       });
   }
@@ -82,7 +82,7 @@ export class OwnerComponent implements OnInit {
  * @param page The page to select
  */
   setPage(pageInfo) {
-   
+
     this.page.number = pageInfo.pageNumber;
     this.page.pageNumber = pageInfo.pageNumber;
 
@@ -90,14 +90,41 @@ export class OwnerComponent implements OnInit {
     this.ownerService.getAllActivitiesForUser(this.migkey, this.currentUserCorporateId, pageInfo).subscribe(
       data => {
         console.log(data);
-        // this.page = data.page;
-        // this.page.pageNumber = this.page.number;
         // Don't set rows to undefined, it'll break the listing!    
         if (data._embedded.activities) {
-          this.rows = data._embedded.activities;
 
-          this.rows.forEach(activity => {
+          data._embedded.activities.forEach(activity => {
+
+            let appCount = 0;
+            let appNames = [];
+
+            let hostCount = 0;
+            let hostNames = [];
+
+            // Count of unique app amd unique hosts
+            activity["qtree"]["shares"].forEach(share => {
+              if (!hostNames.includes(share["host"]["hostName"])) {
+                hostNames.push(share["host"]["hostName"]);
+                hostCount = hostCount + 1;
+
+                share["host"]["applications"].forEach(app => {
+                  if (!appNames.includes(app["applicationName"])) {
+                    appNames.push(app["applicationName"]);
+                    appCount = appCount + share["host"]["applications"].length;
+                  }
+                });
+              }
+
+            });
+
+            activity["qtree"]["appCount"] = appCount;
+            activity["qtree"]["appNames"] = appNames;
+
+            activity["qtree"]["hostCount"] = hostCount;
+            activity["qtree"]["hostNames"] = hostNames;
+
             activity["activityResponses"].forEach(activtyResponse => {
+
               if (activtyResponse["ownerUserCorporateId"] == this.currentUserCorporateId) {
                 this.activtyResponseForCurrentUser = activtyResponse;
               }
@@ -111,6 +138,8 @@ export class OwnerComponent implements OnInit {
             });
 
           });
+
+          this.rows = data._embedded.activities;
         }
         // this.rows = this.adsHelper.ungroupJson(usersNativeResponse._embedded.userNatives, "userRole", ["createTime", "updateTime"]);
         console.log("******************");
@@ -139,7 +168,7 @@ export class OwnerComponent implements OnInit {
 
 
   showScheduleModal(row, action) {
-    
+
     this.activityInfo = row;
     this.scheduleAction = action;
 
@@ -161,7 +190,7 @@ export class OwnerComponent implements OnInit {
     this.isPropPreferenceModal = false;
     this.rows = [];
     this.columns = [];
-  
+
     this.setPage(this.page);
     this.applyPreferences();
   }

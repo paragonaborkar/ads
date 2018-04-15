@@ -33,10 +33,14 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `
 #INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'propertyValue', '1');
 #INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES ('4', 'grouping', '1');
 
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (5, 'Last Accessed', 'qtree.lastAccessed', 'dateTime', '2');
+
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (5, 'Qtree Name', 'qtree.qtreeName','','1');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (5, 'Share Count', 'shares.length','','3');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (5, 'Volume Name', 'nasVolume.volumeName','','1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (5, 'Volume Name', 'qtree.nasVolume.volumeName','','2');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (5, 'Last Accessed', 'qtree.lastAccessed', 'dateTime', '3');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (5, 'Share Count', 'qtree.shares.length','','4');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (5, 'App Count', 'qtree.appCount','','5');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (5, 'Host Count', 'qtree.hostCount','','6');
+
 
 
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_prop`) VALUES (6, 'Source Controller', '1', 'srcController.controllerName');
@@ -53,9 +57,11 @@ INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`) VALUES (7, 'assetNumber', '1');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_order`, `field_template`) VALUES (7, 'createTime', '1', 'dateTime');
 
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Last Accessed', 'qtree.lastAccessed', 'dateTime', '2');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Reason', 'unidentifiedReason','','0');
 INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Qtree Name', 'qtree.qtreeName','','1');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Share Count', 'shares.length','','3');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Volume Name', 'nasVolume.volumeName','','1');
-INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Reason', 'unidentifiedReason','','1');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Volume Name', 'qtree.nasVolume.volumeName','','2');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Last Accessed', 'qtree.lastAccessed', 'dateTime', '3');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Share Count', 'qtree.shares.length','','4');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'App Count', 'qtree.appCount','','5');
+INSERT INTO `preference_detail` (`preference_id`, `field_name`, `field_prop`, `field_template`, `field_order`) VALUES (8, 'Host Count', 'qtree.hostCount','','6');
 

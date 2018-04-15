@@ -4,12 +4,10 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 
 import com.netapp.ads.models.Activity;
 import com.netapp.ads.models.ActivityResponse;
-import com.netapp.ads.models.NasVolume;
 
 @Projection(name="activityWithQtree", types = { Activity.class})
 public interface ActivityWithQtree {
@@ -21,10 +19,6 @@ public interface ActivityWithQtree {
 	public Timestamp getCreateTime();
 
 	public Date getDecommissionDate();
-
-	public Integer getMailCount();
-
-	public Date getMailingDate();
 
 	public Integer getMigrateDay();
 
