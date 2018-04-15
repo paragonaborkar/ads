@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ads-web-service #this will be used by the front end to access the backend
+spec:
+  ports:
+    - port: 8080 # the abstracted Service port, a port other pods use to access the Service
+      protocol: TCP
+      targetPort: 8080 #the port the container accepts traffic on. Can also be a name????
+  selector: #route to pods that have this app label
+    app: ads-web
+  type: NodePort
