@@ -1,0 +1,44 @@
+{
+	"applications": [{
+			"name": "Application1",
+			"code": "A1",
+			"informationOwner": "Here's some text for app 1.",
+			"owner": [
+				{
+				"firstName": "Steve",
+				"lastName": "Zemanick",
+				"middleName": "M",
+				"email": "szemanick@consultparagon.com",
+				"phoneNum": "123-123-1234",
+				"userName": "zemanics",
+				"costCenter": "1C",
+				"manager": {
+					"firstName": "Breaking",
+					"lastName": "Benjamin",
+					"middleName": "B",
+					"email": "stephen.zemanick@cgi.com",
+					"phoneNum":  "123-123-1234",
+					"userName": "BB",
+					"costCenter": "2C"
+				}
+				}
+			]
+		},
+		{
+			"name": "Application2",
+			"code": "A2",
+			"informationOwner": "Here's some text for app 2.",
+			"owner": [
+				{
+				"firstName": "2F",
+				"lastName": "2L",
+				"middleName": "2M",
+				"email": "2E",
+				"phoneNum": "2P",
+				"userName": "2U",
+				"costCenter": "2C"
+				}
+			]
+		}
+	]
+}

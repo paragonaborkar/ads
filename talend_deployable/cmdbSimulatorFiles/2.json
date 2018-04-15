@@ -1,0 +1,40 @@
+{
+	"applications": [{
+			"name": "2",
+			"code": "A",
+			"informationOwner": "1",
+			"owner": {
+				"firstName": "1F",
+				"lastName": "1L",
+				"middleName": "1M",
+				"email": "1E",
+				"phoneNum": "1P",
+				"userName": "1U",
+				"costCenter": "1C",
+				"manager": {
+					"firstName": "1F",
+					"lastName": "1L",
+					"middleName": "1M",
+					"email": "1E",
+					"phoneNum": "1P",
+					"userName": "1U",
+					"costCenter": "1C"
+				}
+			}
+		},
+		{
+			"name": "B",
+			"code": "B",
+			"informationOwner": "2",
+			"owner": {
+				"firstName": "2F",
+				"lastName": "2L",
+				"middleName": "2M",
+				"email": "2E",
+				"phoneNum": "2P",
+				"userName": "2U",
+				"costCenter": "2C"
+			}
+		}
+	]
+}
