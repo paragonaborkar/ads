@@ -1,0 +1,58 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Change Admin User Password</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form (ngSubmit)="changePwConfirmed()" #changePwForm="ngForm" autocomplete="off">
+      <div class="modal-body">
+        <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+          <span>{{errorMessage}}</span>
+        </div>
+        <div>
+          <strong>Name: </strong>{{User.firstName}} {{User.lastName}}
+        </div>
+        <div>
+          <strong>Email: </strong>{{User.email}}
+        </div>
+
+        <div class="form-group row">
+          <label for="password" class="col-sm-3 col-form-label">Password</label>
+          <div class="col-sm-7">
+            <input type="password" class="form-control" adsNoSpaces [ngClass]="{'is-invalid':userPassword.errors?.required && userPassword.touched || userPassword.errors?.minlength && userPassword.touched}"
+              [(ngModel)]="User.password" name="password" #userPassword="ngModel" minlength="5" required placeholder="Password">
+            <div *ngIf="userPassword.errors?.required && userPassword.touched" class="invalid-feedback">
+              Password is required
+            </div>
+            <div *ngIf="userPassword.errors?.minlength && userPassword.touched" class="invalid-feedback">
+              Must be at least 5 characters
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="passwordConfirm" class="col-sm-3 col-form-label">Confirm Password</label>
+          <div class="col-sm-7">
+            <input type="password" class="form-control" (change)="comparePasswords()" [ngClass]="{'is-invalid': (userPasswordConfirm.errors?.required && userPasswordConfirm.touched) || (userPasswordConfirm.errors?.minlength && userPasswordConfirm.touched) ||  !doPasswordsMatch}"
+              [(ngModel)]="passwordConfirm" name="passwordConfirm" #userPasswordConfirm="ngModel" minlength="5" required placeholder="Password">
+            <div *ngIf="userPasswordConfirm.errors?.required && userPasswordConfirm.touched" class="invalid-feedback">
+              Confirm Password is required
+            </div>
+            <div *ngIf="userPasswordConfirm.errors?.minlength && userPasswordConfirm.touched" class="invalid-feedback">
+              Must be at least 5 characters
+            </div>
+            <div *ngIf="!doPasswordsMatch" class="invalid-feedback">
+              Passwords must match
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default" (click)="close()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!changePwForm.form.valid">Change Password</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

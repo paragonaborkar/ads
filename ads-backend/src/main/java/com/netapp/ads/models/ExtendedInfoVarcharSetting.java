@@ -2,7 +2,8 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -11,40 +12,43 @@ import java.util.Date;
  */
 @Entity
 @Table(name="extended_info_varchar_settings")
-@NamedQuery(name="ExtendedInfoVarcharSetting.findAll", query="SELECT e FROM ExtendedInfoVarcharSetting e")
 public class ExtendedInfoVarcharSetting implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_time")
-	private Date createTime;
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
-	@Column(name="field_name")
+	@Column(name="field_name", length=45)
 	private String fieldName;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_time")
-	private Date updateTime;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
+
+	//bi-directional many-to-one association to ExtendedInfoVarchar
+	@OneToMany(mappedBy="extendedInfoVarcharSetting")
+	private List<ExtendedInfoVarchar> extendedInfoVarchars;
 
 	public ExtendedInfoVarcharSetting() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
@@ -56,12 +60,34 @@ public class ExtendedInfoVarcharSetting implements Serializable {
 		this.fieldName = fieldName;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public List<ExtendedInfoVarchar> getExtendedInfoVarchars() {
+		return this.extendedInfoVarchars;
+	}
+
+	public void setExtendedInfoVarchars(List<ExtendedInfoVarchar> extendedInfoVarchars) {
+		this.extendedInfoVarchars = extendedInfoVarchars;
+	}
+
+	public ExtendedInfoVarchar addExtendedInfoVarchar(ExtendedInfoVarchar extendedInfoVarchar) {
+		getExtendedInfoVarchars().add(extendedInfoVarchar);
+		extendedInfoVarchar.setExtendedInfoVarcharSetting(this);
+
+		return extendedInfoVarchar;
+	}
+
+	public ExtendedInfoVarchar removeExtendedInfoVarchar(ExtendedInfoVarchar extendedInfoVarchar) {
+		getExtendedInfoVarchars().remove(extendedInfoVarchar);
+		extendedInfoVarchar.setExtendedInfoVarcharSetting(null);
+
+		return extendedInfoVarchar;
 	}
 
 }

@@ -1,0 +1,12 @@
+<employees>
+    <employee id="EMP0001">
+        <first_name>John</first_name>
+        <last_name>Doe</last_name>
+        <age>26</age>
+    </employee>
+    <employee id="EMP0002">
+        <first_name>Peter</first_name>
+        <last_name>Parker</last_name>
+        <age>30</age>
+    </employee>
+</employees>

@@ -1,33 +1,50 @@
 package com.netapp.ads;
 
+import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.bouncycastle.openpgp.PGPException;
+import org.jfree.util.Log;
+import org.kie.internal.builder.conf.DumpDirOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.data.rest.webmvc.support.RepositoryEntityLinks;
+import org.springframework.util.StreamUtils;
+import org.springframework.web.client.RestTemplate;
 
 import com.javax0.license3j.licensor.License;
-import com.netapp.ads.config.ADSConfiguration;
 
 @SpringBootApplication
-@Import(ADSConfiguration.class)
 public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
     public static HashMap<String, Boolean> ACTIVE_MODULES; 
 
-    public static void main(String[] args) {
-
+    // FIXME:  THIS IS ONLY A TEMPORANY SOLUTION SO WE CAN LOGIN AS MANY CORP USERS
+    public static String ssoWorkAroundId = "";
+    
+    public static void main(String[] args) throws Exception {
+    	
+    	//TO BE REMOVED. Just for Talend testing
+    	File dumpDir = new File("target/drools-dump-dir");
+    	if (dumpDir.exists()) {
+            FileUtils.deleteQuietly(dumpDir);
+        }
+        dumpDir.mkdirs();
+    	System.setProperty(DumpDirOption.PROPERTY_NAME, "target/drools-dump-dir");
+    	
 		HashMap<String, HashMap> completeLicenseInfo = checkLicense();
 
 		// Store the active modules in memory. Each time a user logs in to ADS, a REST call will need to provide modules available.
@@ -36,7 +53,7 @@ public class Application {
 		HashMap<String, String> licenseInfo = completeLicenseInfo.get("licenseInfo");
 
 		// FIXME: no sys out's
-		System.out.println("The following ADS modules are enabled:");
+		log.debug("The following ADS modules are enabled:");
 		boolean noActiveModules = true;
 		for (Map.Entry<String, Boolean> entry : ACTIVE_MODULES.entrySet()) {
 			String key = entry.getKey();
@@ -48,7 +65,7 @@ public class Application {
 
 			// FIXME: Print this out using a logger.
 			// FIXME: no sys out's
-			System.out.println(key + ":" + value);
+			log.debug(key + ":" + value);
 		}
 
 		if (noActiveModules) {
@@ -67,21 +84,19 @@ public class Application {
 	}
 
 
-    public static HashMap<String, HashMap>  checkLicense() {
+    public static HashMap<String, HashMap>  checkLicense() throws Exception {
 
-		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-		URL licenseUrl = classloader.getResource("license/license.out");
-
-		String licenseFileName = "";
+    	Resource licenseFileResource = new ClassPathResource("license/license.out");
+    	String licenseFileContent = null;
 		try {
-			licenseFileName = Paths.get(licenseUrl.toURI()).toFile().getAbsolutePath();
-		} catch (URISyntaxException e1) {
+			licenseFileContent = StreamUtils.copyToString(licenseFileResource.getInputStream(), StandardCharsets.UTF_8);
+		} catch (Exception ex) {
 			throw new IllegalArgumentException("ADS license not found.");
-		}catch (NullPointerException e2) {
-			throw new NullPointerException("ADS license not found.");
 		}
-
-		License lic = new License();
+		
+		if(licenseFileContent == null) {
+			throw new Exception("ADS license not found.");
+		}
 
 		//		 ---KEY RING DIGEST START
 		byte [] digest = new byte[] {
@@ -97,12 +112,14 @@ public class Application {
 				};
 		//		 ---KEY RING DIGEST END
 
+		License lic = new License();
 		try {
 			// FIXME: must use a digest in production. Not sure if this should be loaded from a text file or if it needs to be in the code.
 			// See: https://github.com/verhas/License3j/wiki/sample
 //			 lic.loadKeyRingFromResource("license/pubring.gpg", digest);
-			lic.loadKeyRingFromResource("license/pubring.gpg", null);
-			lic.setLicenseEncodedFromFile(licenseFileName);
+			Resource keyRingResource = new ClassPathResource("license/pubring.gpg");
+			lic.loadKeyRing(keyRingResource.getInputStream(), null);
+			lic.setLicenseEncoded(licenseFileContent);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -174,4 +191,10 @@ public class Application {
 		
 		return true;
 	}
+	
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
+	
 }

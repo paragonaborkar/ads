@@ -2,7 +2,9 @@ package com.netapp.ads.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -11,64 +13,78 @@ import java.util.Date;
  */
 @Entity
 @Table(name="user_corporate")
-@NamedQuery(name="UserCorporate.findAll", query="SELECT u FROM UserCorporate u")
 public class UserCorporate implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Column(name="best_phone")
+	@Column(name="best_phone", length=45)
 	private String bestPhone;
 
-	@Column(name="cost_center")
+	@Column(length=100)
 	private String costCenter;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_time")
-	private Date createTime;
+	@Column(name="create_time", insertable=false, updatable=false)
+	private Timestamp createTime;
 
+	@Column(nullable=false, length=255)
 	private String email;
 
-	@Column(name="first_name")
+	@Column(name="first_name", nullable=false, length=45)
 	private String firstName;
 
-	@Column(name="last_name")
+	@Column(name="last_name", nullable=false, length=45)
 	private String lastName;
 
+	@Column(length=255)
 	private String location;
 
-	@Column(name="manager_user_corporate_id")
-	private int managerUserCorporateId;
-
-	@Column(name="middle_name")
+	@Column(name="middle_name", length=45)
 	private String middleName;
 
-	@Column(name="mobile_phone")
+	@Column(name="mobile_phone", length=45)
 	private String mobilePhone;
 
+	@Column(length=45)
 	private String timezone;
 
+	@Column(length=255)
 	private String title;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_time")
-	private Date updateTime;
+	@Column(name="update_time", insertable=false, updatable=false)
+	private Timestamp updateTime;
 
-	@Column(name="user_name")
+	@Column(name="user_name", nullable=false, length=45)
 	private String userName;
 
-	@Column(name="work_phone")
+	@Column(name="work_phone", length=45)
 	private String workPhone;
+
+	//bi-directional many-to-one association to UserCorporate
+	@ManyToOne (cascade=javax.persistence.CascadeType.ALL)
+	@JoinColumn(name="manager_user_corporate_id")
+	private UserCorporate userCorporateManager;
+
+	//bi-directional many-to-one association to UserCorporate
+	@OneToMany(mappedBy="userCorporateManager")
+	private List<UserCorporate> userCorporates;
+	
+	//bi-directional many-to-one association to UserRole
+	@ManyToOne
+	@JoinColumn(name="user_role_id")
+	private UserRole userRole;
 
 	public UserCorporate() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -88,11 +104,11 @@ public class UserCorporate implements Serializable {
 		this.costCenter = costCenter;
 	}
 
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 
@@ -128,14 +144,6 @@ public class UserCorporate implements Serializable {
 		this.location = location;
 	}
 
-	public int getManagerUserCorporateId() {
-		return this.managerUserCorporateId;
-	}
-
-	public void setManagerUserCorporateId(int managerUserCorporateId) {
-		this.managerUserCorporateId = managerUserCorporateId;
-	}
-
 	public String getMiddleName() {
 		return this.middleName;
 	}
@@ -168,11 +176,11 @@ public class UserCorporate implements Serializable {
 		this.title = title;
 	}
 
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return this.updateTime;
 	}
 
-	public void setUpdateTime(Date updateTime) {
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
 	}
 
@@ -190,6 +198,44 @@ public class UserCorporate implements Serializable {
 
 	public void setWorkPhone(String workPhone) {
 		this.workPhone = workPhone;
+	}
+
+	public UserCorporate getUserCorporateManager() {
+		return this.userCorporateManager;
+	}
+
+	public void setUserCorporateManager(UserCorporate userCorporate) {
+		this.userCorporateManager = userCorporate;
+	}
+
+	public List<UserCorporate> getUserCorporates() {
+		return this.userCorporates;
+	}
+
+	public void setUserCorporates(List<UserCorporate> userCorporates) {
+		this.userCorporates = userCorporates;
+	}
+
+	public UserCorporate addUserCorporate(UserCorporate userCorporate) {
+		getUserCorporates().add(userCorporate);
+		userCorporate.setUserCorporateManager(this);
+
+		return userCorporate;
+	}
+
+	public UserCorporate removeUserCorporate(UserCorporate userCorporate) {
+		getUserCorporates().remove(userCorporate);
+		userCorporate.setUserCorporateManager(null);
+
+		return userCorporate;
+	}
+	
+	public UserRole getUserRole() {
+		return this.userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
 	}
 
 }

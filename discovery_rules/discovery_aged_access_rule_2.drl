@@ -1,0 +1,55 @@
+package rules;
+
+import java.util.List;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
+import org.slf4j.Logger;
+
+import com.netapp.ads.models.Qtree;
+import com.netapp.ads.models.QtreeDisposition;
+import com.netapp.ads.models.Share;
+import com.netapp.ads.repos.QtreeDispositionRepository;
+import com.netapp.ads.util.DateUtils;
+
+global Logger logger;
+
+rule "Discovery - Aged Access Rule" salience 20
+lock-on-active
+when
+	$qtreeDispositionRepository: QtreeDispositionRepository();
+	$qtree: Qtree( (nasVolume.volumeName not contains("vol0")) && lastAccessed != null && ((int) ChronoUnit.MONTHS.between(DateUtils.asLocalDateTime(lastAccessed).toLocalDate(), LocalDateTime.now().toLocalDate())) >= 3)
+then
+	logger.debug("Discovery - Aged Access Rule: Qtree: {}", $qtree.getId());
+	
+	LocalDateTime $dateNow = LocalDateTime.now();
+	LocalDateTime $lastAccessed = DateUtils.asLocalDateTime($qtree.getLastAccessed());;
+	
+	int $duration = 0;
+	if ($lastAccessed != null) {
+		$duration = (int) ChronoUnit.MONTHS.between($lastAccessed.toLocalDate(), $dateNow.toLocalDate());
+	}
+	logger.debug("Action: lastAccessed: {}, dateNow: {}, duration: {}", $lastAccessed, $dateNow, $duration);	
+	
+	String $newDisposition;
+	String $newJustification;
+
+	if ($duration >= 13) {
+		$newDisposition = "Aged_13";
+		$newJustification = "Aged - No access in 13 months";
+	} else if ($duration >= 6) {
+		$newDisposition = "Aged_6";
+		$newJustification = "Aged - No access in 6 months";
+	} else {
+		$newDisposition = "Aged_3";
+		$newJustification = "Aged - No access in 3 months";
+	}
+
+	QtreeDisposition $qtreeDisposition = new QtreeDisposition();
+	$qtreeDisposition.setDisposition($newDisposition);
+	$qtreeDisposition.setQtree($qtree);
+	$qtreeDisposition.setJustification($newJustification);
+	$qtreeDispositionRepository.save($qtreeDisposition);
+	logger.debug("Discovery - Aged Access Rule: Created Qtree Disposition: {}", $qtreeDisposition.getId());
+	update( $qtree );
+end

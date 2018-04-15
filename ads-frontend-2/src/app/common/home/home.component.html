@@ -1,0 +1,111 @@
+<div class="row justify-content-center">
+  <div class="col-xl-9 col-md-10 col-sm-12 text-center">
+    <h1 class="h2 text-center mb-4">Automated Data Services</h1>
+  </div>
+  <div class="col-xl-12 col-md-10 col-sm-12">
+    <div class="card-deck">
+      <div class="card card-with-link" routerLink="/connections/dashboard" *ngIf="modulesAvailable.connections">
+        <div class="card-header text-white bg-warning">
+          <i class="fa fa-share-alt fa-lg  fa-fw" aria-hidden="true"></i>&nbsp; Connections </div>
+        <div class="card-body">
+
+          <ul>
+            <li>Identify who is using the data assets at the volume or qtree level</li>
+            <li>Connections provide scope of users and a list of possible owners</li>
+
+          </ul>
+        </div>
+        <div class="card-footer">
+          <a class="btn btn-warning pull-right" routerLink="/connections/dashboard" role="button">View Connections Dashboard »</a>
+        </div>
+      </div>
+
+      <div class="card card-with-link" routerLink="/discover/dashboard"  *ngIf="modulesAvailable.discover">
+
+        <div class="card-header text-white bg-success ">
+          <i class="fa fa-search fa-lg  fa-fw" aria-hidden="true"></i>&nbsp; Discover </div>
+        <div class="card-body">
+
+          <ul>
+            <li>Integrate to client meta data, i.e., App Registry, CMDB, Asset Mgmt, Corporate Directory, etc</li>
+            <li>Gather all client Meta-Data about ownership</li>
+            <li>Identify Owner at qtree and volume level </li>
+            <li>Provide data for notification, scheduling, and Planning</li>
+          </ul>
+        </div>
+        <div class="card-footer">
+          <a class="btn btn-success  pull-right" routerLink="/discover/dashboard"  role="button">View Discover Dashboard »</a>
+        </div>
+      </div>
+      <div class="card card-with-link"   *ngIf="modulesAvailable.reports">
+        <div class="card-header text-white bg-success ">
+          <i class="fa fa-line-chart fa-lg  fa-fw" aria-hidden="true"></i>&nbsp; Metrics</div>
+        <div class="card-body">
+
+          <ul>
+            <li>Providing a closed loop feedback for client Meta-data like application registry, CMDB, etc</li>
+            <li>Telemetry for best placement of workloads and analysis of Capacity@Performance&trade;</li>
+            <li>Performance data for Workload distribution and balancing</li>
+            <li>Identify Replication Patterns supporting migrations and archive</li>
+          </ul>
+        </div>
+        <div class="card-footer">
+          <a class="btn btn-success  pull-right" href="#" role="button">View Metrics Dashboard »</a>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <div class="card-deck mt-5">
+      <div class="card card-with-link" routerLink="/discover/owner"  *ngIf="modulesAvailable.schedule">
+        <div class="card-header text-white bg-danger ">
+          <i class="fa fa-calendar fa-lg  fa-fw" aria-hidden="true"></i>&nbsp; Scheduling</div>
+        <div class="card-body">
+
+          <ul>
+            <li>Allocation based schedules with thresholds or date certain</li>
+            <li>Self Service, Portal driven providing user feedback on Ownership validation, Deletion intent, Scheduling choices
+              or issues, Archive preference, Contact requests, etc.</li>
+          </ul>
+        </div>
+        <div class="card-footer">
+          <a class="btn btn-danger  pull-right" href="#" role="button">View Scheduling Dashboard »</a>
+        </div>
+      </div>
+      <div class="card card-with-link" routerLink="/discover/owner"  *ngIf="modulesAvailable.planning">
+
+        <div class="card-header text-white bg-info">
+          <i class="fa fa-file-text fa-lg  fa-fw" aria-hidden="true"></i>&nbsp; Planning</div>
+        <div class="card-body">
+
+          <ul>
+            <li>Targeting destination and target refinement with best placement based on Capacity@Performance&trade;</li>
+            <li>Replication Method validation and adjustment </li>
+            <li> File or Block based and Archive</li>
+          </ul>
+        </div>
+        <div class="card-footer">
+          <a class="btn btn-info pull-right" href="#" role="button">View Planning Dashboard »</a>
+        </div>
+      </div>
+      <div class="card card-with-link" routerLink="/discover/owner"   *ngIf="modulesAvailable.planning">
+        <div class="card-header text-white bg-warning ">
+          <i class="fa fa-cogs fa-lg  fa-fw" aria-hidden="true"></i>&nbsp; Execution</div>
+        <div class="card-body">
+
+          <ul>
+            <li>Self service, mail and calendar integration for event management</li>
+            <li>Integration with different methods and tools, i.e., Storage X, 7MTT, WFA automation Scripts, etc.</li>
+            <li>Covers Provisioning, Replication, Copy Baselining, Copy, Completion of cleanup, LDAP Integration, etc.</li>
+          </ul>
+        </div>
+        <div class="card-footer">
+          <a class="btn btn-warning  pull-right" href="#" role="button">View Execution Dashboard »</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

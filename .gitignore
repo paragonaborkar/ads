@@ -1,9 +1,10 @@
 *.log
 *.class
-.project
 .metadata
 **/.recommenders
+**/.settings
 **/ads-backend/target
+**/ads-backend/bin
 **/ads-backend/.apt_generated
 **/ads-backend/.idea
 **/ads-backend/.settings
@@ -12,4 +13,13 @@ Servers/
 RemoteSystemsTempFiles/
 ads-backend/.factorypath
 package-lock.json
+**/target/classes/**
+MANIFEST.MF
 
+# ---- SonarQube
+.sonar
+.scannerwork
+
+talend/.Java/target
+.gitignore
+.project

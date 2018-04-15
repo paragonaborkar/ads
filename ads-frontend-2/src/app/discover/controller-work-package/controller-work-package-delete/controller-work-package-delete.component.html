@@ -1,0 +1,29 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Delete Controller Work Package</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+        <span>{{errorMessage}}</span>
+      </div>
+
+      <h6>Are you sure to delete this Controller Work Package?</h6>
+
+      <div>
+        <strong>Controller Name: </strong>{{controllerTargetAvailable.controller.controllerName}}</div>
+      <div>
+        
+      <!-- <pre class="card card-block card-header"> {{controllerTargetAvailable | json}}</pre> -->
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default" (click)="close()">Cancel</button>
+      <button class="btn btn-primary" (click)="deleteConfirmed()">Delete</button>
+    </div>
+  </div>
+</div>

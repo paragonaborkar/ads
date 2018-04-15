@@ -1,0 +1,98 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Edit User</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <form novalidate #f="ngForm">
+          <div class="form-group row">
+              <label for="userName" class="col-sm-3 col-form-label">User Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" adsNoSpaces [ngClass]="{'is-invalid':userUserName.errors?.required && userUserName.touched || userUserName.errors?.minlength && userUserName.touched}"
+                  [(ngModel)]="User.userName" name="userName" #userUserName="ngModel" minlength="2" required>
+                <div *ngIf="userUserName.errors?.required && userUserName.touched" class="invalid-feedback">
+                  User Name is required
+                </div>
+                <div *ngIf="userUserName.errors?.minlength && userUserName.touched" class="invalid-feedback">
+                  Must be at least 2 characters
+                </div>
+                <div *ngIf="!userUserName.errors?.valid && userUserName.touched" class="invalid-feedback">
+                  User Name is not valid
+                </div>
+              </div>
+            </div>
+        <div class="form-group row">
+          <label for="firstName" class="col-sm-3 col-form-label">First Name</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" adsNoSpaces [ngClass]="{'is-invalid':userFirstName.errors?.required && userFirstName.touched || userFirstName.errors?.minlength && userFirstName.touched}"
+              [(ngModel)]="User.firstName" name="firstName" #userFirstName="ngModel" minlength="2" required>
+            <div *ngIf="userFirstName.errors?.required && userFirstName.touched" class="invalid-feedback">
+              First Name is required
+            </div>
+            <div *ngIf="userFirstName.errors?.minlength && userFirstName.touched" class="invalid-feedback">
+              Must be at least 2 characters
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="lastName" class="col-sm-3 col-form-label">Last Name</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" adsNoSpaces [ngClass]="{'is-invalid':userLastName.errors?.required && userLastName.touched || userLastName.errors?.minlength && userLastName.touched}"
+              [(ngModel)]="User.lastName" name="lastName" #userLastName="ngModel" minlength="2" required>
+            <div *ngIf="userLastName.errors?.required && userLastName.touched" class="invalid-feedback">
+              Last Name is required
+            </div>
+            <div *ngIf="userLastName.errors?.minlength && userLastName.touched" class="invalid-feedback">
+              Must be at least 2 characters
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="email" class="col-sm-3 col-form-label">Email</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" [ngClass]="{'is-invalid':userEmail.errors?.required && userEmail.touched || userEmail.errors?.pattern && userEmail.touched}"
+              [(ngModel)]="User.email" name="email" #userEmail="ngModel" minlength="8" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+            <div *ngIf="userEmail.errors?.required && userEmail.touched" class="invalid-feedback">
+              Email is required
+            </div>
+            <div *ngIf="userEmail.errors?.pattern && userEmail.touched" class="invalid-feedback">
+              Email is invalid
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="role" class="col-sm-3 col-form-label">Role</label>
+          <div class="col-sm-9">
+            <select class="form-control" [(ngModel)]="User.userRole" name="userRole">
+                <!-- userRole._links.self.href = User._links.userRole.href>{{role.userRole} -->
+                 <option *ngFor="let role of roleArray" [value]="role._links.self.href">{{role.userRole}}</option>
+               </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="form-control-label" class="col-sm-3 col-form-label">Enabled</label>
+          <div class="col-sm-9">
+            <select class="form-control" [(ngModel)]="User.enabled" name="User.enabled">
+                <option value="true">Yes</option>
+                <option value="false">No</option> 
+              </select>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="close()">Cancel</button>
+      <button class="btn btn-primary" (click)="save()">Save</button>
+      <!-- <pre>
+         {{User | json}}
+        </pre> -->
+
+    </div>
+  </div>
+</div>

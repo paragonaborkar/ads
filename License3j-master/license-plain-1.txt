@@ -1,0 +1,9 @@
+edition=commercial
+issued_date=2018.01.17
+valid_until=2200.12.31
+module_host_connections=true
+module_discover=false
+module_reports=false
+module_schedule=false
+module_planning=false
+module_execute=false

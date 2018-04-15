@@ -1,0 +1,106 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Resubmit Unidentified Qtrees</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+
+      <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+        <span>{{errorMessage}}</span>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4 h5">
+          <strong>Qtree:</strong>
+        </div>
+        <div class="col-sm-8 h5">{{activityInfo["qtree"]["qtreeName"]}}</div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4 h5">
+          <strong>NAS Volume:</strong>
+        </div>
+        <div class="col-sm-8 h5"> {{activityInfo["qtree"]["nasVolume"]["volumeName"]}}</div>
+      </div>
+
+      <div class="row" >
+          <div class="col-sm-12 ">
+              <table class="table table-bordered table-hover table-sm ">
+                  <tbody>
+                      <tr>
+                          <td><strong>Apps</strong></td>
+                          <td>
+                              <div *ngFor="let app of activityInfo['qtree']['appNames']">
+                                  {{app}}
+                              </div>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td><strong>Hosts</strong></td>
+                          <td>
+                              <div *ngFor="let host of activityInfo['qtree']['hostNames']">
+                                  {{host}}
+                              </div>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+
+      <!-- <label>
+        <span>Debug</span>
+        <input class="checkbox" type="checkbox" #debug="ngModel" ngModel>
+
+      </label>
+      <div *ngIf="debug.value">
+        <pre>{{unidentifiedResponse | json}}</pre>       
+      </div> -->
+
+      <form [formGroup]="formGroup" autocomplete="off">
+
+        <div class="form-group row">
+          <label for="requestedBy" class="col-sm-4 form-control-label">Requested By</label>
+          <div class="col-sm-6">
+            <!-- <input type="text" id="requestedBy" class="form-control" formControlName="requestedBy"> -->
+            
+            <div class="input-group input-group-unstyled">
+              <input id="requestedBy" class="form-control" formControlName="requestedBy" [(ngModel)]="asyncSelected"
+                placeholder="Person Lookup" [typeahead]="dataSource" (typeaheadLoading)="changeTypeaheadLoading($event)" (typeaheadNoResults)="changeTypeaheadNoResults($event)"
+                (typeaheadOnSelect)="typeaheadOnSelect($event)" [typeaheadOptionsLimit]="7" typeaheadOptionField="fullName"
+               >
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="reasonCode" class="col-sm-4 form-control-label">Reason Code</label>
+          <div class="col-sm-6 ">
+            <select class="form-control" formControlName="reasonCode">
+              <option *ngFor="let reason of unidentifiedAuditReasons" [value]="reason.fieldValue">{{reason.fieldValue}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-sm-12 ">
+            <label for="reason" class="form-control-label">Reason</label>
+            
+            <!-- FIXME: where is this stored? Check maxlength of that column -->
+              <textarea id="reason" class="form-control" formControlName="reason" maxlength="200"></textarea>
+            
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default" (click)="close()">Cancel</button>
+      <button class="btn btn-primary" (click)="save()">Resubmit</button>
+    </div>
+  </div>
+</div>

@@ -23,22 +23,22 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-	@Value("${security.jwt.client-id}")
+	@Value("#{sysConfigRepository.findByPropertyName('security.jwt.client-id').getPropertyValue()}")
 	private String clientId;
 
-	@Value("${security.jwt.client-secret}")
+	@Value("#{sysConfigRepository.findByPropertyName('security.jwt.client-secret').getPropertyValue()}")
 	private String clientSecret;
 
-	@Value("${security.jwt.grant-type}")
+	@Value("#{sysConfigRepository.findByPropertyName('security.jwt.grant-type').getPropertyValue()}")
 	private String grantType;
 
-	@Value("${security.jwt.scope-read}")
+	@Value("#{sysConfigRepository.findByPropertyName('security.jwt.scope-read').getPropertyValue()}")
 	private String scopeRead;
 
-	@Value("${security.jwt.scope-write}")
+	@Value("#{sysConfigRepository.findByPropertyName('security.jwt.scope-write').getPropertyValue()}")
 	private String scopeWrite = "write";
 
-	@Value("${security.jwt.resource-ids}")
+	@Value("#{sysConfigRepository.findByPropertyName('security.jwt.resource-ids').getPropertyValue()}")
 	private String resourceIds;
 
 	@Autowired

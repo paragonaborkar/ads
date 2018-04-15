@@ -11,45 +11,46 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="audit_trail_native_user")
-@NamedQuery(name="AuditTrailNativeUser.findAll", query="SELECT a FROM AuditTrailNativeUser a")
 public class AuditTrailNativeUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private AuditTrailNativeUserPK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Column(name="audit_comment")
+	@Column(name="audit_comment", length=1024)
 	private String auditComment;
 
-	@Column(name="audited_resource")
+	@Column(name="audited_resource", length=255)
 	private String auditedResource;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
 	@Lob
 	@Column(name="old_values")
 	private String oldValues;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
-	@Column(name="user_native_id")
-	private int userNativeId;
+	@Column(name="user_native_id", nullable=false)
+	private Integer userNativeId;
 
 	//bi-directional many-to-one association to AuditEvent
 	@ManyToOne
-	@JoinColumn(name="audit_event_id", insertable = false, updatable = false)
+	@JoinColumn(name="audit_event_id", nullable=false)
 	private AuditEvent auditEvent;
 
 	public AuditTrailNativeUser() {
 	}
 
-	public AuditTrailNativeUserPK getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(AuditTrailNativeUserPK id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -93,11 +94,11 @@ public class AuditTrailNativeUser implements Serializable {
 		this.updateTime = updateTime;
 	}
 
-	public int getUserNativeId() {
+	public Integer getUserNativeId() {
 		return this.userNativeId;
 	}
 
-	public void setUserNativeId(int userNativeId) {
+	public void setUserNativeId(Integer userNativeId) {
 		this.userNativeId = userNativeId;
 	}
 

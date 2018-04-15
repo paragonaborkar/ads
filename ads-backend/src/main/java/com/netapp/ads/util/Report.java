@@ -23,13 +23,5 @@ public class Report {
 	public void setReport(String report) {
 		this.report = report;
 	}
-	
-	public static void main(String[] args) {
-		String password = "123456";
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String hashedPassword = passwordEncoder.encode(password);
-		// FIXME: no sys out's
-		System.out.println(hashedPassword);
-	}
 
 }

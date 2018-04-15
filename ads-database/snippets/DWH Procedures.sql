@@ -1,0 +1,4 @@
+CALL dwh_inventory.hhccCIFSHostConnUpdate;
+CALL dwh_inventory.hhccNfsHostConnUpdate;
+CALL dwh_inventory.hostConnectionTable;
+CALL dwh_inventory.cifsHostConnectionTable;

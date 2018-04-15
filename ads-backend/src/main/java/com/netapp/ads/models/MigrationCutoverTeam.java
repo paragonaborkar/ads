@@ -3,7 +3,6 @@ package com.netapp.ads.models;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
@@ -12,40 +11,43 @@ import java.util.List;
  */
 @Entity
 @Table(name="migration_cutover_team")
-@NamedQuery(name="MigrationCutoverTeam.findAll", query="SELECT m FROM MigrationCutoverTeam m")
 public class MigrationCutoverTeam implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
+	private Integer id;
 
-	@Column(name="create_time")
+	@Column(name="create_time", insertable=false, updatable=false)
 	private Timestamp createTime;
 
-	@Column(name="migration_cutover_src_to_tgt_id")
-	private int migrationCutoverSrcToTgtId;
-
-	@Column(name="team_member_role")
+	@Column(name="team_member_role", nullable=false, length=1)
 	private String teamMemberRole;
 
-	@Column(name="update_time")
+	@Column(name="update_time", insertable=false, updatable=false)
 	private Timestamp updateTime;
 
-	@Column(name="user_corporate_id")
-	private int userCorporateId;
+	@Column(name="user_corporate_id", nullable=false)
+	private Integer userCorporateId;
+
+	//bi-directional one-to-one association to MigrationCutoverSrcToTgt
+	@OneToOne(mappedBy="migrationCutoverTeam")
+	private MigrationCutoverSrcToTgt aMigrationCutoverSrcToTgt;
 
 	//bi-directional many-to-one association to MigrationCutoverSrcToTgt
-	@OneToMany(mappedBy="migrationCutoverTeam")
-	private List<MigrationCutoverSrcToTgt> migrationCutoverSrcToTgts;
+	@ManyToOne
+	@JoinColumn(name="migration_cutover_src_to_tgt_id", nullable=false)
+	private MigrationCutoverSrcToTgt migrationCutoverSrcToTgt;
 
 	public MigrationCutoverTeam() {
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -55,14 +57,6 @@ public class MigrationCutoverTeam implements Serializable {
 
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
-	}
-
-	public int getMigrationCutoverSrcToTgtId() {
-		return this.migrationCutoverSrcToTgtId;
-	}
-
-	public void setMigrationCutoverSrcToTgtId(int migrationCutoverSrcToTgtId) {
-		this.migrationCutoverSrcToTgtId = migrationCutoverSrcToTgtId;
 	}
 
 	public String getTeamMemberRole() {
@@ -81,34 +75,28 @@ public class MigrationCutoverTeam implements Serializable {
 		this.updateTime = updateTime;
 	}
 
-	public int getUserCorporateId() {
+	public Integer getUserCorporateId() {
 		return this.userCorporateId;
 	}
 
-	public void setUserCorporateId(int userCorporateId) {
+	public void setUserCorporateId(Integer userCorporateId) {
 		this.userCorporateId = userCorporateId;
 	}
 
-	public List<MigrationCutoverSrcToTgt> getMigrationCutoverSrcToTgts() {
-		return this.migrationCutoverSrcToTgts;
+	public MigrationCutoverSrcToTgt getAMigrationCutoverSrcToTgt() {
+		return this.aMigrationCutoverSrcToTgt;
 	}
 
-	public void setMigrationCutoverSrcToTgts(List<MigrationCutoverSrcToTgt> migrationCutoverSrcToTgts) {
-		this.migrationCutoverSrcToTgts = migrationCutoverSrcToTgts;
+	public void setAMigrationCutoverSrcToTgt(MigrationCutoverSrcToTgt migrationCutoverSrcToTgt) {
+		this.aMigrationCutoverSrcToTgt = migrationCutoverSrcToTgt;
 	}
 
-	public MigrationCutoverSrcToTgt addMigrationCutoverSrcToTgt(MigrationCutoverSrcToTgt migrationCutoverSrcToTgt) {
-		getMigrationCutoverSrcToTgts().add(migrationCutoverSrcToTgt);
-		migrationCutoverSrcToTgt.setMigrationCutoverTeam(this);
-
-		return migrationCutoverSrcToTgt;
+	public MigrationCutoverSrcToTgt getMigrationCutoverSrcToTgt() {
+		return this.migrationCutoverSrcToTgt;
 	}
 
-	public MigrationCutoverSrcToTgt removeMigrationCutoverSrcToTgt(MigrationCutoverSrcToTgt migrationCutoverSrcToTgt) {
-		getMigrationCutoverSrcToTgts().remove(migrationCutoverSrcToTgt);
-		migrationCutoverSrcToTgt.setMigrationCutoverTeam(null);
-
-		return migrationCutoverSrcToTgt;
+	public void setMigrationCutoverSrcToTgt(MigrationCutoverSrcToTgt migrationCutoverSrcToTgt) {
+		this.migrationCutoverSrcToTgt = migrationCutoverSrcToTgt;
 	}
 
 }

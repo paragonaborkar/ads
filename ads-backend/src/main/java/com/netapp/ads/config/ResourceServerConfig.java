@@ -16,7 +16,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private ResourceServerTokenServices tokenServices;
 
-    @Value("${security.jwt.resource-ids}")
+    @Value("#{sysConfigRepository.findByPropertyName('security.jwt.resource-ids').getPropertyValue()}")
     private String resourceIds;
 
     @Override
@@ -30,10 +30,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
                 http
-                .requestMatchers()
+                	.requestMatchers()
                 .and()
-                .authorizeRequests()
-                .antMatchers("/**").authenticated();
+                	.authorizeRequests()
+                		.antMatchers("/saml/**").permitAll()
+                		.antMatchers("/**").authenticated().and().securityContext().securityContextRepository(new TokenSecurityContextRepository());
     }
 
 }

@@ -12,24 +12,31 @@ public class HostApplicationXRefPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="host_id")
-	private int hostId;
+	@Column(name="host_id", insertable=false, updatable=false, unique=true, nullable=false)
+	private Integer hostId;
 
-	@Column(name="application_id")
-	private int applicationId;
+	@Column(name="application_id", insertable=false, updatable=false, unique=true, nullable=false)
+	private Integer applicationId;
 
 	public HostApplicationXRefPK() {
 	}
-	public int getHostId() {
+	
+	public HostApplicationXRefPK(Integer hostId, Integer applicationId) {
+		super();
+		this.hostId = hostId;
+		this.applicationId = applicationId;
+	}
+
+	public Integer getHostId() {
 		return this.hostId;
 	}
-	public void setHostId(int hostId) {
+	public void setHostId(Integer hostId) {
 		this.hostId = hostId;
 	}
-	public int getApplicationId() {
+	public Integer getApplicationId() {
 		return this.applicationId;
 	}
-	public void setApplicationId(int applicationId) {
+	public void setApplicationId(Integer applicationId) {
 		this.applicationId = applicationId;
 	}
 
