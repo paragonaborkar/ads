@@ -133,9 +133,7 @@ public class DiscoverProcessingController {
 
 	@RequestMapping(value="/sendOwnerFirstEmail", method=RequestMethod.POST)
 	public ResponseEntity<?> sendOwnerFirstEmail(HttpServletRequest request,  HttpServletResponse response) {
-		// FIXME: Allow this it called by REST
-		// We cannot assume a previous set of emails was sent out. It could have failed. So search for Activities where emails have not been sent for it.
-		// FIXME: But also convert this it a servive that runs once a day. Configuration in the application properties, if possible. 
+		log.debug("Sending first emails...");
 		emailService.sendOwnerFirstEmail();
 		return new ResponseEntity(TalendConstants.STR_JOB_SUBMITTED.replaceFirst("PLACEHOLDER", "Email sent!"), HttpStatus.OK);
 	}
@@ -144,10 +142,7 @@ public class DiscoverProcessingController {
 
 	@RequestMapping(value="/sendOwnerReminderEmail", method=RequestMethod.POST)
 	public ResponseEntity<?> sendOwnerReminderEmail(HttpServletRequest request,  HttpServletResponse response) {
-
-		// FIXME: Allow this it called by REST
-		// FIXME: But also convert this it a servive that runs once a day. Configuration in the application properties, if possible. 
-		// We cannot assume a previous set of emails was sent out. It could have failed. So search for Activities where emails have not been sent for it.
+		log.debug("Sending reminder emails...");
 		emailService.sendOwnerReminderEmail();
 		return new ResponseEntity(TalendConstants.STR_JOB_SUBMITTED.replaceFirst("PLACEHOLDER", "Email sent!"), HttpStatus.OK);
 	}

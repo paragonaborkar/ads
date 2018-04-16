@@ -181,6 +181,7 @@ public class EmailService {
 	@Scheduled(cron = "#{sysConfigRepository.findByPropertyName('ads.email.sendowner.first').getPropertyValue()}")
 	public void sendOwnerFirstEmail() {
 		List<ActivityResponse> activityResponses = activityResponseRepository.findByEmailCount(0);
+		log.debug("activityResponses size:" + activityResponses.size());
 		sendEmailAndUpdateActivityResponses("QtreeMultiOwnerNoSchedule/email", activityResponses);
 	}
 	
