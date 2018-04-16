@@ -296,6 +296,7 @@ public class OwnerIdentificationService {
 			activityResponse.setIsPresumed(true);
 			activityResponse.setOwnerUserCorporate(ownerUserCorporate);
 			activityResponse.setActivity(activity);
+			activityResponse.setEmailCount(0);
 			activityResponseRepository.save(activityResponse);
 			activity.addActivityResponse(activityResponse);
 			if(activity.getAdminOverride()) {

@@ -33,7 +33,7 @@ export class ControllerWorkPackageComponent implements OnInit {
   constructor(private contrllerWorkPacakageService: ControllerWorkPackageService, private applicationConfigService: ApplicationConfigService,  private errorService: AdsErrorService) {
     this.page.number = 1;
     this.page.pageNumber = 1;
-    this.page.size = 3;
+    this.page.size = 10;
   }
 
   ngOnInit() {

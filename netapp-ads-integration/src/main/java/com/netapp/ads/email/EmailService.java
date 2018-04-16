@@ -137,9 +137,10 @@ public class EmailService {
 		context.setVariable("viewAllTasksFullUrl", viewAllTasks); 
 		context.setVariable("adsQtreeOwnerFullUrl", adsQtreeOwnerUrl);  
 		context.setVariable("adsSupportFullUrl", adsSupportUrl);  		
-
+	
 		//FIXME: Need to generate links for each of the migKeys. There could be more than 1.
-		context.setVariable("migKey", "RANDOM_REPLACE");
+		context.setVariable("migKeys", migKeys);
+		
 
 		try {
 			String emailTo = corpUser.getEmail();

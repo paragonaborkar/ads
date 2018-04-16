@@ -19,7 +19,7 @@ INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`,
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.sso.backend.url', 'http://localhost:8080/sso','1',0,'Security - SSO');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.sso.idp.metadata.url', 'http://idp.ssocircle.com/idp-meta.xml','1',0,'Security - SSO');
 
-INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.rules.rules_path', 'file:C:/Projects/NetApp/Temp/myrules/','1',0,'Rules');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.rules.rules_path', 'file:C:/Projects/NetApp/ADS/github/discovery_rules/','1',0,'Rules');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.rules.discovery_rule.disposition', 'DiscoverOwner','1',0,'Rules');
 
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ads.email.logoUrl', 'http://localhost:4200/index','1',0,'Email');

@@ -196,7 +196,7 @@
                                                         <tr>
 
                                                             <td align="center" style="font-size: 25px; font-family: Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); padding-top: 30px;"
-                                                                class="padding">Qtree Ownership Request</td>
+                                                                class="padding">Qtree Ownership Request - Reminder</td>
                                                         </tr>
 
                                                         <tr>
@@ -223,28 +223,25 @@
                                                                 the disposition for your Qtrees.</br>
                                                                 <br/>
 
-                                                                <br>Please complete this within 3 days.</br>
+                                                                <br>Please complete this ASAP.</br>
 
 
                                                                 <!-- THE TABLE IS THE BUTTON! -->
-                                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-
+                                                                <table width="100%" border="0" cellspacing="0" cellpadding="0" th:each="migKey, iterStat: ${migKeys}">
                                                                     <tbody>
                                                                         <tr>
-
                                                                             <td align="center" style="padding-top: 25px;" class="padding">
-
                                                                                 <table border="0" cellspacing="0" cellpadding="0" class="mobile-button-container">
 
                                                                                     <tbody>
                                                                                         <tr>
-
                                                                                             <td align="center" style="border-radius: 3px;" bgcolor="#0067c5">
-                                                                                                <a th:href="@{${adsQtreeOwnerFullUrl}}" target="_blank" style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: rgb(255, 255, 255); text-decoration: none; border-radius: 3px; padding: 15px 25px; border: 1px solid rgb(37, 111, 156); display: inline-block;"
-                                                                                                    class="mobile-button">Respond Now â†’</a>
+                                                                                                <a  th:href="@{${adsQtreeOwnerFullUrl} + '/' + ${migKey.getMigrationKey()}} + '?userId=' + ${migKey.getUserCorporate().getId()}" target="_blank" style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: rgb(255, 255, 255); text-decoration: none; border-radius: 3px; padding: 15px 25px; border: 1px solid rgb(37, 111, 156); display: inline-block;"
+                                                                                                    class="mobile-button">Respond Now to Request: [[${migKey.getMigrationKey()}]]†’</a>
                                                                                             </td>
                                                                                         </tr>
                                                                                     </tbody>
+                                                                                    
                                                                                 </table>
                                                                             </td>
                                                                         </tr>

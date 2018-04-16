@@ -36,7 +36,7 @@ export class ControllerReleaseComponent implements OnInit {
   constructor(private contrllerReleaseService: ControllerReleaseService, private applicationConfigService: ApplicationConfigService,  private errorService: AdsErrorService) {
     this.page.number = 1;
     this.page.pageNumber = 1;
-    this.page.size = 3;
+    this.page.size = 10;
   }
 
   ngOnInit() {

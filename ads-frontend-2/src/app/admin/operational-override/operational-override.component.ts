@@ -37,7 +37,7 @@ export class OperationalOverrideComponent implements OnInit {
   constructor(private operationalOverrideService: OperationalOverrideService, private sessionHelper: SessionHelper, private applicationConfigService: ApplicationConfigService) {
     this.page.number = 1;
     this.page.pageNumber = 1;
-    this.page.size = 1000;
+    this.page.size = 10;
   }
 
   ngOnInit() {

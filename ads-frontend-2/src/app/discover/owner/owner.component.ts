@@ -43,7 +43,7 @@ export class OwnerComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private ownerService: OwnerService, private sessionHelper: SessionHelper, private applicationConfigService: ApplicationConfigService) {
     this.page.number = 1;
     this.page.pageNumber = 1;
-    this.page.size = 1000;
+    this.page.size = 10;
   }
 
   ngOnInit() {

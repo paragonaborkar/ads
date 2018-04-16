@@ -1922,7 +1922,6 @@ CREATE OR REPLACE VIEW `unknown_owner_report` AS
 			`qt`.`qtree_name` AS `qtree_name`,
 			`nv`.`volume_name` AS `volume_name`,
 			`qtd`.`disposition` AS `disposition`,
-			`a`.`mailing_date` AS `mailing_date`,
 			`a`.`will_decommission` AS `will_decommission`,
 			`a`.`decommission_date` AS `decommission_date`,
 			`a`.`will_migrate` AS `will_migrate`,
@@ -1934,7 +1933,6 @@ CREATE OR REPLACE VIEW `unknown_owner_report` AS
       `a`.`unidentified_reason` AS `unidentified_reason`,
 			`a`.`admin_override` AS `admin_override`,
 			`a`.`note` AS `note`,
-			`a`.`mail_count` AS `mail_count`,
 			`a`.`migration_time_id` AS `migration_time_id`,
 			`a`.`create_time` AS `create_time`,
 			`a`.`update_time` AS `update_time`
@@ -1954,7 +1952,6 @@ CREATE OR REPLACE VIEW `volume_decommission_report` AS
 			`nv`.`volume_name` AS `volume_name`,
 		#	`a`.`vserver` AS `vserver`,
 			`qtd`.`disposition` AS `disposition`,
-			`a`.`mailing_date` AS `mailing_date`,
 			`a`.`will_decommission` AS `will_decommission`,
 			`a`.`decommission_date` AS `decommission_date`,
 			`a`.`will_migrate` AS `will_migrate`,
@@ -1967,7 +1964,6 @@ CREATE OR REPLACE VIEW `volume_decommission_report` AS
 	#		`a`.`is_latest` AS `is_latest`,
 			`a`.`admin_override` AS `admin_override`,
 			`a`.`note` AS `note`,
-			`a`.`mail_count` AS `mail_count`,
 			`a`.`migration_time_id` AS `migration_time_id`,
 			`a`.`create_time` AS `create_time`,
 			`a`.`update_time` AS `update_time`
@@ -1987,7 +1983,6 @@ CREATE VIEW `activity_report` AS
 			`nv`.`volume_name` AS `volume_name`,
 		#	`a`.`vserver` AS `vserver`,
 			`qtd`.`disposition` AS `disposition`,
-			`a`.`mailing_date` AS `mailing_date`,
 			`a`.`will_decommission` AS `will_decommission`,
 			`a`.`decommission_date` AS `decommission_date`,
 			`a`.`will_migrate` AS `will_migrate`,
@@ -2000,7 +1995,6 @@ CREATE VIEW `activity_report` AS
 		#	`a`.`is_latest` AS `is_latest`,
 			`a`.`admin_override` AS `admin_override`,
 			`a`.`note` AS `note`,
-			`a`.`mail_count` AS `mail_count`,
 			`a`.`migration_time_id` AS `migration_time_id`,
 			`a`.`create_time` AS `create_time`,
 			`a`.`update_time` AS `update_time`
@@ -2018,7 +2012,6 @@ CREATE OR REPLACE VIEW `multi_owner_report` AS
 			`nv`.`volume_name` AS `volume_name`,
 		#	`a`.`vserver` AS `vserver`,
 			`qtd`.`disposition` AS `disposition`,
-			`a`.`mailing_date` AS `mailing_date`,
 			`a`.`will_decommission` AS `will_decommission`,
 			`a`.`decommission_date` AS `decommission_date`,
 			`a`.`will_migrate` AS `will_migrate`,
@@ -2031,7 +2024,6 @@ CREATE OR REPLACE VIEW `multi_owner_report` AS
 		#	`a`.`is_latest` AS `is_latest`,
 			`a`.`admin_override` AS `admin_override`,
 			`a`.`note` AS `note`,
-			`a`.`mail_count` AS `mail_count`,
 			`a`.`migration_time_id` AS `migration_time_id`,
 			`a`.`create_time` AS `create_time`,
 			`a`.`update_time` AS `update_time`
