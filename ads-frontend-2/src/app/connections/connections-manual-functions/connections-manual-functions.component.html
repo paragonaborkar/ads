@@ -1,7 +1,9 @@
 <div class="row d-flex justify-content-center">
 
     <div class="col-md-8 mb-2">
-      <h2 class="h3">Host Connections - Manual Actions - NOT READY YET.</h2>
-  
+      <h2 class="h3">Host Connections - Manual Actions</h2>
+      <app-manual-function [fileUpload]="false" [pollForStatus]="false" [displayJobName]="'CIFS Session'" [jobName]="'cifsSession'"></app-manual-function>
+      <app-manual-function [fileUpload]="false" [pollForStatus]="false" [displayJobName]="'NFS Data Collector'" [jobName]="'nfsDataCollector'"></app-manual-function>
+      <app-manual-function [fileUpload]="false" [pollForStatus]="false" [displayJobName]="'Show Mount HHCC'" [jobName]="'showMount'"></app-manual-function>
     </div>
   </div>
