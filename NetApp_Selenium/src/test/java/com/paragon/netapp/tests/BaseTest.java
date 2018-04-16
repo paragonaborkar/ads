@@ -12,8 +12,8 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
-import com.paragon.netapp.modules.LoginPage;
-import com.paragon.netapp.projectUtils.ProjectUtility;
+import com.netapp.ads.login.LoginPage;
+import com.netapp.ads.utils.ProjectUtility;
 
 public class BaseTest {
 	public static WebDriver driver;

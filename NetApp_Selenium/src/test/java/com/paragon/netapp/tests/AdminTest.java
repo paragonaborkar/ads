@@ -2,10 +2,10 @@ package com.paragon.netapp.tests;
 
 import org.testng.annotations.Test;
 
-import com.paragaon.netapp.adminModule.AdminReport;
-import com.paragaon.netapp.adminModule.ApplicationProperties;
-import com.paragaon.netapp.adminModule.ManualFunctions;
-import com.paragaon.netapp.adminModule.PropertyPreferences;
+import com.netapp.ads.admin.AdminReport;
+import com.netapp.ads.admin.ApplicationProperties;
+import com.netapp.ads.admin.ManualFunctions;
+import com.netapp.ads.admin.PropertyPreferences;
 
 /**
  * @author Singprad

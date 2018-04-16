@@ -6,8 +6,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.paragon.netapp.modules.LoginPage;
-import com.paragon.netapp.projectUtils.XLUtility;
+import com.netapp.ads.login.LoginPage;
+import com.netapp.ads.utils.XLUtility;
 
 /**
  * @author Singprad
