@@ -3,8 +3,8 @@ package com.paragon.netapp.tests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.paragaon.netapp.adminModule.InvalidScenario;
-import com.paragon.netapp.projectUtils.XLUtility;
+import com.netapp.ads.admin.InvalidScenario;
+import com.netapp.ads.utils.XLUtility;
 
 /**
  * @author Singprad Methods called to Validate invalid scenario.

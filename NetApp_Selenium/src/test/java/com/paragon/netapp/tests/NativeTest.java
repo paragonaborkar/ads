@@ -3,9 +3,9 @@ package com.paragon.netapp.tests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.paragaon.netapp.adminModule.EditDeletePassChange;
-import com.paragaon.netapp.adminModule.NativeUser;
-import com.paragon.netapp.projectUtils.XLUtility;
+import com.netapp.ads.admin.EditDeletePassChange;
+import com.netapp.ads.admin.NativeUser;
+import com.netapp.ads.utils.XLUtility;
 
 public class NativeTest extends BaseTest {
 
@@ -44,9 +44,9 @@ public class NativeTest extends BaseTest {
 	 */
 	@Test(dataProvider = "EditData")
 	public void editTest(String changename) throws Exception {
-		Thread.sleep(5000);
+
 		EditDeletePassChange.editUserdetails(driver, changename);
-		Thread.sleep(5000);
+
 
 	}
 
@@ -57,9 +57,9 @@ public class NativeTest extends BaseTest {
 	 */
 	@Test(dataProvider = "EditData")
 	public void passwordTest(String changename) throws Exception {
-		Thread.sleep(5000);
+
 		EditDeletePassChange.passwordDetails(driver, changename);
-		Thread.sleep(5000);
+
 
 	}
 
@@ -70,9 +70,9 @@ public class NativeTest extends BaseTest {
 	 */
 	@Test(dataProvider = "EditData", priority = 3)
 	public void deleteTest(String changename) throws Exception {
-		Thread.sleep(5000);
+
 		EditDeletePassChange.deleteUserdetails(driver, changename);
-		Thread.sleep(5000);
+
 	}
 
 	@DataProvider(name = "EditData")

@@ -1,17 +1,12 @@
 package com.paragon.netapp.tests;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.paragaon.netapp.dicoverModule.ControlRelease;
-import com.paragon.netapp.modules.LoginPage;
-import com.paragon.netapp.projectUtils.XLUtility;
-import com.paragaon.netapp.dicoverModule.*;
+import com.netapp.ads.discover.ControlRelease;
+import com.netapp.ads.discover.DiscovrManualFunctions;
+import com.netapp.ads.discover.Manual_discover;
+import com.netapp.ads.utils.XLUtility;;;
 
 /**
  * @author Singprad
@@ -32,7 +27,7 @@ public class DiscoverTest extends BaseTest {
 			throws InterruptedException {
 
 		Manual_discover.Workpack(driver, Workpack, SourceController, Assettag, InstallDate);
-		Thread.sleep(10000);
+
 
 	}
 
@@ -44,7 +39,7 @@ public class DiscoverTest extends BaseTest {
 	public void Control(String SourceController) throws InterruptedException {
 
 		ControlRelease.ControlBatch(driver, SourceController);
-		Thread.sleep(5000);
+
 		ControlRelease.DeleteRelease(driver, SourceController);
 	}
 
@@ -56,7 +51,7 @@ public class DiscoverTest extends BaseTest {
 	public void DeleteWorkpack(String SourceController) throws InterruptedException {
 
 		Manual_discover.DeleteController(driver, SourceController);
-		Thread.sleep(10000);
+
 	}
 
 	/**
@@ -66,7 +61,7 @@ public class DiscoverTest extends BaseTest {
 	public void discoverManual() throws InterruptedException {
 
 		DiscovrManualFunctions.manualFunctions(driver);
-		Thread.sleep(10000);
+
 	}
 
 	@DataProvider(name = "ControllerWorkPackage")
