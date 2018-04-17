@@ -85,6 +85,8 @@ export class LoginComponent implements OnInit {
 
 	private navigateAfterSuccess() {
 
+		console.log("navigateAfterSuccess this.redirectUrl", this.redirectUrl);
+
 		if (this.redirectUrl == '' || this.redirectUrl == undefined) {
 
 			if (this._sessionHelper.get("userRole") == "ROLE_USER")

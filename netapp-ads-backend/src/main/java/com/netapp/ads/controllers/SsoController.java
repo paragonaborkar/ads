@@ -46,23 +46,34 @@ public class SsoController {
 		
 	@RequestMapping(value="/ssoUrl/{owner}/{migKey}/{userId}", method=RequestMethod.GET)
 	public  ResponseEntity<?>  ssoUrl(HttpServletRequest request,  HttpServletResponse response, 
-//			@RequestParam(name = "redirectTo", required = true) String redirectTo, @RequestParam(name = "userId", required = false) String userId) {
 		@PathVariable(name = "owner", required = true) String owner, 
 		@PathVariable(name = "migKey", required = true) String migKey, 
 		@PathVariable(name = "userId", required = true) String userId) {
 
-		String referrer = request.getHeader(HttpHeaders.REFERER); 
-
-//		String url = adsSsoBackendUrl + "?relayState=" + referrer + "?redirectTo=" + redirectTo + "&userId=" + userId;
-//		String url = adsSsoBackendUrl + "?relayState=" + referrer + "&userId=" + userId;
-		String url = adsSsoBackendUrl + "/" + userId + "?relayState=" + referrer;
+		String referrer = request.getHeader(HttpHeaders.REFERER);
 		
+		String relayState = referrer.replaceAll("/" + owner + "/" + migKey + "/" + userId, "/login");
+		String url = adsSsoBackendUrl + "/" + userId + "?relayState=" + relayState  + "?redirectTo=" + "/" + owner + "/" + migKey + "/" + userId; 
+				
 		log.debug("url:" + url);
 		
 		return new ResponseEntity(STR_SSO_REDIRECT_URL.replaceFirst("PLACEHOLDER", url), HttpStatus.OK);	
-
     }
 
+	@RequestMapping(value="/ssoUrl/{page}/{userId}", method=RequestMethod.GET)
+	public  ResponseEntity<?>  ssoUrlIndex(HttpServletRequest request,  HttpServletResponse response, 
+			@PathVariable(name = "page", required = true) String page, 
+			@PathVariable(name = "userId", required = true) String userId) {
+
+		String referrer = request.getHeader(HttpHeaders.REFERER);
+		
+		String relayState = referrer.replaceAll("/" + page + "/" + userId, "/login");
+		String url = adsSsoBackendUrl + "/" + userId + "?relayState=" + relayState  + "?redirectTo=" + "/" + page + "/" + userId; 
+				
+		log.debug("url:" + url);
+		
+		return new ResponseEntity(STR_SSO_REDIRECT_URL.replaceFirst("PLACEHOLDER", url), HttpStatus.OK);	
+    }
 
 
 }

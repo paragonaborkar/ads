@@ -477,7 +477,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 							final byte[] authBytes = token.getBytes(StandardCharsets.UTF_8);
 							final String encodedToken = Base64.getEncoder().encodeToString(authBytes);
 							if(relayStateURL != null) {
-								String url = relayStateURL + "?response=" + encodedToken;
+								String url = relayStateURL + "&response=" + encodedToken;
 								log.debug("relayStateURL:" + url);
 								response.sendRedirect(url);
 							} else {

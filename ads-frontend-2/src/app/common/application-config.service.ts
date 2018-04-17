@@ -88,7 +88,6 @@ export class ApplicationConfigService {
   // getPreferencesForColumns(pageName, columns, hdrTmpl, actionTmpl, dateTimeTmpl, asIsTmpl): Observable<any> {
     getPreferencesForColumns(pageName, columns, columnTemplates, actionColumn:boolean): Observable<any> {
     
-      console.log("corpUserId 2: " + this.sessionHelper.get("corpUserId"));
     return this.getPreferencesForUser(pageName, this.sessionHelper.get("nativeUserId"), this.sessionHelper.get("corpUserId"))
       .map(preferenceDetails => {
         console.log(preferenceDetails);
