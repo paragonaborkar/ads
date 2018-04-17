@@ -3,6 +3,7 @@ package com.netapp.ads.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.netapp.ads.services.SystemPropertiesService;
 
 @RestController
-@RequestMapping(value = "/api")
+@BasePathAwareController
 public class SystemConfigController {
 
 	@Autowired

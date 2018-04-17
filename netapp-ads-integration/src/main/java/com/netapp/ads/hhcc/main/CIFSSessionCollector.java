@@ -17,12 +17,14 @@ import com.netapp.ads.hhcc.converters.HHCCConstants;
 import com.netapp.ads.hhcc.jaxb.CIFSSessionInfo;
 import com.netapp.ads.hhcc.jaxb.CIFShareInfo;
 import com.netapp.ads.hhcc.jaxb.VfilerInfo;
+import com.netapp.ads.hhcc.jdbc.NaDBUtils;
 import com.netapp.ads.hhcc.utils.ADSRestUtils;
 import com.netapp.ads.hhcc.utils.NetAppAPIUtils;
 import com.netapp.ads.hhcc.vo.Controller;
 import com.netapp.ads.hhcc.vo.Credential;
 import com.netapp.ads.hhcc.vo.NADataSource;
 import com.netapp.ads.hhcc.vo.NaSystemInfo;
+import com.netapp.ads.models.JobData;
 
 /***
  * Gathers a list of current CIFS sessions on all NetApp controllers present as
@@ -66,12 +68,17 @@ public class CIFSSessionCollector {
 	
 	@Value("#{sysConfigRepository.findByPropertyName('vfiler.status.dr_backup').getPropertyValue()}")
 	String vFilerDefaultDRBackup;
+	
+	private static final String JOB_NAME = "CIFS Session";
 
 	@Autowired
 	NetAppAPIUtils netAppAPIUtils;
 	
 	@Autowired
 	ADSRestUtils adsRestUtils;
+	
+	@Autowired
+	NaDBUtils naDBUtils;
 	
 	//private static final String QUERY = "insert into  dwh_inventory.wcr_cifs_temp(DateTime,ControllerName, SerialNumber,VfilerName,VfilerUuid,VolumeName,ShareName,MountPoint,HostIp,HostName,WindowsUser,UnixUser) " + 
 	//		" Values (:dateTime,:controllerName,:serialNumber,:vFilerName,:vFilerUUID,:volumeName,:shareName,:mountPoint,:hostIP,:hostName,:windowsUser,:unixUser)  ON DUPLICATE KEY UPDATE DateTime=NOW()";
@@ -81,6 +88,7 @@ public class CIFSSessionCollector {
 
 	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('cifs.schedule').getPropertyValue()}", initialDelayString = "#{sysConfigRepository.findByPropertyName('cifs.schedule.initial_delay').getPropertyValue()}")
 	public void collectCFSSessions() {
+		JobData jobData = naDBUtils.startJob(JOB_NAME, "SYSTEM");
 		log.info("CIFS Session Collector and Importer Job started");
 		log.info("Connecting to OCI server: {}", ociServerName);
 		NADataSource[] dataSources = adsRestUtils.getNetAppDataSources();
@@ -152,7 +160,9 @@ public class CIFSSessionCollector {
 					}
 				}
 			}
+			naDBUtils.endJob(jobData, "Job completed successfully.");
 		} else {
+			naDBUtils.endJob(jobData, "No Data Sources found.");
 			log.info("No Data Sources found!!!");
 		}
 		log.info("CIFS Session Collector and Importer Job completed");
