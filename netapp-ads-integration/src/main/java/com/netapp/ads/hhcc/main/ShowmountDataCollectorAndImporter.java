@@ -20,6 +20,7 @@ import com.netapp.ads.hhcc.vo.HostExportData;
 import com.netapp.ads.hhcc.vo.NaSystemInfo;
 import com.netapp.ads.hhcc.vo.ShowmountImportData;
 import com.netapp.ads.hhcc.vo.StorageVolume;
+import com.netapp.ads.models.JobData;
 
 @Service
 public class ShowmountDataCollectorAndImporter {
@@ -51,9 +52,13 @@ public class ShowmountDataCollectorAndImporter {
 	NaDBUtils naDBUtils;
 	
 	JSONUtils jsonUtils = new JSONUtils();
+	
+	private static final String JOB_NAME = "Show Mount";
 
 	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('showmount.schedule').getPropertyValue()}", initialDelayString = "#{sysConfigRepository.findByPropertyName('showmount.schedule.initial_delay').getPropertyValue()}")
 	public void collectShowmountData() {
+		JobData jobData = naDBUtils.startJob(JOB_NAME, "SYSTEM");
+		StringBuilder jobEndMessage = new StringBuilder();
 		log.info("Show mount job started");
 		String currentTimeStamp=NaDBUtils.getCurrentTimeStamp();
 
@@ -75,6 +80,7 @@ public class ShowmountDataCollectorAndImporter {
 
 		if (testNetworks.size() == 0) {
 			log.warn("Something bad has happened and we have no interfaces on the target array: {} ", ociServerName);
+			naDBUtils.endJob(jobData, "Something bad has happened and we have no interfaces on the target array: " + ociServerName);
 		} else {
 
 			NaSystemInfo netAppSystemInfo = netAppAPIUtils.getNASystemInfo();
@@ -99,8 +105,10 @@ public class ShowmountDataCollectorAndImporter {
 				importData(currentNFSMountedHosts);
 				//jsonUtils.writeToFile(exportFilePath, currentNFSMountedHosts);
 			} else {
+				jobEndMessage.append("No active exports found for ").append(context);
 				log.info("No active exports found for  {} ", context);
 			}
+			naDBUtils.endJob(jobData, jobEndMessage.toString());
 		}
 		log.info("Show mount job completed");
 	}

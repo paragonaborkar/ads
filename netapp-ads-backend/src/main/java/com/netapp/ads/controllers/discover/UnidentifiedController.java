@@ -3,6 +3,8 @@ package com.netapp.ads.controllers.discover;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.BasePathAwareController;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +27,9 @@ import com.netapp.ads.repos.UserCorporateRepository;
 import com.netapp.ads.repos.UserNativeRepository;
 
 @RestController
+@RepositoryRestController
 @RequestMapping(value = "/api")
+@BasePathAwareController
 public class UnidentifiedController {
 
 	private static final Logger log = LoggerFactory.getLogger(UnidentifiedController.class);

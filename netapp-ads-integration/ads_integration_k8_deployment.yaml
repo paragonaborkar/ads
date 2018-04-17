@@ -1,0 +1,22 @@
+apiVersion: apps/v1beta1 # for versions before 1.8.0 use apps/v1beta1
+kind: Deployment
+metadata:
+  name: ads-integration
+spec:
+  selector:
+    matchLabels:
+      app: ads-integration
+  replicas: 2 # tells deployment to run 3 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: ads-integration
+    spec:
+      containers:
+      - name: ads-integration
+        image: ads-integration:0.1
+        imagePullPolicy: IfNotPresent # Get image locally
+        ports:
+        - containerPort: 8080
+      nodeSelector:
+        ads-type: integration

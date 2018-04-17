@@ -25,6 +25,7 @@ import com.netapp.ads.hhcc.vo.NaSystemInfo;
 import com.netapp.ads.hhcc.vo.NfsStatClientsInfo;
 import com.netapp.ads.hhcc.vo.NfsStatStartInfo;
 import com.netapp.ads.hhcc.vo.StorageVolume;
+import com.netapp.ads.models.JobData;
 
 /**
  * This script will gather all hosts in the showmount table and compare those
@@ -81,6 +82,7 @@ public class NFSDataCollectorAndImporter {
 	
 	JSONUtils jsonUtils = new JSONUtils();
 
+	private static final String JOB_NAME = "NFS Data Collector";
 	
 	/*
 	 * -Array netapp1 -DataWarehouseAddress dwh_ip -Port = "3306" -VfilerName
@@ -88,6 +90,9 @@ public class NFSDataCollectorAndImporter {
 	 */
 	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('nfs.schedule').getPropertyValue()}", initialDelayString = "#{sysConfigRepository.findByPropertyName('nfs.schedule.initial_delay').getPropertyValue()}")
 	public void collectCurrentNFSConnectedHostsAndStatistics() {
+		JobData jobData = naDBUtils.startJob(JOB_NAME, "SYSTEM");
+		StringBuilder jobEndMessage = new StringBuilder();
+		
 		boolean clearNFSStats = false;
 		log.info("NFS Collector and Importer Job started");
 		String currentTimeStamp = NaDBUtils.getCurrentTimeStamp();
@@ -117,6 +122,7 @@ public class NFSDataCollectorAndImporter {
 
 		CombinedActiveExports combinedActiveExports = new CombinedActiveExports();
 		if (testNetworks.size() == 0) {
+			naDBUtils.endJob(jobData, "Failed to Connect: Something bad has happened and we have no interfaces on the target array");
 			log.warn("Failed to Connect: Something bad has happened and we have no interfaces on the target array");
 			log.warn("== JOB SKIPPED: Collect NFSSTATS ==");
 		} else {
@@ -141,8 +147,10 @@ public class NFSDataCollectorAndImporter {
 					netAppAPIUtils.clearNfsStats();
 				}
 			} else {
+				jobEndMessage.append("No active exports found for ").append(netAppSystemInfo.getSystemName());
 				log.info("No active exports found for {}", netAppSystemInfo.getSystemName());
 			}
+			naDBUtils.endJob(jobData, jobEndMessage.toString());
 		}
 		log.info("NFS Collector and Importer Job completed");
 	}

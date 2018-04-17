@@ -45,11 +45,11 @@ INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`,
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('wfa.rest.url', 'https://10.216.15.37/rest/v1/admin/datasources','1',0,'HHCC');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('wfa.rest.user', 'admin','1',0,'HHCC');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('wfa.rest.password', 'admin123','1',0,'HHCC');
-INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('cifs.schedule', '900000','1',0,'HHCC');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('cifs.schedule', '86400000','1',0,'HHCC');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('cifs.schedule.initial_delay', '300000','1',0,'HHCC');
-INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('nfs.schedule', '900000','1',0,'HHCC');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('nfs.schedule', '86400000','1',0,'HHCC');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('nfs.schedule.initial_delay', '300000','1',0,'HHCC');
-INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('showmount.schedule', '900000','1',0,'HHCC');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('showmount.schedule', '86400000','1',0,'HHCC');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('showmount.schedule.initial_delay', '300000','1',0,'HHCC');
 
 /*!40000 ALTER TABLE `sys_config` ENABLE KEYS */;

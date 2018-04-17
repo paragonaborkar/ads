@@ -87,71 +87,73 @@ public class AuditInterceptor extends EmptyInterceptor {
 	@Override
 	public void postFlush(Iterator entities) {
 
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-		HttpServletRequest request = servletRequestAttributes.getRequest();
-		String url = request.getRequestURI();
-		String resourcePattern = url.substring(1).split("/")[0];
-		String userName = request.getUserPrincipal().getName();
-		String method = request.getMethod();
-		Object currentObject;
-
-		if (isMainEntity) {
-			if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method)) {
-				currentObject = entities.next();
-			} else {
-				currentObject = null;
-			}
-			
-			ApplicationContext ctx = AppContext.getApplicationContext();
-			AuditEventRepository auditEventRepositories = ctx.getBean(AuditEventRepository.class);
-
-			// Finding Audit Event
-			AuditEvent auditEvent = auditEventRepositories.findByHttpMethodAndResourcePattern(method, resourcePattern);
-
-			if (auditEvent != null) {
-				int auditId = auditEvent.getId();
-				UserNativeRepository userNativeRepo = ctx.getBean(UserNativeRepository.class);
-				UserApiRepository userApiRepo = ctx.getBean(UserApiRepository.class);
-				UserNative userNative = userNativeRepo.findByUserName(userName);
-				if (userNative != null) {
-					AuditTrailNativeUser auditTrailNativeUser = new AuditTrailNativeUser();
-					auditTrailNativeUser.setAuditEvent(auditEventRepositories.findOne(auditId));
-					auditTrailNativeUser.setCreateTime((Timestamp) dateUtils.convertToUtc());
-					auditTrailNativeUser.setUserNativeId(userNative.getId());
-					if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method)) {
-						auditTrailNativeUser.setAuditComment(convertObjectToString(currentObject));
-					}
-					if ("DELETE".equalsIgnoreCase(method)) {
-						auditTrailNativeUser.setOldValues(convertObjectToString(deleteObj));
-					}
-					if ("PUT".equalsIgnoreCase(method)) {
-						auditTrailNativeUser.setOldValues(convertObjectToString(oldUpdate));
-					}
-
-					auditTrailNativeUser.setAuditedResource(url);
-					AuditTrailNativeUserRepository auditTrailNativeUserRepositories = ctx.getBean(AuditTrailNativeUserRepository.class);
-					auditTrailNativeUserRepositories.saveAndFlush(auditTrailNativeUser);
-				} else if (userApiRepo != null) {
-					UserApi userApi = userApiRepo.findByClientId(userName);
-					AuditTrailApi auditTrailApi = new AuditTrailApi();
-					auditTrailApi.setAuditEvent(auditEventRepositories.findOne(auditId));
-					auditTrailApi.setCreateTime((Timestamp) dateUtils.convertToUtc());
-					auditTrailApi.setUserApiId(userApi.getId());
-
-					if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method)) {
-						auditTrailApi.setAuditComment(convertObjectToString(currentObject));
-					}
-					if ("DELETE".equalsIgnoreCase(method)) {
-						auditTrailApi.setOldValues(convertObjectToString(deleteObj));
-					}
-					if ("PUT".equalsIgnoreCase(method)) {
-						auditTrailApi.setOldValues(convertObjectToString(oldUpdate));
-					}
-					auditTrailApi.setAuditedResource(url);
-					AuditTrailApiRepository auditTrailApiRepositories = ctx.getBean(AuditTrailApiRepository.class);
-					auditTrailApiRepositories.saveAndFlush(auditTrailApi);
+		if(RequestContextHolder.getRequestAttributes() != null) {
+			ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+			HttpServletRequest request = servletRequestAttributes.getRequest();
+			String url = request.getRequestURI();
+			String resourcePattern = url.substring(1).split("/")[0];
+			String userName = request.getUserPrincipal().getName();
+			String method = request.getMethod();
+			Object currentObject;
+	
+			if (isMainEntity) {
+				if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method)) {
+					currentObject = entities.next();
+				} else {
+					currentObject = null;
 				}
-				isMainEntity = false;
+				
+				ApplicationContext ctx = AppContext.getApplicationContext();
+				AuditEventRepository auditEventRepositories = ctx.getBean(AuditEventRepository.class);
+	
+				// Finding Audit Event
+				AuditEvent auditEvent = auditEventRepositories.findByHttpMethodAndResourcePattern(method, resourcePattern);
+	
+				if (auditEvent != null) {
+					int auditId = auditEvent.getId();
+					UserNativeRepository userNativeRepo = ctx.getBean(UserNativeRepository.class);
+					UserApiRepository userApiRepo = ctx.getBean(UserApiRepository.class);
+					UserNative userNative = userNativeRepo.findByUserName(userName);
+					if (userNative != null) {
+						AuditTrailNativeUser auditTrailNativeUser = new AuditTrailNativeUser();
+						auditTrailNativeUser.setAuditEvent(auditEventRepositories.findOne(auditId));
+						auditTrailNativeUser.setCreateTime((Timestamp) dateUtils.convertToUtc());
+						auditTrailNativeUser.setUserNativeId(userNative.getId());
+						if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method)) {
+							auditTrailNativeUser.setAuditComment(convertObjectToString(currentObject));
+						}
+						if ("DELETE".equalsIgnoreCase(method)) {
+							auditTrailNativeUser.setOldValues(convertObjectToString(deleteObj));
+						}
+						if ("PUT".equalsIgnoreCase(method)) {
+							auditTrailNativeUser.setOldValues(convertObjectToString(oldUpdate));
+						}
+	
+						auditTrailNativeUser.setAuditedResource(url);
+						AuditTrailNativeUserRepository auditTrailNativeUserRepositories = ctx.getBean(AuditTrailNativeUserRepository.class);
+						auditTrailNativeUserRepositories.saveAndFlush(auditTrailNativeUser);
+					} else if (userApiRepo != null) {
+						UserApi userApi = userApiRepo.findByClientId(userName);
+						AuditTrailApi auditTrailApi = new AuditTrailApi();
+						auditTrailApi.setAuditEvent(auditEventRepositories.findOne(auditId));
+						auditTrailApi.setCreateTime((Timestamp) dateUtils.convertToUtc());
+						auditTrailApi.setUserApiId(userApi.getId());
+	
+						if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method)) {
+							auditTrailApi.setAuditComment(convertObjectToString(currentObject));
+						}
+						if ("DELETE".equalsIgnoreCase(method)) {
+							auditTrailApi.setOldValues(convertObjectToString(deleteObj));
+						}
+						if ("PUT".equalsIgnoreCase(method)) {
+							auditTrailApi.setOldValues(convertObjectToString(oldUpdate));
+						}
+						auditTrailApi.setAuditedResource(url);
+						AuditTrailApiRepository auditTrailApiRepositories = ctx.getBean(AuditTrailApiRepository.class);
+						auditTrailApiRepositories.saveAndFlush(auditTrailApi);
+					}
+					isMainEntity = false;
+				}
 			}
 		}
 	}
