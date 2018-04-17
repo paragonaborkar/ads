@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,13 +44,18 @@ public class SsoController {
 
 	public final static String STR_SSO_REDIRECT_URL = "{\"ssoRedirectUrl\":\"PLACEHOLDER\"}"; 
 		
-	@RequestMapping(value="/ssoUrl", method=RequestMethod.GET)
+	@RequestMapping(value="/ssoUrl/{owner}/{migKey}/{userId}", method=RequestMethod.GET)
 	public  ResponseEntity<?>  ssoUrl(HttpServletRequest request,  HttpServletResponse response, 
-			@RequestParam(name = "redirectTo", required = true) String redirectTo, @RequestParam(name = "userId", required = false) String userId) {
+//			@RequestParam(name = "redirectTo", required = true) String redirectTo, @RequestParam(name = "userId", required = false) String userId) {
+		@PathVariable(name = "owner", required = true) String owner, 
+		@PathVariable(name = "migKey", required = true) String migKey, 
+		@PathVariable(name = "userId", required = true) String userId) {
 
 		String referrer = request.getHeader(HttpHeaders.REFERER); 
 
-		String url = adsSsoBackendUrl + "?relayState=" + referrer + "?redirectTo=" + redirectTo + "&userId=" + userId;
+//		String url = adsSsoBackendUrl + "?relayState=" + referrer + "?redirectTo=" + redirectTo + "&userId=" + userId;
+//		String url = adsSsoBackendUrl + "?relayState=" + referrer + "&userId=" + userId;
+		String url = adsSsoBackendUrl + "/" + userId + "?relayState=" + referrer;
 		
 		log.debug("url:" + url);
 		

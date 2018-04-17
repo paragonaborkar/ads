@@ -195,7 +195,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
 		web.ignoring().antMatchers("/saml/**");
 		web.ignoring().antMatchers("/sso");
-		web.ignoring().antMatchers("/ssoUrl");
+		web.ignoring().antMatchers("/ssoUrl/**");
 		web.ignoring().antMatchers("/favicon.ico");
 		web.ignoring().antMatchers("/remoteLog");
 	}
@@ -388,7 +388,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// properties file
 	@Bean
 	public SAMLEntryPoint samlEntryPoint() {
-		SAMLEntryPoint samlEntryPoint = new SAMLEntryPoint();
+		AdsSAMLEntryPoint samlEntryPoint = new AdsSAMLEntryPoint();
 		samlEntryPoint.setDefaultProfileOptions(defaultWebSSOProfileOptions());
 		return samlEntryPoint;
 	}
@@ -477,7 +477,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 							final byte[] authBytes = token.getBytes(StandardCharsets.UTF_8);
 							final String encodedToken = Base64.getEncoder().encodeToString(authBytes);
 							if(relayStateURL != null) {
-								String url = relayStateURL + "&response=" + encodedToken;
+								String url = relayStateURL + "?response=" + encodedToken;
 								log.debug("relayStateURL:" + url);
 								response.sendRedirect(url);
 							} else {

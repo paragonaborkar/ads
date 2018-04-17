@@ -34,7 +34,8 @@ export class RoleGuard implements CanActivate {
 
         // When using SSO Circle, here we are passing the corpUserId because we only login as 1 user in SSO Circle.
         // If enterprise service is available, this should be updated.
-        return this.http.get("/ssoUrl?redirectTo=" + state.url + "&userId=" + route.queryParams["userId"])
+        // return this.http.get("/ssoUrl?redirectTo=" + state.url + "&userId=" + route.queryParams["userId"])
+        return this.http.get("/ssoUrl" + state.url )
           .map((res: Response) => {
             window.location.href = res["ssoRedirectUrl"];
             return false;

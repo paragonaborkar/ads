@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,20 +35,20 @@ public class LoginController {
 	 * @throws IOException
 	 */
 
-	private static final String USER_ID_PARAM = "userId";
+//	private static final String USER_ID_PARAM = "userId";
+	private static final String RELAY_STATE_PARAM = "relayState";
 	
-	@RequestMapping(value = "/sso", method = RequestMethod.GET)
-	public void loginRedirect(HttpServletRequest request, HttpServletResponse response, Authentication auth)
+	@RequestMapping(value = "/sso/{userId}", method = RequestMethod.GET)
+	public void loginRedirect(HttpServletRequest request, HttpServletResponse response, Authentication auth,
+			@PathVariable(name = "userId", required = true) String userId)
 			throws ServletException, IOException {
 
-		log.debug("User ID to use for SSO:" + request.getParameter(USER_ID_PARAM));
-
-		if (request.getParameter(USER_ID_PARAM) != null) {
-			// FIXME:  THIS IS ONLY A TEMPORANY SOLUTION SO WE CAN LOGIN AS MANY CORP USERS
-			log.error("THIS IS ONLY A TEMPORANY SOLUTION SO WE CAN LOGIN AS MANY CORP USERS");
-			Application.ssoWorkAroundId = request.getParameter(USER_ID_PARAM);
-		}
-		log.debug("Redirecting to:" + ssoIdpURL);
-		response.sendRedirect(ssoIdpURL);
+		log.debug("User ID to use for SSO:" +userId);
+		Application.ssoWorkAroundId = userId;
+				
+		String url = ssoIdpURL + "&" + RELAY_STATE_PARAM + "=" + request.getParameter(RELAY_STATE_PARAM);
+		
+		log.debug("Redirecting to:" + url);
+		response.sendRedirect(url);
 	}
 }

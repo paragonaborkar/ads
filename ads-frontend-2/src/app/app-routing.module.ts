@@ -66,6 +66,7 @@ const routes: Routes = [
   { path: 'index',  component: OwnerHomeComponent, canActivate: [RoleGuard], data: {expectedRole: 'ROLE_USER'}  },
   { path: 'owner',  component: OwnerNotFoundComponent, canActivate: [RoleGuard], data: {expectedRole: 'ROLE_USER'}  },
   { path: 'owner/:migKey',  component: OwnerComponent, canActivate:  [RoleGuard], data: {expectedRole: 'ROLE_USER'}  },
+  { path: 'owner/:migKey/:userid',  component: OwnerComponent, canActivate:  [RoleGuard], data: {expectedRole: 'ROLE_USER'}  },
   { path: 'sso-login-error',  component: SsoLoginErrorComponent },
 
   

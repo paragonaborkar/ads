@@ -22,8 +22,8 @@ public class AdsSAMLEntryPoint extends SAMLEntryPoint {
 	
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-		String relayState = request.getParameter("RelayState");
-		log.debug("Recieved parameter is {}", relayState);
+		String relayState = request.getParameter("relayState");
+		log.debug("Recieved relayState parameter is {}", relayState);
 		setRelayState(relayState);
 		super.commence(request, response, e);
 	}
