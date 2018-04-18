@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.netapp.ads.controllers.discover.TalendConstants;
 import com.netapp.ads.hhcc.converters.HHCCConstants;
 import com.netapp.ads.hhcc.jaxb.CIFSSessionInfo;
 import com.netapp.ads.hhcc.jaxb.CIFShareInfo;
@@ -25,6 +26,7 @@ import com.netapp.ads.hhcc.vo.Credential;
 import com.netapp.ads.hhcc.vo.NADataSource;
 import com.netapp.ads.hhcc.vo.NaSystemInfo;
 import com.netapp.ads.models.JobData;
+import com.netapp.ads.util.JobUtils;
 
 /***
  * Gathers a list of current CIFS sessions on all NetApp controllers present as
@@ -80,6 +82,9 @@ public class CIFSSessionCollector {
 	@Autowired
 	NaDBUtils naDBUtils;
 	
+	@Autowired
+	JobUtils jobUtils;
+	
 	//private static final String QUERY = "insert into  dwh_inventory.wcr_cifs_temp(DateTime,ControllerName, SerialNumber,VfilerName,VfilerUuid,VolumeName,ShareName,MountPoint,HostIp,HostName,WindowsUser,UnixUser) " + 
 	//		" Values (:dateTime,:controllerName,:serialNumber,:vFilerName,:vFilerUUID,:volumeName,:shareName,:mountPoint,:hostIP,:hostName,:windowsUser,:unixUser)  ON DUPLICATE KEY UPDATE DateTime=NOW()";
 
@@ -88,7 +93,7 @@ public class CIFSSessionCollector {
 
 	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('cifs.schedule').getPropertyValue()}", initialDelayString = "#{sysConfigRepository.findByPropertyName('cifs.schedule.initial_delay').getPropertyValue()}")
 	public void collectCFSSessions() {
-		JobData jobData = naDBUtils.startJob(JOB_NAME, "SYSTEM");
+		JobData jobData = jobUtils.startJob(JOB_NAME, TalendConstants.SYSTEM);
 		log.info("CIFS Session Collector and Importer Job started");
 		log.info("Connecting to OCI server: {}", ociServerName);
 		NADataSource[] dataSources = adsRestUtils.getNetAppDataSources();
@@ -160,9 +165,9 @@ public class CIFSSessionCollector {
 					}
 				}
 			}
-			naDBUtils.endJob(jobData, "Job completed successfully.");
+			jobUtils.endJob(jobData, "Job completed successfully.");
 		} else {
-			naDBUtils.endJob(jobData, "No Data Sources found.");
+			jobUtils.endJob(jobData, "No Data Sources found.");
 			log.info("No Data Sources found!!!");
 		}
 		log.info("CIFS Session Collector and Importer Job completed");

@@ -8,23 +8,31 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.netapp.ads.models.Activity;
 import com.netapp.ads.models.ActivityResponse;
 import com.netapp.ads.models.MigrationKey;
+import com.netapp.ads.repos.ActivityRepository;
 import com.netapp.ads.repos.MigrationKeyRepository;
 import com.netapp.ads.services.UniqueKeyService;
 
 @Service
 public class MigrationKeyService {
 	private static final Logger log = LoggerFactory.getLogger(MigrationKeyService.class);
+
+	@Value("#{sysConfigRepository.findByPropertyName('ads.rules.discovery_rule.disposition').getPropertyValue()}")
+	public String discoveryDisposition;
 	
 	@Autowired
 	MigrationKeyRepository migrationKeyRepository;
 	
 	@Autowired
 	UniqueKeyService uniqueKeyService;
+	
+	@Autowired
+	ActivityRepository activityRepository;
 	
 	/**
 	 * Generate migration keys for this run.
@@ -34,8 +42,10 @@ public class MigrationKeyService {
 	 * @param activities
 	 * @return
 	 */
-	public void generateMigrationKeys(List<Activity> activities) {
+	public void generateMigrationKeys() {
 		log.debug("generateMigrationKeys: [ENTER]");
+		List<Activity> activities = activityRepository.findActivitiesWithoutMigrationKeys(discoveryDisposition);
+		log.debug("Number of activities to generate migration keys: {}", activities.size());
 		log.debug("generateMigrationKeys: activities: {}", activities.size());
 		Set<String> migrationKeysGenerated = new HashSet<String>();
 		Integer maxRunNo = migrationKeyRepository.getMaxRunNo();

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.netapp.ads.controllers.discover.TalendConstants;
 import com.netapp.ads.hhcc.jdbc.NaDBUtils;
 import com.netapp.ads.hhcc.utils.JSONUtils;
 import com.netapp.ads.hhcc.utils.NetAppAPIUtils;
@@ -21,6 +22,7 @@ import com.netapp.ads.hhcc.vo.NaSystemInfo;
 import com.netapp.ads.hhcc.vo.ShowmountImportData;
 import com.netapp.ads.hhcc.vo.StorageVolume;
 import com.netapp.ads.models.JobData;
+import com.netapp.ads.util.JobUtils;
 
 @Service
 public class ShowmountDataCollectorAndImporter {
@@ -51,13 +53,16 @@ public class ShowmountDataCollectorAndImporter {
 	@Autowired
 	NaDBUtils naDBUtils;
 	
+	@Autowired
+	JobUtils jobUtils;
+	
 	JSONUtils jsonUtils = new JSONUtils();
 	
 	private static final String JOB_NAME = "Show Mount";
 
 	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('showmount.schedule').getPropertyValue()}", initialDelayString = "#{sysConfigRepository.findByPropertyName('showmount.schedule.initial_delay').getPropertyValue()}")
 	public void collectShowmountData() {
-		JobData jobData = naDBUtils.startJob(JOB_NAME, "SYSTEM");
+		JobData jobData = jobUtils.startJob(JOB_NAME, TalendConstants.SYSTEM);
 		StringBuilder jobEndMessage = new StringBuilder();
 		log.info("Show mount job started");
 		String currentTimeStamp=NaDBUtils.getCurrentTimeStamp();
@@ -80,7 +85,7 @@ public class ShowmountDataCollectorAndImporter {
 
 		if (testNetworks.size() == 0) {
 			log.warn("Something bad has happened and we have no interfaces on the target array: {} ", ociServerName);
-			naDBUtils.endJob(jobData, "Something bad has happened and we have no interfaces on the target array: " + ociServerName);
+			jobUtils.endJob(jobData, "Something bad has happened and we have no interfaces on the target array: " + ociServerName);
 		} else {
 
 			NaSystemInfo netAppSystemInfo = netAppAPIUtils.getNASystemInfo();
@@ -108,7 +113,7 @@ public class ShowmountDataCollectorAndImporter {
 				jobEndMessage.append("No active exports found for ").append(context);
 				log.info("No active exports found for  {} ", context);
 			}
-			naDBUtils.endJob(jobData, jobEndMessage.toString());
+			jobUtils.endJob(jobData, jobEndMessage.toString());
 		}
 		log.info("Show mount job completed");
 	}
