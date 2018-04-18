@@ -12,6 +12,7 @@ import com.netapp.ads.services.SystemPropertiesService;
 
 @RestController
 @BasePathAwareController
+@RequestMapping(value = "/api")
 public class SystemConfigController {
 
 	@Autowired

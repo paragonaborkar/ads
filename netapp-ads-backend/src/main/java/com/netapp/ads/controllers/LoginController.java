@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.netapp.ads.Application;
 
 @RestController
+//Dont annotate this with /api
 public class LoginController {
 
 	private static final Logger log = LoggerFactory.getLogger(LoginController.class);

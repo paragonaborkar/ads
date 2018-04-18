@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @BasePathAwareController
 @RestController
+@RequestMapping(value = "/api")
 public class RemoteLogController {
     
 	private static final Logger log = LoggerFactory.getLogger(RemoteLogController.class);

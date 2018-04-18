@@ -37,7 +37,7 @@ import com.netapp.ads.services.OAuthHelper;
 
 @RestController
 @BasePathAwareController
-@RequestMapping("/talendJobs")
+@RequestMapping("/api/talendJobs")
 public class TalendController {
 
 	private static final Logger log = LoggerFactory.getLogger(TalendController.class);
