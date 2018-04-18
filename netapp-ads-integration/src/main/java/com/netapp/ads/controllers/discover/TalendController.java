@@ -31,7 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @BasePathAwareController
-@RequestMapping("/talendJobs")
+@RequestMapping("/api/talendJobs")
 public class TalendController {
 
 	private static final Logger log = LoggerFactory.getLogger(TalendController.class);

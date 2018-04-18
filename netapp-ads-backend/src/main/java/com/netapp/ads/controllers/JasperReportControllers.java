@@ -19,7 +19,7 @@ import com.netapp.ads.services.JasperReportService;
 import com.netapp.ads.util.Report;
 
 @RestController
-@BasePathAwareController
+@RequestMapping(value = "/api")
 public class JasperReportControllers {
 
 	@Autowired

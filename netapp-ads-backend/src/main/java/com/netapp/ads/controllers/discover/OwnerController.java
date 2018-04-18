@@ -29,6 +29,7 @@ import com.netapp.ads.repos.QtreeRepository;
 import com.netapp.ads.repos.UserCorporateRepository;
 
 @RestController
+@RequestMapping(value = "/api")
 @BasePathAwareController
 public class OwnerController {
 

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
 
 import com.netapp.ads.util.LicenseUtil;
 
@@ -14,8 +15,8 @@ import com.netapp.ads.util.LicenseUtil;
 @EnableScheduling
 public class IntegrationAndBatchProcessingApplication {
 	private static final Logger log = LoggerFactory.getLogger(IntegrationAndBatchProcessingApplication.class);
-	public static HashMap<String, Boolean> ACTIVE_MODULES; 
-
+	public static HashMap<String, Boolean> ACTIVE_MODULES;
+	
 	public static void main(String[] args) throws Exception {
 		// If the Date and At Least 1 Active Module checks are done correctly, an error will be thrown and we will never get to this point.		
 		boolean isActive = LicenseUtil.isLicenseActive();
@@ -25,5 +26,6 @@ public class IntegrationAndBatchProcessingApplication {
 		} else {
 			throw new IllegalArgumentException("ADS License is not valid. Not starting server.");
 		}
+		
 	}
 }

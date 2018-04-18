@@ -36,6 +36,7 @@ import com.netapp.ads.util.DateUtils;
 
 @RestController
 @BasePathAwareController
+@RequestMapping(value = "/api")
 public class DiscoverProcessingController {
 
 	private static final Logger log = LoggerFactory.getLogger(DiscoverProcessingController.class);

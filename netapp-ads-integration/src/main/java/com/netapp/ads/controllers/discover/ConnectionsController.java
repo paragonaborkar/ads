@@ -16,6 +16,7 @@ import com.netapp.ads.hhcc.main.ShowmountDataCollectorAndImporter;
 
 @RestController
 @BasePathAwareController
+@RequestMapping(value = "/api")
 public class ConnectionsController {
 
 	private static final Logger log = LoggerFactory.getLogger(ConnectionsController.class);
