@@ -13,4 +13,6 @@ public interface JobDataRepository extends JpaRepository<JobData, Integer>, JpaS
 
 	JobData findOneByName(@Param("jobName") String jobName);
 	
+	JobData findFirstByStatusNot(@Param("status") String status);
+	
 }

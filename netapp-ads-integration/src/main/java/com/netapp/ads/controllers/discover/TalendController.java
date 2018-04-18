@@ -15,10 +15,12 @@ import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.PumpStreamHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +29,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.netapp.ads.models.JobData;
+import com.netapp.ads.repos.JobDataRepository;
+import com.netapp.ads.services.OAuthHelper;
 
 
 @RestController
@@ -38,6 +44,9 @@ public class TalendController {
 
 	@Value("#{sysConfigRepository.findByPropertyName('ads.talendjobs.loc').getPropertyValue()}")
 	public String batchScriptsLoc;  
+
+	@Autowired
+	private JobDataRepository jobDataRepo;
 
 	@RequestMapping(value = "userRoles", method = RequestMethod.POST, headers = ("content-type=multipart/*"))
 	public @ResponseBody ResponseEntity<?>  loadUserRoles(@RequestParam("file") MultipartFile inputFile) {
@@ -163,20 +172,111 @@ public class TalendController {
 
 	}
 
-	@RequestMapping(value = "runAllOci", method = RequestMethod.POST)
-	public String loadAllOCIData() {
 
-		// FIXME: We cannot launch the next job until the previous one completed!
-		loadHosts();
-		loadStorage();
-		loadDataCenters();
-		loadControllers();
-		loadAggregates();
-		loadNasVolumes();
-		loadQTrees();
-		loadShares();
+	@Autowired
+	OAuthHelper oAuthHelper;
 
-		return TalendConstants.STR_JOB_SUBMITTED;
+	private boolean RUNNING_LOCALLY = false;
+
+	private boolean isAJobRunning(int triesRemaining, int waitInMs) {
+		triesRemaining--;
+
+		if (triesRemaining > 0) {
+			JobData jd = jobDataRepo.findFirstByStatusNot("Finished");
+			
+			if (jd == null) {
+				log.debug("No jobs are running.");
+				return false;
+			} else {
+				log.debug("Job not finished:" + jd.getName() + ": " + jd.getStatus());
+				if (waitInMs > 0) {
+					try {
+						log.debug("Waiting for " + waitInMs + "ms, then will check again. (retries left:" + triesRemaining + ")");
+						Thread.sleep(waitInMs);
+						isAJobRunning(triesRemaining, waitInMs);
+					} catch (InterruptedException e) {
+						log.error(e.getMessage());
+					}
+				}
+			}
+		}
+
+		return true;
+	}
+
+	private void waitForTalendToStartJob(String jobName) {
+		int waitInMs = 5000;
+		try {
+		log.debug("Waiting for Talend startup" + waitInMs + "ms. Next Job:" + jobName);
+		Thread.sleep(5000);} catch (InterruptedException e) {
+			log.error(e.getMessage());
+		}
+	}
+	
+
+	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('ociAndActivityProcessing.schedule').getPropertyValue()}")
+	public  boolean  loadAllOCIDataAndAcvtivityProcessing() {
+
+		RUNNING_LOCALLY = true;
+		int retries = 10;
+		int waitFor = 2000;
+		
+		log.debug("Running all OCI Jobs - Start");
+
+		// We cannot launch the next job until the previous one completed!
+	
+		String jobName;
+
+		if (!isAJobRunning(retries, waitFor))
+			jobName = runTalendJob(TalendConstants.JOB_NAME_HOSTS, null, TalendConstants.JOB_TYPE_OCI_LOAD, null);
+		else 
+			return false;
+
+		waitForTalendToStartJob(TalendConstants.JOB_NAME_STORAGE);
+		if (!isAJobRunning(retries, waitFor))
+			jobName = runTalendJob(TalendConstants.JOB_NAME_STORAGE, null, TalendConstants.JOB_TYPE_OCI_LOAD, null);
+		else 
+			return false;
+
+		waitForTalendToStartJob(TalendConstants.JOB_NAME_DATACENTERS);
+		if (!isAJobRunning(retries, waitFor))
+			jobName = runTalendJob(TalendConstants.JOB_NAME_DATACENTERS, null, TalendConstants.JOB_TYPE_OCI_LOAD, null);
+		else 
+			return false;
+		
+		waitForTalendToStartJob(TalendConstants.JOB_NAME_CONTROLLERS);
+		if (!isAJobRunning(retries, waitFor))
+			jobName = runTalendJob(TalendConstants.JOB_NAME_CONTROLLERS, null, TalendConstants.JOB_TYPE_OCI_LOAD, null);
+		else 
+			return false;
+
+		waitForTalendToStartJob(TalendConstants.JOB_NAME_AGGREGATES);
+		if (!isAJobRunning(retries, waitFor))
+			jobName = runTalendJob(TalendConstants.JOB_NAME_AGGREGATES, null, TalendConstants.JOB_TYPE_OCI_LOAD, null);
+		else 
+			return false;
+
+		waitForTalendToStartJob(TalendConstants.JOB_NAME_NAS_VOLUMES);
+		if (!isAJobRunning(retries, waitFor))
+			jobName = runTalendJob(TalendConstants.JOB_NAME_NAS_VOLUMES, null, TalendConstants.JOB_TYPE_OCI_LOAD, null);
+		else 
+			return false;
+
+		waitForTalendToStartJob(TalendConstants.JOB_NAME_QTREES);
+		if (!isAJobRunning(retries, waitFor))
+			jobName = runTalendJob(TalendConstants.JOB_NAME_QTREES, null, TalendConstants.JOB_TYPE_OCI_LOAD, null);
+		else 
+			return false;
+
+		waitForTalendToStartJob(TalendConstants.JOB_NAME_SHARES);
+		if (!isAJobRunning(retries, waitFor))
+			jobName = runTalendJob(TalendConstants.JOB_NAME_SHARES, null, TalendConstants.JOB_TYPE_OCI_LOAD, null);
+		else 
+			return false;
+
+
+		return true;	
+
 	}
 
 	public String getJobInstanceName(String jobName, long currentTimeMillis) {
@@ -283,9 +383,15 @@ public class TalendController {
 
 
 	public String getAuthorizationToken() {
-
-		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-		String token=attr.getRequest().getHeaders(TalendConstants.STR_AUTHORIZATION).nextElement();
+		String token ="";
+		if (!RUNNING_LOCALLY) {
+			ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+			token=attr.getRequest().getHeaders(TalendConstants.STR_AUTHORIZATION).nextElement();
+		}
+		
+		if (RUNNING_LOCALLY && (token == "" || token == null)) {
+			token = oAuthHelper.createAccessToken().getValue();
+		}
 
 		token=token.replace(TalendConstants.STR_BEARER, "");
 
@@ -295,10 +401,13 @@ public class TalendController {
 	}
 
 	public String getLogInUserName() {
-
-		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-		String loginUser=attr.getRequest().getUserPrincipal().getName();
-		return loginUser;
+		if (!RUNNING_LOCALLY) {
+			ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+			String loginUser=attr.getRequest().getUserPrincipal().getName();
+			return loginUser;
+		} else {
+			return "jdoe@corp.com";
+		}
 	}	
 
 	public String getBatchScript(String jobName) {

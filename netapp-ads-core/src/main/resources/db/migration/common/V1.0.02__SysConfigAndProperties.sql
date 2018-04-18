@@ -52,6 +52,13 @@ INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`,
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('showmount.schedule', '86400000','1',0,'HHCC');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('showmount.schedule.initial_delay', '300000','1',0,'HHCC');
 
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('oci.schedule', '86400000','1',0,'Discover');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ociAndActivityProcessing.schedule', '86400000','1',0,'Discover');
+
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('security.discover.jobs.user', 'jdoe@corp.com','1',0,'Discover');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('security.discover.jobs.password', '123','1',0,'Discover');
+
+
 /*!40000 ALTER TABLE `sys_config` ENABLE KEYS */;
 UNLOCK TABLES;
 
