@@ -30,9 +30,13 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.netapp.ads.batch.MigrationKeyService;
 import com.netapp.ads.models.JobData;
 import com.netapp.ads.repos.JobDataRepository;
+import com.netapp.ads.services.ActivityService;
 import com.netapp.ads.services.OAuthHelper;
+import com.netapp.ads.services.OwnerIdentificationService;
+import com.netapp.ads.util.JobUtils;
 
 
 @RestController
@@ -47,7 +51,19 @@ public class TalendController {
 
 	@Autowired
 	private JobDataRepository jobDataRepo;
-
+	
+	@Autowired
+	private JobUtils jobUtils;
+	
+	@Autowired
+	private ActivityService activityService;
+	
+	@Autowired
+	private OwnerIdentificationService ownerIdentificationService;
+	
+	@Autowired
+	private MigrationKeyService migrationKeyService;
+	
 	@RequestMapping(value = "userRoles", method = RequestMethod.POST, headers = ("content-type=multipart/*"))
 	public @ResponseBody ResponseEntity<?>  loadUserRoles(@RequestParam("file") MultipartFile inputFile) {
 		String jobName = runADSJob(TalendConstants.JOB_NAME_USER_ROLES, inputFile, TalendConstants.ADS_SETUP_LOADSHEET_USER_ROLES_XLSX);
@@ -213,8 +229,7 @@ public class TalendController {
 		}
 	}
 	
-
-	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('ociAndActivityProcessing.schedule').getPropertyValue()}")
+	@Scheduled(fixedDelayString = "#{sysConfigRepository.findByPropertyName('ociAndActivityProcessing.schedule').getPropertyValue()}", initialDelayString = "#{sysConfigRepository.findByPropertyName('ociAndActivityProcessing.initial_delay').getPropertyValue()}")
 	public  boolean  loadAllOCIDataAndAcvtivityProcessing() {
 
 		RUNNING_LOCALLY = true;
@@ -274,7 +289,29 @@ public class TalendController {
 		else 
 			return false;
 
+		log.debug("Running Activity and Applications Processin");
+		
+		if (!isAJobRunning(retries, waitFor)) {
+			JobData jobData = jobUtils.startJob(TalendConstants.JOB_NAME_GENERATE_ACTIVITY, TalendConstants.SYSTEM);
+			activityService.populateActivities();
+			jobUtils.endJob(jobData, null);
+		} else 
+			return false;
 
+		if (!isAJobRunning(retries, waitFor)) {
+			JobData jobData = jobUtils.startJob(TalendConstants.JOB_NAME_GENERATE_APPLICATIONS, TalendConstants.SYSTEM);
+			ownerIdentificationService.identifyOwner();
+			jobUtils.endJob(jobData, null);
+		} else 
+			return false;
+		
+		if (!isAJobRunning(retries, waitFor)) {
+			JobData jobData = jobUtils.startJob(TalendConstants.JOB_NAME_GENERATE_MIGRATION_KEYS, TalendConstants.SYSTEM);
+			migrationKeyService.generateMigrationKeys();
+			jobUtils.endJob(jobData, null);
+		} else 
+			return false;
+		
 		return true;	
 
 	}

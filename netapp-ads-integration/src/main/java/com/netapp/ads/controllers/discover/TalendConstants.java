@@ -19,6 +19,11 @@ public class TalendConstants {
 	public static final String  JOB_NAME_NAS_VOLUMES =  "OCI_Load_6_NasVolumes";
 	public static final String  JOB_NAME_QTREES =  "OCI_Load_7_QTrees";
 	public static final String  JOB_NAME_SHARES =  "OCI_Load_8_Shares";
+	
+	public static final String  JOB_NAME_GENERATE_ACTIVITY =  "Generate Activity";
+	public static final String  JOB_NAME_GENERATE_APPLICATIONS =  "Generate Applications";
+	public static final String  JOB_NAME_GENERATE_MIGRATION_KEYS =  "Generate Migration Keys";
+	public static final String  SYSTEM =  "SYSTEM";
 
 	public static String  FLDR_SEPERATOR="\\";
 	

@@ -32,32 +32,8 @@ public class NaDBUtils {
 	private static final Logger log = LoggerFactory.getLogger(NaDBUtils.class);
 	
 	@Autowired
-	JobDataRepository jobDataRepository;
-	
-	@Autowired
 	@Qualifier("ociJdbcTemplate")
 	JdbcTemplate jdbcTemplate;
-	
-	public JobData startJob(String jobName, String submittedBy) {
-		JobData jobData = new JobData();
-		jobData.setName(jobName);
-		jobData.setStartTime(new Timestamp(System.currentTimeMillis()));
-		jobData.setStatus("In Progress");
-		jobData.setSubmissionTime(jobData.getStartTime());
-		jobData.setSubmittedBy(submittedBy);
-		return jobDataRepository.save(jobData);
-	}
-
-	public JobData endJob(JobData jobData, String additionalMessage) {
-		jobData.setEndTime(new Timestamp(System.currentTimeMillis()));
-		jobData.setStatus("Finished");
-		if(StringUtils.isEmpty(additionalMessage)) {
-			jobData.setAdditionalDetails("Job completed successfully");
-		} else {
-			jobData.setAdditionalDetails(additionalMessage);
-		}
-		return jobDataRepository.save(jobData);
-	}
 	
 	public ArrayList<DWHNFSShowMount> getDWHNFSShowMountsList(String netAppSystemName, String netAppSerialNumber) {
 		ArrayList<DWHNFSShowMount> dWHShowmountList = new ArrayList<>();

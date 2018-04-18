@@ -54,6 +54,7 @@ INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`,
 
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('oci.schedule', '86400000','1',0,'Discover');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ociAndActivityProcessing.schedule', '86400000','1',0,'Discover');
+INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('ociAndActivityProcessing.initial_delay', '100000','1',0,'Discover');
 
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('security.discover.jobs.user', 'jdoe@corp.com','1',0,'Discover');
 INSERT INTO `sys_config` (`property_name`, `property_value`, `property_type_id`, `encrypted`, `grouping`) VALUES('security.discover.jobs.password', '123','1',0,'Discover');
