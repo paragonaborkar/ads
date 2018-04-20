@@ -29,19 +29,14 @@ public class LoginPage
 		}
 		if (displayed) {
 			return "Fail";
-
 		} else {
 			return "Pass";
 		}
 	}
 
 	public static void logoutFromApp(WebDriver driver) throws InterruptedException {
-
-
 		driver.findElement(By.xpath("//i[@class='fa fa-sign-out']")).click();
-
 		driver.close();
-
 	}
 
 }

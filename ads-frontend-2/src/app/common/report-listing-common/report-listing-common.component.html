@@ -1,7 +1,7 @@
 <div *ngIf="!showJasperReport && !loading">
   <h1 class="text-center">{{moduleDisplayName}} Reports</h1>
 
-  <div class="h3 text-center mt-3" *ngIf="reportListing.length == 0">
+  <div class="h3 text-center mt-3" *ngIf="reportListing.length == 0" id="reports-no-result">
     There are no reports to display.
   </div>
   <div *ngFor="let reportRow of reportListing; let index = index">
@@ -85,7 +85,7 @@
           <option value=50>50</option>
         </select>
       </div>
-      <button class="btn btn-outline-primary" (click)="downloadJasperReport()">Export to Excel</button>
+      <button class="btn btn-outline-primary" (click)="downloadJasperReport()" id="report-export-to-excel">Export to Excel</button>
     </form>
   </div>
 </div>
@@ -122,7 +122,7 @@
   </div>
 </div>
 <div class="row " *ngIf="totalPages && showJasperReport && !loading">
-  <div class="col-md-3">
+  <div class="col-md-3" id="reports-page-num">
     Page: {{currentPageNumber}} of {{totalPages}}
   </div>
 </div>

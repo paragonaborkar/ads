@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top" id="main-navbar">
  
-  <a class="navbar-brand" href="" routerLink="{{userRole =='ROLE_USER' ? 'index' : 'home'}}" >
+  <a class="navbar-brand" href="" routerLink="{{userRole =='ROLE_USER' ? 'index' : 'home'}}" id="nav-bar-home">
     <div class="logo"></div>
   </a>
 
@@ -21,30 +21,30 @@
       <li class="nav-item dropdown" *ngIf="userRole !== 'ROLE_USER'">
         <a class="nav-link dropdown-toggle" href="#" id="connectionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Connections</a>
         <div class="dropdown-menu" aria-labelledby="connectionDropdown">
-          <a class="dropdown-item" routerLink="connections/report-listing" *ngIf="userRole == 'ROLE_ADMIN' || userRole == 'ROLE_REPORT_USER'">Reports</a>
-          <a class="dropdown-item" routerLink="connections/manual-functions">Manual Functions</a>
+          <a class="dropdown-item" routerLink="connections/report-listing" *ngIf="userRole == 'ROLE_ADMIN' || userRole == 'ROLE_REPORT_USER'" id="connection-reports">Reports</a>
+          <a class="dropdown-item" routerLink="connections/manual-functions" id="connection-manual-functions">Manual Functions</a>
         </div>
       </li>
 
       <li class="nav-item dropdown" *ngIf="userRole !== 'ROLE_USER'">
         <a class="nav-link dropdown-toggle" href="#" id="discoverDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Discover</a>
         <div class="dropdown-menu" aria-labelledby="discoverDropdown">
-          <a class="dropdown-item" routerLink="discover/controller-workpackage">Controller Work Packages</a>
-          <a class="dropdown-item" routerLink="discover/controller-release">Controller Release</a>
-          <a class="dropdown-item" routerLink="discover/report-listing" *ngIf="userRole == 'ROLE_ADMIN' || userRole == 'ROLE_REPORT_USER'">Reports</a>
-          <a class="dropdown-item" routerLink="discover/manual-functions">Manual Functions</a>
+          <a class="dropdown-item" routerLink="discover/controller-workpackage" id="discover-ctrl-workpackage">Controller Work Packages</a>
+          <a class="dropdown-item" routerLink="discover/controller-release" id="discover-ctrl-release">Controller Release</a>
+          <a class="dropdown-item" routerLink="discover/report-listing" *ngIf="userRole == 'ROLE_ADMIN' || userRole == 'ROLE_REPORT_USER'" id="discover-reports">Reports</a>
+          <a class="dropdown-item" routerLink="discover/manual-functions" id="discover-manual-functions">Manual Functions</a>
         </div>
       </li>
 
       <li class="nav-item dropdown" *ngIf="userRole !== 'ROLE_USER'">
         <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
         <div class="dropdown-menu" aria-labelledby="adminDropdown">
-          <a class="dropdown-item" routerLink="admin/operational-override">Operational Override</a>
-          <a class="dropdown-item" routerLink="admin/admin-user-mgmt"  *ngIf="userRole == 'ROLE_ADMIN'">Admin User Management</a>
-          <a class="dropdown-item" routerLink="admin/property-preferences" *ngIf="userRole == 'ROLE_ADMIN'">Display Preferences</a>
-          <a class="dropdown-item" routerLink="admin/application-properties" *ngIf="userRole == 'ROLE_ADMIN'">Application Properties</a>
-          <a class="dropdown-item" routerLink="admin/report-listing" *ngIf="userRole == 'ROLE_ADMIN' || userRole == 'ROLE_REPORT_USER'">Reports</a>
-          <a class="dropdown-item" routerLink="admin/manual-functions">Manual Functions </a>
+          <a class="dropdown-item" routerLink="admin/operational-override" id="admin-op-override">Operational Override</a>
+          <a class="dropdown-item" routerLink="admin/admin-user-mgmt"  *ngIf="userRole == 'ROLE_ADMIN'" id="admin-user-mgmt">Admin User Management</a>
+          <a class="dropdown-item" routerLink="admin/property-preferences" *ngIf="userRole == 'ROLE_ADMIN'" id="admin-disp-prefs">Display Preferences</a>
+          <a class="dropdown-item" routerLink="admin/application-properties" *ngIf="userRole == 'ROLE_ADMIN'" id="admin-app-props">Application Properties</a>
+          <a class="dropdown-item" routerLink="admin/report-listing" *ngIf="userRole == 'ROLE_ADMIN' || userRole == 'ROLE_REPORT_USER'" id="admin-reports">Reports</a>
+          <a class="dropdown-item" routerLink="admin/manual-functions" id="admin-manual-functions">Manual Functions </a>
         </div>
       </li>
 

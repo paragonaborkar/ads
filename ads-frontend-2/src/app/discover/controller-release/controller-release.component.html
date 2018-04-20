@@ -8,7 +8,7 @@
       <div class="col-md-1">
         <div class="pull-right">
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#createNewControllerRelease" aria-expanded="false"
-            aria-controls="createNewControllerRelease">
+            aria-controls="createNewControllerRelease" id="btnCreateControllerRelease">
             Create New Controller Release
           </button>
         </div>
@@ -73,7 +73,7 @@
 
 
 <ng-template #actionTmpl let-column="column" let-row="row">
-  <button class="btn btn-sm btn-warning" (click)="showDeleteModal(row)" *ngIf="!row.processed">
+  <button class="btn btn-sm btn-warning" (click)="showDeleteModal(row)" *ngIf="!row.processed" id="btnTrashCR">
     <i class="fa fa-trash"></i> Delete
   </button>
 </ng-template>
