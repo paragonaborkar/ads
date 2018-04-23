@@ -8,10 +8,10 @@
     </div>
 
     <div class="col-md-12 mt-3 mb-2">
-      <ul class="nav nav-tabs">
-        <li *ngFor="let groupName of configGroups" class="nav-item">
+      <ul class="nav nav-tabs" id="ulAppPropsNavTab">
+        <li *ngFor="let groupName of configGroups" class="nav-item" id="liAppPropsNavItem">
           <a href="" class="nav-link" [ngClass]="{'active': groupName === grouping}" data-toggle="tab" role="tab" ng-model="myVar"
-            data-dismiss="modal" (click)="updateTableRows(groupName)">{{groupName}}</a>
+            data-dismiss="modal" (click)="updateTableRows(groupName)" id="aAppPropsNavLink">{{groupName}}</a>
         </li>
       </ul>
     </div>
@@ -21,7 +21,7 @@
         <form class="form-inline">
           <div class="form-group">
             <label for="pagesPerPage">Rows:&nbsp;</label>
-            <select class="form-control form-control-sm" name="pagesPerPage" [(ngModel)]="page.size" (change)="pagingUpdated()">
+            <select class="form-control form-control-sm" name="pagesPerPage" [(ngModel)]="page.size" (change)="pagingUpdated()" id="selPagesPerPage">
               <option value=1>1</option>
               <option value=3>3</option>
               <option value=10>10</option>
@@ -36,7 +36,7 @@
         <div class="pull-right">
           <app-save-message-timer [showSuccessMsg]="showSuccessMsg"></app-save-message-timer>
 
-          <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="errorMessage">
+          <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="errorMessage" id="divErrorMessage">
             <span>{{errorMessage}}</span>
           </div>
 
@@ -70,6 +70,6 @@
     {{value}}
   </span>
   <input class="form-control form-control-sm" autofocus (keyup.enter)="updateTableValue($event, column.prop, rowIndex, row)"
-    (blur)="updateTableValue($event, column.prop, rowIndex, row)" *ngIf="editing[rowIndex+ column.prop]" type="text" [value]="value"
+    (blur)="updateTableValue($event, column.prop, rowIndex, row)" *ngIf="editing[rowIndex+ column.prop]" type="text" [value]="value" id="txtUpdateTableValue"
   />
 </ng-template>

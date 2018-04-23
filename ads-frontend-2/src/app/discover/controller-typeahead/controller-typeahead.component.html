@@ -8,7 +8,7 @@
   [(ngModel)]="asyncSelected" #controllerName="ngModel"  placeholder="Controller Lookup"
   [typeahead]="dataSource" (typeaheadLoading)="changeTypeaheadLoading($event)"
   (typeaheadNoResults)="changeTypeaheadNoResults($event)" (typeaheadOnSelect)="typeaheadOnSelect($event)"
-  [typeaheadOptionsLimit]="7" typeaheadOptionField="controllerName">
+  [typeaheadOptionsLimit]="7" typeaheadOptionField="controllerName" id="controllerTypeAheadLookup">
 
   <!-- Add d-block due message not displayed issue. See: https://stackoverflow.com/questions/48401656/bootstrap-4-0-non-beta-invalid-feedback-doesnt-show -->
   <div *ngIf="!controllerName.errors?.required && (typeaheadNoResults===true || (!selectedItem && controllerName.touched))" class="invalid-feedback  d-block">{{controllerTypeName}} Controller does not exist</div>

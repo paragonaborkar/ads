@@ -14,7 +14,7 @@
 
     <ul class="navbar-nav mr-auto" >
       <li class="nav-item active">
-        <a class="nav-link" routerLink="{{userRole =='ROLE_USER' ? 'index' : 'home'}}">Home 
+        <a class="nav-link" routerLink="{{userRole =='ROLE_USER' ? 'index' : 'home'}}" id="home">Home 
           <span class="sr-only">(current)</span>
         </a>
       </li>
@@ -51,7 +51,7 @@
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <div class="mr-3 text-white">{{firstName}} {{lastName }} ({{email}})</div>
-      <a href="#" class="text-white lead" (click)="logout()">
+      <a href="#" class="text-white lead" (click)="logout()" id="logout">
         <i class="fa fa-sign-out"></i>
       </a>
 
