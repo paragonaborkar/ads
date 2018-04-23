@@ -16,7 +16,7 @@
           </ul>
         </div>
         <div class="card-footer">
-          <a class="btn btn-warning pull-right" routerLink="/connections/dashboard" role="button">View Connections Dashboard »</a>
+          <a class="btn btn-warning pull-right" routerLink="/connections/dashboard" role="button" id="viewConnectionsDashboard">View Connections Dashboard »</a>
         </div>
       </div>
 
@@ -34,7 +34,7 @@
           </ul>
         </div>
         <div class="card-footer">
-          <a class="btn btn-success  pull-right" routerLink="/discover/dashboard"  role="button">View Discover Dashboard »</a>
+          <a class="btn btn-success  pull-right" routerLink="/discover/dashboard"  role="button" id="viewDiscoverDashboard">View Discover Dashboard »</a>
         </div>
       </div>
       <div class="card card-with-link"   *ngIf="modulesAvailable.reports">
@@ -50,7 +50,7 @@
           </ul>
         </div>
         <div class="card-footer">
-          <a class="btn btn-success  pull-right" href="#" role="button">View Metrics Dashboard »</a>
+          <a class="btn btn-success  pull-right" href="#" role="button" id="viewMetricsDashboard">View Metrics Dashboard »</a>
         </div>
       </div>
 
@@ -71,7 +71,7 @@
           </ul>
         </div>
         <div class="card-footer">
-          <a class="btn btn-danger  pull-right" href="#" role="button">View Scheduling Dashboard »</a>
+          <a class="btn btn-danger  pull-right" href="#" role="button" id="viewSchedulingDashboard">View Scheduling Dashboard »</a>
         </div>
       </div>
       <div class="card card-with-link" routerLink="/discover/owner"  *ngIf="modulesAvailable.planning">

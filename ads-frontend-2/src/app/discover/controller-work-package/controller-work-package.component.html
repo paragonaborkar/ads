@@ -9,7 +9,7 @@
       <div class="col-md-1">
         <div class="pull-right">
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#createNewControllerWP" aria-expanded="false"
-            aria-controls="createNewControllerWP">
+            aria-controls="createNewControllerWP" id="btnCreateControllerWP">
             Create New Work Package
           </button>
         </div>
@@ -69,7 +69,7 @@
 <app-data-table-col-templates></app-data-table-col-templates>
 
 <ng-template #actionTmpl let-column="column" let-row="row">
-    <button class="btn btn-sm btn-warning" (click)="showDeleteModal(row)" *ngIf="!row.controllerRelease">
+    <button class="btn btn-sm btn-warning" (click)="showDeleteModal(row)" *ngIf="!row.controllerRelease" id="btnTrashWP">
       <i class="fa fa-trash"></i> Delete
     </button>
   </ng-template>

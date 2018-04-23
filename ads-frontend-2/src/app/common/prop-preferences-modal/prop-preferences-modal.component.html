@@ -27,7 +27,7 @@
             <div class="card-header bg-primary text-white">
               Visible
             </div>
-            <div class="card-body">
+            <div class="card-body" id="visibleCardBody">
               <bs-sortable [(ngModel)]="itemObjectsLeft" [itemTemplate]="itemTemplate" fieldName="fieldName" itemClass="sortable-item"
                 itemActiveClass="sortable-item-active" placeholderItem="Nothing visible, drag here to add." placeholderClass="sortable-item"
                 wrapperClass="sortable-wrapper" (drop)="drop()"></bs-sortable>
@@ -41,7 +41,7 @@
             <div class="card-header bg-warning text-white">
               Hidden
             </div>
-            <div class="card-body">
+            <div class="card-body" id="hiddenCardBody">
               <bs-sortable [(ngModel)]="itemObjectsRight" [itemTemplate]="itemTemplate" fieldName="fieldName" itemClass="sortable-item"
                 itemActiveClass="sortable-item-active" placeholderItem="Nothing hidden, drag here to hide." placeholderClass="sortable-item"
                 wrapperClass="sortable-wrapper" (drop)="drop()"></bs-sortable>
@@ -52,7 +52,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary pull-right" (click)="close()">Done</button>
+        <button type="button" class="btn btn-primary pull-right" (click)="close()" id="doneButton">Done</button>
       </div>
     </div>
   </div>

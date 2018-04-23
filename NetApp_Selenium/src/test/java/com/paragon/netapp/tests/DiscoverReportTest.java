@@ -1,5 +1,8 @@
 package com.paragon.netapp.tests;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.netapp.ads.discover.DiscoverReports;
@@ -8,83 +11,76 @@ import com.netapp.ads.discover.DiscoverReports;
  * @author Singprad All below Methods called for Discover Module Reports
  *         Handling and generating to local drive.
  */
-public class DiscoverReportTest extends BaseTest {
+public class DiscoverReportTest extends LoginTest {
+	
+	private Logger log = LoggerFactory.getLogger(DiscoverReportTest.class);
+	DiscoverReports discoverReports = new DiscoverReports();
 
-	/**
-	 * @throws InterruptedException
-	 */
-	@Test // (priority=15)
+	@Test (priority=5)
 	public void callMeTest() throws InterruptedException {
-
-		// calling Page reach method bcoz it contains the common step to reach till the
-		// discover page
-		DiscoverReports d1 = new DiscoverReports();
-		d1.pageReach(driver);
-		d1.callMeReport(driver);
+		log.info("Running test for Discover: Call Me Report");
+		discoverReports.pageReach(driver);
+		boolean returnVal = discoverReports.callMeReport(driver);
+		Assert.assertEquals(returnVal, true);
 	}
 
 	/**
 	 * @throws InterruptedException
 	 * uknownOwnerReport
 	 */
-	@Test // (priority=16)
+	@Test (priority=6)
 	public void uknownOwnerReport() throws InterruptedException {
-
-		DiscoverReports d1 = new DiscoverReports();
-		d1.pageReach(driver);
-		d1.unknownOwnerReport(driver);
-
+		log.info("Running test for Discover: Unknown Report");
+		discoverReports.pageReach(driver);
+		boolean returnVal = discoverReports.unknownOwnerReport(driver);
+		Assert.assertEquals(returnVal, true);
 	}
 
 	/**
 	 * @throws InterruptedException
 	 * volumeDecommisionReport
 	 */
-	@Test // (priority=17)
+	@Test (priority=7)
 	public void volumeDecommisionReport() throws InterruptedException {
-
-		DiscoverReports d1 = new DiscoverReports();
-		d1.pageReach(driver);
-		d1.volumeDecommision(driver);
-
+		log.info("Running test for Discover: Volume Decommission Report");
+		discoverReports.pageReach(driver);
+		boolean returnVal = discoverReports.volumeDecommision(driver);
+		Assert.assertEquals(returnVal, true);
 	}
 
 	/**
 	 * @throws InterruptedException
 	 * activityReport
 	 */
-	@Test // (priority=18)
+	@Test (priority=8)
 	public void multiOwnerReport() throws InterruptedException {
-
-		DiscoverReports d1 = new DiscoverReports();
-		d1.pageReach(driver);
-		d1.multiOwner(driver);
-
+		log.info("Running test for Discover: Multi Owner Report");
+		discoverReports.pageReach(driver);
+		boolean returnVal = discoverReports.multiOwner(driver);
+		Assert.assertEquals(returnVal, true);
 	}
 
 	/**
 	 * @throws InterruptedException
 	 * activityReport
 	 */
-	@Test // (priority=19)
+	@Test (priority=9)
 	public void activityReport() throws InterruptedException {
-
-		DiscoverReports d1 = new DiscoverReports();
-		d1.pageReach(driver);
-		d1.activityReport(driver);
-
+		log.info("Running test for Discover: Activity Report");
+		discoverReports.pageReach(driver);
+		boolean returnVal = discoverReports.activityReport(driver);
+		Assert.assertEquals(returnVal, true);
 	}
 
 	/**
 	 * @throws InterruptedException
 	 * applicationDetailReport
 	 */
-	@Test(priority = 20)
+	@Test (priority = 10)
 	public void applicationDetailReport() throws InterruptedException {
-
-		DiscoverReports d1 = new DiscoverReports();
-		d1.pageReach(driver);
-		d1.applicationDetail(driver);
-
+		log.info("Running test for Discover: Application Report");
+		discoverReports.pageReach(driver);
+		boolean returnVal = discoverReports.applicationDetail(driver);
+		Assert.assertEquals(returnVal, true);
 	}
 }

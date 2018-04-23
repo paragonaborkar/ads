@@ -9,7 +9,7 @@
 
     <div class="modal-body">
 
-      <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+      <div class="alert alert-danger" role="alert" *ngIf="errorMessage" id="divErrorMessage">
         <span>{{errorMessage}}</span>
       </div>
 
@@ -100,7 +100,7 @@
     </div>
     <div class="modal-footer">
       <button class="btn btn-default" (click)="close()">Cancel</button>
-      <button class="btn btn-primary" (click)="save()">Resubmit</button>
+      <button class="btn btn-primary" (click)="save()" id="btnResubmit">Resubmit</button>
     </div>
   </div>
 </div>

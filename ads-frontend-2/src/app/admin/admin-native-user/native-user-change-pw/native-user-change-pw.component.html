@@ -2,7 +2,7 @@
   <div class="modal-content">
     <div class="modal-header">
       <h4 class="modal-title pull-left">Change Admin User Password</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="close()" id="btnAdminChangePwd">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -22,7 +22,7 @@
           <label for="password" class="col-sm-3 col-form-label">Password</label>
           <div class="col-sm-7">
             <input type="password" class="form-control" adsNoSpaces [ngClass]="{'is-invalid':userPassword.errors?.required && userPassword.touched || userPassword.errors?.minlength && userPassword.touched}"
-              [(ngModel)]="User.password" name="password" #userPassword="ngModel" minlength="5" required placeholder="Password">
+              [(ngModel)]="User.password" name="password" #userPassword="ngModel" minlength="5" required placeholder="Password" id="txtPassword">
             <div *ngIf="userPassword.errors?.required && userPassword.touched" class="invalid-feedback">
               Password is required
             </div>
@@ -36,7 +36,7 @@
           <label for="passwordConfirm" class="col-sm-3 col-form-label">Confirm Password</label>
           <div class="col-sm-7">
             <input type="password" class="form-control" (change)="comparePasswords()" [ngClass]="{'is-invalid': (userPasswordConfirm.errors?.required && userPasswordConfirm.touched) || (userPasswordConfirm.errors?.minlength && userPasswordConfirm.touched) ||  !doPasswordsMatch}"
-              [(ngModel)]="passwordConfirm" name="passwordConfirm" #userPasswordConfirm="ngModel" minlength="5" required placeholder="Password">
+              [(ngModel)]="passwordConfirm" name="passwordConfirm" #userPasswordConfirm="ngModel" minlength="5" required placeholder="Password" id="txtConfirmPwd">
             <div *ngIf="userPasswordConfirm.errors?.required && userPasswordConfirm.touched" class="invalid-feedback">
               Confirm Password is required
             </div>
@@ -49,8 +49,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-default" (click)="close()">Cancel</button>
-          <button type="submit" class="btn btn-primary" [disabled]="!changePwForm.form.valid">Change Password</button>
+          <button class="btn btn-default" (click)="close()" id="btnCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!changePwForm.form.valid" id="btnChangePwd">Change Password</button>
         </div>
       </div>
     </form>

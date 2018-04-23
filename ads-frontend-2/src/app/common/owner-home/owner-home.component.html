@@ -32,7 +32,7 @@
             <tr *ngFor="let item of queueToProcess; let i = index">
               <th scope="row">{{i+1}}</th>
               <td>
-                <a routerLink="../owner/{{item.migrationKey}}">Process Qtrees</a>
+                <a routerLink="../owner/{{item.migrationKey}}"  id="processQtrees">Process Qtrees</a>
               </td>
               <td>{{item.migrationKey}}</td>
               <td>{{item.createTime | date:'short'}}</td>
@@ -57,7 +57,7 @@
             <tr>
               <th scope="row">1</th>
               <td>
-                <a href="#">Link A</a>
+                <a href="#" id="linkA">Link A</a>
               </td>
               <td>2</td>
               <td>Jan 2, 2018</td>
@@ -68,7 +68,7 @@
             <tr>
               <th scope="row">2</th>
               <td>
-                <a href="#">Link B</a>
+                <a href="#" id="linkB">Link B</a>
               </td>
               <td>3</td>
               <td>Mar 3, 2018</td>
@@ -79,7 +79,7 @@
             <tr>
               <th scope="row">3</th>
               <td>
-                <a href="#">Link B</a>
+                <a href="#" id="linkC">Link B</a>
               </td>
               <td>7</td>
               <td>Mar 30, 2018</td>

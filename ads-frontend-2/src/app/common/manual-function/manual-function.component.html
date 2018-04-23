@@ -12,12 +12,12 @@
     </div>
 
     <div class="col col-md-auto">
-      <button class="btn btn-success" type="submit" class="btn btn-primary" [disabled]="(!fileName && fileUpload)">Run</button>
+      <button class="btn btn-success" type="submit" class="btn btn-primary" [disabled]="(!fileName && fileUpload)" id="btnRunManualFunction">Run</button>
     </div>
     <div class="col col-md-auto col-form-label">
-      <div class="text-success" *ngIf="successMsg">{{successMsg}}</div>
-      <div class="text-warning" *ngIf="runningMsg">{{runningMsg}}</div>
-      <div class="text-danger" *ngIf="errorMsg">{{errorMsg}}</div>
+      <div class="text-success" *ngIf="successMsg" id="divRunSuccess">{{successMsg}}</div>
+      <div class="text-warning" *ngIf="runningMsg" id="divRunInProgress">{{runningMsg}}</div>
+      <div class="text-danger" *ngIf="errorMsg" id="divRunErrored">{{errorMsg}}</div>
     </div>
   </div>
 </form>

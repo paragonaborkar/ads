@@ -23,7 +23,7 @@
       <label for="workPackageName">Work Package Name</label>
 
       <input type="text" class="form-control" adsNoSpaces [ngClass]="{'is-invalid':workPackageName.errors?.required && workPackageName.touched || workPackageName.errors?.minlength && workPackageName.touched}"
-        [(ngModel)]="newTarget.workPackageName" name="workPackageName" #workPackageName="ngModel" required placeholder="Work Package Name">
+        [(ngModel)]="newTarget.workPackageName" name="workPackageName" #workPackageName="ngModel" required placeholder="Work Package Name" id="txtWPName">
       <div *ngIf="workPackageName.errors?.required && workPackageName.touched" class="invalid-feedback">
         Work Package Name is required
       </div>
@@ -44,7 +44,7 @@
       <label for="assetNumber">Asset Tag</label>
 
       <input type="text" class="form-control" adsNoSpaces [ngClass]="{'is-invalid':assetNumber.errors?.required && assetNumber.touched || assetNumber.errors?.minlength && assetNumber.touched}"
-        [(ngModel)]="newTarget.assetNumber" name="assetNumber" #assetNumber="ngModel" required placeholder="Asset Tag">
+        [(ngModel)]="newTarget.assetNumber" name="assetNumber" #assetNumber="ngModel" required placeholder="Asset Tag" id="txtAssetNumber">
       <div *ngIf="assetNumber.errors?.required && assetNumber.touched" class="invalid-feedback">
         Asset Tag is required
       </div>
@@ -59,7 +59,7 @@
 
       <input type="text" class="form-control" [ngClass]="{'is-invalid':controllerInstalledDate.errors?.required && controllerInstalledDate.touched}"
         [(ngModel)]="newTarget.controllerInstalledDate" name="controllerInstalledDate" #controllerInstalledDate="ngModel" required
-        [minDate]="minDate" [maxDate]="maxDate" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue">
+        [minDate]="minDate" [maxDate]="maxDate" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue" id="txtControllerInstalledDate">
       <div *ngIf="controllerInstalledDate.errors?.required && controllerInstalledDate.touched" class="invalid-feedback">
         Install Date is required
       </div>
@@ -68,7 +68,7 @@
 
     <div class="form-group col-md-4">
       <label for="priority">Priority</label>
-      <select class="form-control" [(ngModel)]="newTarget.priority" name="priority" required #priority="ngModel">
+      <select class="form-control" [(ngModel)]="newTarget.priority" name="priority" required #priority="ngModel" id="selPriority">
         <option value=3>High</option>
         <option value=2>Medium</option>
         <option value=1>Low</option>
@@ -91,7 +91,7 @@
   </div>
   <!-- End Form Row -->
 
-  <button type="submit" class="btn btn-primary" [disabled]="!createControllerWorkPackageForm.form.valid">Create</button>
+  <button type="submit" class="btn btn-primary" [disabled]="!createControllerWorkPackageForm.form.valid" id="btnSubmitCreateWP">Create</button>
   <small id="createFormHelp" class="form-text text-muted" *ngIf="!createControllerWorkPackageForm.form.valid">Enter all required fields to create a new Controller Work Package.</small>
 </form>
 

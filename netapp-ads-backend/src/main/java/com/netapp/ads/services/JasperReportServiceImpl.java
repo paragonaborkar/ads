@@ -39,6 +39,7 @@ import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
 
+@SuppressWarnings("deprecation")
 @Service
 public class JasperReportServiceImpl implements JasperReportService {
 
@@ -52,7 +53,6 @@ public class JasperReportServiceImpl implements JasperReportService {
 	/**
 	 * This method is called to generate Report
 	 */
-	//	@SuppressWarnings("deprecation")
 	@Override
 	public Report generateReport(Integer pageNo, Integer recordsPerPage, String reportName, String adsModule) {
 		DynamicJasper dj = new DynamicJasper();
@@ -86,7 +86,7 @@ public class JasperReportServiceImpl implements JasperReportService {
 			exporter.setParameter(JRHtmlExporterParameter.IS_WRAP_BREAK_WORD, Boolean.TRUE);
 			exporter.setParameter(JRXlsExporterParameter.IS_IGNORE_GRAPHICS, Boolean.TRUE);
 
-			StringBuilder sb = new StringBuilder();
+			StringBuffer sb = new StringBuffer();
 			exporter.setParameter(JRHtmlExporterParameter.SIZE_UNIT, JRHtmlExporterParameter.SIZE_UNIT_POINT);
 			exporter.setParameter(JRExporterParameter.OUTPUT_STRING_BUFFER, sb);
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jp);
@@ -142,8 +142,7 @@ public class JasperReportServiceImpl implements JasperReportService {
 
 			xlsExporter.setConfiguration(xlsReportConfiguration);
 			xlsExporter.exportReport();
-
-			// Java 7 introduced the try-with-resources statement, which implicitly closes Closeables. 
+ 
 			try (InputStream in = new FileInputStream(file)) {
 				response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 				response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
@@ -153,15 +152,7 @@ public class JasperReportServiceImpl implements JasperReportService {
 				response.flushBuffer();
 			} catch (Exception e1) {
 				throw new NetAppAdsException("Error in Downloading Report");
-			}
-
-			InputStream in = new FileInputStream(file);
-			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-			response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
-			FileCopyUtils.copy(in, response.getOutputStream());
-			response.getOutputStream().flush();
-			response.getOutputStream().close();
-			response.flushBuffer();
+			}			
 		} catch (Exception e) {
 			throw new NetAppAdsException("Error in Downloading Report");
 		}
