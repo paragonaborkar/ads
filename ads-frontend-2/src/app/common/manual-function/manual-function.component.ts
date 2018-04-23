@@ -72,9 +72,11 @@ export class ManualFunctionComponent implements OnInit {
       this.manualFunctionService.runJob(this.jobName).subscribe(data => {
         
         if (this.pollForStatus) {
+          data = JSON.parse(data);
           // This is for Talend jobs.
           console.log("data from job request", data);
           this.runningJobName = data.jobName;
+          console.log(" this.runningJobName : " +  this.runningJobName );
           this.updateMessage("", "Job Running...", "");
           this.timer = Observable.timer(5000);
           this.pollForProgress();
