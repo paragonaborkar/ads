@@ -4,14 +4,14 @@
 	<parent>
 		<groupId>com.netapp.ads</groupId>
 		<artifactId>netapp-ads-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${revision}</version>
 		<!--<relativePath />  lookup parent from repository -->
 		<relativePath>../netapp-ads-parent</relativePath>
 	</parent>
 
   	<artifactId>netapp-ads-integration</artifactId>
   	<description>NetApp ADS Integration and Data Loading</description>
-
+  	
 	<dependencies>
 	  	<dependency>
 	  		<groupId>com.netapp.ads</groupId>

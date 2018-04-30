@@ -17,7 +17,7 @@ public class DiscoverWorkPackages {
 	private static Logger log = LoggerFactory.getLogger(DiscoverWorkPackages.class);
 	
 	// Discover page Reach
-	public void pageReach(WebDriver driver) throws InterruptedException {
+	public void pageReach(WebDriver driver) {
 		log.debug("Navigating to discover page for WP");
 		//driver.navigate().refresh();
 		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("discoverDropdown"))).click();
@@ -66,7 +66,7 @@ public class DiscoverWorkPackages {
 		return (rowCountAfter > rowCountBefore);
 	}
 
-	public boolean deleteWorkPackage(WebDriver driver, String workPackage, String sourceController, String assetTag, String installDate) throws InterruptedException {
+	public boolean deleteWorkPackage(WebDriver driver, String workPackage, String sourceController, String assetTag, String installDate) {
 		int rowCountBefore = ProjectUtility.getTableRowCount(driver);
 		log.debug("Total WP before deleting: " + rowCountBefore);
 

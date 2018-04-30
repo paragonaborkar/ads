@@ -39,5 +39,8 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer>, Jp
     		+ "JOIN q.qtreeDisposition qd ON qd.disposition = :disposition "
     		+ "Where a.activityMigrationKeyXRefs is empty")
 	List<Activity> findActivitiesWithoutMigrationKeys(@Param("disposition") String disposition);
-
+	
+	//below method is needed to avoid a 'org.hibernate.LazyInitializationException' exception when fetching migration keys
+	@Query("FROM Activity a JOIN FETCH a.migrationKeys WHERE a.id = :activityId")
+    Activity getActivityWithMigrationKeys(@Param("activityId") Integer activityId);
 }

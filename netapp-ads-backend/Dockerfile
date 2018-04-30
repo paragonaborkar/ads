@@ -8,7 +8,7 @@ RUN apk update && apk upgrade && apk add fontconfig && apk add msttcorefonts-ins
 
 
 #Adds the JAR file to the image
-ADD netapp-ads-backend-0.0.1-SNAPSHOT.jar netapp-ads-web.jar
+ADD netapp-ads-backend.jar netapp-ads-web.jar
 	
 ENTRYPOINT ["java", "-Dspring.datasource.url=jdbc:mysql://10.216.15.30:3308/ads_dev","-Djava.security.egd=file:/dev/./urandom","-jar","/netapp-ads-web.jar"]]
 

@@ -2,6 +2,9 @@ package com.netapp.ads.login;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage
 
@@ -14,11 +17,16 @@ public class LoginPage
 	 * @throws InterruptedException
 	 * Method to Login to Application with Valid and Invalid test data credentials.
 	 */
-	public static String loginToApp(WebDriver driver, String username, String password) throws InterruptedException {
-		driver.findElement(By.name("username")).clear();
-		driver.findElement(By.name("username")).sendKeys(username);
-		driver.findElement(By.id("pwd1")).clear();
-		driver.findElement(By.id("pwd1")).sendKeys(password);
+	public static boolean loginToApp(WebDriver driver, String username, String password) throws InterruptedException {
+		//WebElement userNameElement = new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("username")));
+		WebElement userNameElement = driver.findElement(By.id("username"));
+		userNameElement.clear();
+		userNameElement.sendKeys(username);
+		
+		WebElement passwordElement = driver.findElement(By.id("pwd1"));
+		passwordElement.clear();
+		passwordElement.sendKeys(password);
+		
 		driver.findElement(By.xpath("//button[text()='Login']")).click();
 
 		boolean displayed;
@@ -28,9 +36,9 @@ public class LoginPage
 			displayed = false;
 		}
 		if (displayed) {
-			return "Fail";
+			return false;
 		} else {
-			return "Pass";
+			return true;
 		}
 	}
 

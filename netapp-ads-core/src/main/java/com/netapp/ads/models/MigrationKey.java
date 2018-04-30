@@ -53,7 +53,7 @@ public class MigrationKey implements Serializable {
 	@OneToMany(mappedBy="migrationKey")
 	private List<ActivityMigrationKeyXRef> activityMigrationKeyXRefs = new ArrayList<ActivityMigrationKeyXRef>();
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany
 	@JoinTable(name = "activity_migration_key_x_ref",
 	        joinColumns = {
 	                @JoinColumn(name = "migration_key_id",

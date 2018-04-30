@@ -23,6 +23,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -30,6 +32,7 @@ import com.netapp.ads.models.Activity;
 import com.netapp.ads.models.ActivityResponse;
 import com.netapp.ads.models.MigrationKey;
 import com.netapp.ads.models.UserCorporate;
+import com.netapp.ads.repos.ActivityRepository;
 import com.netapp.ads.repos.ActivityResponseRepository;
 import com.netapp.ads.util.DateUtils;
 
@@ -58,6 +61,9 @@ public class EmailService {
 	
 	@Autowired
 	ActivityResponseRepository activityResponseRepository;
+	
+	@Autowired
+	ActivityRepository activityRepository;
 	
 	@Autowired
 	private DateUtils dateUtils;
@@ -103,6 +109,7 @@ public class EmailService {
         this.emailSender.send(mimeMessage);
     }
     
+    @Transactional(propagation=Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
 	public HashMap<UserCorporate, ArrayList<MigrationKey>> getEmailsToSend(List<ActivityResponse> activityResponses) {
 		HashMap<UserCorporate, ArrayList<MigrationKey>> emailsToSend = new HashMap<UserCorporate, ArrayList<MigrationKey>>();
 		for(ActivityResponse activityResponse : activityResponses) {
@@ -110,7 +117,9 @@ public class EmailService {
 			//			for(Activity activity : response.getActivity()) {
 			// Get the activity to mig key x_ref mapping... a list of migration_key_id's...
 
-			List<MigrationKey> migKeys = activity.getMigrationKeys();
+			//List<MigrationKey> migKeys = activity.getMigrationKeys();
+			List<MigrationKey> migKeys = activityRepository.getActivityWithMigrationKeys(activity.getId()).getMigrationKeys();
+			log.debug("Number of migration keys for activity {}: {}", activity.getId(), migKeys);
 
 			for(MigrationKey migKey : migKeys) {
 				if (emailsToSend.containsKey(migKey.getUserCorporate())) {
@@ -189,6 +198,7 @@ public class EmailService {
 	@Scheduled(cron = "#{sysConfigRepository.findByPropertyName('ads.email.sendowner.reminder').getPropertyValue()}")
 	public void sendOwnerReminderEmail() {
 		List<ActivityResponse> activityResponses = activityResponseRepository.findByIsOwnerAndIsPresumed(false, true);
+		log.debug("activityResponses size:" + activityResponses.size());
 		sendEmailAndUpdateActivityResponses("QtreeOwnerReminderNoSchedule/email", activityResponses);
 	}
 	

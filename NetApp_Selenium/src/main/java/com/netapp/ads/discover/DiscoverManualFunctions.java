@@ -13,7 +13,7 @@ public class DiscoverManualFunctions {
 	private static Logger log = LoggerFactory.getLogger(DiscoverManualFunctions.class);
 	
 	// Discover page Reach
-	public void pageReach(WebDriver driver) throws InterruptedException {
+	public void pageReach(WebDriver driver) {
 		log.debug("Navigating to discover page for Manual Functions");
 		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("discoverDropdown"))).click();
 		//driver.findElement(By.id("discoverDropdown")).click();
@@ -25,10 +25,7 @@ public class DiscoverManualFunctions {
 		log.debug("Running OCI Data Load for element: {}", indexOfRunButton);
 		WebElement runButton = driver.findElement(By.xpath("(//button[@id='btnRunManualFunction'])[" + indexOfRunButton + "]"));
 		runButton.click();
-		new WebDriverWait(driver, 30).until(ExpectedConditions.or(
-				ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='divRunSuccess'])[" + indexOfRunButton + "]")),
-				ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='divRunErrored'])[" + indexOfRunButton + "]"))
-				) );
+		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='divRunSuccess'])[" + indexOfRunButton + "]")));
 		return true;
 	}	
 	
@@ -37,10 +34,7 @@ public class DiscoverManualFunctions {
 		new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.id("app-tab"))).click();
 		WebElement runButton = new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(By.xpath("(//button[@id='btnRunManualFunction'])[" + indexOfRunButton + "]")));
 		runButton.click();
-		new WebDriverWait(driver, 30).until(ExpectedConditions.or(
-				ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='divRunSuccess'])[" + indexOfMessageText + "]")),
-				ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='divRunErrored'])[" + indexOfMessageText + "]"))
-				) );
+		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='divRunSuccess'])[" + indexOfMessageText + "]")));
 		return true;
 	}	
 }

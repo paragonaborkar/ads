@@ -54,6 +54,15 @@ public class ProjectUtility
 	
 	public static int getTableRowCount(WebDriver driver) {
 		//List<WebElement> rows = driver.findElements(By.xpath("//datatable-row-wrapper//datatable-body-row"));
+		try {
+			new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//datatable-pager")));
+			WebElement firstPage = driver.findElement(By.xpath("//datatable-footer//a[contains(@aria-label,'go to first page')]"));
+			if(firstPage != null && firstPage.isEnabled() && isElementEnabledByClass(driver, firstPage)) {
+				firstPage.click();
+			}
+		} catch(NoSuchElementException e) {}
+		
+		new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//datatable-pager")));
 		List<WebElement> rows = driver.findElements(By.xpath("//datatable-row-wrapper"));
 		int rowCount = rows.size();
 		
@@ -61,10 +70,10 @@ public class ProjectUtility
 		while(hasNextPage) {
 			try {
 				WebElement nextPage = driver.findElement(By.xpath("//datatable-footer//a[contains(@aria-label,'go to next page')]"));
-				if(nextPage.isDisplayed() && nextPage.isEnabled() && isNextPageEnabled(driver, nextPage)) {
+				if(nextPage.isDisplayed() && nextPage.isEnabled() && isElementEnabledByClass(driver, nextPage)) {
 					nextPage.click();
 					//log.debug("Waiting for datatable body to be ready");
-					new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//datatable-footer")));
+					new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//datatable-pager")));
 					List<WebElement> moreRows = driver.findElements(By.xpath("//datatable-row-wrapper"));
 					rowCount = rowCount + moreRows.size();
 				} else {
@@ -82,9 +91,9 @@ public class ProjectUtility
 	public static WebElement findRowInDataTable(WebDriver driver, String valueToFind) {
 		WebElement returnElement = null;
 		//log.debug("Finding value in 1st page: {}", valueToFind);
+		new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//datatable-pager")));
 		List<WebElement> rows = driver.findElements(By.xpath("//datatable-row-wrapper//datatable-body-row"));
 		//log.debug("Waiting for datatable body to be ready");
-		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//datatable-footer")));
 		for(WebElement row: rows) {
 			List<WebElement> bodyCells = row.findElements(By.xpath(".//datatable-body-cell"));
 			for(WebElement bodyCell: bodyCells) {
@@ -103,11 +112,11 @@ public class ProjectUtility
 			while(hasNextPage) {
 				try {
 					WebElement nextPage = driver.findElement(By.xpath("//datatable-footer//a[contains(@aria-label,'go to next page')]"));
-					if(nextPage.isDisplayed() && nextPage.isEnabled() && isNextPageEnabled(driver, nextPage)) {
+					if(nextPage.isDisplayed() && nextPage.isEnabled() && isElementEnabledByClass(driver, nextPage)) {
 						//log.debug("Paginating to next page");
 						nextPage.click();
 						//log.debug("Waiting for datatable body to be ready");
-						new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//datatable-footer")));
+						new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//datatable-pager")));
 						//new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(@aria-label,'go to next page')]")));
 						List<WebElement> moreRows = driver.findElements(By.xpath("//datatable-row-wrapper//datatable-body-row"));
 						for(WebElement row: moreRows) {
@@ -115,11 +124,16 @@ public class ProjectUtility
 							List<WebElement> bodyCells = null;
 							try {
 								bodyCells = row.findElements(By.xpath(".//datatable-body-cell"));
-							} catch(StaleElementReferenceException e){
-								bodyCells = row.findElements(By.xpath(".//datatable-body-cell"));
+							} catch(StaleElementReferenceException e) {
+								int i=1;
+								while(i<20) {
+									bodyCells = row.findElements(By.xpath(".//datatable-body-cell"));
+									i++;
+								}
 							}
 	
 							for(WebElement bodyCell: bodyCells) {
+								String str = bodyCell.getText();
 								if(bodyCell.getText().equals(valueToFind)) {
 									returnElement = row;
 									hasNextPage = false;
@@ -152,7 +166,7 @@ public class ProjectUtility
 		}
 	}
 	
-	public static boolean isNextPageEnabled(WebDriver driver, WebElement element) {
+	public static boolean isElementEnabledByClass(WebDriver driver, WebElement element) {
 		WebElement parent = element.findElement(By.xpath(".."));
 		return !parent.getAttribute("class").equals("disabled");
 	}

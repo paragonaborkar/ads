@@ -15,7 +15,7 @@ public class ControllerRelease {
 
 	private static Logger log = LoggerFactory.getLogger(ControllerRelease.class);
 	
-	public void pageReach(WebDriver driver) throws InterruptedException {
+	public void pageReach(WebDriver driver) {
 		log.debug("Navigating to discover page for CR");
 		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("discoverDropdown"))).click();
 		driver.findElement(By.id("discover-ctrl-release")).click();

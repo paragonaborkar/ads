@@ -95,8 +95,7 @@ public class Activity implements Serializable {
 	@OneToMany(mappedBy="activity")
 	private List<ActivityMigrationKeyXRef> activityMigrationKeyXRefs = new ArrayList<ActivityMigrationKeyXRef>();
 	
-	@ManyToMany(fetch = FetchType.LAZY,
-	        mappedBy = "activities")
+	@ManyToMany(mappedBy = "activities")
 	private List<MigrationKey> migrationKeys;
 
 	public Activity() {

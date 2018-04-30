@@ -11,7 +11,7 @@
 
 	<groupId>com.netapp.ads</groupId>
 	<artifactId>netapp-ads-parent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>${revision}</version>
 	<packaging>pom</packaging>
 
 	<name>netapp-ads-parent</name>
@@ -20,6 +20,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		<revision>0.0.1-SNAPSHOT</revision>
 	</properties>
 
 	
@@ -32,6 +33,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	
 	<modules>
 		<module>../netapp-ads-backend</module>
 		<module>../netapp-ads-core</module>
