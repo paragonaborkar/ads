@@ -9,10 +9,10 @@ ADD talendjobs /usr/src/talendjobs
 RUN chmod -R 777 /usr/src/talendjobs
 
 #Rules file
-ADD discovery_rules /usr/src/discovery_rules
+ADD Drools/Discover /usr/src/drools/discover
 
 #Spring boot JAR
-ADD netapp-ads-integration-0.0.1-SNAPSHOT.jar /usr/src/netapp-ads-integration.jar
+ADD netapp-ads-integration.jar /usr/src/netapp-ads-integration.jar
 
 ENTRYPOINT ["java", "-Dspring.datasource.url=jdbc:mysql://10.216.15.30:3308/ads_dev","-Djava.security.egd=file:/dev/./urandom","-jar","/usr/src/netapp-ads-integration.jar"]]
 

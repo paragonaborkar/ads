@@ -4,13 +4,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.netapp.ads.discover.DiscoverReports;
 
 public class AdminReport {
 
-	// Discover page Reach
-	public void pageReach(WebDriver driver) throws InterruptedException {
+	public void pageReach(WebDriver driver) {
 		driver.navigate().refresh();
-		driver.findElement(By.id("adminDropdown")).click();
+		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("adminDropdown"))).click();
 		driver.findElement(By.id("admin-reports")).click();
 	}
 	
@@ -20,8 +23,8 @@ public class AdminReport {
 	 *             For the Admin Module to generate reports For the native user
 	 *             created Pagination checked
 	 */
-	public boolean testReport(WebDriver driver) throws InterruptedException {
-		driver.findElement(By.xpath(".//*[text()='User Admin Report']")).click();
+	public boolean testNativeUserReport(WebDriver driver) {
+		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='User Admin Report']"))).click();
 	/*	List<WebElement> nextpage = driver.findElements(By.xpath(".//*[text()='Next']"));
 		// find pagination link exists.
 		if (nextpage.size() > 0) {
@@ -32,29 +35,6 @@ public class AdminReport {
 		} else {
 			System.out.println("pagination exists");
 		}*/
-		return commonElements(driver);
+		return DiscoverReports.commonElements(driver);
 	}
-	
-	public boolean commonElements(WebDriver driver) {
-		boolean returnTrue = false;
-		try {
-			WebElement element = driver.findElement(By.id("reports-page-num"));
-			//driver.findElement(By.id("report-export-to-excel")).isDisplayed();
-			if(element != null && element.isDisplayed())
-				returnTrue = true;
-		} catch(NoSuchElementException nsee) {
-		}
-		
-		if(!returnTrue) {
-			try {
-				WebElement element = driver.findElement(By.cssSelector("h3.text-center"));
-				//driver.findElement(By.id("report-export-to-excel")).isDisplayed();
-				if(element != null && element.getText().equals("There are no results to display."))
-					returnTrue = true;
-			} catch(NoSuchElementException nsee) {
-			}
-		}
-		return returnTrue;
-	}
-
 }

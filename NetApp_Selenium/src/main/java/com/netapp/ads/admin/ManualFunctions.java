@@ -11,7 +11,7 @@ public class ManualFunctions {
 	 * @throws InterruptedException
 	 * Manual Function Functionality under Admin module From Admin Menu.....
 	 */
-	public static void ManualAdmin(WebDriver driver) throws InterruptedException {
+	public static void ManualAdmin(WebDriver driver) {
 		
         driver.findElement(By.xpath(".//*[@id='adminDropdown']")).click();
         driver.findElement(By.xpath(".//*[text()='Manual Functions ']")).click();

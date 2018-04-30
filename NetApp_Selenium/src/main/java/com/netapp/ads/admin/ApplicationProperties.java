@@ -1,58 +1,52 @@
 package com.netapp.ads.admin;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.netapp.ads.utils.ProjectUtility;
 
 public class ApplicationProperties {
 
+	private static Logger log = LoggerFactory.getLogger(AdminNativeUser.class);
+	
+	// Discover page Reach
+	public void pageReach(WebDriver driver) {
+		log.debug("Refreshing page");
+		//driver.navigate().refresh();
+		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("adminDropdown"))).click();
+		//driver.findElement(By.id("adminDropdown")).click();
+		driver.findElement(By.id("admin-app-props")).click();
+	}
+	
 	/**
 	 * @param driver
 	 * @throws InterruptedException
 	 * For Application Properties in Admin module.
 	 */
-	public static void ApplicationProp(WebDriver driver) throws InterruptedException {
-
-		driver.findElement(By.xpath(".//*[@id='adminDropdown']")).click();
-		driver.findElement(By.xpath(".//*[text()='Application Properties']")).click();
-		driver.switchTo().parentFrame();
-		driver.findElement(By.xpath("//*[text()='WFA']")).click();
-		driver.findElement(By.xpath("//*[text()='Core']")).click();
-
-		// Verifying the Row Selected value is equals to or less than records display in
-		// the WebTable.
-		System.out.println("Testing get passed Ready to select Row********");
-		WebElement allNamesList = driver.findElement(By.xpath(".//*[@name='pagesPerPage']"));
-		// System.out.println("**********"+allNamesList.toString());
-		Select selectrow = new Select(allNamesList);
-		// dropdown.selectByVisibleText(selectedPreference);
-		selectrow.selectByValue("10");
-		List<WebElement> allNames = driver
-				.findElements(By.xpath(".//datatable-body-row/div[2]/datatable-body-cell[1]/div"));
-		int size = allNames.size();
-		System.out.println("*****************" + size);
-		if (size <= 10) {
-			System.out.println("Selected Row Value is matching-->Less than or equal to given number of items");
-		} else
-			System.out.println("More than the value-->Not Matching");
-
-		// Verifying Record is able to edit from the WebTable.
-		//Thread.sleep(5000);
-		driver.findElement(By.xpath("//*[text()='WFA']")).click();
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+	public boolean updateApplicationProperty(WebDriver driver) {
+		log.debug("Updating application property for HHCC");
+		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.linkText("HHCC"))).click();
+		WebElement rowToUpdate = ProjectUtility.findRowInDataTable(driver, "cifs.schedule.initial_delay");
+		WebElement cellToUpdate = rowToUpdate.findElement(By.xpath(".//datatable-body-cell[2]"));
+		String before = cellToUpdate.getText();
+		log.debug("Before application property for cifs.schedule.initial_delay: " + before);
+		//String editPath = "(.//span[@title='Double click to edit'])[1]";
+		WebElement element = cellToUpdate.findElement(By.xpath(".//span[@title='Double click to edit']"));
+		//((JavascriptExecutor) driver).executeScript("document.getElementById('map_container').dispatchEvent(new Event('dblclick'));"); 
 		Actions action = new Actions(driver);
-		String TestXpath = "(.//span[@title='Double click to edit'])[1]";
-		WebElement element = driver.findElement(By.xpath(TestXpath));
-
-		// Double click
-		action.doubleClick(element).perform();
-		driver.findElement(By.xpath("//*[text()='Core']")).click();
-		//Thread.sleep(5000);
-		System.out.println("*******Record is edited and saved********");
+		action.moveToElement(element).doubleClick().sendKeys("1000").perform();
+		//new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("txtUpdateTableValue"))).sendKeys("1000");
+		action.click(rowToUpdate);
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("divSuccessMsg")));
+		 cellToUpdate = rowToUpdate.findElement(By.xpath(".//datatable-body-cell[2]"));
+		 String after = cellToUpdate.getText();
+		 log.debug("After application property for cifs.schedule.initial_delay: " + after);
+		return !before.equals(after);
 	}
 }

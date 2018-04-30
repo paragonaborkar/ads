@@ -7,7 +7,7 @@ import com.netapp.ads.connections.ConnectionsManualFunctions;;;
 
 /**
  * @author Singprad
- * To validate Discover Controller Release and Controller WorkPackage.
+ * 
  */
 public class ConnectionsTest extends LoginTest {
 
@@ -16,7 +16,7 @@ public class ConnectionsTest extends LoginTest {
 	/**
 	 * @throws InterruptedException
 	 */
-	@Test(priority = 14)
+	@Test(priority = 6)
 	public void testRunHostConnections() throws InterruptedException {
 		connectionsManualFunctions.pageReach(driver);
 		for(int i=1; i<=3; i++) {

@@ -33,7 +33,7 @@ public class BaseTest {
 			System.setProperty("webdriver.chrome.driver",
 					".\\src\\main\\resources\\com\\paragon\\resources\\drivers\\chromedriver.exe");
 			driver = new ChromeDriver(options);
-			driver.manage().window().maximize();
+			//driver.manage().window().maximize();
 			driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
 		} else if (browser.equalsIgnoreCase("firefox")) {
 			driver = new FirefoxDriver();

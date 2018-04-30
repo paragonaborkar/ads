@@ -12,7 +12,6 @@ public class ConnectionsManualFunctions {
 	
 	private static Logger log = LoggerFactory.getLogger(ConnectionsManualFunctions.class);
 	
-	// Discover page Reach
 	public void pageReach(WebDriver driver) throws InterruptedException {
 		log.debug("Navigating to connections page for Manual Functions");
 		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("connectionDropdown"))).click();
@@ -25,10 +24,11 @@ public class ConnectionsManualFunctions {
 		log.debug("Running HHCC for element: {}", indexOfRunButton);
 		WebElement runButton = driver.findElement(By.xpath("(//button[@id='btnRunManualFunction'])[" + indexOfRunButton + "]"));
 		runButton.click();
-		new WebDriverWait(driver, 30).until(ExpectedConditions.or(
+/*		new WebDriverWait(driver, 30).until(ExpectedConditions.or(
 				ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='divRunSuccess'])[" + indexOfRunButton + "]")),
 				ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='divRunErrored'])[" + indexOfRunButton + "]"))
-				) );
+				) );*/
+		new WebDriverWait(driver, 60).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='divRunSuccess'])[" + indexOfRunButton + "]")));
 		return true;
 	}	
 }
