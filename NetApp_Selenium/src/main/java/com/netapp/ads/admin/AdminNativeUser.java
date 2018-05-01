@@ -19,9 +19,9 @@ public class AdminNativeUser {
 	// Discover page Reach
 	public void pageReach(WebDriver driver) throws InterruptedException {
 		log.debug("Navigating to admin page for Native Users");
-		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("adminDropdown"))).click();
-		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("admin-user-mgmt"))).click();
-		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("admin-btn-add-user")));
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("adminDropdown"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("admin-user-mgmt"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("admin-btn-add-user")));
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class AdminNativeUser {
 		log.debug("Before adding users: {}", before);
 		log.debug("Clicking Add");
 		driver.findElement(By.id("admin-btn-add-user")).click();
-		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("txtUserName")));
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("txtUserName")));
 		log.debug("Adding user data");
 		driver.findElement(By.id("txtUserName")).clear();
 		driver.findElement(By.id("txtUserName")).sendKeys(username);
@@ -65,7 +65,7 @@ public class AdminNativeUser {
 		driver.findElement(By.id("btnSubmit")).click();
 		log.debug("Hit Save!");
 		driver.navigate().refresh();
-		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("admin-btn-add-user")));
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("admin-btn-add-user")));
 		log.debug("Checking if user was created successfully");
 		String after = driver.findElement(By.xpath("//div[@class='page-count']")).getText();
 		log.debug("After adding users: {}", after);
@@ -93,7 +93,7 @@ public class AdminNativeUser {
 		}
 		
 		if(row != null) {
-			new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//datatable-footer//a[contains(@aria-label,'go to next page')]")));
+			new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//datatable-footer//a[contains(@aria-label,'go to next page')]")));
 			//WebElement trashIcon = row.findElement(By.cssSelector(".btn.btn-sm.btn-danger"));
 			//WebElement trashIcon = row.findElement(By.xpath(".//button[@class='btn btn-sm btn-danger']"));
  			WebElement trashIcon = null;
@@ -107,13 +107,13 @@ public class AdminNativeUser {
 				log.debug("Hitting Trash icon");
 				trashIcon.click();
 				//WebElement deleteDialog = driver.switchTo().activeElement();
-				//new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//native-user-delete//button[@class='btn btn-primary']")));
+				//new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//native-user-delete//button[@class='btn btn-primary']")));
 				//WebElement deleteButton = driver.findElement(By.xpath("//native-user-delete//button[@class='btn btn-primary']"));
-				WebElement deleteButton = new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("btnNativeUserDeleteConfirmed")));
+				WebElement deleteButton = new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("btnNativeUserDeleteConfirmed")));
 				deleteButton.click();
 				log.debug("Delete hit. Now checking if user was removed");
 				driver.navigate().refresh();
-				new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("admin-btn-add-user")));
+				new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("admin-btn-add-user")));
 			}
 			String after = driver.findElement(By.xpath("//div[@class='page-count']")).getText();
 			log.debug("After deleting users: {}", after);

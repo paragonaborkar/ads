@@ -22,17 +22,6 @@
 		<java.version>1.8</java.version>
 		<revision>0.0.1-SNAPSHOT</revision>
 	</properties>
-
-	
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>com.netapp.ads</groupId>
-				<artifactId>netapp-ads-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 	
 	<modules>
 		<module>../netapp-ads-backend</module>

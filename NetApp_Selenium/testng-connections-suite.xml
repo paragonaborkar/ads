@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Connections" thread-count="1" verbose="10">
-	<test name="ConnectionsTest">
-		<classes>
-			<class name="com.paragon.netapp.tests.ConnectionsTest"/>
-		</classes>
-	</test> <!-- Test -->
-</suite> <!-- Suite -->
