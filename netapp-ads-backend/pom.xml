@@ -12,11 +12,11 @@
   <artifactId>netapp-ads-backend</artifactId>
   <description>NetApp ADS Web Backend</description>
   
-  
   <dependencies>
 	  	<dependency>
 	  		<groupId>com.netapp.ads</groupId>
 	  		<artifactId>netapp-ads-core</artifactId>
+	  		<version>${revision}</version>
 	  	</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

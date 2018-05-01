@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Admin" thread-count="1" verbose="10">
-	<test name="AdminTest">
-		<classes>
-			<class name="com.paragon.netapp.tests.AdminTest"/>
-		</classes>
-	</test> <!-- Test -->
-</suite> <!-- Suite -->
