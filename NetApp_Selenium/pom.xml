@@ -60,6 +60,14 @@
 		    <version>1.7.25</version>
 		    <scope>test</scope>
 		</dependency>
+		
+				<!-- https://mvnrepository.com/artifact/commons-dbutils/commons-dbutils -->
+		<dependency>
+		    <groupId>commons-dbutils</groupId>
+		    <artifactId>commons-dbutils</artifactId>
+		    <version>1.6</version>
+		</dependency>
+				
 	</dependencies>
 
 	<build>

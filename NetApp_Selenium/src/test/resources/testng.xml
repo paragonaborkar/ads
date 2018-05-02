@@ -3,7 +3,7 @@
 <suite name="AllSuites" thread-count="1" verbose="10">
 	<suite-files>
 		<suite-file path="testng-login-suite.xml"></suite-file>
-		<suite-file path="testng-connections-suite.xml"></suite-file>
+		<suite-file path="testng-connections-suite.xml"></suite-file> 
 		<suite-file path="testng-discover-suite.xml"></suite-file>
 		<suite-file path="testng-admin-suite.xml"></suite-file>
 	</suite-files>

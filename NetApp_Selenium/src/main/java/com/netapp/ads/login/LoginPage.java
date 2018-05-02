@@ -18,7 +18,7 @@ public class LoginPage
 	 * Method to Login to Application with Valid and Invalid test data credentials.
 	 */
 	public static boolean loginToApp(WebDriver driver, String username, String password) throws InterruptedException {
-		//WebElement userNameElement = new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("username")));
+		//WebElement userNameElement = new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("username")));
 		WebElement userNameElement = driver.findElement(By.id("username"));
 		userNameElement.clear();
 		userNameElement.sendKeys(username);

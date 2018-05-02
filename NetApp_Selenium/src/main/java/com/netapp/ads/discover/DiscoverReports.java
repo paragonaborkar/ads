@@ -18,9 +18,9 @@ public class DiscoverReports {
 	
 	// Discover page Reach
 	public void pageReach(WebDriver driver) throws InterruptedException {
-		driver.navigate().refresh();
-		driver.findElement(By.id("discoverDropdown")).click();
-		driver.findElement(By.id("discover-reports")).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("home"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("discoverDropdown"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("discover-reports"))).click();
 	}
 
 	// Callme Report Test
@@ -30,7 +30,7 @@ public class DiscoverReports {
 	 * @Method to Handle Call Me Report module regression testing.
 	 */
 	public boolean callMeReport(WebDriver driver) throws InterruptedException {
-		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Call Me Report']"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Call Me Report']"))).click();
 		// set preference to download the file in C:\Temp file
 		// Waiting for the element Export to excel 
 //		WebElement wb = driver.findElement(By.xpath("//button[@class='btn btn-outline-primary']"));
@@ -51,37 +51,6 @@ public class DiscoverReports {
 		return commonElements(driver);
 	}
 	
-	
-	public static boolean commonElements(WebDriver driver) {
-		boolean returnTrue = false;
-		try {
-			WebElement element = new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("reports-page-num")));
-			//driver.findElement(By.id("report-export-to-excel")).isDisplayed();
-			if(element != null)
-				returnTrue = true;
-		} catch(NoSuchElementException nsee) {
-		} catch(TimeoutException te) {
-		}
-		
-		try {
-			WebElement element = new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.id("numPages2")));
-			if(element != null)
-				returnTrue = true;
-		} catch(NoSuchElementException nsee) {
-		} catch(TimeoutException te) {
-		}			
-		
-		if(!returnTrue) {
-			try {
-				WebElement element = driver.findElement(By.xpath("//*[contains(text(), 'There are no results to display.')]"));
-				if(element != null)
-					returnTrue = true;
-			} catch(NoSuchElementException nsee) {
-			}
-		}
-		return returnTrue;
-	}
-	
 	// UnknownOwnerReport Test
 	/**
 	 * @param driver
@@ -89,7 +58,7 @@ public class DiscoverReports {
 	 * @Method to Handle unknownOwnerReport Report module regression testing.
 	 */
 	public boolean unknownOwnerReport(WebDriver driver) throws InterruptedException{
-		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Unknown Owner Report']"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Unknown Owner Report']"))).click();
 		// set preference to download the file in C:\Temp file
 		// Waiting for the element Export to excel 
 //		WebElement wb = driver.findElement(By.xpath("//button[@class='btn btn-outline-primary']"));
@@ -119,7 +88,7 @@ public class DiscoverReports {
 	 * 
 	 */
 	public boolean volumeDecommision(WebDriver driver ) throws InterruptedException {
-		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Volume Decommission Report']"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Volume Decommission Report']"))).click();
 		// set preference to download the file in C:\Temp file
 		// Waiting for the element Export to excel 
 //		WebElement wb = driver.findElement(By.xpath("//button[@class='btn btn-outline-primary']"));
@@ -147,7 +116,7 @@ public class DiscoverReports {
 	 * @Method to Handle multiOwner Report module regression testing.
 	 */
 	public boolean multiOwner(WebDriver driver) throws InterruptedException {
-		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Multi Owner Report']"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Multi Owner Report']"))).click();
 		// set preference to download the file in C:\Temp file
 		// Waiting for the element Export to excel 
 //		WebElement wb = driver.findElement(By.xpath("//button[@class='btn btn-outline-primary']"));
@@ -175,7 +144,7 @@ public class DiscoverReports {
 	 * @Method to Handle activityReport Report module regression testing.
 	 */
 	public boolean activityReport(WebDriver driver) throws InterruptedException {
-		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Activity Report']"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Activity Report']"))).click();
 		// set preference to download the file in C:\Temp file
 		// Waiting for the element Export to excel 
 //		WebElement wb = driver.findElement(By.xpath("//button[@class='btn btn-outline-primary']"));
@@ -205,7 +174,7 @@ public class DiscoverReports {
 
 	 */
 	public boolean applicationDetail(WebDriver driver) throws InterruptedException {
-		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Application Detail Report']"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='Application Detail Report']"))).click();
 		// set preference to download the file in C:\Temp file
 		// Waiting for the element Export to excel 
 //		WebElement wb = driver.findElement(By.xpath("//button[@class='btn btn-outline-primary']"));
@@ -224,6 +193,36 @@ public class DiscoverReports {
 //			System.out.println(latestFilefromDir);
 //		}
 		return commonElements(driver);
+	}
+	
+	public static boolean commonElements(WebDriver driver) {
+		boolean returnTrue = false;
+		try {
+			WebElement element = new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.id("reports-page-num")));
+			//driver.findElement(By.id("report-export-to-excel")).isDisplayed();
+			if(element != null)
+				returnTrue = true;
+		} catch(NoSuchElementException nsee) {
+		} catch(TimeoutException te) {
+		}
+		
+		try {
+			WebElement element = new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.id("numPages2")));
+			if(element != null)
+				returnTrue = true;
+		} catch(NoSuchElementException nsee) {
+		} catch(TimeoutException te) {
+		}			
+		
+		if(!returnTrue) {
+			try {
+				WebElement element = driver.findElement(By.xpath("//*[contains(text(), 'There are no results to display.')]"));
+				if(element != null)
+					returnTrue = true;
+			} catch(NoSuchElementException nsee) {
+			}
+		}
+		return returnTrue;
 	}
 	
 	/**

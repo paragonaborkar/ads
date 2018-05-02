@@ -18,8 +18,8 @@ public class DisplayPreferences {
 	// Discover page Reach
 	public void pageReach(WebDriver driver) {
 		log.debug("Navigating to Display Preferences page");
-		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("adminDropdown"))).click();
-		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("admin-disp-prefs"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("adminDropdown"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("admin-disp-prefs"))).click();
 	}
 	
 	/**
@@ -28,11 +28,11 @@ public class DisplayPreferences {
 	 * Property Preferences functionality in Admin Module
 	 */
 	public boolean setDisplayPreferences(WebDriver driver) {
-		Select selectPage = new Select(new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("selectedPreferenceId"))));
+		Select selectPage = new Select(new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("selectedPreferenceId"))));
 		selectPage.selectByIndex(1);
 
-		WebElement draggableElement = new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='divVisibleCardBody']//div[@draggable='true'][2]")));
-		WebElement targetElement = new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='divHiddenCardBody']//bs-sortable")));
+		WebElement draggableElement = new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='divVisibleCardBody']//div[@draggable='true'][2]")));
+		WebElement targetElement = new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='divHiddenCardBody']//bs-sortable")));
 		Actions builder = new Actions(driver);
 		Action action = builder
 				.clickAndHold(draggableElement)

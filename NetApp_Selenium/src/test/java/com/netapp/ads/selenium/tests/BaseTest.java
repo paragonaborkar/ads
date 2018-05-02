@@ -1,6 +1,5 @@
 package com.netapp.ads.selenium.tests;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -16,6 +15,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
+import com.netapp.ads.utils.ADSDbUtils;
 import com.netapp.ads.utils.ProjectUtility;
 
 public class BaseTest {
@@ -28,23 +28,27 @@ public class BaseTest {
 	 * This is a Base Method to Launch any of the Web Browser as user need.
 	 */
 	@BeforeSuite
-	public void launchBrowser() {
+	public void launchBrowser() throws Exception {
 		String browser = ProjectUtility.getProperty("Browser");
 		if (browser.equalsIgnoreCase("Chrome")) {
 			ChromeOptions options = new ChromeOptions();
 			options.setProxy(null);
 			
 			List<String> chromeOptions = Arrays.asList("headless", "start-maximized", "disable-gpu", "no-sandbox"); 
-			//options.addArguments(chromeOptions);
+			options.addArguments(chromeOptions);
 			//System.setProperty("webdriver.chrome.driver", ".\\src\\main\\resources\\com\\paragon\\resources\\drivers\\chromedriver.exe");
 			driver = new ChromeDriver(options);
 			//driver.manage().window().maximize();
-			//driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+			driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			driver.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
 		} else if (browser.equalsIgnoreCase("firefox")) {
 			driver = new FirefoxDriver();
 		} else {
 			driver = new InternetExplorerDriver();
 		}
+		
+		ADSDbUtils.setUpDB();
 	}
 
 	/**
@@ -68,8 +72,11 @@ public class BaseTest {
 			driver.findElement(By.xpath("//i[@class='fa fa-sign-out']")).click();
 		} catch(NoSuchElementException nsee) {
 		} finally {
-			driver.close();
-			driver.quit();
+			try {
+				driver.close();
+				driver.quit();
+			} catch(Exception e) {}
+			ADSDbUtils.closeBD();
 		}
 	}
 }

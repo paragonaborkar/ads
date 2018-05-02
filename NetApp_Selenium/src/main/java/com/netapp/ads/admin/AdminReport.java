@@ -12,9 +12,9 @@ import com.netapp.ads.discover.DiscoverReports;
 public class AdminReport {
 
 	public void pageReach(WebDriver driver) {
-		driver.navigate().refresh();
-		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("adminDropdown"))).click();
-		driver.findElement(By.id("admin-reports")).click();
+		//driver.navigate().refresh();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("adminDropdown"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("admin-reports"))).click();
 	}
 	
 	/**
@@ -24,7 +24,7 @@ public class AdminReport {
 	 *             created Pagination checked
 	 */
 	public boolean testNativeUserReport(WebDriver driver) {
-		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='User Admin Report']"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[text()='User Admin Report']"))).click();
 	/*	List<WebElement> nextpage = driver.findElements(By.xpath(".//*[text()='Next']"));
 		// find pagination link exists.
 		if (nextpage.size() > 0) {

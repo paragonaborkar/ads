@@ -197,7 +197,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers("/sso");
 		web.ignoring().antMatchers("/ssoUrl/**");
 		web.ignoring().antMatchers("/favicon.ico");
-		web.ignoring().antMatchers("/remoteLog");
+		web.ignoring().antMatchers("/api/remoteLog");
 	}
 
 	@Override

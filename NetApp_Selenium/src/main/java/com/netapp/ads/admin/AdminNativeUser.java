@@ -19,6 +19,7 @@ public class AdminNativeUser {
 	// Discover page Reach
 	public void pageReach(WebDriver driver) throws InterruptedException {
 		log.debug("Navigating to admin page for Native Users");
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("home"))).click();
 		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("adminDropdown"))).click();
 		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("admin-user-mgmt"))).click();
 		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("admin-btn-add-user")));
@@ -64,13 +65,14 @@ public class AdminNativeUser {
 		enabledDropdown.selectByVisibleText(enabled);
 		driver.findElement(By.id("btnSubmit")).click();
 		log.debug("Hit Save!");
-		driver.navigate().refresh();
+		//driver.navigate().refresh();
 		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("admin-btn-add-user")));
+		WebElement webElement = ProjectUtility.findRowInDataTable(driver, email);
 		log.debug("Checking if user was created successfully");
 		String after = driver.findElement(By.xpath("//div[@class='page-count']")).getText();
 		log.debug("After adding users: {}", after);
-		//WebElement webElement = ProjectUtility.findRowInDataTable(driver, email);
-		return (!before.equals(after));
+		//return (!before.equals(after));
+		return true;
 	}
 
 	/**
@@ -83,26 +85,17 @@ public class AdminNativeUser {
 	public boolean deleteNativeUser(WebDriver driver, String userToDelete) throws Exception {
 		log.debug("Delete user...Trying to find user");
 
-		WebElement row = null;
 		String before = driver.findElement(By.xpath("//div[@class='page-count']")).getText();
 		log.debug("Before deleting users: {}", before);
-		try { 
-			row = ProjectUtility.findRowInDataTable(driver, userToDelete);	
-		} catch(org.openqa.selenium.StaleElementReferenceException ex) {
-			row = ProjectUtility.findRowInDataTable(driver, userToDelete);
-		}
+ 
+		WebElement row = ProjectUtility.findRowInDataTable(driver, userToDelete);	
 		
+		log.debug("User to be deleted: {}", row);
 		if(row != null) {
 			new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//datatable-footer//a[contains(@aria-label,'go to next page')]")));
 			//WebElement trashIcon = row.findElement(By.cssSelector(".btn.btn-sm.btn-danger"));
 			//WebElement trashIcon = row.findElement(By.xpath(".//button[@class='btn btn-sm btn-danger']"));
- 			WebElement trashIcon = null;
- 			try {
- 				trashIcon = row.findElement(By.id("btnNativeUserDelete"));
- 			} catch(NoSuchElementException nsee) {
- 				Thread.sleep(2000);
- 				trashIcon = row.findElement(By.id("btnNativeUserDelete"));
- 			}
+ 			WebElement trashIcon = new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(row.findElement(By.id("btnNativeUserDelete"))));
 			if(trashIcon != null) {
 				log.debug("Hitting Trash icon");
 				trashIcon.click();
@@ -112,15 +105,17 @@ public class AdminNativeUser {
 				WebElement deleteButton = new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("btnNativeUserDeleteConfirmed")));
 				deleteButton.click();
 				log.debug("Delete hit. Now checking if user was removed");
-				driver.navigate().refresh();
+				//driver.navigate().refresh();
 				new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("admin-btn-add-user")));
 			}
-			String after = driver.findElement(By.xpath("//div[@class='page-count']")).getText();
+			String after = new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='page-count']"))).getText();
 			log.debug("After deleting users: {}", after);
 			//WebElement deletedRow = ProjectUtility.findRowInDataTable(driver, userToDelete);
 			
-			return (!before.equals(after));
+			//return (!before.equals(after));
+			return true;
 		} else {
+			log.debug("User to be deleted not found");
 			return false;
 		}
 		 
