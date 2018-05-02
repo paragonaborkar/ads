@@ -35,6 +35,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 	.authorizeRequests()
                 		.antMatchers("/saml/**").permitAll()
                 		.antMatchers("/oauth/**").permitAll()
+                		.antMatchers("/api/remoteLog").permitAll()
                 		.antMatchers("/api/**").authenticated()
                 		.antMatchers("/**").permitAll().and().securityContext().securityContextRepository(new TokenSecurityContextRepository());
     }

@@ -14,10 +14,9 @@ public class ConnectionsManualFunctions {
 	
 	public void pageReach(WebDriver driver) throws InterruptedException {
 		log.debug("Navigating to connections page for Manual Functions");
-		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("connectionDropdown"))).click();
-		//driver.findElement(By.id("discoverDropdown")).click();
-		driver.findElement(By.id("connection-manual-functions")).click();
-		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("btnRunManualFunction")));
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("connectionDropdown"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("connection-manual-functions"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("btnRunManualFunction")));
 	}
 	
 	public boolean runHostConnections(WebDriver driver, int indexOfRunButton) {

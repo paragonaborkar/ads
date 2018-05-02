@@ -15,17 +15,17 @@ public class DiscoverManualFunctions {
 	// Discover page Reach
 	public void pageReach(WebDriver driver) {
 		log.debug("Navigating to discover page for Manual Functions");
-		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("discoverDropdown"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("discoverDropdown"))).click();
 		//driver.findElement(By.id("discoverDropdown")).click();
-		driver.findElement(By.id("discover-manual-functions")).click();
-		new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(By.id("btnRunManualFunction")));
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("discover-manual-functions"))).click();
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("btnRunManualFunction")));
 	}
 	
 	public boolean ociDataLoadRunJob(WebDriver driver, int indexOfRunButton) {
 		log.debug("Running OCI Data Load for element: {}", indexOfRunButton);
 		WebElement runButton = driver.findElement(By.xpath("(//button[@id='btnRunManualFunction'])[" + indexOfRunButton + "]"));
 		runButton.click();
-		new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='divRunSuccess'])[" + indexOfRunButton + "]")));
+		new WebDriverWait(driver, 60).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//div[@id='divRunSuccess'])[" + indexOfRunButton + "]")));
 		return true;
 	}	
 	
