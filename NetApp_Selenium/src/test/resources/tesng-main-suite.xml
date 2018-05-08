@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="ADS" thread-count="1" verbose="10" preserve-order="true">
+	<test name="LoginTests" preserve-order="true">
+		<classes>
+			<class name="com.netapp.ads.selenium.tests.LoginTest"/>
+		</classes>
+	</test>
+	<test name="ConnectionsTests" preserve-order="true">
+		<classes>
+			<class name="com.netapp.ads.selenium.tests.ConnectionsTest"/>
+		</classes>
+	</test>
+	<test name="DiscoverTests" preserve-order="true">
+		<classes>
+			<class name="com.netapp.ads.selenium.tests.DiscoverTest"/>
+		</classes>
+	</test>
+	<test name="AdminTests" preserve-order="true">
+		<classes>
+			<class name="com.netapp.ads.selenium.tests.AdminTest"/>
+		</classes>
+	</test>
+</suite> <!-- Suite -->

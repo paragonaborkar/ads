@@ -33,7 +33,6 @@ public class BaseTest {
 		if (browser.equalsIgnoreCase("Chrome")) {
 			ChromeOptions options = new ChromeOptions();
 			options.setProxy(null);
-			
 			List<String> chromeOptions = Arrays.asList("headless", "start-maximized", "disable-gpu", "no-sandbox"); 
 			options.addArguments(chromeOptions);
 			//System.setProperty("webdriver.chrome.driver", ".\\src\\main\\resources\\com\\paragon\\resources\\drivers\\chromedriver.exe");
