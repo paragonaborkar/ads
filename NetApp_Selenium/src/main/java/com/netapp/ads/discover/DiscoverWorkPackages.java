@@ -63,7 +63,7 @@ public class DiscoverWorkPackages {
 		(new WebDriverWait(driver, 20)).until(ExpectedConditions.invisibilityOfElementLocated(By.id("divSuccessMsg")));
 		
 		String after = driver.findElement(By.xpath("//div[@class='page-count']")).getText();
-		log.debug("Total CR after adding: " + after);
+		log.debug("Total WP after adding: " + after);
 		
 		return (!before.equals(after));
 	}
